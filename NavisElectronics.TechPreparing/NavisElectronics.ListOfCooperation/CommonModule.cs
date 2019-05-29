@@ -4,6 +4,8 @@
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
     using Ninject.Modules;
+    using Ninject.Planning.Bindings;
+
     using Services;
     using ViewInterfaces;
     using ViewModels;
@@ -18,6 +20,7 @@
         /// </summary>
         public override void Load()
         {
+            Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
             Bind<Search>().ToSelf();

@@ -107,10 +107,19 @@ namespace NavisElectronics.ListOfCooperation.Entities
             get { return _elements; }
         }
 
+        /// <summary>
+        /// Объем выборки
+        /// </summary>
         public string SampleSize { get; set; }
 
+        /// <summary>
+        /// Ссылка на тех. процесс
+        /// </summary>
         public string TechProcessReference { get; set; }
 
+        /// <summary>
+        /// Тех. задание
+        /// </summary>
         public string TechTask { get; set; }
 
         /// <summary>
