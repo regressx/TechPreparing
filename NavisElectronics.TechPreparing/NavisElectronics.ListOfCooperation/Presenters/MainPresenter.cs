@@ -48,6 +48,7 @@
         private readonly MainViewModel _model;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MainPresenter"/> class. 
         /// Конструктор
         /// </summary>
         /// <param name="mainView">
