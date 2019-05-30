@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.ListOfCooperation.Entities;
 using NavisElectronics.ListOfCooperation.Logic;
@@ -102,7 +103,7 @@ namespace ListOfCooperationTests
 
 
             TreeBuilderService service = new TreeBuilderService();
-            treeElement = service.Build(ds);
+            treeElement = service.Build(ds,CancellationToken.None);
 
             Assert.AreEqual(treeElement.Id, 1);
             Assert.AreEqual(treeElement[0].Id, 2);

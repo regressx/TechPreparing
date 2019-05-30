@@ -1,4 +1,5 @@
-﻿using Intermech.Interfaces.Compositions;
+﻿using System.Threading;
+using Intermech.Interfaces.Compositions;
 using Intermech.Kernel.Search;
 using NavisElectronics.IPS1C.IntegratorService.Services;
 
@@ -574,7 +575,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
             IntermechReader reader = new IntermechReader();
             DataSet myDataset = reader.GetDataset(versionId, ListOfCooperation.Helpers.ConstHelper.BinaryDataOfOrder);
             TreeBuilderService treeBuilderService = new TreeBuilderService();
-            techDataOrderElement = treeBuilderService.Build(myDataset);
+            techDataOrderElement = treeBuilderService.Build(myDataset, CancellationToken.None);
             ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
             ProductTreeNode root = mapper.Map(techDataOrderElement);
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace NavisElectronics.ListOfCooperation.Logic
 {
@@ -14,17 +15,16 @@ namespace NavisElectronics.ListOfCooperation.Logic
     /// </summary>
     public class TreeBuilderService
     {
-
-        public IntermechTreeElement Build(long id)
-        {
-            IntermechReader reader = new IntermechReader();
-            IntermechTreeElement mainElement = new IntermechTreeElement();
-            BuildTreeRecursive(mainElement, reader);
-            return mainElement;
-        }
-
-
-        public IntermechTreeElement Build(DataSet ds)
+        /// <summary>
+        /// Строит дерево из состава, полученного из Dataset, прикрепленного к заказу
+        /// </summary>
+        /// <param name="ds">
+        /// Dataset из заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="IntermechTreeElement"/>.
+        /// </returns>
+        public IntermechTreeElement Build(DataSet ds, CancellationToken token)
         {
             // строим главный узел
             IntermechTreeElement root = new IntermechTreeElement();
@@ -40,19 +40,27 @@ namespace NavisElectronics.ListOfCooperation.Logic
                 root.Note = (string)ds.Tables["Order"].Rows[0]["BigNote"];
             }
 
-            CreateRelations(ds, root);
+            CreateRelations(ds, root, token);
 
             return root;
         }
 
-
-        public Task<IntermechTreeElement> BuildAsync(DataSet ds)
+        /// <summary>
+        /// Строит дерево из состава, полученного из Dataset, прикрепленного к заказу
+        /// </summary>
+        /// <param name="ds">
+        /// Dataset из заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="IntermechTreeElement"/>.
+        /// </returns>
+        public Task<IntermechTreeElement> BuildAsync(DataSet ds, CancellationToken token)
         {
             Func<IntermechTreeElement> func = () =>
             {
-                return Build(ds);
+                return Build(ds, token);
             };
-            return Task.Run(func);
+            return Task.Run(func, token);
         }
 
         public IntermechTreeElement BuildTreeWithoutCoop(IntermechTreeElement mainElement, string agentFilter)
@@ -97,7 +105,7 @@ namespace NavisElectronics.ListOfCooperation.Logic
             return newMainElement;
         }
 
-        private void BuildTreeRecursive(IntermechTreeElement mainElement, IntermechReader reader)
+        private void BuildTreeRecursive(IntermechTreeElement mainElement, IDataRepository reader)
         {
             ICollection<IntermechTreeElement> elements = reader.Read(mainElement.Id);
 
@@ -114,14 +122,18 @@ namespace NavisElectronics.ListOfCooperation.Logic
         /// <summary>
         /// Внутренний метод собирания дерева из Dataset
         /// </summary>
-        /// <param name="element">
-        /// Элемент, в который собираем данные
-        /// </param>
         /// <param name="ds">
         /// Набор данных Dataset
         /// </param>
-        internal void CreateRelations(DataSet ds, IntermechTreeElement element)
+        /// <param name="element">
+        /// Элемент, в который собираем данные
+        /// </param>
+        /// <param name="token">
+        /// Токен отмены
+        /// </param>
+        internal void CreateRelations(DataSet ds, IntermechTreeElement element, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             for (int i = 0; i < ds.Tables["ProductRelations"].Rows.Count; i++)
             {
                 if ((long)ds.Tables["ProductRelations"].Rows[i]["ParentId"] == element.Id)
@@ -517,7 +529,7 @@ namespace NavisElectronics.ListOfCooperation.Logic
                     element.Add(childElement);
                     if (childElement.Type == 1078 || childElement.Type == 1074 || childElement.Type == 1052 || childElement.Type == 1159 || childElement.Type == 0 || childElement.Type == 1097)
                     {
-                        CreateRelations(ds, childElement);
+                        CreateRelations(ds, childElement, token);
                     }
                 }
             }

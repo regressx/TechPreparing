@@ -4,11 +4,10 @@
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
     using Ninject.Modules;
-    using Ninject.Planning.Bindings;
-
     using Services;
     using ViewInterfaces;
     using ViewModels;
+    using Views;
 
     /// <summary>
     /// Модуль для настройки контейнера
@@ -27,6 +26,7 @@
             Bind<OpenFolderService>().ToSelf();
             Bind<DataSetGatheringService>().ToSelf();
             Bind<MainViewModel>().ToSelf();
+            Bind<TreeNodeDialogView>().ToSelf();
             Bind<IMainView>().To<MainView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
         }

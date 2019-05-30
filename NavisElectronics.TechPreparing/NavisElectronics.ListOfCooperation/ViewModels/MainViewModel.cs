@@ -1,4 +1,7 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿using System;
+using NavisElectronics.ListOfCooperation.Logic;
+
+namespace NavisElectronics.ListOfCooperation.ViewModels
 {
     using System.Collections.Generic;
     using System.Data;
@@ -29,6 +32,8 @@
         /// </summary>
         private readonly IDatabaseWriter _writer;
 
+        private readonly TreeBuilderService _treeBuilderService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
@@ -41,13 +46,26 @@
         /// <param name="writer">
         /// Интерфейс для записи в базу данных
         /// </param>
-        public MainViewModel(IDataRepository reader, DataSetGatheringService gatheringService,IDatabaseWriter writer)
+        /// <param name="treeBuilderService">
+        /// Сервис построения дерева из Dataset
+        /// </param>
+        public MainViewModel(IDataRepository reader, DataSetGatheringService gatheringService, IDatabaseWriter writer, TreeBuilderService treeBuilderService)
         {
             _reader = reader;
             _gatheringService = gatheringService;
             _writer = writer;
+            _treeBuilderService = treeBuilderService;
         }
 
+        /// <summary>
+        /// Построение представления дерева из состава заказа
+        /// </summary>
+        /// <param name="mainElement">
+        /// Дерево заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="TreeNode"/>.
+        /// </returns>
         public TreeNode BuildTree(IntermechTreeElement mainElement)
         {
             TreeNode mainNode = new TreeNode(mainElement.Name);
@@ -55,6 +73,61 @@
             BuildTreeRecursive(mainNode, mainElement);
             return mainNode;
         }
+
+
+        public IList<T> Select<T>(ITechPreparingSelector<T> selector)
+        {
+            return selector.Select();
+        }
+
+        /// <summary>
+        /// Построение представления дерева из Dataset
+        /// </summary>
+        /// <param name="dataset">
+        /// Набор данных из заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="TreeNode"/>.
+        /// </returns>
+        public TreeNode BuildTree(DataSet dataset)
+        {
+            IntermechTreeElement mainElement = _treeBuilderService.Build(dataset, CancellationToken.None);
+            return BuildTree(mainElement);
+        }
+
+
+        /// <summary>
+        /// Создание представления дерева асинхронно
+        /// </summary>
+        /// <param name="dataset">
+        /// Набор данных
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<TreeNode> BuildTreeAsync(DataSet dataset)
+        {
+            return BuildTreeAsync(dataset, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Создание представления дерева асинхронно
+        /// </summary>
+        /// <param name="dataset">
+        /// Набор данных
+        /// </param>
+        /// <param name="token">Токен отмены</param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<TreeNode> BuildTreeAsync(DataSet dataset, CancellationToken token)
+        {
+            IntermechTreeElement mainElement = await _treeBuilderService.BuildAsync(dataset, token);
+            Func<TreeNode> func = () => { return BuildTree(mainElement); };
+
+            return await Task.Run(func, token);
+        }
+
 
         /// <summary>
         /// Асинхронно получает заказ
@@ -73,6 +146,30 @@
             return await _reader.GetFullOrderAsync(versionId, token);
         }
 
+        /// <summary>
+        /// Асинхронно получает заказ
+        /// </summary>
+        /// <param name="dataSet">
+        /// Dataset
+        /// </param>
+        /// <param name="token">
+        /// Токен отмемы
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<IntermechTreeElement> GetFullOrderAsync(DataSet dataSet, CancellationToken token)
+        {
+            return await _treeBuilderService.BuildAsync(dataSet, token);
+        }
+
+
+        /// <summary>
+        /// Пересчитать данные о входимости, а также с учетом тех. запаса
+        /// </summary>
+        /// <param name="mainElement">
+        /// Элемент дерева
+        /// </param>
         public void RecountAmount(IntermechTreeElement mainElement)
         {
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();

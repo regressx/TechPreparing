@@ -111,8 +111,10 @@
     <Compile Include="Reports\CooperationList\CooperationListViewInDepth.cs" />
     <Compile Include="Reports\CooperationList\CooperationListViewUniqueAssemblies.cs" />
     <Compile Include="Reports\CooperationList\MyPageDescription.cs" />
+    <Compile Include="Services\ITechPreparingSelector.cs" />
     <Compile Include="Services\OpenFolderService.cs" />
     <Compile Include="Services\SaveTreeService.cs" />
+    <Compile Include="Services\TechPreparingSelector.cs" />
     <Compile Include="Services\TechRouteManager.cs" />
     <Compile Include="ViewInterfaces\EditTechRouteEventArgs.cs" />
     <Compile Include="ViewModels\InfoInTableModel.cs" />

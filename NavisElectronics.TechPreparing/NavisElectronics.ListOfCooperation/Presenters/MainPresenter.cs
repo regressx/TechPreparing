@@ -175,8 +175,9 @@
 
         private async void _mainView_LoadPreparationClick(object sender, EventArgs e)
         {
+           
             // загрузить список существующих заказов
-            long[] result = SelectionWindow.SelectObjects("Выбор заказа с тех. подготовкой", "Выберите нужный Вам заказ", 1019, SelectionOptions.SelectObjects | SelectionOptions.DisableMultiselect);
+            IList<long> result = _model.Select<long>();
 
             if (result != null)
             {
@@ -192,13 +193,13 @@
                 }
 
                 // строим дерево из полученной тех. подготовки
-                TreeBuilderService treeBuilderService = new TreeBuilderService();
-                IntermechTreeElement oldPreparation = await treeBuilderService.BuildAsync(ds);
 
-                TreeNodeDialogView treeNodeDialog = new TreeNodeDialogView();
+                IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
+
                 IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement>();
-
                 IntermechTreeElement elementToCopy = null;
+                treeNodeDialogPresenter.Run(oldPreparation);
+
 
                 //if (treeNodeDialogPresenter.Run(oldPreparation) == DialogResult.OK)
                 //{
@@ -209,39 +210,7 @@
                 //}
 
                 // Идем по новому дереву, ищем в старом элемент очереди, присваиваем данные новому элементу из старого дерева
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                queue.Enqueue(_globalTreeElement);
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement elementFromQueue = queue.Dequeue();
-
-                    string str = elementFromQueue.GetFullPathByObjectId();
-                    string str2 = elementToCopy.GetFullPathByObjectId();
-
-                    IntermechTreeElement elementFromUpdate =
-                        elementToCopy.Parent.FindByObjectIdPath(str);
-
-                    elementFromQueue.CooperationFlag = elementFromUpdate.CooperationFlag;
-                    elementFromQueue.Agent = elementFromUpdate.Agent;
-                    elementFromQueue.StockRate = elementFromUpdate.StockRate;
-                    elementFromQueue.Note = elementFromUpdate.Note;
-                    elementFromQueue.RouteNote = elementFromUpdate.RouteNote;
-                    elementFromQueue.SampleSize = elementFromUpdate.SampleSize;
-                    elementFromQueue.TechProcessReference = elementFromUpdate.TechProcessReference;
-                    elementFromQueue.TechRoute = elementFromUpdate.TechRoute;
-                    elementFromQueue.ContainsInnerCooperation = elementFromUpdate.ContainsInnerCooperation;
-                    elementFromQueue.InnerCooperation = elementFromUpdate.InnerCooperation;
-
-                    if (elementFromQueue.Children.Count > 0)
-                    {
-                        foreach (IntermechTreeElement child in elementFromQueue.Children)
-                        {
-                            queue.Enqueue(child);
-                        }
-                    }
-                }
             }
-
         }
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
@@ -484,8 +453,7 @@
 
             if (fromDataset)
             {
-                TreeBuilderService treeBuilderService = new TreeBuilderService();
-                orderElement = await treeBuilderService.BuildAsync(dataset);
+                orderElement = await _model.GetFullOrderAsync(dataset, CancellationToken.None);
                 _mainView.FillNote(orderElement.Note);
             }
             else

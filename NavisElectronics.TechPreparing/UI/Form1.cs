@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NavisElectronics.ListOfCooperation.Services;
 
 namespace UI
 {
@@ -31,13 +32,9 @@ namespace UI
             IKernel kernel = new StandardKernel();
             kernel.Load(module);
             kernel.Rebind<IDataRepository>().To<TempReader>();
-
-
+            kernel.Rebind<ITechPreparingSelector<string>>().To<TempSelector>();
             kernel.Bind<IPresentationFactory>().To<PresentationFactory>().WithConstructorArgument("container", kernel);
-
             PresentationFactory presentationFactory = kernel.Get<PresentationFactory>();
-
-
             IPresenter<long> mainPresenter = presentationFactory.GetPresenter<MainPresenter, long>();
             mainPresenter.Run(-1);
         }
