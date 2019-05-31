@@ -22,11 +22,12 @@
             Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
+
             Bind<Search>().ToSelf();
             Bind<OpenFolderService>().ToSelf();
             Bind<DataSetGatheringService>().ToSelf();
             Bind<MainViewModel>().ToSelf();
-            Bind<TreeNodeDialogView>().ToSelf();
+            Bind<ITreeNodeDialogView>().To<TreeNodeDialogView>();
             Bind<IMainView>().To<MainView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
         }

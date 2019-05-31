@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="CommonModule.cs" />
     <Compile Include="Entities\ExtractedObject.cs" />
+    <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\WithdrawalType.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />

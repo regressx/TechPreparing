@@ -10,9 +10,6 @@
     using Enums;
     using EventArguments;
     using Exceptions;
-    using Intermech.Interfaces.Client;
-    using Intermech.Navigator;
-    using Logic;
     using Services;
     using ViewInterfaces;
     using ViewModels;
@@ -39,6 +36,8 @@
         private long _rootVersionId;
 
         private IntermechTreeElement _globalTreeElement;
+        private IntermechTreeElement _elementToCopy;
+
 
         private IDictionary<long, Agent> _agents;
 
@@ -175,42 +174,37 @@
 
         private async void _mainView_LoadPreparationClick(object sender, EventArgs e)
         {
-           
             // загрузить список существующих заказов
-            IList<long> result = _model.Select<long>();
-
-            if (result != null)
+            IList<IdOrPath> result = _model.Select();
+            if (result.Count == 0)
             {
-                DataSet ds;
-                try
-                {
-                    ds = await _model.GetDataSetAsync(result[0]);
-                }
-                catch (DataSetIsEmptyException)
-                {
-                    MessageBox.Show("На выбранный Вами заказ нет никакой тех. подготовки");
-                    return;
-                }
-
-                // строим дерево из полученной тех. подготовки
-
-                IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
-
-                IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement>();
-                IntermechTreeElement elementToCopy = null;
-                treeNodeDialogPresenter.Run(oldPreparation);
-
-
-                //if (treeNodeDialogPresenter.Run(oldPreparation) == DialogResult.OK)
-                //{
-                //    elementToCopy = treeNodeDialogPresenter.ElementToCopy;
-
-                //    // эту штуку я делаю специально, будто бы заказы одинаковые, и поиск тогда будет замечательно работать
-                //    elementToCopy.Parent.Id = _globalTreeElement.Parent.Id;
-                //}
-
-                // Идем по новому дереву, ищем в старом элемент очереди, присваиваем данные новому элементу из старого дерева
+                return;
             }
+
+            DataSet ds;
+            try
+            {
+                ds = await _model.GetDataSetAsync(result[0].Id);
+            }
+            catch (DataSetIsEmptyException)
+            {
+                MessageBox.Show("На выбранный Вами заказ нет никакой тех. подготовки");
+                return;
+            }
+
+            // строим дерево из полученной тех. подготовки
+            IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
+
+            IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement>();
+
+            IntermechTreeElement elementToCopy = new IntermechTreeElement(); // создаем пустышку
+            treeNodeDialogPresenter.Run(oldPreparation);
+            UpdateTechPreparinNode(elementToCopy);
+        }
+
+        private void UpdateTechPreparinNode(IntermechTreeElement elementToCopy)
+        {
+            _elementToCopy = elementToCopy;
         }
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)

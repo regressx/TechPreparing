@@ -33,6 +33,7 @@ namespace NavisElectronics.ListOfCooperation.ViewModels
         private readonly IDatabaseWriter _writer;
 
         private readonly TreeBuilderService _treeBuilderService;
+        private readonly ITechPreparingSelector<IdOrPath> _selector;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -49,12 +50,13 @@ namespace NavisElectronics.ListOfCooperation.ViewModels
         /// <param name="treeBuilderService">
         /// Сервис построения дерева из Dataset
         /// </param>
-        public MainViewModel(IDataRepository reader, DataSetGatheringService gatheringService, IDatabaseWriter writer, TreeBuilderService treeBuilderService)
+        public MainViewModel(IDataRepository reader, DataSetGatheringService gatheringService, IDatabaseWriter writer, TreeBuilderService treeBuilderService, ITechPreparingSelector<IdOrPath> selector)
         {
             _reader = reader;
             _gatheringService = gatheringService;
             _writer = writer;
             _treeBuilderService = treeBuilderService;
+            _selector = selector;
         }
 
         /// <summary>
@@ -75,9 +77,9 @@ namespace NavisElectronics.ListOfCooperation.ViewModels
         }
 
 
-        public IList<T> Select<T>(ITechPreparingSelector<T> selector)
+        public IList<IdOrPath> Select()
         {
-            return selector.Select();
+            return _selector.Select();
         }
 
         /// <summary>
