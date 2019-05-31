@@ -9,7 +9,7 @@
     /// <summary>
     /// Представитель окна загрузки уже созданной тех. подготовки из ранее выполненных заказов
     /// </summary>
-    public class TreeNodeDialogPresenter : BasePresenter<IntermechTreeElement>
+    public class TreeNodeDialogPresenter : BasePresenter<IntermechTreeElement, IntermechTreeElement>
     {
         /// <summary>
         /// Представление
@@ -27,10 +27,8 @@
         /// </summary>
         private IntermechTreeElement _elementToBuild;
 
-        /// <summary>
-        /// Элемент, тех. подготовку которого мы копируем
-        /// </summary>
         private IntermechTreeElement _elementToCopy;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeNodeDialogPresenter"/> class.
@@ -50,22 +48,15 @@
         }
 
         /// <summary>
-        /// Элемент, тех. подготовку которого мы копируем
-        /// </summary>
-        public IntermechTreeElement ElementToCopy
-        {
-            get { return _elementToCopy; }
-        }
-
-        /// <summary>
         /// Запуск представителя.
         /// </summary>
         /// <param name="parameter">
         /// Передаем дерево
         /// </param>
-        public override void Run(IntermechTreeElement parameter)
+        public override void Run(IntermechTreeElement parameter, IntermechTreeElement element)
         {
             _elementToBuild = parameter;
+            _elementToCopy = element;
             _view.Show();
         }
 
@@ -82,6 +73,7 @@
         private void _view_AcceptClick(object sender, IntermechTreeElement e)
         {
             _elementToCopy = e;
+            _view.Close();
         }
 
         /// <summary>

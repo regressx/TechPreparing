@@ -12,5 +12,6 @@ namespace NavisElectronics.ListOfCooperation.ViewInterfaces
         void FillTree(TreeModel model);
         void Show();
         IntermechTreeElement GetSelectedNode();
+        void Close();
     }
 }

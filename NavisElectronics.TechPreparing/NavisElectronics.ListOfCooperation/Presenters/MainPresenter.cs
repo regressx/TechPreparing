@@ -195,16 +195,9 @@
             // строим дерево из полученной тех. подготовки
             IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
 
-            IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement>();
-
-            IntermechTreeElement elementToCopy = new IntermechTreeElement(); // создаем пустышку
-            treeNodeDialogPresenter.Run(oldPreparation);
-            UpdateTechPreparinNode(elementToCopy);
-        }
-
-        private void UpdateTechPreparinNode(IntermechTreeElement elementToCopy)
-        {
-            _elementToCopy = elementToCopy;
+            IPresenter<IntermechTreeElement, IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement, IntermechTreeElement>();
+            treeNodeDialogPresenter.Run(oldPreparation, _elementToCopy);
+            MessageBox.Show(_elementToCopy.Name);
         }
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)

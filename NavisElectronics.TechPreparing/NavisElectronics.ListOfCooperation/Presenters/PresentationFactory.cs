@@ -51,6 +51,15 @@ namespace NavisElectronics.ListOfCooperation.Presenters
             return (IPresenter<V>)_container.Get<T>();
         }
 
+        public IPresenter<V,Z> GetPresenter<T, V,Z>() where T : class, IPresenter<V,Z>
+        {
+            if (!_container.CanResolve<T>())
+            {
+                _container.Bind<T>().To<T>();
+            }
+            return (IPresenter<V,Z>)_container.Get<T>();
+        }
+
 
         public void ReleasePresenter<TPresenter>()
         {
@@ -66,6 +75,7 @@ namespace NavisElectronics.ListOfCooperation.Presenters
     {
         IPresenter GetPresenter<T>() where T : class, IPresenter;
         IPresenter<V> GetPresenter<T, V>() where T : class, IPresenter<V>;
+        IPresenter<V,Z> GetPresenter<T, V, Z>() where T : class, IPresenter<V,Z>;
         void ReleasePresenter<TPresenter>();
 
     }

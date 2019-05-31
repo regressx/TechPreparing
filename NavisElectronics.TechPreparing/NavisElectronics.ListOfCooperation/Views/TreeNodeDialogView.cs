@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
-using Intermech.Expressions.Exceptions;
 using NavisElectronics.ListOfCooperation.Entities;
 using NavisElectronics.ListOfCooperation.ViewInterfaces;
 using NavisElectronics.ListOfCooperation.ViewModels;
@@ -45,7 +39,12 @@ namespace NavisElectronics.ListOfCooperation.Views
             treeViewAdv1.Model = model;
         }
 
-        /// <summary>
+        public new void Show()
+        {
+            ShowDialog();
+        }
+
+            /// <summary>
         /// Получение выбранного узла
         /// </summary>
         /// <returns>
