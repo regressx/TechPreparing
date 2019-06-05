@@ -11,8 +11,8 @@ namespace NavisElectronics.ListOfCooperation.IO
     /// </summary>
     public class IntermechPathRepository : NavisArchiveWork.Data.IRepository
     {
-        private const int IdOfNodeOfCatalog = 1481505;
-        private const int ShortNameAttributeId= 7;
+        private const int IdOfNodeCatalog = 1481505;
+        private const int descriptionAttribute = 7;
 
         IList<PathContainer> _lines = new List<PathContainer>();
 
@@ -24,7 +24,7 @@ namespace NavisElectronics.ListOfCooperation.IO
         {
             using (SessionKeeper keeper = new SessionKeeper())
             {
-                IDBObject pathes = keeper.Session.GetObject(1481505);
+                IDBObject pathes = keeper.Session.GetObject(IdOfNodeCatalog);
                 
                 // Сервис для получения составов
                 ICompositionLoadService compositionService =
@@ -56,12 +56,12 @@ namespace NavisElectronics.ListOfCooperation.IO
                         SortOrders.NONE,
                         0), // наименование
 
-                    new ColumnDescriptor(13,
+                    new ColumnDescriptor(descriptionAttribute,
                         AttributeSourceTypes.Object,
                         ColumnContents.ID,
                         ColumnNameMapping.Index,
                         SortOrders.NONE,
-                        0), // Краткое наименование
+                        0), // описание
                 };
 
 
@@ -75,7 +75,7 @@ namespace NavisElectronics.ListOfCooperation.IO
 
                 foreach (DataRow row in articlesComposition.Rows)
                 {
-                    PathContainer pathContainer= new PathContainer((string)row[2],(string)row[3]);
+                    PathContainer pathContainer= new PathContainer((string)row[2], (string)row[3]);
                     _lines.Add(pathContainer);
                 }
 
@@ -115,8 +115,8 @@ namespace NavisElectronics.ListOfCooperation.IO
         {
             using (SessionKeeper keeper = new SessionKeeper())
             {
-                IDBObject netPath = keeper.Session.GetObject(IdOfNodeOfCatalog);
-                IDBAttribute netPathAttribute = netPath.GetAttributeByID(ShortNameAttributeId);
+                IDBObject netPath = keeper.Session.GetObject(IdOfNodeCatalog);
+                IDBAttribute netPathAttribute = netPath.GetAttributeByID(descriptionAttribute);
                 if (netPathAttribute != null)
                 {
                     return netPathAttribute.AsString;

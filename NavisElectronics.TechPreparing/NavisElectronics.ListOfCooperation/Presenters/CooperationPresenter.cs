@@ -19,7 +19,7 @@
     /// <summary>
     /// Класс-посредник между логикой и представлением для ведомости кооперации
     /// </summary>
-    public class CooperationPresenter
+    public class CooperationPresenter : IPresenter<IntermechTreeElement>
     {
         /// <summary>
         /// Интерфейс для окна ведомости кооперации
@@ -90,8 +90,8 @@
             _view.FindInTreeClick += _view_FindInTreeClick;
             _view.GlobalSearchClick += _view_GlobalSearchClick;
             _view.CreateCooperationClick += _view_CreateCooperationClick;
-            _view.SetTechTaskClick += _view_SetTechTaskClick;
-            _view.CreateCompleteListClick += _view_CreateCompleteListClick;
+            _view.SetTechTaskClick += View_SetTechTaskClick;
+            _view.CreateCompleteListClick += View_CreateCompleteListClick;
             _view.SetPcbClick += _view_SetPcbClick;
         }
 
@@ -117,7 +117,19 @@
             }
         }
 
-        private void _view_CreateCompleteListClick(object sender, MultipleNodesSelectedEventArgs e)
+        /// <summary>
+        /// Обработчик события нажатия кнопки создания комплектовочной карты на форме
+        /// </summary>
+        /// <param name="sender">
+        /// отправитель
+        /// </param>
+        /// <param name="e">
+        /// Набор параметров
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Выбрасываем исключение, если агрумент внутри пустой
+        /// </exception>
+        private void View_CreateCompleteListClick(object sender, MultipleNodesSelectedEventArgs e)
         {
             if (e.SelectedNodes == null)
             {
@@ -130,7 +142,7 @@
             }
         }
 
-        private void _view_SetTechTaskClick(object sender, MultipleNodesSelectedEventArgs e)
+        private void View_SetTechTaskClick(object sender, MultipleNodesSelectedEventArgs e)
         {
 
             string text = string.Empty;
@@ -436,10 +448,7 @@
             _view.FillTree(_model.GetModel(_element));
         }
 
-        /// <summary>
-        /// Запуск формы
-        /// </summary>
-        public void Run()
+        public void Run(IntermechTreeElement mainElement)
         {
             _view.Show();
         }

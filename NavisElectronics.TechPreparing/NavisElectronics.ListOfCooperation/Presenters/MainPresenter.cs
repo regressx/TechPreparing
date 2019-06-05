@@ -290,7 +290,11 @@
 
         private void _mainView_KbNavisFilterClick(object sender, EventArgs e)
         {
-            //CooperationView cooperationView = new CooperationView(true);
+
+            IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<CooperationPresenter,IntermechTreeElement>();
+            treeNodeDialogPresenter.Run(_globalTreeElement);
+
+            CooperationView cooperationView = new CooperationView(true);
             //cooperationView.Text = "Фильтр по КБ НАВИС";
             //TreeBuilderService treeBuilderService = new TreeBuilderService();
             //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;

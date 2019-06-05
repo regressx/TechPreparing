@@ -1,5 +1,4 @@
-﻿using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Reports;
+﻿using NavisElectronics.ListOfCooperation.Reports;
 
 namespace NavisElectronics.ListOfCooperation
 {
@@ -13,8 +12,6 @@ namespace NavisElectronics.ListOfCooperation
     using EventArguments;
     using Intermech.Interfaces.AutoSelection;
     using Intermech.Interfaces.Client;
-    using NavisArchiveWork.Data;
-    using NavisArchiveWork.Model;
     using ViewInterfaces;
     using ViewModels;
 
@@ -167,12 +164,11 @@ namespace NavisElectronics.ListOfCooperation
             //}
         }
 
-        readonly Search _search = new Search(new Repository("ParentDirectoryNames.xml"));
         private void goToArchiveButton_Click(object sender, EventArgs e)
         {
-            MyNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as MyNode;
-            FileDesignation fd = _search.GetFileDesignation(selectedNode.Designation);
-            _search.StepToFolder(_search.GetFullPath(fd));
+            //MyNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as MyNode;
+            //FileDesignation fd = _search.GetFileDesignation(selectedNode.Designation);
+            //_search.StepToFolder(_search.GetFullPath(fd));
         }
 
 

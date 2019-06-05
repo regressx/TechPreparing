@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NavisArchiveWork.Data;
 using NavisElectronics.ListOfCooperation.Entities;
 using NavisElectronics.ListOfCooperation.Services;
 
@@ -32,6 +33,7 @@ namespace UI
             CommonModule module = new CommonModule();
             IKernel kernel = new StandardKernel();
             kernel.Load(module);
+            kernel.Rebind<IRepository>().To<TempRepository>();
             kernel.Rebind<IDataRepository>().To<TempReader>();
             kernel.Rebind<ITechPreparingSelector<IdOrPath>>().To<TempSelector>();
             kernel.Bind<IPresentationFactory>().To<PresentationFactory>().WithConstructorArgument("container", kernel);

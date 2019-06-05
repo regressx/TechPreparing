@@ -22,7 +22,6 @@
             Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
-
             Bind<Search>().ToSelf();
             Bind<OpenFolderService>().ToSelf();
             Bind<DataSetGatheringService>().ToSelf();
