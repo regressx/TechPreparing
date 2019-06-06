@@ -89,13 +89,34 @@
             _parametersService = new SetParametersService(element);
             _view.FindInTreeClick += _view_FindInTreeClick;
             _view.GlobalSearchClick += _view_GlobalSearchClick;
-            _view.CreateCooperationClick += _view_CreateCooperationClick;
+            _view.CreateCooperationClick += View_CreateCooperationClick;
             _view.SetTechTaskClick += View_SetTechTaskClick;
             _view.CreateCompleteListClick += View_CreateCompleteListClick;
-            _view.SetPcbClick += _view_SetPcbClick;
+            _view.SetPcbClick += View_SetPcbClick;
         }
 
-        private void _view_SetPcbClick(object sender, MultipleNodesSelectedEventArgs e)
+
+        /// <summary>
+        /// Метод запуска представителя
+        /// </summary>
+        /// <param name="filteredElement">
+        /// Отфильтрованный элемент по изготовителю
+        /// </param>
+        public void Run(IntermechTreeElement filteredElement)
+        {
+            _view.Show();
+        }
+
+        /// <summary>
+        /// The view_ set pcb click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void View_SetPcbClick(object sender, MultipleNodesSelectedEventArgs e)
         {
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (CooperationNode myNode in e.SelectedNodes)
@@ -133,7 +154,7 @@
         {
             if (e.SelectedNodes == null)
             {
-                throw new ArgumentNullException("e.SelectedNodes");
+                throw new ArgumentNullException("e");
             }
             ReportService reportService = new ReportService();
             foreach (CooperationNode cooperationNode in e.SelectedNodes)
@@ -142,6 +163,15 @@
             }
         }
 
+        /// <summary>
+        /// The view_ set tech task click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private void View_SetTechTaskClick(object sender, MultipleNodesSelectedEventArgs e)
         {
 
@@ -182,7 +212,18 @@
 
         }
 
-        private void _view_CreateCooperationClick(object sender, MultipleNodesSelectedEventArgs e)
+        /// <summary>
+        /// The _view_ create cooperation click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
+        private void View_CreateCooperationClick(object sender, MultipleNodesSelectedEventArgs e)
         {
             if (e.SelectedNodes == null)
             {
@@ -448,9 +489,6 @@
             _view.FillTree(_model.GetModel(_element));
         }
 
-        public void Run(IntermechTreeElement mainElement)
-        {
-            _view.Show();
-        }
+
     }
 }

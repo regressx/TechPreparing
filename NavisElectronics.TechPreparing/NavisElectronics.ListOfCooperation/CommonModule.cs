@@ -29,6 +29,7 @@
             Bind<ITreeNodeDialogView>().To<TreeNodeDialogView>();
             Bind<IMainView>().To<MainView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
+            Bind<ICooperationView>().To<CooperationView>();
         }
     }
 }
