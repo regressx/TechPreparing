@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Enums
+﻿namespace NavisElectronics.TechPreparation.Enums
 {
     /// <summary>
     /// Перечисление агентов, по которым будет производиться фильтрация

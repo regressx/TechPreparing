@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
+    using System;
+
     /// <summary>
     /// Класс извлекает данные по тегам из указанной строки
     /// </summary>

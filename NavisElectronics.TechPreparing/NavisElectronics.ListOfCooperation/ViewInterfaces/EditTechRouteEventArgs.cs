@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
+    using System;
+
     /// <summary>
     /// Аргументы события редактирования тех. маршрута
     /// </summary>

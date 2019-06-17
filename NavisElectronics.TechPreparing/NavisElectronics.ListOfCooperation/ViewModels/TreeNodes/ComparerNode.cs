@@ -1,9 +1,9 @@
-﻿using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Enums;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Enums;
+
     /// <summary>
     /// Узел для отображения в Aga.Controls.Tree. Служит для построения модели данных для сравнения деревьев
     /// </summary>

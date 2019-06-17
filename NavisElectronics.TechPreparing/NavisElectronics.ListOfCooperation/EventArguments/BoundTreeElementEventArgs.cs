@@ -1,7 +1,8 @@
-﻿namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
     using System;
-    using Entities;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Аргумент для события по очистке данных о кооперации

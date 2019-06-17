@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Windows.Forms;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     /// <summary>
     /// Представление для загрузки тех. подготовки из заказов, выполненных ранее
     /// </summary>

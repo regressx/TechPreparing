@@ -1,18 +1,34 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TechRouteMapPresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Класс-посредник, представитель для формы регистрации маршрутов
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using Enums;
-    using IO;
-    using Reports;
-    using Services;
-    using ViewInterfaces;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Reports;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using NavisElectronics.TechPreparation.Views;
 
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
@@ -177,7 +193,7 @@
         /// <param name="e">
         /// The e.
         /// </param>
-        private void View_RemoveInnerCooperation(object sender, EventArguments.ClipboardEventArgs e)
+        private void View_RemoveInnerCooperation(object sender, ClipboardEventArgs e)
         {
             SetParametersService parametersService = new SetParametersService(_element);
 
@@ -207,7 +223,7 @@
             }
         }
 
-        private void View_SetInnerCooperation(object sender, EventArguments.ClipboardEventArgs e)
+        private void View_SetInnerCooperation(object sender, ClipboardEventArgs e)
         {
             SetParametersService parametersService = new SetParametersService(_element);
 
@@ -277,23 +293,23 @@
 
         }
 
-        private void _view_ShowClick(object sender, EventArguments.SaveClickEventArgs e)
+        private void _view_ShowClick(object sender, SaveClickEventArgs e)
         {
             IntermechTreeElement element = e.Node.Tag as IntermechTreeElement;
             _showFileManager.Show(element.Id, element.Type);
         }
 
-        private void _view_PasteClick(object sender, EventArguments.ClipboardEventArgs e)
+        private void _view_PasteClick(object sender, ClipboardEventArgs e)
         {
             _model.Paste(e.Nodes, _agentFilter);
         }
 
-        private void _view_CopyClick(object sender, EventArguments.ClipboardEventArgs e)
+        private void _view_CopyClick(object sender, ClipboardEventArgs e)
         {
             _model.Copy(e.Nodes, _agentFilter);
         }
 
-        private void _view_EditClick(object sender, EventArguments.SaveClickEventArgs e)
+        private void _view_EditClick(object sender, SaveClickEventArgs e)
         {
 
             IList<MyNode> elements = _view.GetSelectedRows().ToList();
@@ -338,7 +354,7 @@
             }
         }
 
-        private void _view_SaveClick(object sender, EventArguments.SaveClickEventArgs e)
+        private void _view_SaveClick(object sender, SaveClickEventArgs e)
         {
             IntermechTreeElement rootElement = e.Node.Tag as IntermechTreeElement;
             DataSetGatheringService gatheringService = new DataSetGatheringService();

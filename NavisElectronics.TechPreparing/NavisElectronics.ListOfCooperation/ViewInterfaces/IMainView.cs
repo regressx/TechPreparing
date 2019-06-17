@@ -1,10 +1,11 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Entities;
-    using EventArguments;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
 
     public interface IMainView
     {

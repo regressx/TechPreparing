@@ -1,8 +1,7 @@
-﻿
-using Aga.Controls.Tree;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
+    using Aga.Controls.Tree;
+
     public class TechRouteNodeView: Node
     {
         public long Id { get; set; }

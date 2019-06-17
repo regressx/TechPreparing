@@ -1,10 +1,13 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports.CooperationList
+﻿namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System;
     using System.Collections.Generic;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public class CooperationListFactoryUniqueAssemblies
     {

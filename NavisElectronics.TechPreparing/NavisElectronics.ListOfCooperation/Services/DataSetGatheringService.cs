@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Entities;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Сервис для создания Dataset из узла дерева

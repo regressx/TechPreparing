@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Services;
 
 namespace UI
 {
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Services;
+
     public class TempSelector : ITechPreparingSelector<IdOrPath>
     {
         public IList<IdOrPath> Select()

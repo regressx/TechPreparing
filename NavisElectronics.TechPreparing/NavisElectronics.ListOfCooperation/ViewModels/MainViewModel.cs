@@ -1,16 +1,25 @@
-﻿using System;
-using NavisElectronics.ListOfCooperation.Logic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MainViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Модель для обслуживания запросов формы MainView
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.ViewModels
+namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Entities;
-    using IO;
-    using Services;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Helpers;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Services;
 
     /// <summary>
     /// Модель для обслуживания запросов формы MainView
@@ -202,7 +211,7 @@ namespace NavisElectronics.ListOfCooperation.ViewModels
 
         public async Task<DataSet> GetDataSetAsync(long orderVersionId)
         {
-            return await _reader.GetDatasetAsync(orderVersionId, Helpers.ConstHelper.BinaryDataOfOrder);
+            return await _reader.GetDatasetAsync(orderVersionId, ConstHelper.BinaryDataOfOrder);
         }
 
         public async Task<ICollection<Agent>> GetAllAgentsAsync()

@@ -12,9 +12,12 @@ namespace NavisElectronics.IPS1C.IntegratorService
     using Exceptions;
     using Intermech.Interfaces;
     using ListOfCooperation.Entities;
-    using ListOfCooperation.Enums;
-    using ListOfCooperation.IO;
-    using ListOfCooperation.Logic;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.Helpers;
+    using NavisElectronics.TechPreparation.Services;
+
     using Changes = Logic.Changes;
 
 
@@ -573,7 +576,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
             IntermechTreeElement techDataOrderElement = null;
 
             IntermechReader reader = new IntermechReader();
-            DataSet myDataset = reader.GetDataset(versionId, ListOfCooperation.Helpers.ConstHelper.BinaryDataOfOrder);
+            DataSet myDataset = reader.GetDataset(versionId, ConstHelper.BinaryDataOfOrder);
             TreeBuilderService treeBuilderService = new TreeBuilderService();
             techDataOrderElement = treeBuilderService.Build(myDataset, CancellationToken.None);
             ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();

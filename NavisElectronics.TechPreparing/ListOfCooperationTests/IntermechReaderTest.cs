@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.IO;
 
 namespace ListOfCooperationTests
 {

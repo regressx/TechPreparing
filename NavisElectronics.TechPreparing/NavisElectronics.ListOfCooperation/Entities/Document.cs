@@ -1,5 +1,16 @@
-﻿namespace NavisElectronics.ListOfCooperation.Entities
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Document.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Сущность для документа
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Entities
 {
+    using NavisElectronics.TechPreparation.Views;
+
     /// <summary>
     /// Сущность для документа
     /// </summary>

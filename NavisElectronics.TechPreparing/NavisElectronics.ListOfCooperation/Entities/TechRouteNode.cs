@@ -1,7 +1,18 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TechRouteNode.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Узел тех. процесса
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Entities
+
+
+namespace NavisElectronics.TechPreparation.Entities 
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Узел тех. процесса
     /// </summary>

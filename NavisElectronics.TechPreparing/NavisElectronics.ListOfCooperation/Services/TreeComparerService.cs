@@ -1,10 +1,11 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System;
     using System.Collections.Generic;
-    using Entities;
-    using Enums;
-    using Exceptions;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.Exceptions;
 
     public class TreeComparerService
     {

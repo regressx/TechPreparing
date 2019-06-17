@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Entities
+﻿namespace NavisElectronics.TechPreparation.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,9 @@
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
-    using Enums;
-    using Exceptions;
-    using Substitutes;
+    using NavisElectronics.Substitutes;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.Exceptions;
 
     /// <summary>
     /// Узел дерева из IPS
@@ -254,9 +254,9 @@
         /// <summary>
         /// Ищет коллекцию узлов по id
         /// </summary>
-        /// <param name="id">Id версии объекта</param>
+        /// <param name="objectId">Id объекта</param>
         /// <returns>Возвращает коллекцию узлов, входящих во всё дерево</returns>
-        public IList<IntermechTreeElement> Find(long id)
+        public IList<IntermechTreeElement> Find(long objectId)
         {
             IList<IntermechTreeElement> elementCollection = new List<IntermechTreeElement>();
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
@@ -264,7 +264,7 @@
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
-                if (elementFromQueue.Id == id)
+                if (elementFromQueue.ObjectId == objectId)
                 {
                     elementCollection.Add(elementFromQueue);
                 }
@@ -283,16 +283,16 @@
         /// <summary>
         /// Ищет в ширину первый попавшийся элемент с указанным Id
         /// </summary>
-        /// <param name="id">Идентификатор версии объекта</param>
+        /// <param name="objectId">Идентификатор объекта</param>
         /// <returns>Первый попавшийся узел</returns>
-        public IntermechTreeElement FindFirst(long id)
+        public IntermechTreeElement FindFirst(long objectId)
         {
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
             queue.Enqueue(this);
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
-                if (elementFromQueue.Id == id)
+                if (elementFromQueue.ObjectId == objectId)
                 {
                     return elementFromQueue;
                 }
@@ -486,7 +486,12 @@
             return string.Format("{0} {1} {2}", Name, Designation, Amount);
         }
 
-
+        /// <summary>
+        /// Получает deep Copy этого объекта
+        /// </summary>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
         public object Clone()
         {
             using (MemoryStream ms = new MemoryStream())

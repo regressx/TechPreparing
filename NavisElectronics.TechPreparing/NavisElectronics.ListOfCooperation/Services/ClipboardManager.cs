@@ -1,9 +1,9 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
-    using Entities;
-    using Logic;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Класс, повторяющий работу буфера обмена, но только в пределах нашего приложения

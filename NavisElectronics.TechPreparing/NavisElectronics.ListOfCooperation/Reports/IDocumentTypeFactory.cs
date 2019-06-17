@@ -1,9 +1,9 @@
-﻿using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.Reports
+﻿namespace NavisElectronics.TechPreparation.Reports
 {
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     public interface IDocumentTypeFactory
     {
         void Create(Node mainElement, string name, Agent currentManufacturer);

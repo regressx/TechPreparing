@@ -1,10 +1,20 @@
-﻿using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.ViewModels;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ReportService.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the ReportService type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Reports
+namespace NavisElectronics.TechPreparation.Reports
 {
     using System;
-    using Entities;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
 
     public class ReportService : IReportService
     {

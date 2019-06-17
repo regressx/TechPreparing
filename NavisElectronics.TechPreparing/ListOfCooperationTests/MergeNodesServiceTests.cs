@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Services;
 
 namespace ListOfCooperationTests
 {
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Services;
+
     [TestClass]
     public class MergeNodesServiceTests
     {

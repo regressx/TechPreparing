@@ -1,8 +1,10 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
-    using Entities;
-    using Enums;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
 
     /// <summary>
     /// Класс для извлечения представленного типа объекта из IPS из дерева

@@ -1,7 +1,7 @@
-﻿using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public class ErrorElement
     {
         private readonly string _message;

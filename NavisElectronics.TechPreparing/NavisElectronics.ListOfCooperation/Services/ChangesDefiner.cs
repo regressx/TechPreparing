@@ -1,7 +1,8 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
-    using Entities;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Класс накладывает новые данные на старые

@@ -1,12 +1,22 @@
-﻿using System;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Reports.CompleteList;
-using NavisElectronics.ListOfCooperation.Reports.CooperationList;
-using NavisElectronics.ListOfCooperation.ViewModels;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ReportIntermech.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Класс для получения отчета в IPS
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Reports
+namespace NavisElectronics.TechPreparation.Reports
 {
-    using Entities;
+    using System;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Reports.CompleteList;
+    using NavisElectronics.TechPreparation.Reports.CooperationList;
 
     /// <summary>
     /// Класс для получения отчета в IPS

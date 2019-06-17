@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows.Forms;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     public partial class SelectManufacturerView : Form
     {

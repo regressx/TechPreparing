@@ -1,20 +1,25 @@
-﻿using System.Reflection;
-using Intermech.Interfaces;
-using NavisArchiveWork.Model;
-using NavisElectronics.ListOfCooperation.IO;
-using NavisElectronics.ListOfCooperation.Presenters;
-using NavisElectronics.ListOfCooperation.Reports;
-using Ninject;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CooperationListPlugin.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Плагин для работы с ведомостью кооперации
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation
+namespace NavisElectronics.TechPreparation
 {
     using System;
+
     using Intermech;
+    using Intermech.Interfaces;
     using Intermech.Interfaces.Plugins;
     using Intermech.Navigator.ContextMenu;
     using Intermech.Navigator.Interfaces;
-    using Logic;
-    using Services;
+    using NavisElectronics.TechPreparation.Presenters;
+    using NavisElectronics.TechPreparation.Services;
+
+    using Ninject;
 
     /// <summary>
     /// Плагин для работы с ведомостью кооперации

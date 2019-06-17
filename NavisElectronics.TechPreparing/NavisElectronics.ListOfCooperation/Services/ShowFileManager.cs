@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Intermech.Commands;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.IO;
-
-namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
+    using Intermech.Commands;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
+
     /// <summary>
     /// Класс-менеджер для просмотра прикрепленных файлов к объекту
     /// </summary>

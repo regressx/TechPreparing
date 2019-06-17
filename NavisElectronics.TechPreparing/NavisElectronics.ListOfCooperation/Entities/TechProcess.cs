@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Entities
+namespace NavisElectronics.TechPreparation.Entities
 {
     using System;
 

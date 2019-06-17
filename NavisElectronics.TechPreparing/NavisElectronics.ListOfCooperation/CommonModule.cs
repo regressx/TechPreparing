@@ -1,13 +1,25 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CommonModule.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Модуль для настройки контейнера
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation
 {
-    using IO;
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
+
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.Views;
+
     using Ninject.Modules;
-    using Services;
-    using ViewInterfaces;
-    using ViewModels;
-    using Views;
 
     /// <summary>
     /// Модуль для настройки контейнера
@@ -22,10 +34,11 @@
             Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
-            Bind<Search>().ToSelf();
-            Bind<OpenFolderService>().ToSelf();
-            Bind<DataSetGatheringService>().ToSelf();
+            Bind<Search>().ToSelf().InSingletonScope();
+            Bind<OpenFolderService>().ToSelf().InSingletonScope();
+            Bind<DataSetGatheringService>().ToSelf().InSingletonScope();
             Bind<MainViewModel>().ToSelf();
+            Bind<TreeNodeDialogViewModel>().ToSelf();
             Bind<ITreeNodeDialogView>().To<TreeNodeDialogView>();
             Bind<IMainView>().To<MainView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();

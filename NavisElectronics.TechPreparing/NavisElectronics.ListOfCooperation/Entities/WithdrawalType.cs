@@ -1,4 +1,13 @@
-﻿namespace NavisElectronics.ListOfCooperation.Entities
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="WithdrawalType.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Класс, представляющий тип тех. отхода
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Entities
 {
     using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Enums
+﻿namespace NavisElectronics.TechPreparation.Enums
 {
     /// <summary>
     /// Типы данных из IPS

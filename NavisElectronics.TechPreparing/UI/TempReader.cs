@@ -10,7 +10,8 @@
     using System.Windows.Forms.Design;
 
     using NavisElectronics.ListOfCooperation.Entities;
-    using NavisElectronics.ListOfCooperation.IO;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
 
     public class TempReader:IDataRepository
     {

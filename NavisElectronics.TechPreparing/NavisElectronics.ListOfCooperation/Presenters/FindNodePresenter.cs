@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using NavisElectronics.ListOfCooperation.ViewModels;
-using NavisElectronics.ListOfCooperation.Views;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FindNodePresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the FindNodePresenter type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Presenters
+namespace NavisElectronics.TechPreparation.Presenters
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public class FindNodePresenter
     {
         public event EventHandler<TreeNodeAdv> SearchInitClick;

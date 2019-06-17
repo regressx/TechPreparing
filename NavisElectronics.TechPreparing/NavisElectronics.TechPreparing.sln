@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Substitutes.Tests", "Substi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.IPS1C.IntegratorService", "NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj", "{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.ListOfCooperation", "NavisElectronics.ListOfCooperation\NavisElectronics.ListOfCooperation.csproj", "{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.TechPreparation", "NavisElectronics.ListOfCooperation\NavisElectronics.TechPreparation.csproj", "{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListOfCooperationTests", "ListOfCooperationTests\ListOfCooperationTests.csproj", "{AC8D31B2-AD27-454D-94B2-E21167B04680}"
 EndProject

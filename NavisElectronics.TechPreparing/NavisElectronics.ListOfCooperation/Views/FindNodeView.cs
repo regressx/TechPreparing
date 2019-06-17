@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-
-namespace NavisElectronics.ListOfCooperation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+
     public partial class FindNodeView : Form, IFindNodeView
     {
         public FindNodeView()

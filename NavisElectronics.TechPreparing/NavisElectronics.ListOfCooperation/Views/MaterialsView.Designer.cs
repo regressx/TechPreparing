@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class MaterialsView
     {
@@ -76,7 +76,7 @@
             // SaveButton
             // 
             this.SaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SaveButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.if_stock_save_20659;
+            this.SaveButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_save_20659;
             this.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(23, 22);
@@ -92,7 +92,7 @@
             // 
             this.checkButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.checkButton.Enabled = false;
-            this.checkButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.if_stock_check_filled_21448;
+            this.checkButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_check_filled_21448;
             this.checkButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.checkButton.Name = "checkButton";
             this.checkButton.Size = new System.Drawing.Size(23, 22);

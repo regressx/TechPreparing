@@ -4,6 +4,8 @@ using NavisElectronics.ListOfCooperation.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService.Services
 {
+    using NavisElectronics.TechPreparation.Entities;
+
     public class ProductTreeNodeMapper
     {
         public ProductTreeNode Map(DataBaseProduct product)

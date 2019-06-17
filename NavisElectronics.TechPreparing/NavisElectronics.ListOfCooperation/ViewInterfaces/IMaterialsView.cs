@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.EventArguments;
-
-namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
+    using System;
+    using System.Collections.Generic;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+
     public interface IMaterialsView
     {
         event EventHandler Load;

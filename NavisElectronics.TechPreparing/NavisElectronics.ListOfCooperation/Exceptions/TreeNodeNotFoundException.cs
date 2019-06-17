@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Exceptions
+﻿namespace NavisElectronics.TechPreparation.Exceptions
 {
     using System;
 

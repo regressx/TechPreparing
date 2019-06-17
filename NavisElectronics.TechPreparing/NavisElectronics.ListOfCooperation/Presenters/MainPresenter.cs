@@ -1,4 +1,13 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MainPresenter.cs" company="NavisElectronics">
+// ---
+// </copyright>
+// <summary>
+//   Посредник между главной формой и ее моделью
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
@@ -6,14 +15,14 @@
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
-    using Entities;
-    using Enums;
-    using EventArguments;
-    using Exceptions;
-    using Services;
-    using ViewInterfaces;
-    using ViewModels;
-    using Views;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.Exceptions;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.Views;
 
     /// <summary>
     /// Посредник между главной формой и ее моделью
@@ -166,9 +175,8 @@
             WithdrawalType year = await _model.GetWithdrawalTypesAsync();
 
             IntermechObjectExtractor extractor = new IntermechObjectExtractor();
-            ICollection<ExtractedObject> collection = extractor.ExctractObjects(_mainView.GetMainTreeElement().Tag as IntermechTreeElement,
-                IntermechObjectTypes.Other);
-            WithdrawalTypeView view = new WithdrawalTypeView(year, _mainView.GetMainTreeElement().Tag as IntermechTreeElement,collection);
+            ICollection<ExtractedObject> collection = extractor.ExctractObjects(_mainView.GetMainTreeElement().Tag as IntermechTreeElement, IntermechObjectTypes.Other);
+            WithdrawalTypeView view = new WithdrawalTypeView(year, _mainView.GetMainTreeElement().Tag as IntermechTreeElement, collection);
             view.Show();
         }
 
@@ -195,9 +203,17 @@
             // строим дерево из полученной тех. подготовки
             IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
 
-            IPresenter<IntermechTreeElement, IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, IntermechTreeElement, IntermechTreeElement>();
-            treeNodeDialogPresenter.Run(oldPreparation, _elementToCopy);
-            MessageBox.Show(_elementToCopy.Name);
+            Parameter<IntermechTreeElement> myParameter = new Parameter<IntermechTreeElement>();
+            myParameter.AddParameter(oldPreparation);
+            _elementToCopy = new IntermechTreeElement();
+            myParameter.AddParameter(_elementToCopy);
+            IPresenter<Parameter<IntermechTreeElement>> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, Parameter<IntermechTreeElement>>();
+            treeNodeDialogPresenter.Run(myParameter);
+            _elementToCopy = myParameter.GetParameter(1);
+
+            ICollection<IntermechTreeElement> elementsToSetTechPreparation = _globalTreeElement.Find(_elementToCopy.ObjectId);
+
+
         }
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
@@ -229,7 +245,6 @@
 
             IPresenter presenter = _presentationFactory.GetPresenter<TreeComparerPresenter>();
             presenter.Run();
-
 
         }
 

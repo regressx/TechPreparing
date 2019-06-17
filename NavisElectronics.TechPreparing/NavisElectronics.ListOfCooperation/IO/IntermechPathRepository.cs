@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using Intermech.Interfaces;
-using Intermech.Interfaces.Compositions;
-using Intermech.Kernel.Search;
-
-namespace NavisElectronics.ListOfCooperation.IO
+﻿namespace NavisElectronics.TechPreparation.IO
 {
+    using System.Collections.Generic;
+    using System.Data;
+
+    using Intermech.Interfaces;
+    using Intermech.Interfaces.Compositions;
+    using Intermech.Kernel.Search;
+
     /// <summary>
     /// Класс умеет получать сетевые пути из IMBase
     /// </summary>

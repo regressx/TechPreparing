@@ -70,9 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NavisElectronics.ListOfCooperation\NavisElectronics.ListOfCooperation.csproj">
+    <ProjectReference Include="..\NavisElectronics.ListOfCooperation\NavisElectronics.TechPreparation.csproj">
       <Project>{ad2aa800-fa78-40ed-aa16-7c0bcc6f6a86}</Project>
-      <Name>NavisElectronics.ListOfCooperation</Name>
+      <Name>NavisElectronics.TechPreparation</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

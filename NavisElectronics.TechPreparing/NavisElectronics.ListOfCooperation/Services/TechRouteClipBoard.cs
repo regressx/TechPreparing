@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     public class TechRouteClipBoard
     {

@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Entities
+﻿namespace NavisElectronics.TechPreparation.Entities
 {
     public class IdOrPath
     {

@@ -1,11 +1,12 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-
-namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
+
     using Aga.Controls.Tree;
-    using EventArguments;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Интерфейс формы работы с кооперацией

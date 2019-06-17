@@ -1,12 +1,23 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TechRoutesMapModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the TechRoutesMapModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
     using System.Threading.Tasks;
-    using Entities;
-    using IO;
-    using Services;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public class TechRoutesMapModel
     {

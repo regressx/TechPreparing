@@ -1,15 +1,14 @@
-﻿using System.Drawing;
-using System.Threading;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.Threading;
     using System.Windows.Forms;
-    using Entities;
-    using EventArguments;
-    using Presenters;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
 
     public partial class MainView : Form, IMainView
     {

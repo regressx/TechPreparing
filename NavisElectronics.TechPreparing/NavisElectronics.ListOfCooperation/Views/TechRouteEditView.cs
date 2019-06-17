@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using Intermech.Techcard;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.EventArguments;
-using NavisElectronics.ListOfCooperation.Presenters;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Forms;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public partial class TechRouteEditView : Form, ITechRouteView
     {
         private readonly string _data;

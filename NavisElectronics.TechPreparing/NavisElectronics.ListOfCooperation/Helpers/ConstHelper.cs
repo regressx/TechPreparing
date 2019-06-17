@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Helpers
+﻿namespace NavisElectronics.TechPreparation.Helpers
 {
     /// <summary>
     /// Класс, предоставляющий константы

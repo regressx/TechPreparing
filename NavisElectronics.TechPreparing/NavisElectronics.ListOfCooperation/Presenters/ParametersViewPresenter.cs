@@ -1,8 +1,9 @@
-﻿using System.Windows.Forms;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-
-namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
+    using System.Windows.Forms;
+
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+
     public class ParametersViewPresenter
     {
         private IParametersView _view;

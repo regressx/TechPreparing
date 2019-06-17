@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+
     public partial class MultiplyParametersView : Form, IMultiplyParametersView
     {
         public MultiplyParametersView()

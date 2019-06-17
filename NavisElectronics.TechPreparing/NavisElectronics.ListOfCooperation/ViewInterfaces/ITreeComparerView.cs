@@ -1,11 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
+    using System;
+    using System.Windows.Forms;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public interface ITreeComparerView
     {
         event EventHandler Load;

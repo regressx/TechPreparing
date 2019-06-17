@@ -1,8 +1,21 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TechRouteManager.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The tech route manager.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Services
+namespace NavisElectronics.TechPreparation.Services
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.TechPreparation.Entities;
+
+    /// <summary>
+    /// The tech route manager.
+    /// </summary>
     public class TechRouteManager
     {
         private IList<TechRouteNode> _techRoutes;

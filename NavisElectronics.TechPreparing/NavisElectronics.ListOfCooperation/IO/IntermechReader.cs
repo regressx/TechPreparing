@@ -1,22 +1,34 @@
-﻿using System.Collections;
-using System.Net.Sockets;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IntermechReader.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Реализует чтение составов отдельных элементов, целого заказа
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.IO
+namespace NavisElectronics.TechPreparation.IO
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
-    using Entities;
-    using Enums;
-    using Exceptions;
+
     using ICSharpCode.SharpZipLib.Zip.Compression;
+
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.Exceptions;
+    using NavisElectronics.TechPreparation.IO;
+
     using Substitutes;
 
     /// <summary>

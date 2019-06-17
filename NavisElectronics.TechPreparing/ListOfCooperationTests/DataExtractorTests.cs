@@ -1,10 +1,11 @@
-﻿using System;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NavisElectronics.ListOfCooperation.Logic;
-using NavisElectronics.ListOfCooperation.Services;
+
 
 namespace ListOfCooperationTests
 {
+    using NavisElectronics.TechPreparation.Services;
+
     [TestClass]
     public class DataExtractorTests
     {

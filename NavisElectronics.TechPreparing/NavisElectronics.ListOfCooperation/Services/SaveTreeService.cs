@@ -1,8 +1,7 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
-    using Entities;
-    using Enums;
-    using IO;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
 
     public class SaveTreeService
     {

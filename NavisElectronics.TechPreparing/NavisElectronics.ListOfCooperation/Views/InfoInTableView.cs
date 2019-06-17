@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
-using Intermech.Navigator.Controls;
-using NavisElectronics.ListOfCooperation.EventArguments;
-using TenTec.Windows.iGridLib;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows.Forms;
-    using Entities;
+
+    using Intermech.Navigator.Controls;
+
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+
+    using TenTec.Windows.iGridLib;
 
     public partial class InfoInTableView : Form, ITableView
     {

@@ -1,14 +1,15 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-namespace NavisElectronics.ListOfCooperation.Logic
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Entities;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     using Intermech.Interfaces;
-    using IO;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
 
     /// <summary>
     /// Сервис, позволяющий получать дерево из Dataset

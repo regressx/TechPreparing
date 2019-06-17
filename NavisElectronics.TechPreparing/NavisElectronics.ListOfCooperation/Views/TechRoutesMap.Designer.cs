@@ -1,6 +1,4 @@
-﻿using NavisElectronics.ListOfCooperation.EventArguments;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class TechRoutesMap
     {
@@ -103,7 +101,7 @@ namespace NavisElectronics.ListOfCooperation
             // SaveButton
             // 
             this.SaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SaveButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.if_stock_save_20659;
+            this.SaveButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_save_20659;
             this.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(23, 22);
@@ -143,7 +141,7 @@ namespace NavisElectronics.ListOfCooperation
             // ExpandAllButton
             // 
             this.ExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ExpandAllButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_flow_chart_16;
+            this.ExpandAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_flow_chart_16;
             this.ExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ExpandAllButton.Name = "ExpandAllButton";
             this.ExpandAllButton.Size = new System.Drawing.Size(23, 22);
@@ -153,7 +151,7 @@ namespace NavisElectronics.ListOfCooperation
             // CollapseAllButton
             // 
             this.CollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CollapseAllButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_simple_tree_16;
+            this.CollapseAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_simple_tree_16;
             this.CollapseAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CollapseAllButton.Name = "CollapseAllButton";
             this.CollapseAllButton.Size = new System.Drawing.Size(23, 22);
@@ -318,7 +316,7 @@ namespace NavisElectronics.ListOfCooperation
             this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createNewRouteButton,
             this.addIntoExistingRouteButton});
-            this.SetTechRouteMenuItem.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.RouteObject;
+            this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
             this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
             this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
             this.SetTechRouteMenuItem.Text = "Маршрут изготовления";

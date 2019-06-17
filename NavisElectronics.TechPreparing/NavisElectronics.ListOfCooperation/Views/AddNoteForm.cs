@@ -1,9 +1,8 @@
-﻿using NavisElectronics.ListOfCooperation.ViewInterfaces;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System.Windows.Forms;
-    using Presenters;
+
+    using NavisElectronics.TechPreparation.ViewInterfaces;
 
     /// <summary>
     /// Форма для добавления данных примечания

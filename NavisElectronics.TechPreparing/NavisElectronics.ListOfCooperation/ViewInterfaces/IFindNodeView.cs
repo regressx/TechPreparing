@@ -1,8 +1,9 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
 
     /// <summary>

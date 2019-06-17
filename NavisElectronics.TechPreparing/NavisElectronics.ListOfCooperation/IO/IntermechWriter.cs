@@ -1,12 +1,14 @@
-﻿namespace NavisElectronics.ListOfCooperation.IO
+﻿namespace NavisElectronics.TechPreparation.IO
 {
     using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
-    using Enums;
+
     using Intermech;
     using Intermech.Interfaces;
     using Intermech.Interfaces.BlobStream;
+
+    using NavisElectronics.TechPreparation.Helpers;
 
     /// <summary>
     /// Класс для записи технологического атрибута в базу IPS
@@ -54,14 +56,14 @@
                         orderId = -orderId;
                     }
                     IDBObject orderObject = keeper.Session.GetObject(orderId);
-                    IDBAttribute binaryAttribute = orderObject.GetAttributeByID(Helpers.ConstHelper.ShortNameAttribute);
+                    IDBAttribute binaryAttribute = orderObject.GetAttributeByID(ConstHelper.ShortNameAttribute);
 
                     if (binaryAttribute != null)
                     {
                         binaryAttribute.Delete(0L);
                     }
 
-                    IDBAttribute newBinaryAttribute = orderObject.Attributes.AddAttribute(Helpers.ConstHelper.ShortNameAttribute, false);
+                    IDBAttribute newBinaryAttribute = orderObject.Attributes.AddAttribute(ConstHelper.ShortNameAttribute, false);
 
                     using (BlobWriterStream bws =
                         new BlobWriterStream(newBinaryAttribute, bytes.Length, info, keeper.Session))

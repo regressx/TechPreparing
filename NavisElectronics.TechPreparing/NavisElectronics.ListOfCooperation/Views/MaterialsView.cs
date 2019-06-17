@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.EventArguments;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using TenTec.Windows.iGridLib;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Forms;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+
+    using TenTec.Windows.iGridLib;
+
     public partial class MaterialsView : Form, IMaterialsView
     {
         public MaterialsView()

@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace NavisElectronics.ListOfCooperation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System.Windows.Forms;
+
     public partial class ProcessReportView : Form
     {
         public ProcessReportView()

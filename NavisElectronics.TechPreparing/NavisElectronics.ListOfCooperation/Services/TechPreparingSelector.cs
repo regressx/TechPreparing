@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using Intermech.Interfaces.Client;
-using Intermech.Navigator;
-
-namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
+    using System.Collections.Generic;
+
+    using Intermech.Interfaces.Client;
+    using Intermech.Navigator;
+
     /// <summary>
     /// Реализация интерфейса выбора созданной тех. подготовки
     /// </summary>

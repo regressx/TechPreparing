@@ -1,8 +1,19 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports.CooperationList
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CooperationListFactoryInDepth.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Этот класс позволяет составить закупочную ведомость, так сказать, в глубину. Все элементы и все входящие уникальны. Ни один элемент не будет расбросан по отчету
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System.Collections.Generic;
-    using Entities;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Этот класс позволяет составить закупочную ведомость, так сказать, в глубину. Все элементы и все входящие уникальны. Ни один элемент не будет расбросан по отчету

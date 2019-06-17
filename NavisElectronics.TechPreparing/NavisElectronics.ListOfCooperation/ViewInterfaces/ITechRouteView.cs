@@ -1,12 +1,13 @@
-﻿using Aga.Controls.Tree;
-
-namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Entities;
-    using EventArguments;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
 
     /// <summary>
     /// Интерфейс для окна редактирования тех. маршрутов

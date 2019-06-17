@@ -1,8 +1,10 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Entities;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Модель для представления InfoInTable

@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class AddNoteForm
     {

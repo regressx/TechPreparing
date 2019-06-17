@@ -1,6 +1,6 @@
-﻿namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
-    using ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public class SaveClickEventArgs
     {

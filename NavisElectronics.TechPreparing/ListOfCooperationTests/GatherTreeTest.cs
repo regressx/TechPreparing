@@ -2,11 +2,12 @@
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Logic;
-using NavisElectronics.ListOfCooperation.Services;
 
 namespace ListOfCooperationTests
 {
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Services;
+
     [TestClass]
     public class GatherTreeFromDatasetTests
     {

@@ -1,8 +1,9 @@
-﻿namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
     using System;
     using System.Collections.Generic;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Аргумент для события копирования узлов в буфер

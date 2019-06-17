@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class TechRouteEditView
     {
@@ -170,7 +170,7 @@
             // 
             // buttonRemoveNode
             // 
-            this.buttonRemoveNode.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.action_Cancel_16xLG;
+            this.buttonRemoveNode.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
             this.buttonRemoveNode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonRemoveNode.Location = new System.Drawing.Point(3, 72);
             this.buttonRemoveNode.Name = "buttonRemoveNode";
@@ -182,7 +182,7 @@
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.arrow_Up_16xLG;
+            this.button1.Image = global::NavisElectronics.TechPreparation.Properties.Resources.arrow_Up_16xLG;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
@@ -193,7 +193,7 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.arrow_Down_16xLG;
+            this.button2.Image = global::NavisElectronics.TechPreparation.Properties.Resources.arrow_Down_16xLG;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(3, 38);
             this.button2.Name = "button2";

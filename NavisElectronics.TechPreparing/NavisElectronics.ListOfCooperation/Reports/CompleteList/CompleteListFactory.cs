@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using Aga.Controls.Tree;
-using Intermech.Document.Client;
-using Intermech.Document.Model;
-using Intermech.Interfaces;
-using Intermech.Interfaces.Compositions;
-using Intermech.Interfaces.Document;
-using Intermech.Kernel.Search;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Enums;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.Reports.CompleteList
+﻿namespace NavisElectronics.TechPreparation.Reports.CompleteList
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+
+    using Aga.Controls.Tree;
+
+    using Intermech.Document.Client;
+    using Intermech.Document.Model;
+    using Intermech.Interfaces;
+    using Intermech.Interfaces.Compositions;
+    using Intermech.Interfaces.Document;
+    using Intermech.Kernel.Search;
+
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     /// <summary>
     /// Класс для создания комплектовочной карты
     /// </summary>

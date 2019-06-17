@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using NavisArchiveWork.Model;
-using NavisElectronics.ListOfCooperation.Services;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using IO;
-    using Logic;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Фасад для основной логики для обслуживания команд от окна TreeComparerView

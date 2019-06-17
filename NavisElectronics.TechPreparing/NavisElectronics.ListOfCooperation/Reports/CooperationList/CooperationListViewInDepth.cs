@@ -1,14 +1,18 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports.CooperationList
+﻿namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
-    using System.Collections;
     using System.Collections.Generic;
+
     using Aga.Controls.Tree;
-    using Entities;
+
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Класс для создания "бумажного" документа Ведомость кооперации

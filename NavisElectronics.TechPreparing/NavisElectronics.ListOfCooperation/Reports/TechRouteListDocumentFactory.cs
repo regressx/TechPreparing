@@ -1,16 +1,18 @@
-﻿using System.Drawing;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.Reports
+﻿namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
-    using Entities;
+    using System.Drawing;
+
+    using Aga.Controls.Tree;
+
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
-    using Services;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Класс создает представление документа

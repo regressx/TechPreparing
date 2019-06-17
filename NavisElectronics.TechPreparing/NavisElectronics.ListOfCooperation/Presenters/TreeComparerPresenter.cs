@@ -1,14 +1,28 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TreeComparerPresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the TreeComparerPresenter type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using Enums;
-    using ViewInterfaces;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using NavisElectronics.TechPreparation.Views;
 
     public class TreeComparerPresenter : IPresenter
     {

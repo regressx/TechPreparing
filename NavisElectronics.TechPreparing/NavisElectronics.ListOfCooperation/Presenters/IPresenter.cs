@@ -1,6 +1,13 @@
-﻿using System.Windows.Forms;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IPresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Интерфейс представителя
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Presenters
+namespace NavisElectronics.TechPreparation.Presenters
 {
     /// <summary>
     /// Интерфейс представителя

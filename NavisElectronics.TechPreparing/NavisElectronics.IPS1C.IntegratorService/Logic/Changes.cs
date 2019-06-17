@@ -6,6 +6,8 @@ using NavisElectronics.ListOfCooperation.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService.Logic
 {
+    using NavisElectronics.TechPreparation.Entities;
+
     public class Changes
     {
         /// <summary>

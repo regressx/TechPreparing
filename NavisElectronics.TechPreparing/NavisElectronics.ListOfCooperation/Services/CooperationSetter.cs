@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-    using Entities;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Класс, умеющий проставить требуемым узлам кооперацию

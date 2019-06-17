@@ -1,10 +1,12 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;
+
     using Aga.Controls.Tree;
-    using EventArguments;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public interface ITechRouteMap
     {

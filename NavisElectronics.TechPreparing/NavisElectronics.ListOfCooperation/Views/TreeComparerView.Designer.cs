@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class TreeComparerView
     {
@@ -423,7 +423,7 @@
             // uploadChangesButton
             // 
             this.uploadChangesButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.uploadChangesButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_ok_16;
+            this.uploadChangesButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_ok_16;
             this.uploadChangesButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.uploadChangesButton.Name = "uploadChangesButton";
             this.uploadChangesButton.Size = new System.Drawing.Size(23, 22);
@@ -433,7 +433,7 @@
             // downloadTreeButton
             // 
             this.downloadTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.downloadTreeButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.arrow_Down_16xLG;
+            this.downloadTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.arrow_Down_16xLG;
             this.downloadTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.downloadTreeButton.Name = "downloadTreeButton";
             this.downloadTreeButton.Size = new System.Drawing.Size(23, 22);
@@ -443,7 +443,7 @@
             // compareTreeButton
             // 
             this.compareTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.compareTreeButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_forest_16;
+            this.compareTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_forest_16;
             this.compareTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.compareTreeButton.Name = "compareTreeButton";
             this.compareTreeButton.Size = new System.Drawing.Size(23, 22);

@@ -1,20 +1,26 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using EventArguments;
+
     using Intermech.Interfaces;
     using Intermech.Interfaces.Client;
     using Intermech.Navigator;
-    using IO;
-    using Reports;
-    using Services;
-    using ViewInterfaces;
-    using ViewModels;
-    using Views;
+
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Reports;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using NavisElectronics.TechPreparation.Views;
 
     /// <summary>
     /// Класс-посредник между логикой и представлением для ведомости кооперации

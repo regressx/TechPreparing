@@ -1,23 +1,29 @@
-﻿using System.Drawing;
-using System.IO;
-using System.Text;
-using System.Threading;
-using Aga.Controls.Tree;
-using Intermech.Collections;
-using Intermech.Interfaces.Client;
-using NavisArchiveWork.Data;
-using NavisArchiveWork.Model;
-using NavisElectronics.ListOfCooperation.EventArguments;
-using NavisElectronics.ListOfCooperation.ViewInterfaces;
-using NavisElectronics.ListOfCooperation.ViewModels;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CooperationView.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the CooperationView type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation
+namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Drawing;
+    using System.Threading;
     using System.Windows.Forms;
-    using Entities;
+
+    using Aga.Controls.Tree;
+
+    using NavisArchiveWork.Data;
+    using NavisArchiveWork.Model;
+
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public partial class CooperationView : Form, ICooperationView
     {

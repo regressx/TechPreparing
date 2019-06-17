@@ -1,8 +1,9 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
     using System.Text;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public class MapTreeOnListService
     {

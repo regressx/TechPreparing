@@ -1,12 +1,23 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TechRoutePresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the TechRoutePresenter type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Presenters
 {
     using System.Collections.Generic;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using EventArguments;
-    using ViewInterfaces;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
 
     public class TechRoutePresenter
     {

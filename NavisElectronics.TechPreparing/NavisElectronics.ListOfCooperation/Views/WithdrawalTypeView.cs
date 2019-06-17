@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-using TenTec.Windows.iGridLib;
-
-namespace NavisElectronics.ListOfCooperation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Forms;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+
     /// <summary>
     /// Представление типов тех. отхода
     /// </summary>

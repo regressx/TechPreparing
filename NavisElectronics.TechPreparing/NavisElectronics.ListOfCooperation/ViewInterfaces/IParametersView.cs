@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System.Windows.Forms;
 

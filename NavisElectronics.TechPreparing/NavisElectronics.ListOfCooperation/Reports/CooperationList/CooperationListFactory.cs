@@ -1,9 +1,12 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports.CooperationList
+﻿namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System;
     using System.Collections.Generic;
-    using Entities;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// The cooperation list factory.

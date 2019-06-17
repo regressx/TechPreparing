@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System.Collections.Generic;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public class TechRouteModel
     {
 

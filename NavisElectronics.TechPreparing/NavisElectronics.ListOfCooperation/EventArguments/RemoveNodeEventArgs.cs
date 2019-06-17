@@ -1,7 +1,18 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RemoveNodeEventArgs.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the RemoveNodeEventArgs type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.EventArguments
+
+
+namespace NavisElectronics.TechPreparation.EventArguments
 {
+    using System;
+
     public class RemoveNodeEventArgs:EventArgs
     {
         private int indexToRemove;

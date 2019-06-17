@@ -1,11 +1,25 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="InfoInTablePresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Представитель для
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using Entities;
-    using EventArguments;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.Views;
 
     /// <summary>
     /// Представитель для 

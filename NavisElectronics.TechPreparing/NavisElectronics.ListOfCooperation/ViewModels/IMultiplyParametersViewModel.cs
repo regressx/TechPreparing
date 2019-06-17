@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     /// <summary>
     /// Моделька для окна параметров
     /// </summary>

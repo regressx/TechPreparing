@@ -1,6 +1,4 @@
-﻿using NavisElectronics.ListOfCooperation.Reports;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
@@ -8,12 +6,17 @@ namespace NavisElectronics.ListOfCooperation
     using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using EventArguments;
+
     using Intermech.Interfaces.AutoSelection;
     using Intermech.Interfaces.Client;
-    using ViewInterfaces;
-    using ViewModels;
+
+    using NavisElectronics.ListOfCooperation.Reports;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.Reports;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public partial class TechRoutesMap : Form, ITechRouteMap
     {

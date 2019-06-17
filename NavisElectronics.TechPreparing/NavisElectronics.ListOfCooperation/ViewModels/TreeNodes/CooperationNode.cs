@@ -1,12 +1,13 @@
-﻿using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     /// <summary>
     /// Узел дерева для кооперации
     /// </summary>
-    public class CooperationNode:Node
+    public class CooperationNode : Node
     {
         /// <summary>
         /// Идентификатор версии объекта

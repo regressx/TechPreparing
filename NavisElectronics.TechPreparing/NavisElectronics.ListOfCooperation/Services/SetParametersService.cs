@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Intermech.Interfaces;
-using Intermech.Interfaces.Client;
-using Intermech.Navigator;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     /// <summary>
     /// Сервис простановки параметров
     /// </summary>

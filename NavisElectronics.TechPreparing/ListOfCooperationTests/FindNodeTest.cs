@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Exceptions;
 
 namespace ListOfCooperationTests
 {
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Exceptions;
+
     [TestClass]
     public class FindNodeTest
     {

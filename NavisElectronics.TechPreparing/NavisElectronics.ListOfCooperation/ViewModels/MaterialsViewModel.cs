@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Enums;
-using NavisElectronics.ListOfCooperation.IO;
-using NavisElectronics.ListOfCooperation.Services;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Services;
+
     public class MaterialsViewModel
     {
 

@@ -1,10 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Aga.Controls.Tree;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
+    using Aga.Controls.Tree;
+
     /// <summary>
     /// Наследник Node для компонента Aga.Controls.Tree. Наделяем его всякими свойствами для отображения, а затем строим с его помощью модель
     /// </summary>

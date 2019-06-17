@@ -1,7 +1,16 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ExtractedObject.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Сущность описывает извлекаемый из дерева объект
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Entities
+namespace NavisElectronics.TechPreparation.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Сущность описывает извлекаемый из дерева объект
     /// </summary>

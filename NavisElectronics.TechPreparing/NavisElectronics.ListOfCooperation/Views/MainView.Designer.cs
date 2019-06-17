@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class MainView
     {
@@ -167,7 +167,7 @@
             // refreshTreeButton
             // 
             this.refreshTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshTreeButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_repeat_16;
+            this.refreshTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_repeat_16;
             this.refreshTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.refreshTreeButton.Name = "refreshTreeButton";
             this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
@@ -182,7 +182,7 @@
             // LoadTechPreparationButton
             // 
             this.LoadTechPreparationButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.LoadTechPreparationButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_robot_16;
+            this.LoadTechPreparationButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_robot_16;
             this.LoadTechPreparationButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.LoadTechPreparationButton.Name = "LoadTechPreparationButton";
             this.LoadTechPreparationButton.Size = new System.Drawing.Size(23, 22);
@@ -197,7 +197,7 @@
             // GetDataNEButton
             // 
             this.GetDataNEButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.GetDataNEButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.if_stock_standard_filter_21344;
+            this.GetDataNEButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_standard_filter_21344;
             this.GetDataNEButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.GetDataNEButton.Name = "GetDataNEButton";
             this.GetDataNEButton.Size = new System.Drawing.Size(23, 22);
@@ -207,7 +207,7 @@
             // GetDataKBData
             // 
             this.GetDataKBData.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.GetDataKBData.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.if_stock_advanced_filter_21283;
+            this.GetDataKBData.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_advanced_filter_21283;
             this.GetDataKBData.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.GetDataKBData.Name = "GetDataKBData";
             this.GetDataKBData.Size = new System.Drawing.Size(23, 22);
@@ -217,7 +217,7 @@
             // TechRoutesEditButton
             // 
             this.TechRoutesEditButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TechRoutesEditButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.route_16;
+            this.TechRoutesEditButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.route_16;
             this.TechRoutesEditButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TechRoutesEditButton.Name = "TechRoutesEditButton";
             this.TechRoutesEditButton.Size = new System.Drawing.Size(23, 22);
@@ -227,7 +227,7 @@
             // MainMaterialsButton
             // 
             this.MainMaterialsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MainMaterialsButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.just_another_layers_16;
+            this.MainMaterialsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.just_another_layers_16;
             this.MainMaterialsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainMaterialsButton.Name = "MainMaterialsButton";
             this.MainMaterialsButton.Size = new System.Drawing.Size(23, 22);
@@ -237,7 +237,7 @@
             // standartsButton
             // 
             this.standartsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.standartsButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.iconfinder_Screw_bolts_3605318;
+            this.standartsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.iconfinder_Screw_bolts_3605318;
             this.standartsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.standartsButton.Name = "standartsButton";
             this.standartsButton.Size = new System.Drawing.Size(23, 22);
@@ -247,7 +247,7 @@
             // SetTechWithdrawalButton
             // 
             this.SetTechWithdrawalButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SetTechWithdrawalButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_full_trash_16;
+            this.SetTechWithdrawalButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_full_trash_16;
             this.SetTechWithdrawalButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SetTechWithdrawalButton.Name = "SetTechWithdrawalButton";
             this.SetTechWithdrawalButton.Size = new System.Drawing.Size(23, 22);
@@ -262,7 +262,7 @@
             // UpdateButton
             // 
             this.UpdateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.UpdateButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_download_16;
+            this.UpdateButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_download_16;
             this.UpdateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.UpdateButton.Name = "UpdateButton";
             this.UpdateButton.Size = new System.Drawing.Size(23, 22);
@@ -272,7 +272,7 @@
             // CheckReadyButton
             // 
             this.CheckReadyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CheckReadyButton.Image = global::NavisElectronics.ListOfCooperation.Properties.Resources.icons8_ok_16;
+            this.CheckReadyButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_ok_16;
             this.CheckReadyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CheckReadyButton.Name = "CheckReadyButton";
             this.CheckReadyButton.Size = new System.Drawing.Size(23, 22);

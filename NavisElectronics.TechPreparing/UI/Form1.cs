@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NavisArchiveWork.Data;
 using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Services;
 
 namespace UI
 {
     using System.Net.Configuration;
 
     using NavisElectronics.ListOfCooperation;
-    using NavisElectronics.ListOfCooperation.IO;
-    using NavisElectronics.ListOfCooperation.Presenters;
+    using NavisElectronics.TechPreparation;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Presenters;
+    using NavisElectronics.TechPreparation.Services;
 
     using Ninject;
 

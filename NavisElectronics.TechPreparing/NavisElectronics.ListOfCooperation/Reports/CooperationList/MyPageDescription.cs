@@ -1,8 +1,18 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MyPageDescription.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the MyPageDescription type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Reports
+namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+
     public class MyPageDescription<T> where T:class
     {
         private ICollection<T> _elements;

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
+    using System;
+    using System.Collections.Generic;
+
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     public class MultipleNodesSelectedEventArgs: EventArgs
     {
         private ICollection<CooperationNode> _nodes;

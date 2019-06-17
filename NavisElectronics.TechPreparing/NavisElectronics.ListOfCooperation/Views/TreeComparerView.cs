@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using Intermech.Interfaces;
-using Intermech.Interfaces.Compositions;
-using Intermech.Kernel.Search;
-using NavisElectronics.ListOfCooperation.Enums;
-using NavisElectronics.ListOfCooperation.ViewModels;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
+    using System.Collections.Generic;
+    using System.Drawing;
     using System.Windows.Forms;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using ViewInterfaces;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public partial class TreeComparerView : Form, ITreeComparerView
     {

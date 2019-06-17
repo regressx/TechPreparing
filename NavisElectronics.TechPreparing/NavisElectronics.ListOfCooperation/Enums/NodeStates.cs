@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Enums
+﻿namespace NavisElectronics.TechPreparation.Enums
 {
     using System;
 

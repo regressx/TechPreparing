@@ -10,7 +10,8 @@
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
-    using ListOfCooperation.Enums;
+
+    using NavisElectronics.TechPreparation.Enums;
 
     /// <summary>
     /// The service intermech reader.

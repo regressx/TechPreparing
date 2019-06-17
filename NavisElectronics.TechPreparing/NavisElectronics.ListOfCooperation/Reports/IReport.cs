@@ -1,7 +1,8 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports
+﻿namespace NavisElectronics.TechPreparation.Reports
 {
     using Aga.Controls.Tree;
-    using Entities;
+
+    using NavisElectronics.TechPreparation.Entities;
 
     /// <summary>
     /// Интерфейс для создания отчета

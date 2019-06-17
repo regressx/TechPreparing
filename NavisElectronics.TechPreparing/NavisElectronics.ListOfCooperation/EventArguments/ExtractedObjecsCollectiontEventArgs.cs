@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
+    using System;
+    using System.Collections.Generic;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+
     public class ExtractedObjectCollectionEventArgs:EventArgs
     {
         private ICollection<ExtractedObject> _exctractedObjectsCollection;

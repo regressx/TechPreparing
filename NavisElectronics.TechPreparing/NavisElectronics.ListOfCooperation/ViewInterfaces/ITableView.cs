@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.EventArguments;
-
-namespace NavisElectronics.ListOfCooperation
+﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.TechPreparation.EventArguments;
+
     /// <summary>
     /// Интерфейс представления для всех таблиц
     /// </summary>

@@ -1,15 +1,18 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
+
     using Aga.Controls.Tree;
-    using Entities;
-    using ViewInterfaces;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     /// <summary>
     /// Представитель окна загрузки уже созданной тех. подготовки из ранее выполненных заказов
     /// </summary>
-    public class TreeNodeDialogPresenter : BasePresenter<IntermechTreeElement, IntermechTreeElement>
+    public class TreeNodeDialogPresenter : BasePresenter<Parameter<IntermechTreeElement>>
     {
         /// <summary>
         /// Представление
@@ -21,13 +24,7 @@
         /// </summary>
         private readonly TreeNodeDialogViewModel _model;
 
-
-        /// <summary>
-        /// The _element to build.
-        /// </summary>
-        private IntermechTreeElement _elementToBuild;
-
-        private IntermechTreeElement _elementToCopy;
+        private Parameter<IntermechTreeElement> _parameter;
 
 
         /// <summary>
@@ -53,10 +50,9 @@
         /// <param name="parameter">
         /// Передаем дерево
         /// </param>
-        public override void Run(IntermechTreeElement parameter, IntermechTreeElement element)
+        public override void Run(Parameter<IntermechTreeElement> parameter)
         {
-            _elementToBuild = parameter;
-            _elementToCopy = element;
+            _parameter = parameter;
             _view.Show();
         }
 
@@ -72,7 +68,7 @@
         /// </param>
         private void _view_AcceptClick(object sender, IntermechTreeElement e)
         {
-            _elementToCopy = e;
+            _parameter.SetParameter(1, e);
             _view.Close();
         }
 
@@ -87,7 +83,7 @@
         /// </param>
         private void _treeNodeDialog_Load(object sender, EventArgs e)
         {
-            MyNode mainNode = _model.BuildTree(_elementToBuild);
+            MyNode mainNode = _model.BuildTree(_parameter.GetParameter(0));
             TreeModel model = new TreeModel();
             model.Nodes.Add(mainNode);
             _view.FillTree(model);

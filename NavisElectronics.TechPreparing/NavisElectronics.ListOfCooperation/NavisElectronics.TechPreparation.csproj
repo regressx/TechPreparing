@@ -7,8 +7,8 @@
     <ProjectGuid>{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NavisElectronics.ListOfCooperation</RootNamespace>
-    <AssemblyName>NavisElectronics.ListOfCooperation</AssemblyName>
+    <RootNamespace>NavisElectronics.TechPreparation</RootNamespace>
+    <AssemblyName>NavisElectronics.TechPreparation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NavisElectronics.ListOfCooperation.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\NavisElectronics.TechPreparation.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\NavisElectronics.ListOfCooperation.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\NavisElectronics.TechPreparation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aga.Controls">
@@ -99,6 +99,7 @@
     <Compile Include="IO\IDatabaseWriter.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
+    <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\FindNodePresenter.cs" />
@@ -280,19 +281,19 @@
       <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\ITreeComparerView.cs" />
-    <Compile Include="ViewModels\ComparerNode.cs" />
-    <Compile Include="ViewModels\CooperationNode.cs" />
+    <Compile Include="ViewModels\TreeNodes\ComparerNode.cs" />
+    <Compile Include="ViewModels\TreeNodes\CooperationNode.cs" />
     <Compile Include="ViewModels\CooperationViewModel.cs" />
     <Compile Include="ViewModels\ErrorElement.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MaterialsViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
-    <Compile Include="ViewModels\MyNode.cs" />
+    <Compile Include="ViewModels\TreeNodes\MyNode.cs" />
     <Compile Include="Services\TechRouteClipBoard.cs" />
-    <Compile Include="ViewModels\Parameter.cs" />
+    <Compile Include="Entities\Parameter.cs" />
     <Compile Include="ViewModels\TechRouteModel.cs" />
-    <Compile Include="ViewModels\TechRouteNodeView.cs" />
+    <Compile Include="ViewModels\TreeNodes\TechRouteNodeView.cs" />
     <Compile Include="ViewModels\TechRoutesMapModel.cs" />
     <Compile Include="ViewModels\TreeComparerViewModel.cs" />
     <Compile Include="Views\WithdrawalTypeView.cs">
@@ -362,13 +363,14 @@
       <Name>NavisElectronics.Substitutes</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\FullCompleteList\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Options.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Manual\ListOfCooperation %28Руководство пользователя%29 .docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\icons8-business-report-16%281%29.png" />
     <None Include="Resources\icons8-flow-chart-16.png" />
     <None Include="Resources\icons8-simple-tree-16.png" />

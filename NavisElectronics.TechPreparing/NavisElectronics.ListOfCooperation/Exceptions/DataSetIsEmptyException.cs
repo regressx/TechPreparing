@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NavisElectronics.ListOfCooperation.Exceptions
+﻿namespace NavisElectronics.TechPreparation.Exceptions
 {
+    using System;
+
     public class DataSetIsEmptyException:Exception
     {
         public DataSetIsEmptyException(string message):base (message)

@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.ListOfCooperation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     partial class FindNodeView
     {

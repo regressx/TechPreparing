@@ -1,12 +1,22 @@
-﻿namespace NavisElectronics.ListOfCooperation.Services
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CooperationListCommandProvider.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Провайдер команд для пункта меню
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Services
 {
     using System;
+
     using Intermech.Extensions;
     using Intermech.Interfaces;
     using Intermech.Navigator.ContextMenu;
     using Intermech.Navigator.Interfaces;
-    using IO;
-    using Presenters;
+
+    using NavisElectronics.TechPreparation.Presenters;
 
     /// <summary>
     /// Провайдер команд для пункта меню

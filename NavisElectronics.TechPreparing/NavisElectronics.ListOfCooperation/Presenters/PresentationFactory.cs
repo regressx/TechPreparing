@@ -1,8 +1,7 @@
-﻿using System;
-using Ninject;
-
-namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
+    using Ninject;
+
     /// <summary>
     /// Фабрика представителей. Умеет выдавать нужного представителя
     /// </summary>
@@ -51,7 +50,7 @@ namespace NavisElectronics.ListOfCooperation.Presenters
             return (IPresenter<V>)_container.Get<T>();
         }
 
-        public IPresenter<V,Z> GetPresenter<T, V,Z>() where T : class, IPresenter<V,Z>
+        public IPresenter<V,Z> GetPresenter<T, V, Z>() where T : class, IPresenter<V,Z>
         {
             if (!_container.CanResolve<T>())
             {
@@ -70,14 +69,4 @@ namespace NavisElectronics.ListOfCooperation.Presenters
         }
 
     }
-
-    public interface IPresentationFactory
-    {
-        IPresenter GetPresenter<T>() where T : class, IPresenter;
-        IPresenter<V> GetPresenter<T, V>() where T : class, IPresenter<V>;
-        IPresenter<V,Z> GetPresenter<T, V, Z>() where T : class, IPresenter<V,Z>;
-        void ReleasePresenter<TPresenter>();
-
-    }
-
 }

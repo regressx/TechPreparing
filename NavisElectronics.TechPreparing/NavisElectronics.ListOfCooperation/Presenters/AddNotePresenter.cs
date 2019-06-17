@@ -1,7 +1,8 @@
-﻿namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
     using System.Windows.Forms;
-    using ViewInterfaces;
+
+    using NavisElectronics.TechPreparation.ViewInterfaces;
 
     /// <summary>
     /// Посредник между окном ввода примечания и некоторой логикой

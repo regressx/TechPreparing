@@ -1,8 +1,18 @@
-﻿using System;
-using NavisElectronics.ListOfCooperation.Entities;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RouteNodeClickEventAgrs.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the RouteNodeClickEventAgrs type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.EventArguments
+namespace NavisElectronics.TechPreparation.EventArguments
 {
+    using System;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     public class RouteNodeClickEventAgrs : EventArgs
     {
         private readonly TechRouteNode _node;

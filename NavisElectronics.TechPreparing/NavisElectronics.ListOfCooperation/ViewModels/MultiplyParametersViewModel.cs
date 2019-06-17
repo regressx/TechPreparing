@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace NavisElectronics.ListOfCooperation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System.Collections.Generic;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     public class MultiplyParametersViewModel : IMultiplyParametersViewModel
     {
         private IList<Parameter> _parameters;

@@ -1,12 +1,24 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using Aga.Controls.Tree;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CooperationViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Реализация модели для окна модуля Кооперации
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.ViewModels
+namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml;
+
+    using Aga.Controls.Tree;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Services;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
     /// <summary>
     /// Реализация модели для окна модуля Кооперации
     /// </summary>

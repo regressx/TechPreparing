@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Threading;
-using System.Threading.Tasks;
-using Intermech.Interfaces;
-using NavisElectronics.ListOfCooperation.Entities;
-using NavisElectronics.ListOfCooperation.Enums;
-
-namespace NavisElectronics.ListOfCooperation.IO
+﻿namespace NavisElectronics.TechPreparation.IO
 {
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using NavisElectronics.TechPreparation.Entities;
+
     public interface IDataRepository
     {
         Task<IntermechTreeElement> GetFullOrderAsync(long versionId, CancellationToken token);

@@ -1,10 +1,11 @@
-﻿using NavisElectronics.ListOfCooperation.ViewInterfaces;
-
-namespace NavisElectronics.ListOfCooperation.Presenters
+﻿namespace NavisElectronics.TechPreparation.Presenters
 {
     using System.Collections.Generic;
     using System.Windows.Forms;
-    using ViewModels;
+
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
 
     public class MultiplyParametersViewPresenter
     {

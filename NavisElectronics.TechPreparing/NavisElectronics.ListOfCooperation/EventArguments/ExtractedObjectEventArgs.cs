@@ -1,8 +1,9 @@
-﻿using System;
-using NavisElectronics.ListOfCooperation.Entities;
-
-namespace NavisElectronics.ListOfCooperation.EventArguments
+﻿namespace NavisElectronics.TechPreparation.EventArguments
 {
+    using System;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+
     public class ExtractedObjectEventArgs:EventArgs
     {
         private ExtractedObject _exctractedObject;

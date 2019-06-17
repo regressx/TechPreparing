@@ -1,7 +1,9 @@
-﻿namespace NavisElectronics.ListOfCooperation.Reports.CooperationList
+﻿namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System.Collections.Generic;
-    using Entities;
+
+    using NavisElectronics.ListOfCooperation.Entities;
+    using NavisElectronics.ListOfCooperation.Reports;
 
     /// <summary>
     /// Документ ведомости кооперации

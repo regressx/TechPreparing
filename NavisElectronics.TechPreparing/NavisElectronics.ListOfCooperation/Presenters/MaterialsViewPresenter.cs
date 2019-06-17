@@ -1,11 +1,21 @@
-﻿using NavisElectronics.ListOfCooperation.EventArguments;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MaterialsViewPresenter.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Представитель для окна Электронной ведомости материалов
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.ListOfCooperation.Presenters
+namespace NavisElectronics.TechPreparation.Presenters
 {
-    using Entities;
-    using Enums;
-    using ViewInterfaces;
-    using ViewModels;
+    using NavisElectronics.ListOfCooperation;
+    using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Enums;
+    using NavisElectronics.TechPreparation.EventArguments;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels;
+    using NavisElectronics.TechPreparation.Views;
 
     /// <summary>
     /// Представитель для окна Электронной ведомости материалов
