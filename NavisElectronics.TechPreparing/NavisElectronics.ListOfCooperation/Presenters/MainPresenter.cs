@@ -33,6 +33,11 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Представление
         /// </summary>
         private readonly IMainView _mainView;
+        
+        /// <summary>
+        /// Модель для этого представления
+        /// </summary>
+        private readonly MainViewModel _model;
 
         /// <summary>
         /// Фабрика представителей. Умеет выдавать представителя по указке
@@ -44,16 +49,22 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </summary>
         private long _rootVersionId;
 
+        /// <summary>
+        /// Самый главный элемент дерева, с которым мы работаем
+        /// </summary>
         private IntermechTreeElement _globalTreeElement;
-        private IntermechTreeElement _elementToCopy;
-
-
-        private IDictionary<long, Agent> _agents;
 
         /// <summary>
-        /// Модель для этого представления
+        /// Нужен для того, чтобы понять, откуда копировать тех. подготовку
         /// </summary>
-        private readonly MainViewModel _model;
+        private IntermechTreeElement _elementToCopy;
+
+        /// <summary>
+        /// Словарик агентов
+        /// </summary>
+        private IDictionary<long, Agent> _agents;
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPresenter"/> class. 
@@ -84,13 +95,13 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.UpdateClick += _mainView_UpdateClick;
             _mainView.EditMainMaterialsClick += _mainView_EditMainMaterialsClick;
             _mainView.EditStandartDetailsClick += _mainView_EditStandartDetailsClick;
-            _mainView.LoadPreparationClick += _mainView_LoadPreparationClick;
+            _mainView.LoadPreparationClick += MainViewLoadPreparationClick;
             _mainView.EditWithdrawalTypeClick += _mainView_EditWithdrawalTypeClick;
             _mainView.RefreshClick += _mainView_RefreshClick;
-            _mainView.CheckAllReadyClick += _mainView_CheckAllReadyClick;
+            _mainView.CheckAllReadyClick += MainViewCheckAllReadyClick;
         }
 
-        private void _mainView_CheckAllReadyClick(object sender, EventArgs e)
+        private void MainViewCheckAllReadyClick(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
             IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
@@ -180,7 +191,16 @@ namespace NavisElectronics.TechPreparation.Presenters
             view.Show();
         }
 
-        private async void _mainView_LoadPreparationClick(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик события загрузки формы выбора заказа с созданной тех. подготовкой
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private async void MainViewLoadPreparationClick(object sender, EventArgs e)
         {
             // загрузить список существующих заказов
             IList<IdOrPath> result = _model.Select();
@@ -211,8 +231,42 @@ namespace NavisElectronics.TechPreparation.Presenters
             treeNodeDialogPresenter.Run(myParameter);
             _elementToCopy = myParameter.GetParameter(1);
 
-            ICollection<IntermechTreeElement> elementsToSetTechPreparation = _globalTreeElement.Find(_elementToCopy.ObjectId);
+            // не хочу заморачиваться с сохранением уже заполненных узлов. Пройдем в ширину по указанному в предложенном окне дереву, 
+            // каждый из узлов в очереди будем искать в основном дереве и проставлять нужные свойства
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(_elementToCopy);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
 
+                // ищем все-все узлы из главного дерева, которые совпадают с узлом из очереди
+                ICollection<IntermechTreeElement> elementsToSetTechPreparation = _globalTreeElement.Find(elementFromQueue.ObjectId);
+
+                foreach (IntermechTreeElement elementToSetTechPreparation in elementsToSetTechPreparation)
+                {
+                    elementToSetTechPreparation.CooperationFlag = elementFromQueue.CooperationFlag;
+                    elementToSetTechPreparation.Agent = elementFromQueue.Agent;
+                    elementToSetTechPreparation.StockRate = elementFromQueue.StockRate;
+                    elementToSetTechPreparation.Note = elementFromQueue.Note;
+                    elementToSetTechPreparation.RouteNote = elementFromQueue.RouteNote;
+                    elementToSetTechPreparation.SampleSize = elementFromQueue.SampleSize;
+                    elementToSetTechPreparation.TechProcessReference = elementFromQueue.TechProcessReference;
+                    elementToSetTechPreparation.TechRoute = elementFromQueue.TechRoute;
+                    elementToSetTechPreparation.ContainsInnerCooperation = elementFromQueue.ContainsInnerCooperation;
+                    elementToSetTechPreparation.InnerCooperation = elementFromQueue.InnerCooperation;
+                    elementToSetTechPreparation.IsPCB = elementFromQueue.IsPCB;
+                    elementToSetTechPreparation.IsToComplect = elementFromQueue.IsToComplect;
+                    elementToSetTechPreparation.TechTask = elementFromQueue.TechTask;
+                }
+
+                if (elementFromQueue.Children.Count > 0)
+                {
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
 
         }
 

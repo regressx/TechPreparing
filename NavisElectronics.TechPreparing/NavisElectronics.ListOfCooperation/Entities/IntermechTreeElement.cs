@@ -255,7 +255,7 @@
         /// Ищет коллекцию узлов по id
         /// </summary>
         /// <param name="objectId">Id объекта</param>
-        /// <returns>Возвращает коллекцию узлов, входящих во всё дерево</returns>
+        /// <returns>Возвращает коллекцию узлов, входящих во всё дерево. Если узлов нет, то вернет пустую коллекцию</returns>
         public IList<IntermechTreeElement> Find(long objectId)
         {
             IList<IntermechTreeElement> elementCollection = new List<IntermechTreeElement>();
