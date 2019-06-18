@@ -13,7 +13,7 @@ namespace UI
             using (StreamReader sr = new StreamReader("lines.txt"))
             {
                 _netPath = sr.ReadLine();
-                while (sr.EndOfStream)
+                while (!sr.EndOfStream)
                 {
                     string[] lineMembers = sr.ReadLine().Split(';');
                     PathContainer pathContainer = new PathContainer(lineMembers[0], lineMembers[1]);

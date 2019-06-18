@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NavisElectronics.ListOfCooperation.Entities;
-
 namespace ListOfCooperationTests
 {
     using NavisElectronics.TechPreparation.Entities;

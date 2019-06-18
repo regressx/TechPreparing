@@ -10,12 +10,14 @@ namespace NavisElectronics.IPS1C.IntegratorService
     using System.Data;
     using Entities;
     using Exceptions;
+
+    using Intermech;
     using Intermech.Interfaces;
-    using ListOfCooperation.Entities;
 
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.Enums;
     using NavisElectronics.TechPreparation.Helpers;
+    using NavisElectronics.TechPreparation.IO;
     using NavisElectronics.TechPreparation.Services;
 
     using Changes = Logic.Changes;

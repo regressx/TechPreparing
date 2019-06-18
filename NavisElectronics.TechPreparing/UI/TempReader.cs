@@ -7,9 +7,6 @@
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Windows.Forms.Design;
-
-    using NavisElectronics.ListOfCooperation.Entities;
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.IO;
 

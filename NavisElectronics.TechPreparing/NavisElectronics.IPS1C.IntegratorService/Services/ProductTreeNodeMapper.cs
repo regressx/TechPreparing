@@ -1,6 +1,5 @@
 ﻿using System;
 using NavisElectronics.IPS1C.IntegratorService.Entities;
-using NavisElectronics.ListOfCooperation.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService.Services
 {

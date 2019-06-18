@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 using NavisArchiveWork.Data;
-using NavisElectronics.ListOfCooperation.Entities;
 
 namespace UI
 {
-    using System.Net.Configuration;
+    using NavisArchiveWork.Model;
 
-    using NavisElectronics.ListOfCooperation;
     using NavisElectronics.TechPreparation;
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.IO;
@@ -35,7 +27,8 @@ namespace UI
             CommonModule module = new CommonModule();
             IKernel kernel = new StandardKernel();
             kernel.Load(module);
-            kernel.Rebind<IRepository>().To<TempRepository>();
+            kernel.Rebind<IRepository>().To<TempRepository>().InSingletonScope();
+            kernel.Rebind<Search>().ToSelf().InSingletonScope();
             kernel.Rebind<IDataRepository>().To<TempReader>();
             kernel.Rebind<ITechPreparingSelector<IdOrPath>>().To<TempSelector>();
             kernel.Bind<IPresentationFactory>().To<PresentationFactory>().WithConstructorArgument("container", kernel);

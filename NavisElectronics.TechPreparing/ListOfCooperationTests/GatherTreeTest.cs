@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NavisElectronics.ListOfCooperation.Entities;
+
 
 namespace ListOfCooperationTests
 {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NavisElectronics.IPS1C.IntegratorService.Entities;
 using NavisElectronics.IPS1C.IntegratorService.Exceptions;
-using NavisElectronics.ListOfCooperation.Entities;
+
 
 namespace NavisElectronics.IPS1C.IntegratorService.Logic
 {

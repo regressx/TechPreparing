@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using NavisElectronics.ListOfCooperation.Entities;
 
 namespace UI
 {
