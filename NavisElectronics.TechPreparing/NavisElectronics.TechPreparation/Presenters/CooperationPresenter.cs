@@ -17,9 +17,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     using Intermech.Interfaces.Client;
     using Intermech.Navigator;
     using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
     using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.IO;
     using NavisElectronics.TechPreparation.Reports;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewInterfaces;

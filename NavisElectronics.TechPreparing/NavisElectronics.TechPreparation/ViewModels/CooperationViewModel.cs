@@ -9,13 +9,10 @@
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-
     using Aga.Controls.Tree;
-
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
@@ -52,28 +49,39 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     if (elementFromQueue.Agent == agentFilter)
                     {
                         cooperationElements.Add(elementFromQueue);
+                        continue;
                     }
-                    else
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
                     {
-                        
-                        foreach (IntermechTreeElement child in elementFromQueue.Children)
-                        {
-                            queue.Enqueue(child);
-                        }
+                        queue.Enqueue(child);
                     }
+
                 }
 
                 foreach (IntermechTreeElement cooperationElement in cooperationElements)
                 {
-                    CooperationNode mainNode = new CooperationNode();
-                    mainNode.Designation = element.Designation;
-                    mainNode.Name = element.Name;
-                    mainNode.Amount = element.Amount.ToString();
-                    mainNode.Note = element.RouteNote;
-                    mainNode.CooperationFlag = element.CooperationFlag;
-                    mainNode.Tag = element;
-                    BuildNodeRecursive(mainNode, cooperationElement, whoIsMainInOrder, agentFilter);
-                    model.Nodes.Add(mainNode);
+                    CooperationNode cooperationNode = new CooperationNode();
+                    cooperationNode.Id = cooperationElement.Id;
+                    cooperationNode.Type = cooperationElement.Type;
+                    cooperationNode.Designation = cooperationElement.Designation;
+                    cooperationNode.Name = cooperationElement.Name;
+                    cooperationNode.Amount = cooperationElement.Amount.ToString("F3");
+                    cooperationNode.AmountWithUse = cooperationElement.AmountWithUse.ToString("F3");
+                    cooperationNode.TotalAmount = cooperationElement.TotalAmount.ToString("F3");
+                    cooperationNode.StockRate = cooperationElement.StockRate.ToString("F3");
+                    cooperationNode.SampleSize = cooperationElement.SampleSize;
+                    cooperationNode.TechProcessReference = cooperationElement.TechProcessReference;
+                    cooperationNode.Note = cooperationElement.Note;
+                    cooperationNode.SubstituteInfo = cooperationElement.SubstituteInfo;
+                    cooperationNode.CooperationFlag = cooperationElement.CooperationFlag;
+                    cooperationNode.IsPcb = cooperationElement.IsPCB;
+                    cooperationNode.PcbVersion = cooperationElement.PcbVersion;
+                    cooperationNode.TechTask = cooperationElement.TechTask;
+                    cooperationNode.Tag = cooperationElement;
+
+                    BuildNodeRecursive(cooperationNode, cooperationElement, whoIsMainInOrder, agentFilter);
+                    model.Nodes.Add(cooperationNode);
                 }
             }
             else
@@ -130,14 +138,15 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.Note = child.Note;
                     childNode.SubstituteInfo = child.SubstituteInfo;
                     childNode.CooperationFlag = child.CooperationFlag;
-                    if (!child.Agent.Contains(agentFilter))
-                    {
-                        childNode.CooperationFlag = true;
-                    }
                     childNode.IsPcb = child.IsPCB;
                     childNode.PcbVersion = child.PcbVersion;
                     childNode.TechTask = child.TechTask;
                     childNode.Tag = child;
+                    if (!child.Agent.Contains(agentFilter))
+                    {
+                        childNode.CooperationFlag = true;
+                    }
+
                     mainNode.Nodes.Add(childNode);
                     BuildNodeRecursive(childNode, child, whoIsMainInOrder, agentFilter);
                 }

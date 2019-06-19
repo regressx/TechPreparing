@@ -43,6 +43,7 @@
                 foreach (IntermechTreeElement child in element.Children)
                 {
                     MyNode childNode = new MyNode(child.Id.ToString());
+                    childNode.Id = child.Id;
                     childNode.Designation = child.Designation;
                     childNode.Name = child.Name;
                     childNode.Tag = child;

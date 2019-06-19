@@ -589,6 +589,7 @@
             this.treeViewAdv1.TabIndex = 2;
             this.treeViewAdv1.Text = "treeViewAdv1";
             this.treeViewAdv1.UseColumns = true;
+            this.treeViewAdv1.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.TreeViewAdv1_RowDraw);
             // 
             // CooperationView
             // 

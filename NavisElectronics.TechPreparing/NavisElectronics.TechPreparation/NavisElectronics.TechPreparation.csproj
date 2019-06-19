@@ -262,11 +262,11 @@
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="EventArguments\RouteNodeClickEventAgrs.cs" />
     <Compile Include="EventArguments\SaveClickEventArgs.cs" />
-    <Compile Include="Views\SelectSomethingView.cs">
+    <Compile Include="Views\SelectManufacturerView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SelectSomethingView.Designer.cs">
-      <DependentUpon>SelectSomethingView.cs</DependentUpon>
+    <Compile Include="Views\SelectManufacturerView.Designer.cs">
+      <DependentUpon>SelectManufacturerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TechRoutesMap.cs">
       <SubType>Form</SubType>
@@ -338,8 +338,8 @@
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SelectSomethingView.resx">
-      <DependentUpon>SelectSomethingView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\SelectManufacturerView.resx">
+      <DependentUpon>SelectManufacturerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>

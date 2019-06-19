@@ -1,4 +1,13 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SelectSomethingView.cs" company="NavisElectronics">
+//   ---
+// </copyright>
+// <summary>
+//   Defines the SelectManufacturerView type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +15,9 @@
 
     using NavisElectronics.TechPreparation.Entities;
 
+    /// <summary>
+    /// The select manufacturer view.
+    /// </summary>
     public partial class SelectManufacturerView : Form
     {
         private readonly ICollection<Agent> _agents;
@@ -18,13 +30,11 @@
             InitializeComponent();
         }
 
-
-
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
-            if (listBox1.Items.Count > 0)
+            if (listBox.Items.Count > 0)
             {
-                Agent filterAgent = (Agent)listBox1.SelectedItem;
+                Agent filterAgent = (Agent)listBox.SelectedItem;
                 SelectedAgentId = filterAgent.Id.ToString();
                 SelectedAgentName = filterAgent.Name;
                 DialogResult = DialogResult.OK;
@@ -36,7 +46,7 @@
         {
             foreach (Agent agent in _agents)
             {
-                listBox1.Items.Add(agent);
+                listBox.Items.Add(agent);
             }
         }
     }

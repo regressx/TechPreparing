@@ -15,8 +15,6 @@ namespace NavisElectronics.TechPreparation.Views
     using System.Threading;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using NavisArchiveWork.Data;
-    using NavisArchiveWork.Model;
     using NavisElectronics.TechPreparation.EventArguments;
     using NavisElectronics.TechPreparation.ViewInterfaces;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
@@ -29,9 +27,6 @@ namespace NavisElectronics.TechPreparation.Views
         /// <summary>
         /// Initializes a new instance of the <see cref="CooperationView"/> class.
         /// </summary>
-        /// <param name="saveButtonEnable">
-        /// The save button enable.
-        /// </param>
         public CooperationView()
         {
             InitializeComponent();

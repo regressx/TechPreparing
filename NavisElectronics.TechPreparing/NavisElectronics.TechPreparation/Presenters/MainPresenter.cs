@@ -50,9 +50,15 @@ namespace NavisElectronics.TechPreparation.Presenters
         private long _rootVersionId;
 
         /// <summary>
-        /// Самый главный элемент дерева, с которым мы работаем
+        /// Для простановки агентов
         /// </summary>
         private IntermechTreeElement _globalTreeElement;
+
+        /// <summary>
+        /// Корень
+        /// </summary>
+        private IntermechTreeElement _rootElement;
+
 
         /// <summary>
         /// Нужен для того, чтобы понять, откуда копировать тех. подготовку
@@ -240,7 +246,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
 
                 // ищем все-все узлы из главного дерева, которые совпадают с узлом из очереди
-                ICollection<IntermechTreeElement> elementsToSetTechPreparation = _globalTreeElement.Find(elementFromQueue.ObjectId);
+                ICollection<IntermechTreeElement> elementsToSetTechPreparation = _rootElement.Find(elementFromQueue.ObjectId);
 
                 foreach (IntermechTreeElement elementToSetTechPreparation in elementsToSetTechPreparation)
                 {
@@ -349,9 +355,9 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
-            parameter.AddParameter(_globalTreeElement);
+            parameter.AddParameter(_rootElement);
             parameter.AddParameter(new IntermechTreeElement(){ Agent = ((int)AgentsId.Kb).ToString() });
-            parameter.AddParameter(new IntermechTreeElement(){ Agent = ((int)AgentsId.Kb).ToString() });
+            parameter.AddParameter(new IntermechTreeElement(){ Agent = ((int)AgentsId.NavisElectronics).ToString() });
             presenter.Run(parameter);
             //TreeBuilderService treeBuilderService = new TreeBuilderService();
             //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
@@ -524,7 +530,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 orderElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
             }
 
-            _globalTreeElement = orderElement;
+            _rootElement = orderElement;
             ICollection<Agent> agents = await _model.GetAllAgentsAsync();
             _agents = new Dictionary<long, Agent>();
             foreach (Agent agent in agents)
