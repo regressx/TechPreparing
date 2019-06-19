@@ -39,6 +39,7 @@
             root.AmountWithUse = 1;
             root.StockRate = 1;
             root.TotalAmount = root.StockRate * root.AmountWithUse;
+
             if (ds.Tables["Order"].Rows[0]["BigNote"] != DBNull.Value)
             {
                 root.Note = (string)ds.Tables["Order"].Rows[0]["BigNote"];
@@ -54,6 +55,9 @@
         /// </summary>
         /// <param name="ds">
         /// Dataset из заказа
+        /// </param>
+        /// <param name="token">
+        /// Токен отмены
         /// </param>
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
@@ -475,6 +479,7 @@
                     }
 
                     element.Add(childElement);
+
                     if (childElement.Type == 1078 || childElement.Type == 1074 || childElement.Type == 1052 || childElement.Type == 1159 || childElement.Type == 0 || childElement.Type == 1097)
                     {
                         CreateRelations(ds, childElement, token);
