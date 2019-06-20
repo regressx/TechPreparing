@@ -14,6 +14,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using System.Xml;
     using Aga.Controls.Tree;
     using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Reports;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
@@ -24,9 +25,17 @@ namespace NavisElectronics.TechPreparation.ViewModels
     {
         private readonly OpenFolderService _openFolderService;
 
-        public CooperationViewModel(OpenFolderService openFolderService)
+        private readonly ReportService _reportService;
+
+        public CooperationViewModel(OpenFolderService openFolderService, ReportService reportService)
         {
             _openFolderService = openFolderService;
+            _reportService = reportService;
+        }
+
+        public void CreateReport(CooperationNode node, string name, ReportType reportType, DocumentType documentType)
+        {
+            _reportService.CreateReport(node, name, reportType, DocumentType.Intermech, null);
         }
 
         /// <summary>
@@ -80,7 +89,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     cooperationNode.TechTask = cooperationElement.TechTask;
                     cooperationNode.Tag = cooperationElement;
 
-                    BuildNodeRecursive(cooperationNode, cooperationElement, whoIsMainInOrder, agentFilter);
+                    BuildNodeRecursive(cooperationNode, cooperationElement, agentFilter);
                     model.Nodes.Add(cooperationNode);
                 }
             }
@@ -95,7 +104,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 mainNode.Tag = element;
                 
                 // строим всё
-                BuildNodeRecursive(mainNode, element, whoIsMainInOrder, agentFilter);
+                BuildNodeRecursive(mainNode, element, agentFilter);
                 model.Nodes.Add(mainNode);
             }
 
@@ -113,7 +122,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="element">
         /// Элемент, из которого получаем данные
         /// </param>
-        private void BuildNodeRecursive(CooperationNode mainNode, IntermechTreeElement element, string whoIsMainInOrder, string agentFilter)
+        private void BuildNodeRecursive(CooperationNode mainNode, IntermechTreeElement element, string agentFilter)
         {
             if (element.Children.Count > 0)
             {
@@ -148,7 +157,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     }
 
                     mainNode.Nodes.Add(childNode);
-                    BuildNodeRecursive(childNode, child, whoIsMainInOrder, agentFilter);
+                    BuildNodeRecursive(childNode, child, agentFilter);
                 }
             }
         }
@@ -248,6 +257,41 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 return designation.Substring(firstDotIndex + 1);
             }
             return designation;
+        }
+
+        public void SetCooperationValue(IntermechTreeElement root, IList<IntermechTreeElement> elements, bool cooperationFlag)
+        {
+            foreach (IntermechTreeElement element in elements)
+            {
+                SetCooperationValueInternal(root, element, cooperationFlag);
+            }
+        }
+
+        internal void SetCooperationValueInternal(IntermechTreeElement root, IntermechTreeElement element, bool value)
+        {
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            IList<IntermechTreeElement> allElementsFromTree = root.Find(element.ObjectId);
+            
+            // всех под кооперацию, всех, кого нашли
+            foreach (IntermechTreeElement treeElement in allElementsFromTree)
+            {
+                queue.Enqueue(treeElement);
+            }
+
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.CooperationFlag = value;
+                
+                // и этих тоже, это дочерние элементы узла из очереди
+                if (elementFromQueue.Children.Count > 0)
+                {
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
         }
 
     }

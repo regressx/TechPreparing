@@ -27,11 +27,8 @@
         event EventHandler<MultipleNodesSelectedEventArgs> SearchInArchiveClick;
         event EventHandler<MultipleNodesSelectedEventArgs> FindInTreeClick;
         event EventHandler GlobalSearchClick;
-        event EventHandler<MultipleNodesSelectedEventArgs> CreateCooperationClick;
         event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
         event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
-        event EventHandler<MultipleNodesSelectedEventArgs> CreateCompleteListClick;
-
         event EventHandler ExpandAllNodesClick;
         event EventHandler CollapseAllNodesClick;
         /// <summary>
@@ -49,5 +46,7 @@
 
         TreeViewAdv GetTreeView();
         void JumpToNode(TreeNodeAdv cooperationNode);
+
+        void SetWindowCaption(string name);
     }
 }

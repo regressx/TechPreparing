@@ -97,10 +97,8 @@ namespace NavisElectronics.TechPreparation.Views
         /// </summary>
         public event EventHandler GlobalSearchClick;
 
-        public event EventHandler<MultipleNodesSelectedEventArgs> CreateCooperationClick;
         public event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
         public event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
-        public event EventHandler<MultipleNodesSelectedEventArgs> CreateCompleteListClick;
         public event EventHandler ExpandAllNodesClick;
         public event EventHandler CollapseAllNodesClick;
 
@@ -126,6 +124,11 @@ namespace NavisElectronics.TechPreparation.Views
             treeViewAdv1.SelectedNode = cooperationNode;
         }
 
+        public void SetWindowCaption(string name)
+        {
+            this.Text = "Фильтр по организации " + name;
+        }
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             EventHandler temp = Volatile.Read(ref SaveClick);
@@ -147,6 +150,7 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node);
                 }
                 temp(sender, new MultipleNodesSelectedEventArgs(nodes));
+                treeViewAdv1.Invalidate();
             }
         }
 
@@ -254,15 +258,6 @@ namespace NavisElectronics.TechPreparation.Views
         private void collapseAllButton_Click(object sender, EventArgs e)
         {
             treeViewAdv1.CollapseAll();
-        }
-
-        private void createCooperationListButton_Click(object sender, EventArgs e)
-        {
-            if (CreateCooperationClick != null)
-            {
-                CooperationNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as CooperationNode;
-                CreateCooperationClick(sender, new MultipleNodesSelectedEventArgs(new List<CooperationNode>() { selectedNode }));
-            }
         }
 
         private void SetTechTaskMenuItem_Click(object sender, EventArgs e)

@@ -94,8 +94,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.NodeMouseClick += _mainView_NodeMouseClick;
             _mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
             _mainView.CellValueChanged += _mainView_CellValueChanged;
-            _mainView.KbNavisFilterClick += _mainView_KbNavisFilterClick;
-            _mainView.NavisElectronicsFilterClick += _mainView_NavisElectronicsFilterClick;
+            _mainView.CooperationClick += _mainView_NavisElectronicsFilterClick;
             _mainView.ClearCooperationClick += _mainView_ClearCooperationClick;
             _mainView.EditTechRoutesClick += _mainView_EditTechRoutesClick;
             _mainView.UpdateClick += _mainView_UpdateClick;
@@ -237,6 +236,11 @@ namespace NavisElectronics.TechPreparation.Presenters
             treeNodeDialogPresenter.Run(myParameter);
             _elementToCopy = myParameter.GetParameter(1);
 
+            if (_elementToCopy.Id == 0)
+            {
+                return;
+            }
+
             // не хочу заморачиваться с сохранением уже заполненных узлов. Пройдем в ширину по указанному в предложенном окне дереву, 
             // каждый из узлов в очереди будем искать в основном дереве и проставлять нужные свойства
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
@@ -310,16 +314,50 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
         {
-            using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
+
+            Parameter<Agent> agentParameter = new Parameter<Agent>();
+
+            foreach (Agent agent in _agents.Values)
             {
-                if (manufacturerView.ShowDialog() == DialogResult.OK)
-                {
-                    string filter = manufacturerView.SelectedAgentId;
-                    TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, true);
-                    TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, _mainView.GetMainTreeElement().Tag as IntermechTreeElement, filter, _agents);
-                    presenter.Run();
-                }
+                agentParameter.AddParameter(agent);
             }
+
+            Agent filterAgent = new Agent();
+            agentParameter.AddParameter(filterAgent);
+
+            IPresenter<Parameter<Agent>> agentDialogPresenter = _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>(); 
+            agentDialogPresenter.Run(agentParameter);
+
+            if (filterAgent.Id == 0)
+            {
+                return;
+            }
+
+            IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>>();
+            Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
+            parameter.AddParameter(_rootElement);
+            parameter.AddParameter(new IntermechTreeElement()
+                                       {
+                                           Agent = ((int)AgentsId.Kb).ToString()
+                                       });
+            parameter.AddParameter(new IntermechTreeElement()
+                                       {
+                                           Name = filterAgent.Name,
+                                           Agent = filterAgent.Id.ToString()
+                                       });
+            presenter.Run(parameter);
+
+
+            //using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
+            //{
+            //    if (manufacturerView.ShowDialog() == DialogResult.OK)
+            //    {
+            //        //string filter = manufacturerView.SelectedAgentId;
+            //        //TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, true);
+            //        //TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, _mainView.GetMainTreeElement().Tag as IntermechTreeElement, filter, _agents);
+            //        //presenter.Run();
+            //    }
+            //}
 
         }
 
@@ -353,43 +391,46 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_NavisElectronicsFilterClick(object sender, EventArgs e)
         {
+            Parameter<Agent> agentParameter = new Parameter<Agent>();
+
+            foreach (Agent agent in _agents.Values)
+            {
+                agentParameter.AddParameter(agent);
+            }
+
+            Agent filterAgent = new Agent();
+            agentParameter.AddParameter(filterAgent);
+
+            IPresenter<Parameter<Agent>> agentDialogPresenter = _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>(); 
+            agentDialogPresenter.Run(agentParameter);
+
+            if (filterAgent.Id == 0)
+            {
+                return;
+            }
+
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
             parameter.AddParameter(_rootElement);
-            parameter.AddParameter(new IntermechTreeElement(){ Agent = ((int)AgentsId.Kb).ToString() });
-            parameter.AddParameter(new IntermechTreeElement(){ Agent = ((int)AgentsId.NavisElectronics).ToString() });
+            parameter.AddParameter(new IntermechTreeElement()
+                                       {
+                                           Agent = ((int)AgentsId.Kb).ToString()
+                                       });
+            parameter.AddParameter(new IntermechTreeElement()
+                                       {
+                                           Name = filterAgent.Name,
+                                           Agent = filterAgent.Id.ToString()
+                                       });
             presenter.Run(parameter);
-            //TreeBuilderService treeBuilderService = new TreeBuilderService();
-            //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
-            //IntermechTreeElement element =
-            //    treeBuilderService.BuildTreeWithoutCoop(mainElement, ((int)AgentsId.NavisElectronics).ToString());
-            //CooperationPresenter coopPresenter = new CooperationPresenter(cooperationView, element, mainElement);
-            //coopPresenter.Run();
         }
 
-        private void _mainView_KbNavisFilterClick(object sender, EventArgs e)
-        {
-
-            //IPresenter<IntermechTreeElement> treeNodeDialogPresenter = _presentationFactory.GetPresenter<CooperationPresenter, IntermechTreeElement>();
-            //treeNodeDialogPresenter.Run(_globalTreeElement);
-            //cooperationView.Text = "Фильтр по КБ НАВИС";
-            //TreeBuilderService treeBuilderService = new TreeBuilderService();
-            //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
-            //IntermechTreeElement element =
-            //    treeBuilderService.BuildTreeWithoutCoop(mainElement, ((int)AgentsId.Kb).ToString());
-            //CooperationPresenter coopPresenter = new CooperationPresenter(cooperationView, element, mainElement);
-            //coopPresenter.Run();
-        }
 
         private void _mainView_CellValueChanged(object sender, TreeNodeAgentValueEventArgs e)
         {
-
             string agentsValues = GatherAgents(e);
-
             _globalTreeElement.Agent = agentsValues;
 
-            // Раздаем кооперацию детям
-
+            // Раздаем кооперацию потомкам
             if (_globalTreeElement.Children.Count > 0)
             {
                 Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
@@ -425,6 +466,10 @@ namespace NavisElectronics.TechPreparation.Presenters
             if (globalTreeElement.Parent != null)
             {
                 IntermechTreeElement parent = globalTreeElement.Parent;
+                if (parent == _rootElement)
+                {
+                    return;
+                }
                 string agents = GatherAgents(new TreeNodeAgentValueEventArgs(parent, key));
                 parent.Agent = agents;
                 SetParentCooperationRecursive(parent, key);
@@ -502,7 +547,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
         }
 
-        private async void _view_Load(object sender, System.EventArgs e)
+        private async void _view_Load(object sender, EventArgs e)
         {
             _mainView.FillTree(new TreeNode("Пожалуйста, подождите. Идет загрузка данных"));
             _mainView.LockButtons();
@@ -522,7 +567,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             if (fromDataset)
             {
                 orderElement = await _model.GetFullOrderAsync(dataset, CancellationToken.None);
-                _mainView.FillNote(orderElement.Note);
+
             }
             else
             {         
@@ -530,7 +575,10 @@ namespace NavisElectronics.TechPreparation.Presenters
                 orderElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
             }
 
+            _mainView.FillNote(orderElement.Note);
+
             _rootElement = orderElement;
+            _rootElement.Agent = ((int)AgentsId.Kb).ToString();
             ICollection<Agent> agents = await _model.GetAllAgentsAsync();
             _agents = new Dictionary<long, Agent>();
             foreach (Agent agent in agents)
@@ -557,8 +605,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
                 TreeNode childNode = new TreeNode
                 {
-                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB,
-                        description).Trim(),
+                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB, description).Trim(),
                 };
 
                 childNode.Tag = node;

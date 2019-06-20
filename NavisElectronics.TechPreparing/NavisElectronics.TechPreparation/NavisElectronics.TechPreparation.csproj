@@ -101,8 +101,10 @@
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
+    <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\FindNodePresenter.cs" />
+    <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
     <Compile Include="Presenters\TreeNodeDialogPresenter.cs" />
     <Compile Include="Reports\CompleteList\CompleteListFactory.cs" />
     <Compile Include="Reports\CooperationList\CooperationListDocument.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Services\TechPreparingSelector.cs" />
     <Compile Include="Services\TechRouteManager.cs" />
     <Compile Include="ViewInterfaces\EditTechRouteEventArgs.cs" />
+    <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\InfoInTableModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
     <Compile Include="Views\AddNoteForm.cs">

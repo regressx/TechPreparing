@@ -12,6 +12,7 @@ namespace NavisElectronics.TechPreparation
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
     using NavisElectronics.TechPreparation.IO;
+    using NavisElectronics.TechPreparation.Reports;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewInterfaces;
     using NavisElectronics.TechPreparation.ViewModels;
@@ -33,6 +34,7 @@ namespace NavisElectronics.TechPreparation
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
             Bind<Search>().ToSelf().InSingletonScope();
+            Bind<ReportService>().ToSelf().InSingletonScope();
             Bind<OpenFolderService>().ToSelf().InSingletonScope();
             Bind<DataSetGatheringService>().ToSelf().InSingletonScope();
             Bind<MainViewModel>().ToSelf();
@@ -40,6 +42,7 @@ namespace NavisElectronics.TechPreparation
             Bind<TreeNodeDialogViewModel>().ToSelf();
             Bind<ITreeNodeDialogView>().To<TreeNodeDialogView>();
             Bind<IMainView>().To<MainView>();
+            Bind<ISelectManufacturerView>().To<SelectManufacturerView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
             Bind<ICooperationView>().To<CooperationView>();
         }

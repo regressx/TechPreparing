@@ -1,4 +1,13 @@
-﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IMainView.cs" company="NavisElectronics">
+//   ---
+// </copyright>
+// <summary>
+//   Defines the IMainView type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;
@@ -7,10 +16,12 @@
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.EventArguments;
 
+    /// <summary>
+    /// Интерфейс главной формы
+    /// </summary>
     public interface IMainView
     {
-        event EventHandler NavisElectronicsFilterClick;
-        event EventHandler KbNavisFilterClick;
+        event EventHandler CooperationClick;
         event EventHandler Load;
         event EventHandler<TreeNodeMouseClickEventArgs> NodeMouseClick;
         event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;

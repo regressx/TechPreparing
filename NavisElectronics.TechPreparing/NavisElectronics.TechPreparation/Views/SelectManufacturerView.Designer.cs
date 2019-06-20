@@ -51,7 +51,6 @@
             this.Controls.Add(this.listBox);
             this.Name = "SelectManufacturerView";
             this.Text = "Выбор изготовителя";
-            this.Load += new System.EventHandler(this.SelectManufacturerView_Load);
             this.ResumeLayout(false);
 
         }

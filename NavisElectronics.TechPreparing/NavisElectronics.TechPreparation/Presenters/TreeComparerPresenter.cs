@@ -153,31 +153,31 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_EditTechRoutesClick(object sender, IntermechTreeElement e)
         {
-            using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
-            {
-                if (manufacturerView.ShowDialog() == DialogResult.OK)
-                {
-                    string filter = manufacturerView.SelectedAgentId;
-                    Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                    queue.Enqueue(e);
-                    while (queue.Count > 0)
-                    {
-                        IntermechTreeElement elementFromQueue = queue.Dequeue();
-                        elementFromQueue.Agent = filter;
-                        if (elementFromQueue.Children.Count > 0)
-                        {
-                            foreach (IntermechTreeElement child in elementFromQueue.Children)
-                            {
-                                queue.Enqueue(child);
-                            }
-                        }
-                    }
+            //using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
+            //{
+            //    if (manufacturerView.ShowDialog() == DialogResult.OK)
+            //    {
+            //        string filter = manufacturerView.SelectedAgentId;
+            //        Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            //        queue.Enqueue(e);
+            //        while (queue.Count > 0)
+            //        {
+            //            IntermechTreeElement elementFromQueue = queue.Dequeue();
+            //            elementFromQueue.Agent = filter;
+            //            if (elementFromQueue.Children.Count > 0)
+            //            {
+            //                foreach (IntermechTreeElement child in elementFromQueue.Children)
+            //                {
+            //                    queue.Enqueue(child);
+            //                }
+            //            }
+            //        }
 
-                    TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
-                    TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
-                    presenter.Run();
-                }
-            }
+            //        TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
+            //        TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
+            //        presenter.Run();
+            //    }
+            //}
         }
 
         private void _view_EditCooperationClick(object sender, IntermechTreeElement e)

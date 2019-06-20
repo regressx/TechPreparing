@@ -14,40 +14,52 @@ namespace NavisElectronics.TechPreparation.Views
     using System.Windows.Forms;
 
     using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.ViewInterfaces;
 
     /// <summary>
     /// The select manufacturer view.
     /// </summary>
-    public partial class SelectManufacturerView : Form
+    public partial class SelectManufacturerView : Form, ISelectManufacturerView
     {
-        private readonly ICollection<Agent> _agents;
-        public string SelectedAgentId { get; set; }
-        public string SelectedAgentName { get; set; }
-
-        public SelectManufacturerView(ICollection<Agent> agents)
+        public SelectManufacturerView()
         {
-            _agents = agents;
             InitializeComponent();
         }
+        public event EventHandler<Agent> SelectAgent;
+
+        public new void Show()
+        {
+            this.ShowDialog();
+        }
+
+        public void FillAgents(ICollection<Agent> agents)
+        {
+            foreach (Agent agent in agents)
+            {
+                listBox.Items.Add(agent);
+            }
+        }
+
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             if (listBox.Items.Count > 0)
             {
-                Agent filterAgent = (Agent)listBox.SelectedItem;
-                SelectedAgentId = filterAgent.Id.ToString();
-                SelectedAgentName = filterAgent.Name;
-                DialogResult = DialogResult.OK;
-                Close();
+                if (SelectAgent != null)
+                {
+                    Agent filterAgent = (Agent)listBox.SelectedItem;
+                    SelectAgent(sender, filterAgent);
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+
             }
         }
 
-        private void SelectManufacturerView_Load(object sender, EventArgs e)
-        {
-            foreach (Agent agent in _agents)
-            {
-                listBox.Items.Add(agent);
-            }
-        }
+
+
+
+
+
     }
 }

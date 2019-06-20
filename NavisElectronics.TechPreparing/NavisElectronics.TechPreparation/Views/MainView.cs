@@ -20,9 +20,9 @@
 
         private void CooperationButton_Click(object sender, EventArgs e)
         {
-            if (NavisElectronicsFilterClick != null)
+            if (CooperationClick != null)
             {
-                NavisElectronicsFilterClick(sender, e);
+                CooperationClick(sender, e);
             }
         }
 
@@ -30,8 +30,7 @@
         #region События
 
         public event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;
-        public event EventHandler NavisElectronicsFilterClick;
-        public event EventHandler KbNavisFilterClick;
+        public event EventHandler CooperationClick;
         public event EventHandler<TreeNodeMouseClickEventArgs> NodeMouseClick;
         public event EventHandler ApplyButtonClick;
         public event EventHandler ClearCooperationClick;
@@ -198,22 +197,6 @@
         }
 
 
-
-        private void GetDataNEButton_Click(object sender, EventArgs e)
-        {
-            if (NavisElectronicsFilterClick != null)
-            {
-                NavisElectronicsFilterClick(sender, e);
-            }
-        }
-
-        private void GetDataKBData_Click(object sender, EventArgs e)
-        {
-            if (KbNavisFilterClick != null)
-            {
-                KbNavisFilterClick(sender, e);
-            }
-        }
 
         private void ClearCooperationButton_Click(object sender, EventArgs e)
         {

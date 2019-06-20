@@ -36,6 +36,15 @@
         {
             return _myParameters[index];
         }
+
+        public int Count
+        {
+            get
+            {
+                return _myParameters.Count;
+            }
+        }
+
     }
 
 }

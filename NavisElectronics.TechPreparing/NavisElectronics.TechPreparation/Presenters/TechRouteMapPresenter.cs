@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TechRouteMapPresenter.cs" company="">
-//   
+// <copyright file="TechRouteMapPresenter.cs" company="NavisElectronics">
+//   ---
 // </copyright>
 // <summary>
 //   Класс-посредник, представитель для формы регистрации маршрутов
@@ -29,7 +29,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
     /// </summary>
-    public class TechRouteMapPresenter
+    public class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>>
     {
         /// <summary>
         /// Интерфейс представления
@@ -67,6 +67,11 @@ namespace NavisElectronics.TechPreparation.Presenters
         private TechRouteNode _techRouteNode;
 
         /// <summary>
+        /// Поле служит на передачи параметров
+        /// </summary>
+        private Parameter<IntermechTreeElement> _parameter;
+
+        /// <summary>
         /// Переменная, от чьего лица мы смотрим ведомость тех. маршрутов
         /// </summary>
         private Agent _mainManufacturer = null;
@@ -87,11 +92,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="agents">
         /// Существующие контрагенты
         /// </param>
-        public TechRouteMapPresenter(
-            ITechRouteMap view,
-            IntermechTreeElement element,
-            string agentFilter,
-            IDictionary<long, Agent> agents)
+        public TechRouteMapPresenter( ITechRouteMap view,  IntermechTreeElement element,  string agentFilter,  IDictionary<long, Agent> agents)
         {
             _view = view;
             _element = element;
@@ -464,6 +465,12 @@ namespace NavisElectronics.TechPreparation.Presenters
                     }
                 }
             }
+        }
+
+        public void Run(Parameter<IntermechTreeElement> parameter)
+        {
+            _parameter = parameter;
+            _view.Show();
         }
     }
 }
