@@ -19,7 +19,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
     public class FindNodePresenter
     {
-        public event EventHandler<TreeNodeAdv> SearchInitClick;
+        public event EventHandler<CooperationNode> SearchInitClick;
         public event EventHandler ViewClosing;
         private IFindNodeView _view;
         private readonly TreeViewAdv _treeView;
@@ -41,9 +41,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
         }
 
-        private void _view_NodeClick(object sender, TreeNodeAdv e)
+        private void _view_NodeClick(object sender, CooperationNode e)
         {
-            EventHandler<TreeNodeAdv> temp = SearchInitClick;
+            EventHandler<CooperationNode> temp = SearchInitClick;
             if (temp != null)
             {
                 temp(sender, e);
@@ -67,15 +67,8 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             }
 
-            foreach (TreeNodeAdv adv in list)
-            {
-                _view.FillListBox(list);
-            }
-        }
+            _view.FillListBox(list);
 
-        public string GetDesignation()
-        {
-            return _view.Designation;
         }
 
         public void Run()

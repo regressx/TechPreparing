@@ -1,5 +1,7 @@
 ﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
+    using System.Security.Cryptography;
+
     using Aga.Controls.Tree;
 
     using NavisElectronics.TechPreparation.Entities;
@@ -80,5 +82,17 @@
         /// Тех. задание
         /// </summary>
         public string TechTask { get; set; }
+
+        /// <summary>
+        /// Переопределяем ToString на отображение обозначения и наименования
+        /// </summary>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format($"{Designation} {Name}").Trim();
+
+        }
     }
 }

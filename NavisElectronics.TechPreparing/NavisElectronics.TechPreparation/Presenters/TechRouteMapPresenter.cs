@@ -192,7 +192,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private void View_RemoveInnerCooperation(object sender, ClipboardEventArgs e)
         {
-            SetParametersService parametersService = new SetParametersService(_element);
+            //SetParametersService parametersService = new SetParametersService(_element);
 
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (MyNode myNode in e.Nodes)
@@ -200,7 +200,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
 
-            parametersService.SetInnerCooperationValue(rows, false);
+            //parametersService.SetInnerCooperationValue(rows, false);
 
             Queue<MyNode> queue = new Queue<MyNode>();
             queue.Enqueue(_view.GetMainNode());
@@ -222,7 +222,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void View_SetInnerCooperation(object sender, ClipboardEventArgs e)
         {
-            SetParametersService parametersService = new SetParametersService(_element);
+            //SetParametersService parametersService = new SetParametersService(_element);
 
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (MyNode myNode in e.Nodes)
@@ -230,7 +230,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
 
-            parametersService.SetInnerCooperationValue(rows, true);
+            //parametersService.SetInnerCooperationValue(rows, true);
 
             // проходим по дереву и расставляем галки внутрипроизводственной кооперации уже на объекты View
             Queue<MyNode> queue = new Queue<MyNode>();

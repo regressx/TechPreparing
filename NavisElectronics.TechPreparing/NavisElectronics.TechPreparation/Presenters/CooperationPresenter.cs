@@ -18,7 +18,6 @@ namespace NavisElectronics.TechPreparation.Presenters
     using Intermech.Navigator;
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.Reports;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewInterfaces;
     using NavisElectronics.TechPreparation.ViewModels;
@@ -36,16 +35,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         private readonly ICooperationView _view;
 
         /// <summary>
-        /// Ссылка на сервис собирания Dataset из элемента дерева
-        /// </summary>
-        private readonly DataSetGatheringService _gatheringService;
-
-        /// <summary>
-        /// Ссылка на сервис для указания параметров элементов, таких как объем выборки и тех. запас
-        /// </summary>
-        private readonly SetParametersService _parametersService;
-
-        /// <summary>
         /// Модель для представления. Умеет строить дерево. 
         /// </summary>
         private readonly CooperationViewModel _model;
@@ -60,15 +49,11 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </summary>
         private IntermechTreeElement _root;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CooperationPresenter"/> class.
         /// </summary>
         /// <param name="view">
         /// Интерфейс окна
-        /// </param>
-        /// <param name="oldElement">
-        /// Главный элемент самого полного дерева
         /// </param>
         /// <param name="model">
         /// The model.
@@ -89,10 +74,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetParametersClick += _view_SetParametersClick;
             _view.PutDownCooperation += _view_PutDownCooperation;
             _view.SearchInArchiveClick += _view_SearchInArchiveClick;
-            _view.FindInTreeClick += _view_FindInTreeClick;
             _view.GlobalSearchClick += _view_GlobalSearchClick;
             _view.SetTechTaskClick += View_SetTechTaskClick;
-            _view.SetPcbClick += View_SetPcbClick;
+            _view.SetPcbClick += ViewSetPcbClick;
         }
 
         /// <summary>
@@ -104,7 +88,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="e">
         /// The e.
         /// </param>
-        private void View_SetPcbClick(object sender, MultipleNodesSelectedEventArgs e)
+        private void ViewSetPcbClick(object sender, MultipleNodesSelectedEventArgs e)
         {
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (CooperationNode myNode in e.SelectedNodes)
@@ -123,30 +107,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             foreach (CooperationNode myNode in e.SelectedNodes)
             {
                 myNode.IsPcb = true;
-            }
-        }
-
-        /// <summary>
-        /// Обработчик события нажатия кнопки создания комплектовочной карты на форме
-        /// </summary>
-        /// <param name="sender">
-        /// отправитель
-        /// </param>
-        /// <param name="e">
-        /// Набор параметров
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Выбрасываем исключение, если агрумент внутри пустой
-        /// </exception>
-        private void View_CreateCompleteListClick(object sender, MultipleNodesSelectedEventArgs e)
-        {
-            if (e.SelectedNodes == null)
-            {
-                throw new ArgumentNullException("e");
-            }
-            foreach (CooperationNode cooperationNode in e.SelectedNodes)
-            {
-                _model.CreateReport(cooperationNode, cooperationNode.Name, ReportType.CompleteList, DocumentType.Intermech);
             }
         }
 
@@ -217,12 +177,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _presenter.ViewClosing -= Presenter_ViewClosing;
         }
 
-        private void _view_FindInTreeClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Presenter_SearchInitClick(object sender, TreeNodeAdv e)
+        private void Presenter_SearchInitClick(object sender, CooperationNode e)
         {
             _view.JumpToNode(e);
         }
@@ -257,7 +212,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_CheckListOfCooperation(object sender, System.EventArgs e)
         {
-            _model.CheckReady(_view.GetMainNode());
+            //_model.CheckReady(_root);
         }
 
         private void _view_DeleteNoteClick(object sender, MultipleNodesSelectedEventArgs e)
@@ -308,7 +263,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                     {
                         myNode.Note = notePresenter.GetNote();
                     }
-
                 }
             }
 
@@ -348,7 +302,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             _model.SetCooperationValue(_root, rows, cooperationFlag);
 
             Queue<CooperationNode> queue = new Queue<CooperationNode>();
-            queue.Enqueue(_view.GetMainNode());
+
+            foreach (CooperationNode node in _view.GetMainNodes())
+            {
+                queue.Enqueue(node);
+            }
+
             while (queue.Count > 0)
             {
                 CooperationNode nodeFromQueue = queue.Dequeue();
@@ -373,12 +332,14 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
 
-            _parametersService.SetParameters(rows,stockRate,sampleSize);
-
+            _model.SetParameters(_root, rows, stockRate, sampleSize);
 
 
             Queue<CooperationNode> queue = new Queue<CooperationNode>();
-            queue.Enqueue(_view.GetMainNode());
+            foreach (CooperationNode node in _view.GetMainNodes())
+            {
+                queue.Enqueue(node);
+            }
             while (queue.Count > 0)
             {
                 CooperationNode nodeFromQueue = queue.Dequeue();
@@ -406,10 +367,13 @@ namespace NavisElectronics.TechPreparation.Presenters
             {
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
-            _parametersService.SetTechProcess(rows, techProcess);
+            _model.SetTechProcess(_root, rows, techProcess);
 
             Queue<CooperationNode> queue = new Queue<CooperationNode>();
-            queue.Enqueue(_view.GetMainNode());
+            foreach (CooperationNode node in _view.GetMainNodes())
+            {
+                queue.Enqueue(node);
+            }
             while (queue.Count > 0)
             {
                 CooperationNode nodeFromQueue = queue.Dequeue();

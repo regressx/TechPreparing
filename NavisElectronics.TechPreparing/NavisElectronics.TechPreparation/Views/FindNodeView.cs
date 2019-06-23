@@ -7,6 +7,7 @@
     using Aga.Controls.Tree;
 
     using NavisElectronics.TechPreparation.ViewInterfaces;
+    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
     public partial class FindNodeView : Form, IFindNodeView
     {
@@ -16,7 +17,7 @@
         }
 
         public event EventHandler FindButtonClick;
-        public event EventHandler<TreeNodeAdv> NodeClick;
+        public event EventHandler<CooperationNode> NodeClick;
 
         public string Designation
         {
@@ -27,9 +28,10 @@
         public void FillListBox(IList<TreeNodeAdv> list)
         {
             listBox1.Items.Clear();
+            int index = 0;
             foreach (TreeNodeAdv advNode in list)
             {
-                listBox1.Items.Add(advNode);
+                listBox1.Items.Add((CooperationNode)advNode.Tag);
             }
         }
 
@@ -47,7 +49,7 @@
             {
                 if (NodeClick != null)
                 {
-                    NodeClick(sender, listBox1.SelectedItem as TreeNodeAdv);
+                    NodeClick(sender, listBox1.SelectedItem as CooperationNode);
                 }
             }
         }

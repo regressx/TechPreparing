@@ -227,7 +227,6 @@
     <Compile Include="Reports\IReport.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Services\CooperationSetter.cs" />
-    <Compile Include="Services\SetParametersService.cs" />
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="ViewInterfaces\ICooperationView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />

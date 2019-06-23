@@ -1,6 +1,7 @@
 ﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
+    using System.Collections.Generic;
 
     using Aga.Controls.Tree;
 
@@ -42,11 +43,12 @@
         /// </summary>
         void Show();
 
-        CooperationNode GetMainNode();
-
         TreeViewAdv GetTreeView();
-        void JumpToNode(TreeNodeAdv cooperationNode);
+
+        void JumpToNode(CooperationNode cooperationNode);
 
         void SetWindowCaption(string name);
+
+        ICollection<CooperationNode> GetMainNodes();
     }
 }

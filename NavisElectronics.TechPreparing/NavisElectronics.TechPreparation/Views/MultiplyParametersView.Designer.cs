@@ -38,22 +38,24 @@
             // 
             // applyButton
             // 
+            this.applyButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.applyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.applyButton.Location = new System.Drawing.Point(3, 246);
+            this.applyButton.Location = new System.Drawing.Point(121, 246);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 0;
-            this.applyButton.Text = "button1";
+            this.applyButton.TabIndex = 1;
+            this.applyButton.Text = "Принять";
             this.applyButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(202, 246);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "button2";
+            this.cancelButton.TabIndex = 2;
+            this.cancelButton.Text = "Закрыть";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
@@ -83,7 +85,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(393, 237);
-            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.TabIndex = 0;
             // 
             // MultiplyParametersView
             // 
@@ -93,6 +95,7 @@
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(399, 273);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MultiplyParametersView";
             this.Text = "MultiplyParametersView";
             this.tableLayoutPanel1.ResumeLayout(false);

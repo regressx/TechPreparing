@@ -97,36 +97,78 @@ namespace NavisElectronics.TechPreparation.Views
         /// </summary>
         public event EventHandler GlobalSearchClick;
 
+        /// <summary>
+        /// Событие установки ТЗ
+        /// </summary>
         public event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
+
+        /// <summary>
+        /// Установка флага печатной платы
+        /// </summary>
         public event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
+
+        /// <summary>
+        /// Раскрыть все узлы
+        /// </summary>
         public event EventHandler ExpandAllNodesClick;
+
+        /// <summary>
+        /// Скрыть все узлы
+        /// </summary>
         public event EventHandler CollapseAllNodesClick;
 
+        /// <summary>
+        /// Заполняем дерево моделью дерева
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
         public void FillTree(TreeModel model)
         {
             treeViewAdv1.Model = null;
             treeViewAdv1.Model = model;
         }
 
-        public CooperationNode GetMainNode()
-        {
-            CooperationNode node = treeViewAdv1.Root.Children[0].Tag as CooperationNode;
-            return node;
-        }
-
+        /// <summary>
+        /// Получить отображение дерева
+        /// </summary>
+        /// <returns>
+        /// The <see cref="TreeViewAdv"/>.
+        /// </returns>
         public TreeViewAdv GetTreeView()
         {
             return treeViewAdv1;
         }
 
-        public void JumpToNode(TreeNodeAdv cooperationNode)
+        /// <summary>
+        /// Прыгнуть на указанный узел
+        /// </summary>
+        /// <param name="cooperationNode">
+        /// The cooperation node.
+        /// </param>
+        public void JumpToNode(CooperationNode cooperationNode)
         {
-            treeViewAdv1.SelectedNode = cooperationNode;
+            TreeNodeAdv nodeToFind = treeViewAdv1.FindNodeByTag(cooperationNode);
+            treeViewAdv1.SelectedNode = nodeToFind;
+            treeViewAdv1.EnsureVisible(nodeToFind);
+
         }
 
         public void SetWindowCaption(string name)
         {
             this.Text = "Фильтр по организации " + name;
+        }
+
+        public ICollection<CooperationNode> GetMainNodes()
+        {
+            IReadOnlyCollection<TreeNodeAdv> collection = treeViewAdv1.Root.Children[0].Children;
+            IList<CooperationNode> nodes = new List<CooperationNode>();
+            foreach (TreeNodeAdv nodeAdv in collection)
+            {
+                nodes.Add((CooperationNode)nodeAdv.Tag);
+            }
+
+            return nodes;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -262,20 +304,13 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void SetTechTaskMenuItem_Click(object sender, EventArgs e)
         {
-            if (SetTechTaskClick != null)
-            {
-                CooperationNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as CooperationNode;
-                SetTechTaskClick(sender, new MultipleNodesSelectedEventArgs(new List<CooperationNode>() { selectedNode }));
-            }
+
+            CallEvent(SetTechTaskClick, sender);
         }
 
         private void SetPcbMenuItem_Click(object sender, EventArgs e)
         {
-            if (SetPcbClick != null)
-            {
-                CooperationNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as CooperationNode;
-                SetPcbClick(sender, new MultipleNodesSelectedEventArgs(new List<CooperationNode>() { selectedNode }));
-            }
+            CallEvent(SetPcbClick, sender);
         }
     }
 }

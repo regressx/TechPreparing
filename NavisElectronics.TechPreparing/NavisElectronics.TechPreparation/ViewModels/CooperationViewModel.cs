@@ -11,10 +11,8 @@ namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml;
     using Aga.Controls.Tree;
     using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Reports;
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
@@ -25,17 +23,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
     {
         private readonly OpenFolderService _openFolderService;
 
-        private readonly ReportService _reportService;
-
-        public CooperationViewModel(OpenFolderService openFolderService, ReportService reportService)
+        public CooperationViewModel(OpenFolderService openFolderService)
         {
             _openFolderService = openFolderService;
-            _reportService = reportService;
-        }
-
-        public void CreateReport(CooperationNode node, string name, ReportType reportType, DocumentType documentType)
-        {
-            _reportService.CreateReport(node, name, reportType, DocumentType.Intermech, null);
         }
 
         /// <summary>
@@ -169,79 +159,79 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <exception cref="FileNotFoundException"></exception>
         public void CheckReady(CooperationNode treeElement)
         {
-            ICollection<string> dependencies = new List<string>();
-            try
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load("Designations.xml");
+            //ICollection<string> dependencies = new List<string>();
+            //try
+            //{
+            //    XmlDocument xmlDoc = new XmlDocument();
+            //    xmlDoc.Load("Designations.xml");
 
-                XmlElement mainXmlElement = xmlDoc.DocumentElement;
+            //    XmlElement mainXmlElement = xmlDoc.DocumentElement;
 
-                foreach (XmlNode node in mainXmlElement.ChildNodes)
-                {
-                    dependencies.Add(node.Attributes["BeginWith"].Value);
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileNotFoundException("Не найден файл Designations.xml");
-            }
+            //    foreach (XmlNode node in mainXmlElement.ChildNodes)
+            //    {
+            //        dependencies.Add(node.Attributes["BeginWith"].Value);
+            //    }
+            //}
+            //catch (FileNotFoundException)
+            //{
+            //    throw new FileNotFoundException("Не найден файл Designations.xml");
+            //}
 
-            Queue<CooperationNode> queue = new Queue<CooperationNode>();
-            queue.Enqueue(treeElement);
-            while (queue.Count > 0)
-            {
-                CooperationNode elementFromQueue = queue.Dequeue();
-                elementFromQueue.Error = false;
-                if (elementFromQueue.Designation != null)
-                {
-                    string cuttedDesignation = CutTheDesignation(elementFromQueue.Designation);
-                    foreach (string s in dependencies)
-                    {
-                        if (cuttedDesignation.StartsWith(s))
-                        {
-                            if (!elementFromQueue.CooperationFlag)
-                            {
-                                elementFromQueue.Error = true;
-                            }
-                            break;
-                        }
-                    }
-                }
+            //Queue<CooperationNode> queue = new Queue<CooperationNode>();
+            //queue.Enqueue(treeElement);
+            //while (queue.Count > 0)
+            //{
+            //    CooperationNode elementFromQueue = queue.Dequeue();
+            //    elementFromQueue.Error = false;
+            //    if (elementFromQueue.Designation != null)
+            //    {
+            //        string cuttedDesignation = CutTheDesignation(elementFromQueue.Designation);
+            //        foreach (string s in dependencies)
+            //        {
+            //            if (cuttedDesignation.StartsWith(s))
+            //            {
+            //                if (!elementFromQueue.CooperationFlag)
+            //                {
+            //                    elementFromQueue.Error = true;
+            //                }
+            //                break;
+            //            }
+            //        }
+            //    }
 
-                if (elementFromQueue.CooperationFlag)
-                {
-                    if (elementFromQueue.SampleSize == string.Empty)
-                    {
-                        elementFromQueue.Error = true;
-                    }
+            //    if (elementFromQueue.CooperationFlag)
+            //    {
+            //        if (elementFromQueue.SampleSize == string.Empty)
+            //        {
+            //            elementFromQueue.Error = true;
+            //        }
 
-                    if (elementFromQueue.StockRate == string.Empty)
-                    {
-                        elementFromQueue.Error = true;
-                    }
-                    else
-                    {
-                        if (elementFromQueue.StockRate.Contains("-"))
-                        {
-                            elementFromQueue.Error = true;
-                        }
-                    }
+            //        if (elementFromQueue.StockRate == string.Empty)
+            //        {
+            //            elementFromQueue.Error = true;
+            //        }
+            //        else
+            //        {
+            //            if (elementFromQueue.StockRate.Contains("-"))
+            //            {
+            //                elementFromQueue.Error = true;
+            //            }
+            //        }
 
-                    if (elementFromQueue.TechProcessReference == null)
-                    {
-                        elementFromQueue.Error = true;
-                    }
-                }
+            //        if (elementFromQueue.TechProcessReference == null)
+            //        {
+            //            elementFromQueue.Error = true;
+            //        }
+            //    }
 
-                if (elementFromQueue.Nodes.Count > 0)
-                {
-                    foreach (Node child in elementFromQueue.Nodes)
-                    {
-                        queue.Enqueue((CooperationNode)child);
-                    }
-                }
-            }
+            //    if (elementFromQueue.Nodes.Count > 0)
+            //    {
+            //        foreach (Node child in elementFromQueue.Nodes)
+            //        {
+            //            queue.Enqueue((CooperationNode)child);
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>
@@ -294,5 +284,75 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
+        public void SetParameters(IntermechTreeElement root, IList<IntermechTreeElement> elements, double stockRate, string sampleSize)
+        {
+            foreach (IntermechTreeElement element in elements)
+            {
+                SetParametersInternal(root, element, stockRate, sampleSize);
+            }
+        }
+
+        public void SetTechProcess(IntermechTreeElement root, IList<IntermechTreeElement> elements, TechProcess techProcess)
+        {
+            foreach (IntermechTreeElement element in elements)
+            {
+                SetTechProcessReference(root, element, techProcess);
+            }
+        }
+
+        internal void SetTechProcessReference(IntermechTreeElement root, IntermechTreeElement element, TechProcess techProcess)
+        {
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            IList<IntermechTreeElement> allElementsFromTree = root.Find(element.ObjectId);
+            
+
+            foreach (IntermechTreeElement treeElement in allElementsFromTree)
+            {
+                queue.Enqueue(treeElement);
+            }
+
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.TechProcessReference = techProcess;
+                
+                // и этих тоже, это дочерние элементы узла из очереди
+                if (elementFromQueue.Children.Count > 0)
+                {
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+        }
+
+        internal void SetParametersInternal(IntermechTreeElement root, IntermechTreeElement element, double stockRate, string sampleSize)
+        {
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            IList<IntermechTreeElement> allElementsFromTree = root.Find(element.ObjectId);
+            
+
+            foreach (IntermechTreeElement treeElement in allElementsFromTree)
+            {
+                queue.Enqueue(treeElement);
+            }
+
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.StockRate = stockRate;
+                elementFromQueue.SampleSize = sampleSize;
+                
+                // и этих тоже, это дочерние элементы узла из очереди
+                if (elementFromQueue.Children.Count > 0)
+                {
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+        }
     }
 }

@@ -43,7 +43,6 @@
             this.myContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showIntermechCardButton = new System.Windows.Forms.ToolStripMenuItem();
             this.GoToTheArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.findInTreeNodeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.CooperationButton = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteCoopButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -202,7 +201,6 @@
             this.myContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showIntermechCardButton,
             this.GoToTheArchiveButton,
-            this.findInTreeNodeButton,
             this.toolStripSeparator6,
             this.CooperationButton,
             this.DeleteCoopButton,
@@ -233,15 +231,6 @@
             this.GoToTheArchiveButton.Size = new System.Drawing.Size(244, 22);
             this.GoToTheArchiveButton.Text = "Перейти к архиву предприятия";
             this.GoToTheArchiveButton.Click += new System.EventHandler(this.GoToTheArchiveButton_Click);
-            // 
-            // findInTreeNodeButton
-            // 
-            this.findInTreeNodeButton.Enabled = false;
-            this.findInTreeNodeButton.Name = "findInTreeNodeButton";
-            this.findInTreeNodeButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.findInTreeNodeButton.Size = new System.Drawing.Size(244, 22);
-            this.findInTreeNodeButton.Text = "Найти в узле";
-            this.findInTreeNodeButton.Click += new System.EventHandler(this.findInTreeButton_Click);
             // 
             // toolStripSeparator6
             // 
@@ -653,7 +642,6 @@
         private Aga.Controls.Tree.NodeControls.NodeCheckBox coopCheckBox;
         private Aga.Controls.Tree.TreeColumn pcbColumn;
         private System.Windows.Forms.ToolStripMenuItem GoToTheArchiveButton;
-        private System.Windows.Forms.ToolStripMenuItem findInTreeNodeButton;
         private System.Windows.Forms.ToolStripButton CheckingModeOn;
         private System.Windows.Forms.ToolStripButton SearchInTreeButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

@@ -1,50 +1,52 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ParametersView.cs" company="NavisElectronics">
+//   ---
+// </copyright>
+// <summary>
+//   The parameters view.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Views
 {
     using System.Windows.Forms;
 
     using NavisElectronics.TechPreparation.ViewInterfaces;
 
+    /// <summary>
+    /// The parameters view.
+    /// </summary>
     public partial class ParametersView : Form, IParametersView
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParametersView"/> class.
+        /// </summary>
         public ParametersView()
         {
             InitializeComponent();
-            textBox1.Select();
+            sampleSizeNumericUpDown.Select();
         }
 
+        /// <summary>
+        /// The get stock rate.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="double"/>.
+        /// </returns>
         public double GetStockRate()
         {
-            string str = textBox1.Text.Replace('.', ',');
-            return double.Parse(str);
+            return (double)stockRateNumericUpDown.Value;
         }
 
+        /// <summary>
+        /// The get sample size.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         public string GetSampleSize()
         {
-            return string.Format("{0} %", textBox2.Text);
-        }
-
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                if (e.KeyChar == (char)Keys.Back)
-                {
-                    e.Handled = false;
-                }
-            }
-        }
-
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsDigit(e.KeyChar) || e.KeyChar == ',' || e.KeyChar == (char)Keys.Back)
-            {
-                e.Handled = false;
-            }
-            else
-            {
-                e.Handled = true;
-            }
+            return string.Format($"{ sampleSizeNumericUpDown.Value} %");
         }
     }
 }
