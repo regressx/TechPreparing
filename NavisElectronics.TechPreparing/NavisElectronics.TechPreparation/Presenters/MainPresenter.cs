@@ -94,7 +94,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.NodeMouseClick += _mainView_NodeMouseClick;
             _mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
             _mainView.CellValueChanged += _mainView_CellValueChanged;
-            _mainView.CooperationClick += _mainView_NavisElectronicsFilterClick;
+            _mainView.CooperationClick += _mainView_CooperationClick;
             _mainView.ClearCooperationClick += _mainView_ClearCooperationClick;
             _mainView.EditTechRoutesClick += _mainView_EditTechRoutesClick;
             _mainView.UpdateClick += _mainView_UpdateClick;
@@ -335,30 +335,23 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
+
+            // корень
             parameter.AddParameter(_rootElement);
+            
+            // кто главный
             parameter.AddParameter(new IntermechTreeElement()
                                        {
                                            Agent = ((int)AgentsId.Kb).ToString()
                                        });
+            
+            // по кому фильтруем
             parameter.AddParameter(new IntermechTreeElement()
                                        {
                                            Name = filterAgent.Name,
                                            Agent = filterAgent.Id.ToString()
                                        });
             presenter.Run(parameter);
-
-
-            //using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
-            //{
-            //    if (manufacturerView.ShowDialog() == DialogResult.OK)
-            //    {
-            //        //string filter = manufacturerView.SelectedAgentId;
-            //        //TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, true);
-            //        //TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, _mainView.GetMainTreeElement().Tag as IntermechTreeElement, filter, _agents);
-            //        //presenter.Run();
-            //    }
-            //}
-
         }
 
         private void _mainView_ClearCooperationClick(object sender, EventArgs e)
@@ -389,7 +382,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.FillAgent(_globalTreeElement.Agent);
         }
 
-        private void _mainView_NavisElectronicsFilterClick(object sender, EventArgs e)
+        private void _mainView_CooperationClick(object sender, EventArgs e)
         {
             Parameter<Agent> agentParameter = new Parameter<Agent>();
 

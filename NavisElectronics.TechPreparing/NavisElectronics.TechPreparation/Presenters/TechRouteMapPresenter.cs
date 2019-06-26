@@ -39,12 +39,12 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <summary>
         /// Главный элемент дерева
         /// </summary>
-        private readonly IntermechTreeElement _element;
+        private IntermechTreeElement _root;
 
         /// <summary>
         /// Строка-фильтр для агентов
         /// </summary>
-        private readonly string _agentFilter;
+        private string _agentFilter;
 
         /// <summary>
         /// Словарик, чтобы быстро выгребать данные по агентам
@@ -92,11 +92,9 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="agents">
         /// Существующие контрагенты
         /// </param>
-        public TechRouteMapPresenter( ITechRouteMap view,  IntermechTreeElement element,  string agentFilter,  IDictionary<long, Agent> agents)
+        public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model)
         {
             _view = view;
-            _element = element;
-            _agentFilter = agentFilter;
             _agents = agents;
             _view.EditTechRouteClick += _view_EditTechRouteClick;
             _view.Load += _view_Load;
@@ -111,9 +109,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.SetNodesToComplectClick += _view_SetNodesToComplectClick;
             _view.CreateCooperationList += _view_CreateCooperationList;
-            _model = new TechRoutesMapModel();
-            _showFileManager = new ShowFileManager();
-
+            _model = model;
         }
 
         private void _view_CreateCooperationList(object sender, EventArgs e)
@@ -308,7 +304,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_EditClick(object sender, SaveClickEventArgs e)
         {
-
             IList<MyNode> elements = _view.GetSelectedRows().ToList();
             string note = string.Empty;
             TechAgentDataExtractor dataExtractor = new TechAgentDataExtractor();
@@ -374,7 +369,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 _techRouteNode.Children.RemoveAt(1);
                 _mainManufacturer = _agents[(long)AgentsId.Kb];
             }
-            MyNode mainNode = _model.BuildTree(_element, _techRouteNode, _agentFilter, _agents);
+            MyNode mainNode = _model.BuildTree(_root, _techRouteNode, _agentFilter, _agents);
             treeModel.Nodes.Add(mainNode);
             _view.SetTreeModel(treeModel);
 
@@ -469,7 +464,9 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
-            _parameter = parameter;
+            _root = parameter.GetParameter(0);
+            _agentFilter = parameter.GetParameter(2).Agent;
+            //_mainManufacturer = parameter.GetParameter(1).Agent;
             _view.Show();
         }
     }

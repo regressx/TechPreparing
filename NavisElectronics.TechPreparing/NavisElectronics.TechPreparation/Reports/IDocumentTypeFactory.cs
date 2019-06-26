@@ -1,11 +1,21 @@
-﻿namespace NavisElectronics.TechPreparation.Reports
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IDocumentTypeFactory.cs" company="NavisElectronics">
+//   ---
+// </copyright>
+// <summary>
+//   Defines the IDocumentTypeFactory type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace NavisElectronics.TechPreparation.Reports
 {
     using Aga.Controls.Tree;
 
-    using NavisElectronics.TechPreparation.Entities;
-
+    /// <summary>
+    /// The DocumentTypeFactory interface.
+    /// </summary>
     public interface IDocumentTypeFactory
     {
-        void Create(Node mainElement, string name, Agent currentManufacturer);
+        void Create(Node mainElement, string name);
     }
 }

@@ -30,7 +30,6 @@
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.FindNextButton = new System.Windows.Forms.Button();
-            this.CloseButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
@@ -44,22 +43,13 @@
             // 
             // FindNextButton
             // 
-            this.FindNextButton.Location = new System.Drawing.Point(274, 236);
+            this.FindNextButton.Location = new System.Drawing.Point(321, 236);
             this.FindNextButton.Name = "FindNextButton";
             this.FindNextButton.Size = new System.Drawing.Size(88, 23);
             this.FindNextButton.TabIndex = 1;
             this.FindNextButton.Text = "Найти все вхождения";
             this.FindNextButton.UseVisualStyleBackColor = true;
             this.FindNextButton.Click += new System.EventHandler(this.FindAllButton_Click);
-            // 
-            // CloseButton
-            // 
-            this.CloseButton.Location = new System.Drawing.Point(368, 236);
-            this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(88, 23);
-            this.CloseButton.TabIndex = 2;
-            this.CloseButton.Text = "Закрыть";
-            this.CloseButton.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -86,10 +76,11 @@
             this.ClientSize = new System.Drawing.Size(731, 271);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.FindNextButton);
             this.Controls.Add(this.textBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FindNodeView";
             this.Text = "Поиск узла по обозначению";
             this.ResumeLayout(false);
@@ -101,7 +92,6 @@
 
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button FindNextButton;
-        private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
     }

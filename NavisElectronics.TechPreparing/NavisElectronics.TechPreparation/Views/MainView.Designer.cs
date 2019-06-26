@@ -54,6 +54,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -155,7 +157,9 @@
             this.SetTechWithdrawalButton,
             this.toolStripSeparator1,
             this.UpdateButton,
-            this.CheckReadyButton});
+            this.CheckReadyButton,
+            this.toolStripLabel1,
+            this.toolStripProgressBar1});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(894, 25);
@@ -340,6 +344,17 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(894, 178);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(83, 22);
+            this.toolStripLabel1.Text = "Не сохранено";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -397,5 +412,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton CheckReadyButton;
         private System.Windows.Forms.ToolStripButton cooperationButton;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }

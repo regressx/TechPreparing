@@ -21,6 +21,6 @@
         /// <param name="agent">
         /// Кто делает
         /// </param>
-        void Create(Node mainElement, string path, Agent agent);
+        void Create(Node mainElement, string path);
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TechRoutesMapModel.cs" company="">
-//   
+// <copyright file="TechRoutesMapModel.cs" company="NavisElectronics">
+//   ---
 // </copyright>
 // <summary>
 //   Defines the TechRoutesMapModel type.
@@ -19,28 +19,77 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using NavisElectronics.TechPreparation.Services;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
+    /// <summary>
+    /// The tech routes map model.
+    /// </summary>
     public class TechRoutesMapModel
     {
+        /// <summary>
+        /// The _data extractor.
+        /// </summary>
         private TechAgentDataExtractor _dataExtractor;
+
+        /// <summary>
+        /// The _clipboard manager.
+        /// </summary>
         private ClipboardManager _clipboardManager;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechRoutesMapModel"/> class.
+        /// </summary>
         public TechRoutesMapModel()
         {
             _dataExtractor = new TechAgentDataExtractor();
             _clipboardManager = new ClipboardManager();
         }
 
+        /// <summary>
+        /// The paste.
+        /// </summary>
+        /// <param name="nodes">
+        /// The nodes.
+        /// </param>
+        /// <param name="agentFilter">
+        /// The agent filter.
+        /// </param>
         public void Paste(ICollection<MyNode> nodes, string agentFilter)
         {
-            _clipboardManager.Paste(nodes,agentFilter);
+            _clipboardManager.Paste(nodes, agentFilter);
         }
 
+        /// <summary>
+        /// The copy.
+        /// </summary>
+        /// <param name="nodes">
+        /// The nodes.
+        /// </param>
+        /// <param name="agentFilter">
+        /// The agent filter.
+        /// </param>
         public void Copy(ICollection<MyNode> nodes, string agentFilter)
         {
             _clipboardManager.Copy(nodes, agentFilter);
         }
 
-        public MyNode BuildTree(IntermechTreeElement element, TechRouteNode techRouteNode,
-            string agentFilter, IDictionary<long, Agent> agents)
+        /// <summary>
+        /// The build tree.
+        /// </summary>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <param name="techRouteNode">
+        /// The tech route node.
+        /// </param>
+        /// <param name="agentFilter">
+        /// The agent filter.
+        /// </param>
+        /// <param name="agents">
+        /// The agents.
+        /// </param>
+        /// <returns>
+        /// The <see cref="MyNode"/>.
+        /// </returns>
+        public MyNode BuildTree(IntermechTreeElement element, TechRouteNode techRouteNode,  string whoIsMainInOrder, string agentFilter, IDictionary<long, Agent> agents)
         {
             MyNode mainNode = new MyNode(element.Id.ToString());
             mainNode.Id = element.Id;
@@ -55,7 +104,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             mainNode.CooperationFlag = element.CooperationFlag;
             mainNode.InnerCooperation = element.InnerCooperation;
             mainNode.ContainsInnerCooperation = element.ContainsInnerCooperation;
-            mainNode.Agent = string.Empty;
+            mainNode.Agent = element.Agent == null ? string.Empty : element.Agent;
             mainNode.Tag = element;
             mainNode.IsToComplect = element.IsToComplect;
             mainNode.TechPreparing = element.TechTask;
@@ -215,12 +264,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     BuildNodeRecursive(childNode, child, techRouteNode, agentFilter, agents);
                 }
             }
-        }
-
-
-        private void BuildNodeRecursive(MyNode mainNode, IntermechTreeElement element, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
-        {
-            BuildNodeRecursive(mainNode, element, techRouteNode, string.Empty, agents);
         }
 
         /// <summary>

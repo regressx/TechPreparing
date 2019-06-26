@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportIntermech.cs" company="">
-//   
+// <copyright file="ReportIntermech.cs" company="NavisElectronics">
+//   ---
 // </copyright>
 // <summary>
 //   Класс для получения отчета в IPS
@@ -22,8 +22,22 @@ namespace NavisElectronics.TechPreparation.Reports
     /// </summary>
     public class ReportIntermech : IReport
     {
-        private ReportType _reportType;
+        /// <summary>
+        /// The _report type.
+        /// </summary>
+        private readonly ReportType _reportType;
+
+        /// <summary>
+        /// The _document type factory.
+        /// </summary>
         private IDocumentTypeFactory _documentTypeFactory;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReportIntermech"/> class.
+        /// </summary>
+        /// <param name="reportType">
+        /// The report type.
+        /// </param>
         public ReportIntermech(ReportType reportType)
         {
             _reportType = reportType;
@@ -35,7 +49,7 @@ namespace NavisElectronics.TechPreparation.Reports
         /// <param name="mainElement"></param>
         /// <param name="path"></param>
         /// <param name="agent"></param>
-        public void Create(Node mainElement, string path, Agent agent)
+        public void Create(Node mainElement, string path)
         {
             switch (_reportType)
             {
@@ -59,7 +73,7 @@ namespace NavisElectronics.TechPreparation.Reports
                     throw new NotImplementedException("Метод выгрузки данных в эту ведомость еще не был разработан");
 
             }
-            _documentTypeFactory.Create(mainElement, path, agent);
+            _documentTypeFactory.Create(mainElement, path);
         }
     }
 }

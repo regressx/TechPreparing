@@ -42,7 +42,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
         /// <param name="currentManufacturer">
         /// Текущий производитель. Для ведомости кооперации можно задать пустым
         /// </param>
-        public void Create(Node mainElement, string name, Agent currentManufacturer)
+        public void Create(Node mainElement, string name)
         {
             MyNode myNode = mainElement as MyNode;
 

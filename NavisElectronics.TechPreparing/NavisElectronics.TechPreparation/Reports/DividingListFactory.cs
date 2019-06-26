@@ -18,8 +18,6 @@
     /// </summary>
     public class DividingListFactory : IDocumentTypeFactory
     {
-        private Agent _mainAgent;
-
         /// <summary>
         /// id шаблона разделительной ведомости из IPS
         /// </summary>
@@ -37,10 +35,11 @@
         /// <param name="currentManufacturer">
         /// Производитель, от лица которого идет формирование ведомости
         /// </param>
-        public void Create(Node mainElement, string name, Agent currentManufacturer)
+        public void Create(Node mainElement, string name)
         {
             MyNode myNode = mainElement as MyNode;
-            _mainAgent = currentManufacturer;
+            IntermechTreeElement root = (IntermechTreeElement)myNode.Tag;
+            string mainAgent = root.Agent;
             long newObjectId = -1;
             IDBObject myTestDbObject;
             using (SessionKeeper keeper = new SessionKeeper())
@@ -81,7 +80,7 @@
             // хочу заполнить графу производителя в заголовке, хочу заметить, что следует сделать это в копии шаблона документа, а не просто в документе
             TableData tableHeader = docTemplate.FindNode("TableHeader") as TableData;
             TextData manufacturerNode = tableHeader.FindNode("Manufacturer") as TextData;
-            manufacturerNode.AssignText(_mainAgent.Name, false, false, false);
+            manufacturerNode.AssignText(mainAgent, false, false, false);
 
 
             // получаю главную таблицу напрямую из документа

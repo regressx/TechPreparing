@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportService.cs" company="">
-//   
+// <copyright file="ReportService.cs" company="NavisElectronics">
+//   ---
 // </copyright>
 // <summary>
 //   Defines the ReportService type.
@@ -15,10 +15,32 @@ namespace NavisElectronics.TechPreparation.Reports
 
     using NavisElectronics.TechPreparation.Entities;
 
+    /// <summary>
+    /// The report service.
+    /// </summary>
     public class ReportService : IReportService
     {
-        public void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType,
-            Agent mainManufacturer)
+        /// <summary>
+        /// The create report.
+        /// </summary>
+        /// <param name="mainElement">
+        /// The main element.
+        /// </param>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <param name="reportType">
+        /// The report type.
+        /// </param>
+        /// <param name="documentType">
+        /// The document type.
+        /// </param>
+        /// <param name="mainManufacturer">
+        /// The main manufacturer.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
+        public void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType, Agent mainManufacturer)
         {
             if (path == null)
             {
@@ -40,16 +62,10 @@ namespace NavisElectronics.TechPreparation.Reports
 
             if (report != null)
             {
-                report.Create(mainElement, path, mainManufacturer);
+                report.Create(mainElement, path);
             }
 
         }
 
-    }
-
-    public interface IReportService
-    {
-        void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType,
-            Agent mainManufacturer);
     }
 }

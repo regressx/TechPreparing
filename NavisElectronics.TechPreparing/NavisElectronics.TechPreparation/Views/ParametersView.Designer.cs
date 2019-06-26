@@ -139,6 +139,8 @@
             this.ClientSize = new System.Drawing.Size(293, 135);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ParametersView";
             this.Text = "Задайте значения";
             this.tableLayoutPanel1.ResumeLayout(false);

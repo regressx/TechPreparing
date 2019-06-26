@@ -418,6 +418,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.FillTree(_model.GetModel(_parameter.GetParameter(0), _parameter.GetParameter(1).Agent, _parameter.GetParameter(2).Agent));
         }
 
+        /// <summary>
+        /// Отвечает за передачу параметров и запуск формы
+        /// </summary>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
             _parameter = parameter;
