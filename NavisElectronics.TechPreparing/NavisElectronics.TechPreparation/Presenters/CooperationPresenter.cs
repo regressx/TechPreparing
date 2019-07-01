@@ -16,13 +16,13 @@ namespace NavisElectronics.TechPreparation.Presenters
     using Intermech.Interfaces;
     using Intermech.Interfaces.Client;
     using Intermech.Navigator;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-    using NavisElectronics.TechPreparation.Views;
+    using Entities;
+    using EventArguments;
+    using Services;
+    using ViewInterfaces;
+    using ViewModels;
+    using ViewModels.TreeNodes;
+    using Views;
 
     /// <summary>
     /// Класс-посредник между логикой и представлением для ведомости кооперации

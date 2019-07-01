@@ -3,19 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-
     using Aga.Controls.Tree;
-
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Interfaces.Document;
     using Intermech.Kernel.Search;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Entities;
+    using Enums;
+    using ViewModels.TreeNodes;
 
     /// <summary>
     /// Класс для создания комплектовочной карты
@@ -44,7 +41,7 @@
         /// <param name="currentManufacturer">
         /// Производитель, от лица которого создается документ
         /// </param>
-        public void Create(Node mainElement, string name, Agent currentManufacturer)
+        public void Create(Node mainElement, string name)
         {
             MyNode nodeForReport = mainElement as MyNode;
             IntermechTreeElement root = nodeForReport.Tag as IntermechTreeElement;

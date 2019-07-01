@@ -15,16 +15,16 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Text;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.IO;
-    using NavisElectronics.TechPreparation.Reports;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-    using NavisElectronics.TechPreparation.Views;
+    using Entities;
+    using Enums;
+    using EventArguments;
+    using IO;
+    using Reports;
+    using Services;
+    using ViewInterfaces;
+    using ViewModels;
+    using ViewModels.TreeNodes;
+    using Views;
 
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
@@ -45,11 +45,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Строка-фильтр для агентов
         /// </summary>
         private string _agentFilter;
-
-        /// <summary>
-        /// Словарик, чтобы быстро выгребать данные по агентам
-        /// </summary>
-        private readonly IDictionary<long, Agent> _agents;
 
         /// <summary>
         /// Класс-логика для событий представления
@@ -74,7 +69,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <summary>
         /// Переменная, от чьего лица мы смотрим ведомость тех. маршрутов
         /// </summary>
-        private Agent _mainManufacturer = null;
+        private string _mainManufacturer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TechRouteMapPresenter"/> class. 
@@ -83,19 +78,12 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="view">
         /// Окно ведомости маршрутов
         /// </param>
-        /// <param name="element">
-        /// Главный элемент дерева
-        /// </param>
-        /// <param name="agentFilter">
-        /// Фильтр по изготовителю
-        /// </param>
-        /// <param name="agents">
-        /// Существующие контрагенты
+        /// <param name="model">
+        ///  модель для окна
         /// </param>
         public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model)
         {
             _view = view;
-            _agents = agents;
             _view.EditTechRouteClick += _view_EditTechRouteClick;
             _view.Load += _view_Load;
             _view.SaveClick += _view_SaveClick;
@@ -112,13 +100,22 @@ namespace NavisElectronics.TechPreparation.Presenters
             _model = model;
         }
 
+        /// <summary>
+        /// Метод создания ведомости кооперации
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private void _view_CreateCooperationList(object sender, EventArgs e)
         {
             ReportService reportService = new ReportService();
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
-                reportService.CreateReport(node, node.Name, ReportType.ListOfCooperation, DocumentType.Intermech, _mainManufacturer);
+                reportService.CreateReport(node, node.Name, ReportType.ListOfCooperation, DocumentType.Intermech);
             }
         }
 
@@ -262,7 +259,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
-                reportService.CreateReport(node, node.Name, ReportType.DividingList, DocumentType.Intermech, _mainManufacturer);
+                reportService.CreateReport(node, node.Name, ReportType.DividingList, DocumentType.Intermech);
             }
         }
 
@@ -281,7 +278,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
-                reportService.CreateReport(node, node.Name, ReportType.ListOfTechRoutes, DocumentType.Intermech, _mainManufacturer);
+                reportService.CreateReport(node, node.Name, ReportType.ListOfTechRoutes, DocumentType.Intermech);
             }
 
         }
@@ -362,22 +359,15 @@ namespace NavisElectronics.TechPreparation.Presenters
             if (_agentFilter == ((int)AgentsId.NavisElectronics).ToString())
             {
                 _techRouteNode.Children.RemoveAt(0);
-                _mainManufacturer = _agents[(long)AgentsId.NavisElectronics];
             }
             else
             {
                 _techRouteNode.Children.RemoveAt(1);
-                _mainManufacturer = _agents[(long)AgentsId.Kb];
             }
-            MyNode mainNode = _model.BuildTree(_root, _techRouteNode, _agentFilter, _agents);
+            MyNode mainNode = _model.BuildTree(_root, _techRouteNode, _agentFilter);
             treeModel.Nodes.Add(mainNode);
             _view.SetTreeModel(treeModel);
 
-        }
-
-        public void Run()
-        {
-            _view.Show();
         }
 
         private void _view_EditTechRouteClick(object sender, EditTechRouteEventArgs e)
@@ -462,11 +452,17 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
         }
 
+        /// <summary>
+        /// Передача параметров, запуск формы
+        /// </summary>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
             _root = parameter.GetParameter(0);
+            _mainManufacturer = parameter.GetParameter(1).Agent;
             _agentFilter = parameter.GetParameter(2).Agent;
-            //_mainManufacturer = parameter.GetParameter(1).Agent;
             _view.Show();
         }
     }

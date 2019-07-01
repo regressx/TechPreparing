@@ -40,7 +40,7 @@ namespace NavisElectronics.TechPreparation.Reports
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
-        public void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType, Agent mainManufacturer)
+        public void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType)
         {
             if (path == null)
             {

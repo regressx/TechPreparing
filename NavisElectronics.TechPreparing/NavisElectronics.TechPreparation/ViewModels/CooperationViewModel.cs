@@ -12,9 +12,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using System.Collections.Generic;
     using System.IO;
     using Aga.Controls.Tree;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Entities;
+    using Services;
+    using TreeNodes;
 
     /// <summary>
     /// Реализация модели для окна модуля Кооперации
@@ -31,8 +31,18 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <summary>
         /// Метод получения модели из входных данных
         /// </summary>
-        /// <param name="element"> Элемент дерева, полученный из базы данных</param>
-        /// <returns>Модель дерева для отображения</returns>
+        /// <param name="element">
+        /// Элемент дерева, полученный из базы данных
+        /// </param>
+        /// <param name="whoIsMainInOrder">
+        /// Кто главный в заказе
+        /// </param>
+        /// <param name="agentFilter">
+        /// The agent Filter.
+        /// </param>
+        /// <returns>
+        /// Модель дерева для отображения
+        /// </returns>
         public TreeModel GetModel(IntermechTreeElement element, string whoIsMainInOrder, string agentFilter)
         {
             TreeModel model = new TreeModel();

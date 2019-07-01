@@ -33,9 +33,6 @@ namespace NavisElectronics.TechPreparation.Reports
         /// <param name="documentType">
         /// The document type.
         /// </param>
-        /// <param name="mainManufacturer">
-        /// The main manufacturer.
-        /// </param>
-        void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType, Agent mainManufacturer);
+        void CreateReport(Node mainElement, string path, ReportType reportType, DocumentType documentType);
     }
 }

@@ -31,7 +31,7 @@
         /// </summary>
         private const int TemplateId = 1224285;
 
-        public void Create(Node node, string name, Agent currentManufacturer)
+        public void Create(Node node, string name) 
         {
             MyNode myNode = node as MyNode;
 

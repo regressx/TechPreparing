@@ -235,7 +235,7 @@
         {
             ReportService reportService = new ReportService();
             MyNode selectedNode = treeViewAdv.SelectedNode.Tag as MyNode;
-            reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.CompleteList, DocumentType.Intermech, null);
+            reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.CompleteList, DocumentType.Intermech);
         }
 
         private void createFullCompleteListMenuItem_Click(object sender, EventArgs e)
