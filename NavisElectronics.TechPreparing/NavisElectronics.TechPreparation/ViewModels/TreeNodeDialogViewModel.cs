@@ -19,7 +19,7 @@
         /// </returns>
         public MyNode BuildTree(IntermechTreeElement element)
         {
-            MyNode mainNode = new MyNode(element.Id.ToString());
+            MyNode mainNode = new MyNode();
             mainNode.Designation = element.Designation;
             mainNode.Name = element.Name;
             mainNode.Tag = element;
@@ -42,7 +42,7 @@
             {
                 foreach (IntermechTreeElement child in element.Children)
                 {
-                    MyNode childNode = new MyNode(child.Id.ToString());
+                    MyNode childNode = new MyNode();
                     childNode.Id = child.Id;
                     childNode.Designation = child.Designation;
                     childNode.Name = child.Name;

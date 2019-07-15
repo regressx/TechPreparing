@@ -154,7 +154,7 @@
 
         private MyNode CreateNewNode(MyNode template)
         {
-            MyNode node = new MyNode(string.Empty);
+            MyNode node = new MyNode();
             node.Agent = template.Agent;
             node.Note = template.Note;
             node.Designation = template.Designation;

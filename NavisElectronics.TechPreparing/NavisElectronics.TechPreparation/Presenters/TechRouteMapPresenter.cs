@@ -364,9 +364,8 @@ namespace NavisElectronics.TechPreparation.Presenters
             {
                 _techRouteNode.Children.RemoveAt(1);
             }
-            MyNode mainNode = _model.BuildTree(_root, _techRouteNode, _agentFilter);
-            treeModel.Nodes.Add(mainNode);
-            _view.SetTreeModel(treeModel);
+            TreeModel model = _model.GetTreeModel(_root, _mainManufacturer, _agentFilter);
+            _view.SetTreeModel(model);
 
         }
 

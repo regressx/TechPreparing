@@ -45,6 +45,7 @@ namespace NavisElectronics.TechPreparation
             Bind<ISelectManufacturerView>().To<SelectManufacturerView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
             Bind<ICooperationView>().To<CooperationView>();
+            Bind<ITechRouteMap>().To<TechRoutesMap>();
         }
     }
 }

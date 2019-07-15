@@ -102,7 +102,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             if (whoIsMainInOrder != agentFilter)
             {
 
-                ICollection<IntermechTreeElement> cooperationElements = new List<IntermechTreeElement>();
+                ICollection<IntermechTreeElement> elements = new List<IntermechTreeElement>();
                 Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
                 queue.Enqueue(element);
                 while (queue.Count > 0)
@@ -110,7 +110,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     IntermechTreeElement elementFromQueue = queue.Dequeue();
                     if (elementFromQueue.Agent == agentFilter)
                     {
-                        cooperationElements.Add(elementFromQueue);
+                        elements.Add(elementFromQueue);
                         continue;
                     }
 
@@ -121,38 +121,29 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
                 }
 
-                foreach (IntermechTreeElement cooperationElement in cooperationElements)
+                foreach (IntermechTreeElement myElement in elements)
                 {
-                    MyNode cooperationNode = new MyNode();
-                    cooperationNode.Id = cooperationElement.Id;
-                    cooperationNode.Type = cooperationElement.Type;
-                    cooperationNode.Designation = cooperationElement.Designation;
-                    cooperationNode.Name = cooperationElement.Name;
-                    cooperationNode.Amount = cooperationElement.Amount.ToString("F3");
-                    cooperationNode.AmountWithUse = cooperationElement.AmountWithUse.ToString("F3");
-                    cooperationNode.TotalAmount = cooperationElement.TotalAmount.ToString("F3");
-                    cooperationNode.StockRate = cooperationElement.StockRate.ToString("F3");
-                    cooperationNode.SampleSize = cooperationElement.SampleSize;
-                    cooperationNode.TechProcessReference = cooperationElement.TechProcessReference;
-                    cooperationNode.Note = cooperationElement.Note;
-                    cooperationNode.SubstituteInfo = cooperationElement.SubstituteInfo;
-                    cooperationNode.CooperationFlag = cooperationElement.CooperationFlag;
-                    cooperationNode.IsPcb = cooperationElement.IsPCB;
-                    cooperationNode.PcbVersion = cooperationElement.PcbVersion;
-                    cooperationNode.TechTask = cooperationElement.TechTask;
-                    cooperationNode.Tag = cooperationElement;
+                    MyNode myNode = new MyNode();
+                    myNode.Id = myElement.Id;
+                    myNode.Type = myElement.Type;
+                    myNode.Designation = myElement.Designation;
+                    myNode.Name = myElement.Name;
+                    myNode.Amount = myElement.Amount.ToString("F3");
+                    myNode.SampleSize = myElement.SampleSize;
+                    myNode.Note = myElement.Note;
+                    myNode.CooperationFlag = myElement.CooperationFlag;
+                    myNode.IsPcb = myElement.IsPCB;
+                    myNode.PcbVersion = myElement.PcbVersion;
+                    myNode.Tag = myElement;
 
-                    BuildNodeRecursive(cooperationNode, cooperationElement, agentFilter);
-                    model.Nodes.Add(cooperationNode);
+                    BuildNodeRecursive(myNode, myElement, agentFilter);
+                    model.Nodes.Add(myNode);
                 }
-
-
-
 
             }
             else
             {
-                MyNode mainNode = new MyNode(element.Id.ToString());
+                MyNode mainNode = new MyNode();
                 mainNode.Id = element.Id;
                 mainNode.Type = element.Type;
                 mainNode.PcbVersion = element.PcbVersion;
@@ -209,7 +200,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                         continue;
                     }
 
-                    MyNode childNode = new MyNode(child.Id.ToString());
+                    MyNode childNode = new MyNode();
                     childNode.Id = child.Id;
                     childNode.Type = child.Type;
                     childNode.PcbVersion = child.PcbVersion;
@@ -228,46 +219,46 @@ namespace NavisElectronics.TechPreparation.ViewModels
                         childNode.TechProcessReference = child.TechProcessReference.Name;
                     }
 
-                    // если маршрут заполнен
-                    if (child.TechRoute != null)
-                    {
-                        // выцепляем данные по фильтру предприятия
-                        string data = _dataExtractor.ExtractData(child.TechRoute, agentFilter);
+                    //// если маршрут заполнен
+                    //if (child.TechRoute != null)
+                    //{
+                    //    // выцепляем данные по фильтру предприятия
+                    //    string data = _dataExtractor.ExtractData(child.TechRoute, agentFilter);
  
-                        // здесь существующие маршруты по выделенному предприятию
-                        string[] routes = data.Split(new char[] { '|', '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    //    // здесь существующие маршруты по выделенному предприятию
+                    //    string[] routes = data.Split(new char[] { '|', '|' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        StringBuilder sb = new StringBuilder();
+                    //    StringBuilder sb = new StringBuilder();
 
-                        foreach (string route in routes)
-                        {
-                            string[] routeNodes = route.Split(new char[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+                    //    foreach (string route in routes)
+                    //    {
+                    //        string[] routeNodes = route.Split(new char[] {';'}, StringSplitOptions.RemoveEmptyEntries);
 
-                            if (routeNodes.Length > 0 && routeNodes[0] != string.Empty)
-                            {
+                    //        if (routeNodes.Length > 0 && routeNodes[0] != string.Empty)
+                    //        {
 
-                                TechRouteNode routeNode = techRouteNode.Find(Convert.ToInt64(routeNodes[0]));
-                                if (routeNode != null)
-                                {
-                                    sb.Append(routeNode.GetCaption());
-                                }
+                    //            TechRouteNode routeNode = techRouteNode.Find(Convert.ToInt64(routeNodes[0]));
+                    //            if (routeNode != null)
+                    //            {
+                    //                sb.Append(routeNode.GetCaption());
+                    //            }
 
-                            }
-                            for (int i = 1; i < routeNodes.Length; i++)
-                            {
-                                TechRouteNode routeNode = techRouteNode.Find(Convert.ToInt64(routeNodes[i]));
-                                string value = "null";
-                                if (routeNode != null)
-                                {
-                                    value = routeNode.GetCaption();
-                                }
-                                sb.AppendFormat("-{0}", value);
-                            }
-                            sb.Append(" \\ ");
-                        }
+                    //        }
+                    //        for (int i = 1; i < routeNodes.Length; i++)
+                    //        {
+                    //            TechRouteNode routeNode = techRouteNode.Find(Convert.ToInt64(routeNodes[i]));
+                    //            string value = "null";
+                    //            if (routeNode != null)
+                    //            {
+                    //                value = routeNode.GetCaption();
+                    //            }
+                    //            sb.AppendFormat("-{0}", value);
+                    //        }
+                    //        sb.Append(" \\ ");
+                    //    }
 
-                        childNode.Route = sb.ToString().TrimEnd(new char[] {' ', '\\' });
-                    }
+                    //    childNode.Route = sb.ToString().TrimEnd(new char[] {' ', '\\' });
+                    //}
 
                     if (child.RouteNote != null)
                     {
@@ -287,42 +278,42 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.IsToComplect = child.IsToComplect;
                     mainNode.Nodes.Add(childNode);
 
-                    if (child.Agent != null)
-                    {
-                        if (child.Agent != string.Empty)
-                        {
+                    //if (child.Agent != null)
+                    //{
+                    //    if (child.Agent != string.Empty)
+                    //    {
 
-                            if (child.Agent.Split(';').Length > 1)
-                            {
-                                childNode.IsMultipleAgents = true;
-                            }
+                    //        if (child.Agent.Split(';').Length > 1)
+                    //        {
+                    //            childNode.IsMultipleAgents = true;
+                    //        }
 
-                            if (!child.Agent.Contains(agentFilter))
-                            {
-                                childNode.CooperationFlag = true;
-                                childNode.AnotherAgent = true;
-                                StringBuilder sb = new StringBuilder();
+                    //        if (!child.Agent.Contains(agentFilter))
+                    //        {
+                    //            childNode.CooperationFlag = true;
+                    //            childNode.AnotherAgent = true;
+                    //            StringBuilder sb = new StringBuilder();
 
-                                string[] lines = child.Agent.Split(';');
+                    //            string[] lines = child.Agent.Split(';');
 
-                                if (lines.Length > 0)
-                                {
-                                    sb.AppendFormat(agents[long.Parse(lines[0])].Name);
-                                }
+                    //            if (lines.Length > 0)
+                    //            {
+                    //                sb.AppendFormat(agents[long.Parse(lines[0])].Name);
+                    //            }
 
-                                for (int i = 1; i < lines.Length; i++)
-                                {
-                                    sb.AppendFormat(";{0}", agents[long.Parse(lines[i])].Name);
-                                }
+                    //            for (int i = 1; i < lines.Length; i++)
+                    //            {
+                    //                sb.AppendFormat(";{0}", agents[long.Parse(lines[i])].Name);
+                    //            }
 
-                                childNode.Agent = sb.ToString();
-                                continue;
-                            }
-                        }
+                    //            childNode.Agent = sb.ToString();
+                    //            continue;
+                    //        }
+                    //    }
 
-                    }
+                    //}
 
-                    BuildNodeRecursive(childNode, child, techRouteNode, agentFilter, agents);
+                    BuildNodeRecursive(childNode, child, agentFilter);
                 }
             }
         }

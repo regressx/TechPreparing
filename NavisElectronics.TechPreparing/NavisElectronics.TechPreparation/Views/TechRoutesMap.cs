@@ -39,14 +39,9 @@
         public event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
         public event EventHandler<SaveClickEventArgs> CreateCooperationListClick;
 
-        public TechRoutesMap(string manufacturerViewSelectedAgentName, bool saveButtonEnable)
+        public TechRoutesMap()
         {
-            _manufacturerViewSelectedAgentName = manufacturerViewSelectedAgentName;
             InitializeComponent();
-            if (!saveButtonEnable)
-            {
-                SaveButton.Enabled = false;
-            }
         }
 
         public void SetTreeModel(TreeModel treeModel)

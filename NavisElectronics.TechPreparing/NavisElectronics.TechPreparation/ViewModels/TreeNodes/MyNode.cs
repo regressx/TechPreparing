@@ -12,14 +12,6 @@
         public int PcbVersion { get; set; }
 
         /// <summary>
-        /// Конструктор класса
-        /// </summary>
-        /// <param name="str"></param>
-        public MyNode(string str):base(str)
-        {
-            
-        }
-        /// <summary>
         /// Наименование
         /// </summary>
         public string Name { get; set; }
