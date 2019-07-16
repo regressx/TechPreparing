@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Entities;
+
 namespace NavisElectronics.TechPreparation
 {
     using NavisArchiveWork.Data;
@@ -33,6 +35,7 @@ namespace NavisElectronics.TechPreparation
             Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
+            Bind<ITechPreparingSelector<IdOrPath>>().To<IdSelector>();
             Bind<Search>().ToSelf().InSingletonScope();
             Bind<ReportService>().ToSelf().InSingletonScope();
             Bind<OpenFolderService>().ToSelf().InSingletonScope();
