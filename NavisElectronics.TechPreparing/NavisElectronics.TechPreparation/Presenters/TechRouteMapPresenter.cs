@@ -356,6 +356,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             TreeModel treeModel = new TreeModel();
             _techRouteNode = await _model.GetWorkShops();
+            IDictionary<long, Agent> agents = await _model.GetAgents();
             if (_agentFilter == ((int)AgentsId.NavisElectronics).ToString())
             {
                 _techRouteNode.Children.RemoveAt(0);
@@ -364,7 +365,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             {
                 _techRouteNode.Children.RemoveAt(1);
             }
-            TreeModel model = _model.GetTreeModel(_root, _mainManufacturer, _agentFilter);
+            TreeModel model = _model.GetTreeModel(_root, _mainManufacturer, _agentFilter, _techRouteNode, agents);
             _view.SetTreeModel(model);
 
         }
@@ -377,7 +378,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                 TechRoutePresenter presenter = new TechRoutePresenter(techRouteView, techRouteModel, _techRouteNode);
                 if (presenter.Run() == DialogResult.OK)
                 {
-
                     ICollection<MyNode> elements = _view.GetSelectedRows();
                     TechAgentDataExtractor dataExtractor = new TechAgentDataExtractor();
 

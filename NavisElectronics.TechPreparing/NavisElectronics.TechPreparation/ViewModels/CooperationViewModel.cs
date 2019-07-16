@@ -151,6 +151,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.PcbVersion = child.PcbVersion;
                     childNode.TechTask = child.TechTask;
                     childNode.Tag = child;
+
                     if (!child.Agent.Contains(agentFilter))
                     {
                         childNode.CooperationFlag = true;
