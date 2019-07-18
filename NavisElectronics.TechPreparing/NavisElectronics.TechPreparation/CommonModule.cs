@@ -7,20 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Entities;
-
 namespace NavisElectronics.TechPreparation
 {
+    using Entities;
+    using IO;
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
-    using NavisElectronics.TechPreparation.IO;
-    using NavisElectronics.TechPreparation.Reports;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-    using NavisElectronics.TechPreparation.Views;
-
     using Ninject.Modules;
+    using Reports;
+    using Services;
+    using ViewInterfaces;
+    using ViewModels;
+    using Views;
 
     /// <summary>
     /// Модуль для настройки контейнера
@@ -35,7 +33,7 @@ namespace NavisElectronics.TechPreparation
             Bind<IDatabaseWriter>().To<IntermechWriter>();
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
-            Bind<ITechPreparingSelector<IdOrPath>>().To<IdSelector>();
+            Bind<ITechPreparingSelector<IdOrPath>>().To<TechPreparingSelector>();
             Bind<Search>().ToSelf().InSingletonScope();
             Bind<ReportService>().ToSelf().InSingletonScope();
             Bind<OpenFolderService>().ToSelf().InSingletonScope();

@@ -59,7 +59,7 @@
 
                     new ColumnDescriptor(descriptionAttribute,
                         AttributeSourceTypes.Object,
-                        ColumnContents.ID,
+                        ColumnContents.Text,
                         ColumnNameMapping.Index,
                         SortOrders.NONE,
                         0), // описание

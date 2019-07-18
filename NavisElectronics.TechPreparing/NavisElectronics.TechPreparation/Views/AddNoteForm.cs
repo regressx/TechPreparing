@@ -31,5 +31,17 @@
         {
             return textBox1.Text;
         }
+
+        private void textBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                   DialogResult = DialogResult.OK;
+                   Close();
+                }
+            }
+        }
     }
 }

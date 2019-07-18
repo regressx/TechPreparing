@@ -204,14 +204,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
                     MyNode childNode = new MyNode();
                     childNode.Id = child.Id;
-                    childNode.Type = child.Type;
+                    //childNode.Type = child.Type;
                     childNode.PcbVersion = child.PcbVersion;
                     childNode.IsPcb = child.IsPCB;
-                    childNode.Designation = child.Designation;
-                    childNode.Name = child.Name;
-                    childNode.Amount = child.Amount.ToString("F0");
-                    childNode.Type = child.Type;
-                    childNode.AmountWithUse = (int)child.AmountWithUse;
+                    //childNode.Designation = child.Designation;
+                    //childNode.Name = child.Name;
+                    //childNode.Amount = child.Amount.ToString("F0");
+                    //childNode.AmountWithUse = (int)child.AmountWithUse;
                     childNode.TechPreparing = child.TechTask;
                     childNode.StockRate = child.StockRate;
                     childNode.SampleSize = childNode.SampleSize;

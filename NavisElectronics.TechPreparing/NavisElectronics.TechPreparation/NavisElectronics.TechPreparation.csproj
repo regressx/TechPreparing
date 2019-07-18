@@ -102,7 +102,6 @@
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Reports\IReportService.cs" />
-    <Compile Include="Services\IdSelector.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\FindNodePresenter.cs" />
