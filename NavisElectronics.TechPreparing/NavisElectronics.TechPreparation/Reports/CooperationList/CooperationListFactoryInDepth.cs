@@ -81,32 +81,21 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                             currentObject.SampleSize = nodeFromQueue.SampleSize;
 
                             uniqueCooperationElements.Add(nodeFromQueue.Id, currentObject);
-                            IList<IntermechTreeElement> elementsInTree = _root.Find(nodeFromQueue.Id);
+                            IList<IntermechTreeElement> elementsInTree = _root.Find(nodeFromQueue.ObjectId);
 
                             foreach (IntermechTreeElement intermechTreeElement in elementsInTree)
                             {
                                 if (intermechTreeElement.Parent.CooperationFlag == false)
                                 {
                                     ExtractedObject parentReportElement = new ExtractedObject();
+                                    parentReportElement.Id = intermechTreeElement.Parent.Id;
                                     parentReportElement.Type = intermechTreeElement.Parent.Type;
                                     parentReportElement.Designation = intermechTreeElement.Parent.Designation;
                                     parentReportElement.Name = intermechTreeElement.Parent.Name;
-                                    parentReportElement.Id = intermechTreeElement.Parent.Id;
+
                                     parentReportElement.Amount = intermechTreeElement.Amount;
                                     parentReportElement.AmountWithUse = intermechTreeElement.AmountWithUse;
                                     currentObject.RegisterElement(parentReportElement);
-
-                                    //IList<IntermechTreeElement> allParents = _root.Find(parentReportElement.Id);
-                                    //int total = 0;
-                                    //foreach (IntermechTreeElement treeElement in allParents)
-                                    //{
-                                    //    if (treeElement.CooperationFlag == false)
-                                    //    {
-                                    //        total += (int)treeElement.AmountWithUse;
-                                    //    }
-                                    //}
-
-                                    //parentReportElement.AmountWithUse = (int)(total / rootAmount);
                                 }
                             }
                         }

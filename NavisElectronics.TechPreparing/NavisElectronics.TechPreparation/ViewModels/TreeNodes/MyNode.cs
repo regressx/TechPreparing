@@ -1,13 +1,18 @@
-﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
+﻿using Intermech.Expressions.Exceptions;
+
+namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
     using Aga.Controls.Tree;
 
     /// <summary>
     /// Наследник Node для компонента Aga.Controls.Tree. Наделяем его всякими свойствами для отображения, а затем строим с его помощью модель
     /// </summary>
-    public class  MyNode:Node
+    public class MyNode:Node
     {
         public long Id { get; set; }
+        public long ObjectId { get; set; }
+
+
         public bool IsPcb { get; set; }
         public int PcbVersion { get; set; }
 

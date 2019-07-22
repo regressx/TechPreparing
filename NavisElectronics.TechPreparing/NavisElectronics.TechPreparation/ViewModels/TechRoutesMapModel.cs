@@ -154,6 +154,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             MyNode myNode = new MyNode();
             myNode.Id = myElement.Id;
+            myNode.ObjectId = myElement.ObjectId;
             myNode.Type = myElement.Type;
             myNode.PcbVersion = myElement.PcbVersion;
             myNode.IsPcb = myElement.IsPCB;
@@ -204,6 +205,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
                     MyNode childNode = new MyNode();
                     childNode.Id = child.Id;
+                    childNode.ObjectId = child.ObjectId;
                     childNode.Type = child.Type;
                     childNode.PcbVersion = child.PcbVersion;
                     childNode.IsPcb = child.IsPCB;

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CooperationListViewUniqueAssemblies.cs" company="">
+// <copyright file="CooperationListViewUniqueAssemblies.cs" company="NavisElectronics">
 //   
 // </copyright>
 // <summary>
@@ -19,7 +19,10 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
-    public class CooperationListViewUniqueAssemblies:IDocumentTypeFactory
+    /// <summary>
+    /// Ведомость кооперации. Здесь идем от лица сборочных единиц
+    /// </summary>
+    public class CooperationListViewUniqueAssemblies : IDocumentTypeFactory
     {
                 /// <summary>
         /// id шаблона ведомости кооперации из IPS

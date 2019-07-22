@@ -204,11 +204,6 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                     mainNode.AddChildNode(parentRowInstance, false, false);
                 }
 
-
-
-
-
-
                 i++;
             }
 
