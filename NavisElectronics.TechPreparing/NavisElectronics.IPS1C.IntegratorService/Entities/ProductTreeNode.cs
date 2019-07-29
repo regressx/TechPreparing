@@ -27,111 +27,111 @@ namespace NavisElectronics.IPS1C.IntegratorService.Entities
         /// IPS Id
         /// </summary>
         [DataMember]
-        public string Id1 { get; set; }
+        public string VersionId { get; set; }
 
         /// <summary>
         /// IPS Id
         /// </summary>
         [DataMember]
-        public string ObjectId1 { get; set; }
+        public string ObjectId { get; set; }
 
         /// <summary>
         /// Номер типа из IPS
         /// </summary>
         [DataMember]
-        public string Type1 { get; set; }
+        public string Type { get; set; }
         
         /// <summary>
         /// Обозначение
         /// </summary>
         [DataMember]
-        public string Designation1 { get; set; }
+        public string Designation { get; set; }
 
 
         /// <summary>
         /// Наименование
         /// </summary>
         [DataMember]
-        public string Name1 { get; set; }
+        public string Name { get; set; }
 
 
         /// <summary>
         /// Применяемость
         /// </summary>
         [DataMember]
-        public string Amount1 { get; set; }
+        public string Amount { get; set; }
 
 
         /// <summary>
         /// Идентификационный номер производителя
         /// </summary>
         [DataMember]
-        public string PartNumber1 { get;set; }
+        public string PartNumber { get;set; }
 
 
         /// <summary>
         /// Флаг кооперации.
         /// </summary>
         [DataMember]
-        public string CooperationFlag1 { get; set; }
+        public string CooperationFlag { get; set; }
 
         /// <summary>
         /// Номер группы допустимых замен
         /// </summary>
         [DataMember]
-        public string SubstituteGroup1 { get; set; }
+        public string SubstituteGroup { get; set; }
 
 
         /// <summary>
         /// Номер в группе допустимых замен
         /// </summary>
         [DataMember]
-        public string NumberInSubstituteGroup1 { get; set; }
+        public string NumberInSubstituteGroup { get; set; }
 
         /// <summary>
         /// Информация о доп. заменах
         /// </summary>
         [DataMember]
-        public string SubstituteInfo1 { get; set; }
+        public string SubstituteInfo { get; set; }
 
         /// <summary>
         /// Позиция в спецификации
         /// </summary>
         [DataMember]
-        public string PositionInSpecification1 { get; set; }
+        public string PositionInSpecification { get; set; }
 
         /// <summary>
         /// Позиционное обозначение
         /// </summary>
         [DataMember]
-        public string PositionDesignation1 { get; set; }
+        public string PositionDesignation { get; set; }
 
         /// <summary>
         /// Примечание
         /// </summary>
         [DataMember]
-        public string Note1 { get; set; }
+        public string Note { get; set; }
 
         /// <summary>
         /// Поставщик
         /// </summary>
         [DataMember]
-        public string Supplier1 { get; set; }
+        public string Supplier { get; set; }
 
         /// <summary>
         /// Единицы изменения
         /// </summary>
         [DataMember]
-        public string MeasureUnits1 { get; set; }
+        public string MeasureUnits { get; set; }
 
         /// <summary>
         /// Класс изделия
         /// </summary>
         [DataMember]
-        public string Class1 { get; set; }
+        public string Class { get; set; }
 
         [DataMember]
-        public string LastVersion1 { get; set; }
+        public string LastVersion { get; set; }
 
         /// <summary>
         /// Контрагент
@@ -251,7 +251,7 @@ namespace NavisElectronics.IPS1C.IntegratorService.Entities
                 bool foundFlag = false;
                 foreach (ProductTreeNode childElement in elementWhereFind.Products)
                 {
-                    if (childId == Convert.ToInt64(childElement.ObjectId1))
+                    if (childId == Convert.ToInt64(childElement.ObjectId))
                     {
                         foundFlag = true;
                         FindNodeRecursive(queue, childElement, stackElements);

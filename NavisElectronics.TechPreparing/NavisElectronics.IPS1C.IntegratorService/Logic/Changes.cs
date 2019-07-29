@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NavisElectronics.IPS1C.IntegratorService.Entities;
 using NavisElectronics.IPS1C.IntegratorService.Exceptions;
-
+using NavisElectronics.TechPreparation.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService.Logic
 {
-    using NavisElectronics.TechPreparation.Entities;
-
     public class Changes
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace NavisElectronics.IPS1C.IntegratorService.Logic
                     continue;
                 }
 
-                element.CooperationFlag1 = elementFromQueue.CooperationFlag.ToString();
+                element.CooperationFlag = elementFromQueue.CooperationFlag.ToString();
                 element.StockRate = elementFromQueue.StockRate.ToString("F6");
                 element.SampleSize = elementFromQueue.SampleSize;
                 element.Agent = elementFromQueue.Agent;
@@ -52,16 +51,16 @@ namespace NavisElectronics.IPS1C.IntegratorService.Logic
                 element.TypeOfWithDrawal = elementFromQueue.TypeOfWithDrawal.ToString();
                 element.IsComplectNodeComponent = elementFromQueue.IsToComplect.ToString();
                 element.Case = elementFromQueue.Case;
-                if (element.Type1 == "1128")
+                if (element.Type == "1128")
                 {
-                    element.Amount1 = elementFromQueue.Amount.ToString("F6");
+                    element.Amount = elementFromQueue.Amount.ToString("F6");
                 }
 
                 if (element.Agent != null)
                 {
                     if (!element.Agent.Contains(agentFilter))
                     {
-                        element.CooperationFlag1 = "True";
+                        element.CooperationFlag = "True";
                     }
                 }
 
@@ -89,7 +88,7 @@ namespace NavisElectronics.IPS1C.IntegratorService.Logic
                 {
                     if (!nodeFromQueue.Agent.Contains(agentFilter))
                     {
-                        nodeFromQueue.CooperationFlag1 = "True";
+                        nodeFromQueue.CooperationFlag = "True";
                     }
                 }
 

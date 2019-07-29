@@ -1,10 +1,9 @@
 ﻿using System;
 using NavisElectronics.IPS1C.IntegratorService.Entities;
+using NavisElectronics.TechPreparation.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService.Services
 {
-    using NavisElectronics.TechPreparation.Entities;
-
     public class ProductTreeNodeMapper
     {
         public ProductTreeNode Map(DataBaseProduct product)
@@ -52,20 +51,20 @@ namespace NavisElectronics.IPS1C.IntegratorService.Services
         private ProductTreeNode CreateProductTreeNode(DataBaseProduct product)
         {
             ProductTreeNode root = new ProductTreeNode();
-            root.Id1 = product.Id.ToString();
-            root.ObjectId1 = product.ObjectId.ToString();
-            root.Amount1 = product.AmountAsString;
-            root.Designation1 = product.Designation;
-            root.Name1 = product.Name;
-            root.SubstituteGroup1 = product.SubstituteGroupNumber.ToString();
-            root.NumberInSubstituteGroup1 = product.SubstituteNumberInGroup.ToString();
-            root.PositionDesignation1 = product.PositionDesignation;
-            root.PositionInSpecification1 = product.PositionInSpecification;
-            root.PartNumber1 = product.PartNumber;
-            root.Supplier1 = product.Supplier;
-            root.Class1 = product.Class;
-            root.LastVersion1 = product.LastVersion;
-            root.MeasureUnits1 = product.MeasureUnits;
+            root.VersionId = product.Id.ToString();
+            root.ObjectId = product.ObjectId.ToString();
+            root.Amount = product.AmountAsString;
+            root.Designation = product.Designation;
+            root.Name = product.Name;
+            root.SubstituteGroup = product.SubstituteGroupNumber.ToString();
+            root.NumberInSubstituteGroup = product.SubstituteNumberInGroup.ToString();
+            root.PositionDesignation = product.PositionDesignation;
+            root.PositionInSpecification = product.PositionInSpecification;
+            root.PartNumber = product.PartNumber;
+            root.Supplier = product.Supplier;
+            root.Class = product.Class;
+            root.LastVersion = product.LastVersion;
+            root.MeasureUnits = product.MeasureUnits;
             root.Case = product.Case;
             return root;
         }
@@ -75,24 +74,24 @@ namespace NavisElectronics.IPS1C.IntegratorService.Services
             ProductTreeNode root = new ProductTreeNode();
             try
             {
-                root.Id1 = product.Id.ToString();
-                root.ObjectId1 = product.ObjectId.ToString();
-                root.Type1 = product.Type.ToString();
-                root.Designation1 = product.Designation;
-                root.Name1 = product.Name;
-                root.Amount1 = product.Amount.ToString("F6");
-                root.PartNumber1 = product.PartNumber;
-                root.CooperationFlag1 = product.CooperationFlag.ToString();
-                root.SubstituteGroup1 = product.SubstituteGroupNumber.ToString();
-                root.NumberInSubstituteGroup1 = product.SubstituteNumberInGroup.ToString();
-                root.SubstituteInfo1 = product.SubstituteInfo;
-                root.PositionInSpecification1 = product.Position;
-                root.PositionDesignation1 = product.PositionDesignation;
-                root.Note1 = string.Format("{0} {1}", product.Note, product.RouteNote).Trim();
-                root.Supplier1 = product.Supplier;
-                root.MeasureUnits1 = product.MeasureUnits;
-                root.Class1 = product.Class;
-                root.LastVersion1 = product.ChangeNumber;
+                root.VersionId = product.Id.ToString();
+                root.ObjectId = product.ObjectId.ToString();
+                root.Type = product.Type.ToString();
+                root.Designation = product.Designation;
+                root.Name = product.Name;
+                root.Amount = product.Amount.ToString("F6");
+                root.PartNumber = product.PartNumber;
+                root.CooperationFlag = product.CooperationFlag.ToString();
+                root.SubstituteGroup = product.SubstituteGroupNumber.ToString();
+                root.NumberInSubstituteGroup = product.SubstituteNumberInGroup.ToString();
+                root.SubstituteInfo = product.SubstituteInfo;
+                root.PositionInSpecification = product.Position;
+                root.PositionDesignation = product.PositionDesignation;
+                root.Note = string.Format("{0} {1}", product.Note, product.RouteNote).Trim();
+                root.Supplier = product.Supplier;
+                root.MeasureUnits = product.MeasureUnits;
+                root.Class = product.Class;
+                root.LastVersion = product.ChangeNumber;
                 root.Agent = product.Agent;
                 root.StockRate = product.StockRate.ToString("F6");
                 root.SampleSize = product.SampleSize;

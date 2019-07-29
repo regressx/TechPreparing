@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.IPS1C.IntegratorService.Services
+﻿using NavisElectronics.TechPreparation.Enums;
+
+namespace NavisElectronics.IPS1C.IntegratorService.Services
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +12,6 @@
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
-
-    using NavisElectronics.TechPreparation.Enums;
 
     /// <summary>
     /// The service intermech reader.

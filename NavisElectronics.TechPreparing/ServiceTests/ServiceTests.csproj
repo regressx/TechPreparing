@@ -57,13 +57,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IDBObjectMock.cs" />
-    <Compile Include="LifeCycleTests.cs" />
     <Compile Include="VersionParsingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj">
-      <Project>{1ef257d5-234c-4ed1-b94d-d6d36bf6defd}</Project>
+      <Project>{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}</Project>
       <Name>NavisElectronics.IPS1C.IntegratorService</Name>
     </ProjectReference>
   </ItemGroup>

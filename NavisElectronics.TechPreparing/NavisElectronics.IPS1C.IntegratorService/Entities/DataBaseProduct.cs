@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace NavisElectronics.IPS1C.IntegratorService.Entities
+﻿namespace NavisElectronics.IPS1C.IntegratorService.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Класс для передачи данных из базы данных в сервис
     /// </summary>
     public class DataBaseProduct
     {
 
-        private ICollection<DataBaseProduct> _products = null;
+        private readonly ICollection<DataBaseProduct> _products = null;
 
 
         public DataBaseProduct()

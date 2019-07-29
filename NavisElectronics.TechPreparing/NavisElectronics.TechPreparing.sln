@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F1A4A1A9-1DAD-404A-91B0-0F4BB5808DFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.Substitutes", "NavisElectronics.Substitutes\NavisElectronics.Substitutes.csproj", "{228C1B09-9E36-4CF7-B0B6-0E45DD4233AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Substitutes.Tests", "Substitutes.Tests\Substitutes.Tests.csproj", "{554F92BF-8B2C-413A-AFB9-F07F1970A238}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.IPS1C.IntegratorService", "NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj", "{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListOfCooperationTests", "ListOfCooperationTests\ListOfCooperationTests.csproj", "{AC8D31B2-AD27-454D-94B2-E21167B04680}"
 EndProject
@@ -22,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{682BC812-9A68-407A-A8E5-423AD01F0C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.TechPreparation", "NavisElectronics.TechPreparation\NavisElectronics.TechPreparation.csproj", "{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.IPS1C.IntegratorService", "NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj", "{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,6 @@ Global
 		{554F92BF-8B2C-413A-AFB9-F07F1970A238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{554F92BF-8B2C-413A-AFB9-F07F1970A238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{554F92BF-8B2C-413A-AFB9-F07F1970A238}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC8D31B2-AD27-454D-94B2-E21167B04680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC8D31B2-AD27-454D-94B2-E21167B04680}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8D31B2-AD27-454D-94B2-E21167B04680}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +61,10 @@ Global
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

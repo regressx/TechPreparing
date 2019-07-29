@@ -23,35 +23,27 @@
         [OperationContract]
         string GetMessage(string message);
 
-        [OperationContract]
-        void NotifyIM(long ipsObjectId, long code1C);
 
-        /// <summary>
-        /// Получает состав объекта по идентификатору его версии
-        /// </summary>
-        /// <param name="versionId">
-        /// Идентификатор версии объекта
-        /// </param>
-        /// <returns>
-        /// The <see cref="ICollection"/>.
-        /// Возвращает коллекцию объектов, входящих в указанный
-        /// </returns>
         [OperationContract]
-        ICollection<ProductTreeNode> GetProductComposition(long versionId);
+        ProductTreeNode GetAllProducts();
+
+
+        [OperationContract]
+        ProductTreeNode GetUsedTypes();
 
 
         /// <summary>
         /// Выдает заголовок изделия и тип по его ID
         /// </summary>
-        /// <param name="id">
-        /// Идентификатор 
+        /// <param name="objectId">
+        /// Id объекта
         /// </param>
         /// <returns>
         /// The <see cref="string[]"/>.
         /// Массив строк с соответствующим содержимым
         /// </returns>
         [OperationContract]
-        ProductTreeNode GetProductInfo(long id);
+        ProductTreeNode GetProductInfo(long objectId);
 
 
         /// <summary>

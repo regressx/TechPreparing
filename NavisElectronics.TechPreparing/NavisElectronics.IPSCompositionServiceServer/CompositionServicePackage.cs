@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.IPSCompositionService
+﻿using NavisElectronics.IPS1C.IntegratorService;
+
+namespace NavisElectronics.IPSCompositionService
 {
     using System;
     using System.ServiceModel;
     using Intermech.Interfaces.Plugins;
-    using IPS1C.IntegratorService;
 
     /// <summary>
     /// Плагин для запуска сервиса передачи составов

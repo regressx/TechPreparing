@@ -18,29 +18,5 @@ namespace ServiceTests
 
             Assert.AreEqual("000", result);
         }
-
-        [TestMethod]
-        public void CheckVersionTest()
-        {
-
-            ProductTreeNode node = new ProductTreeNode();
-            ProductTreeNode node1 = new ProductTreeNode();
-
-            string des = "ХХХХ.000000.135";
-
-            string innerString1 = "ХХХХ.000000.133V1.PcbDoc";
-            string innerString2 = "ХХХХ.000000.135V2.PcbDoc";
-
-            Service service = new Service();
-
-            string last = service.GetLastNumbersOfDesignation(des);
-
-            string pcbVersion = service.CheckVersion(new object[] {innerString1, innerString2},
-                last, node, node1);
-
-            Assert.AreEqual("2", pcbVersion);
-        }
-
-
     }
 }
