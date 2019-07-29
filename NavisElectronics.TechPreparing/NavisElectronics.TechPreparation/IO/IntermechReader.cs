@@ -99,6 +99,28 @@ namespace NavisElectronics.TechPreparation.IO
 
             FetchNodeRecursive(orderElement, downloadedParts);
 
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(orderElement);
+
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                IntermechTreeElement parent = elementFromQueue.Parent;
+
+                if (parent != null)
+                {
+                    elementFromQueue.AmountWithUse = parent.AmountWithUse * elementFromQueue.Amount;
+                    elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
+                }
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+
+
             return orderElement;
         }
 
@@ -759,19 +781,33 @@ namespace NavisElectronics.TechPreparation.IO
         /// </param>
         private void FetchNodeRecursive(IntermechTreeElement elementToFetch, IDictionary<long, IntermechTreeElement> fetchedElements)
         {
-            if (elementToFetch.Type == 1019 || elementToFetch.Type == 1078 ||
-                elementToFetch.Type == 1074 || elementToFetch.Type == 0 || elementToFetch.Type == 1097)
+            // читаем состав
+            ICollection<IntermechTreeElement> elements = null;
+            if (fetchedElements.ContainsKey(elementToFetch.Id))
             {
-                // начальный состав всё равно придется читать
-                ICollection<IntermechTreeElement> elements = Read(elementToFetch.Id);
+                IntermechTreeElement alreadyDownloadedElement = (IntermechTreeElement)fetchedElements[elementToFetch.Id].Clone();
+                elements = alreadyDownloadedElement.Children;
+                
+                // проходим по элементам
+                foreach (IntermechTreeElement element in elements)
+                {
+                    elementToFetch.Add(element);
+                }
 
-                // этот словарик нужен для того, чтобы схлопнуть повторяющиеся элементы в составе. У меня не работает поиск из-за повторяющихся элементов
+                return;
+            }
+            else
+            {
+                // читаем состав
+                elements = Read(elementToFetch.Id);
+                
                 IDictionary<long, IntermechTreeElement> uniqueElements = new Dictionary<long, IntermechTreeElement>();
+
+                // сжимаем повторяющиеся элементы
                 foreach (IntermechTreeElement element in elements)
                 {
                     if (uniqueElements.ContainsKey(element.Id))
                     {
-
                         IntermechTreeElement registeredElement = uniqueElements[element.Id];
                         registeredElement.Amount += element.Amount;
                         registeredElement.Position += ", " + element.Position;
@@ -783,24 +819,22 @@ namespace NavisElectronics.TechPreparation.IO
                     }
                 }
 
-                // проходимся по словарю
-                foreach (IntermechTreeElement element in uniqueElements.Values)
-                {
-                    // если изделие уже зарегистрировано в словаре
-                    if (fetchedElements.ContainsKey(element.Id))
-                    {
-                        IntermechTreeElement clonedElement = (IntermechTreeElement)fetchedElements[element.Id].Clone();
-                        elementToFetch.Add(clonedElement);
-                    }
-                    else
-                    {
-                        elementToFetch.Add(element);
-                        FetchNodeRecursive(element, fetchedElements);
-                    }
-                }
-
-                // на подъеме из рекурсии добавляем загруженный элемент в словарь. Теперь при загрузке из словаря запрошенный элемент загружен со всеми входящими
+                elements = uniqueElements.Values;
+                
+                // зарегистрировали, что скачали элемент
                 fetchedElements.Add(elementToFetch.Id, elementToFetch);
+            }
+
+            // проходим по элементам
+            foreach (IntermechTreeElement element in elements)
+            {
+                elementToFetch.Add(element);
+
+                // если у объекта есть состав, то спускаемся рекурсивно
+                if (element.Type == 1019 || element.Type == 1078 || element.Type == 1074 || element.Type == 1097)
+                {
+                    FetchNodeRecursive(element, fetchedElements);
+                }
             }
         }
 
