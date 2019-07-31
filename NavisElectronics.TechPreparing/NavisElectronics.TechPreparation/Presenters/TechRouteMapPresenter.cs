@@ -303,7 +303,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _view_ShowClick(object sender, SaveClickEventArgs e)
         {
             IntermechTreeElement element = e.Node.Tag as IntermechTreeElement;
-            _showFileManager.Show(element.Id, element.Type);
+            _model.ShowProductCard(element);
         }
 
         private void _view_PasteClick(object sender, ClipboardEventArgs e)

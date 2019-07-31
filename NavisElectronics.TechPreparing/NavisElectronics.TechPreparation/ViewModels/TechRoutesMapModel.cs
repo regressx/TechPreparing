@@ -34,6 +34,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         private readonly IDataRepository _reader;
 
         private readonly Search _search;
+        private readonly ShowFileManager _showFileManager;
 
 
         /// <summary>
@@ -52,10 +53,11 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="reader">
         /// Репозиторий с данными
         /// </param>
-        public TechRoutesMapModel(IDataRepository reader, Search search)
+        public TechRoutesMapModel(IDataRepository reader, Search search, ShowFileManager showFileManager)
         {
             _reader = reader;
             _search = search;
+            _showFileManager = showFileManager;
             _dataExtractor = new TechAgentDataExtractor();
             _clipboardManager = new ClipboardManager();
         }
@@ -360,5 +362,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
             FileDesignation fd = _search.GetFileDesignation(designation);
             _search.StepToFolder(_search.GetFullPath(fd));
         }
+
+        public void ShowProductCard(IntermechTreeElement element)
+        {
+            _showFileManager.Show(element.Id, element.Type);
+        }
+
+
+
     }
 }
