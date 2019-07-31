@@ -21,6 +21,8 @@
     {
         private readonly string _manufacturerViewSelectedAgentName;
 
+
+
         /// <summary>
         /// Событие при редактировании тех. маршрута
         /// </summary>
@@ -31,6 +33,7 @@
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
+        public event EventHandler<SaveClickEventArgs> GoToOldArchive;
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
         public event EventHandler SetNodesToComplectClick;
@@ -163,9 +166,11 @@
 
         private void goToArchiveButton_Click(object sender, EventArgs e)
         {
-            //MyNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as MyNode;
-            //FileDesignation fd = _search.GetFileDesignation(selectedNode.Designation);
-            //_search.StepToFolder(_search.GetFullPath(fd));
+            if (GoToOldArchive != null)
+            {
+                MyNode selectedNode = treeViewAdv.SelectedNodes[0].Tag as MyNode;
+                GoToOldArchive(sender, new SaveClickEventArgs(selectedNode));
+            }
         }
 
 

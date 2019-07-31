@@ -10,6 +10,7 @@
 
     public interface ITechRouteMap
     {
+        event EventHandler<SaveClickEventArgs> GoToOldArchive;
         event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
         event EventHandler Load;
         event EventHandler<SaveClickEventArgs> SaveClick;

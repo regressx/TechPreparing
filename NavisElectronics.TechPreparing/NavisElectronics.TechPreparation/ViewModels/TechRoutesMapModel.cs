@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Intermech.Navigator.DBObjects;
+using NavisArchiveWork.Data;
+using NavisArchiveWork.Model;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
@@ -31,6 +33,8 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// </summary>
         private readonly IDataRepository _reader;
 
+        private readonly Search _search;
+
 
         /// <summary>
         /// Класс, умеющий получать данные по отдельному агенту
@@ -48,9 +52,10 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="reader">
         /// Репозиторий с данными
         /// </param>
-        public TechRoutesMapModel(IDataRepository reader)
+        public TechRoutesMapModel(IDataRepository reader, Search search)
         {
             _reader = reader;
+            _search = search;
             _dataExtractor = new TechAgentDataExtractor();
             _clipboardManager = new ClipboardManager();
         }
@@ -350,6 +355,10 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return agentsDictionary;
         }
 
-
+        public void GoToOldArchive(string designation)
+        {
+            FileDesignation fd = _search.GetFileDesignation(designation);
+            _search.StepToFolder(_search.GetFullPath(fd));
+        }
     }
 }

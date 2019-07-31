@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisArchiveWork.Data;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -91,6 +93,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.CopyClick += _view_CopyClick;
             _view.PasteClick += _view_PasteClick;
             _view.ShowClick += _view_ShowClick;
+            _view.GoToOldArchive += _view_GoToOldArchive;
             _view.CreateReportClick += View_CreateReportClick;
             _view.CreateDevideList += View_CreateDevideList;
             _view.SetInnerCooperation += View_SetInnerCooperation;
@@ -98,6 +101,20 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetNodesToComplectClick += _view_SetNodesToComplectClick;
             _view.CreateCooperationList += _view_CreateCooperationList;
             _model = model;
+        }
+
+        /// <summary>
+        /// Событие перехода к старому архиву предприятия
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void _view_GoToOldArchive(object sender, SaveClickEventArgs e)
+        {
+            _model.GoToOldArchive(e.Node.Designation);
         }
 
         /// <summary>
@@ -354,7 +371,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private async void _view_Load(object sender, System.EventArgs e)
         {
-            TreeModel treeModel = new TreeModel();
             _techRouteNode = await _model.GetWorkShops();
             IDictionary<long, Agent> agents = await _model.GetAgents();
             if (_agentFilter == ((int)AgentsId.NavisElectronics).ToString())
