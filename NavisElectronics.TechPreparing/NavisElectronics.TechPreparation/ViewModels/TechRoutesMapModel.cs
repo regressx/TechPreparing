@@ -10,6 +10,7 @@
 using Intermech.Navigator.DBObjects;
 using NavisArchiveWork.Data;
 using NavisArchiveWork.Model;
+using NavisElectronics.TechPreparation.Interfaces;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {

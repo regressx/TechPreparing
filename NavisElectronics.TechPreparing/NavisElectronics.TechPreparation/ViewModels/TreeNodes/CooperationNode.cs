@@ -1,10 +1,7 @@
 ﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
-    using System.Security.Cryptography;
-
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
+    using Entities;
 
     /// <summary>
     /// Узел дерева для кооперации

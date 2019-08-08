@@ -1,4 +1,6 @@
-﻿namespace UI
+﻿using NavisElectronics.TechPreparation.Interfaces;
+
+namespace UI
 {
     using System;
     using System.Collections.Generic;
@@ -8,82 +10,90 @@
     using System.Threading;
     using System.Threading.Tasks;
     using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.IO;
 
-    public class TempReader:IDataRepository
+    /// <summary>
+    /// The temp reader.
+    /// </summary>
+    public class TempReader : IDataRepository
     {
         public Task<IntermechTreeElement> GetFullOrderAsync(long versionId, CancellationToken token)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public Task<IntermechTreeElement> GetFullOrderAsync(long versionId)
+        {
+            throw new NotImplementedException();
         }
 
         public IntermechTreeElement GetFullOrder(long versionId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public ICollection<IntermechTreeElement> Read(long id)
+        public ICollection<IntermechTreeElement> Read(long versionId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<ICollection<Agent>> GetAllAgentsAsync()
         {
-            Func<ICollection<Agent>> func = () =>
-                {
-                    Agent agent1 = new Agent();
-                    agent1.Id = 1372599;
-                    agent1.Name = "КБ НАВИС";
-
-                    Agent agent2 = new Agent();
-                    agent2.Id = 1299782;
-                    agent2.Name = "НАВИС-Электроника";
-                    List<Agent> agents  = new List<Agent>(2);
-
-                    agents.Add(agent1);
-                    agents.Add(agent2);
-
-                    return agents;
-                };
-            return Task<ICollection<Agent>>.Run(func);
+            throw new NotImplementedException();
         }
 
-        public DataSet GetDataset(long orderId, int dataAttributeId)
+        public ICollection<Agent> GetAgents()
         {
-            DataSet ds = null;
-            using (FileStream fs = new FileStream("dataset.blb", FileMode.Open))
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                ds = (DataSet)bf.Deserialize(fs);
-            }
-
-            return ds;
+            throw new NotImplementedException();
         }
 
-        public Task<DataSet> GetDatasetAsync(long orderId, int dataAttributeId)
+        public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId)
         {
-            Func<DataSet> func = () => { return GetDataset(orderId, dataAttributeId); };
-            return Task.Run(func);
+            throw new NotImplementedException();
+        }
+
+        public Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId, long organization)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId, long organization)
+        {
+            throw new NotImplementedException();
         }
 
         public WithdrawalType GetWithdrawalTypes()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task<WithdrawalType> GetWithdrawalTypesAsync()
+        public Task GetWithdrawalTypesAsync()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task<TechRouteNode> GetWorkshopsAsync()
+        public Task GetWorkshopsAsync()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ICollection<Document> GetDocuments(long id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        Task<WithdrawalType> IDataRepository.GetWithdrawalTypesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<TechRouteNode> IDataRepository.GetWorkshopsAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

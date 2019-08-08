@@ -2,17 +2,15 @@
 
 using System.Windows.Forms;
 using NavisArchiveWork.Data;
+using NavisElectronics.TechPreparation;
+using NavisElectronics.TechPreparation.Entities;
+using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Presenters;
+using NavisElectronics.TechPreparation.Services;
 
 namespace UI
 {
     using NavisArchiveWork.Model;
-
-    using NavisElectronics.TechPreparation;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.IO;
-    using NavisElectronics.TechPreparation.Presenters;
-    using NavisElectronics.TechPreparation.Services;
-
     using Ninject;
 
     public partial class Form1 : Form

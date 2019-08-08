@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Entities
+﻿using NavisElectronics.TechPreparation.Enums;
+
+namespace NavisElectronics.TechPreparation.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +8,8 @@
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
-    using NavisElectronics.Substitutes;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.Exceptions;
+    using Substitutes;
+    using Exceptions;
 
     /// <summary>
     /// Узел дерева из IPS
@@ -206,15 +207,17 @@
         public string TechRoute { get;set; }
 
         /// <summary>
+        /// Состояние узла
+        /// </summary>
+        [Browsable(false)]
+        public NodeStates NodeState { get; set; }
+
+
+        /// <summary>
         /// Единицы изм.
         /// </summary>
         [DisplayName("Ед. изм.")]
         public string MeasureUnits { get; set; }
-
-        /// <summary>
-        /// Состояние узла
-        /// </summary>
-        public NodeStates NodeState { get;set; }
 
         /// <summary>
         /// Класс изделия

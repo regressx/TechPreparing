@@ -13,8 +13,8 @@
     using Services;
     using TechPreparation.Entities;
     using TechPreparation.Enums;
-    using TechPreparation.IO;
     using TechPreparation.Services;
+    using TechPreparing.Data;
     using Changes = Logic.Changes;
 
 
@@ -281,9 +281,16 @@
             IntermechTreeElement techDataOrderElement = null;
 
             IntermechReader reader = new IntermechReader();
-            DataSet myDataset = reader.GetDataset(versionId, TechPreparation.Helpers.ConstHelper.BinaryDataOfOrder);
-            TreeBuilderService treeBuilderService = new TreeBuilderService();
-            techDataOrderElement = treeBuilderService.Build(myDataset, CancellationToken.None);
+            long organization = long.Parse(agentFilter);
+
+            // Асинхронно получаем файлик
+            reader.GetDataFromFileAsync(versionId, 1006)
+                .ContinueWith(t =>
+                {
+                    // здесь получаем результат
+                    techDataOrderElement = t.Result;
+                });
+
             ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
             ProductTreeNode root = mapper.Map(techDataOrderElement);
 

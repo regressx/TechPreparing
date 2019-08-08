@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparing.Data.Helpers;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -15,14 +17,14 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.Exceptions;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-    using NavisElectronics.TechPreparation.Views;
+    using Entities;
+    using Enums;
+    using EventArguments;
+    using Exceptions;
+    using Services;
+    using ViewInterfaces;
+    using ViewModels;
+    using Views;
 
     /// <summary>
     /// Посредник между главной формой и ее моделью
@@ -34,6 +36,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </summary>
         private readonly IMainView _mainView;
         
+
         /// <summary>
         /// Модель для этого представления
         /// </summary>
@@ -121,6 +124,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 {
                     continue;
                 }
+
                 if (elementFromQueue.Amount < 0.000001)
                 {
                     string str = string.Format("В узле {0} {1} из состава {2} {3} не указано количество",
@@ -207,76 +211,76 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private async void MainViewLoadPreparationClick(object sender, EventArgs e)
         {
-            // загрузить список существующих заказов
-            IList<IdOrPath> result = _model.Select();
-            if (result.Count == 0)
-            {
-                return;
-            }
+            //// загрузить список существующих заказов
+            //IList<IdOrPath> result = _model.Select();
+            //if (result.Count == 0)
+            //{
+            //    return;
+            //}
 
-            DataSet ds;
-            try
-            {
-                ds = await _model.GetDataSetAsync(result[0].Id);
-            }
-            catch (DataSetIsEmptyException)
-            {
-                MessageBox.Show("На выбранный Вами заказ нет никакой тех. подготовки");
-                return;
-            }
+            //IntermechTreeElement root;
+            //try
+            //{
+            //    root = await _model.GetTreeFromFileAsync(result[0].Id);
+            //}
+            //catch (DataSetIsEmptyException)
+            //{
+            //    MessageBox.Show("На выбранный Вами заказ нет никакой тех. подготовки");
+            //    return;
+            //}
 
-            // строим дерево из полученной тех. подготовки
-            IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
+            //// строим дерево из полученной тех. подготовки
+            //IntermechTreeElement oldPreparation = await _model.GetFullOrderAsync(ds, CancellationToken.None);
 
-            Parameter<IntermechTreeElement> myParameter = new Parameter<IntermechTreeElement>();
-            myParameter.AddParameter(oldPreparation);
-            _elementToCopy = new IntermechTreeElement();
-            myParameter.AddParameter(_elementToCopy);
-            IPresenter<Parameter<IntermechTreeElement>> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, Parameter<IntermechTreeElement>>();
-            treeNodeDialogPresenter.Run(myParameter);
-            _elementToCopy = myParameter.GetParameter(1);
+            //Parameter<IntermechTreeElement> myParameter = new Parameter<IntermechTreeElement>();
+            //myParameter.AddParameter(oldPreparation);
+            //_elementToCopy = new IntermechTreeElement();
+            //myParameter.AddParameter(_elementToCopy);
+            //IPresenter<Parameter<IntermechTreeElement>> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, Parameter<IntermechTreeElement>>();
+            //treeNodeDialogPresenter.Run(myParameter);
+            //_elementToCopy = myParameter.GetParameter(1);
 
-            if (_elementToCopy.Id == 0)
-            {
-                return;
-            }
+            //if (_elementToCopy.Id == 0)
+            //{
+            //    return;
+            //}
 
-            // не хочу заморачиваться с сохранением уже заполненных узлов. Пройдем в ширину по указанному в предложенном окне дереву, 
-            // каждый из узлов в очереди будем искать в основном дереве и проставлять нужные свойства
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(_elementToCopy);
-            while (queue.Count > 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
+            //// не хочу заморачиваться с сохранением уже заполненных узлов. Пройдем в ширину по указанному в предложенном окне дереву, 
+            //// каждый из узлов в очереди будем искать в основном дереве и проставлять нужные свойства
+            //Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            //queue.Enqueue(_elementToCopy);
+            //while (queue.Count > 0)
+            //{
+            //    IntermechTreeElement elementFromQueue = queue.Dequeue();
 
-                // ищем все-все узлы из главного дерева, которые совпадают с узлом из очереди
-                ICollection<IntermechTreeElement> elementsToSetTechPreparation = _rootElement.Find(elementFromQueue.ObjectId);
+            //    // ищем все-все узлы из главного дерева, которые совпадают с узлом из очереди
+            //    ICollection<IntermechTreeElement> elementsToSetTechPreparation = _rootElement.Find(elementFromQueue.ObjectId);
 
-                foreach (IntermechTreeElement elementToSetTechPreparation in elementsToSetTechPreparation)
-                {
-                    elementToSetTechPreparation.CooperationFlag = elementFromQueue.CooperationFlag;
-                    elementToSetTechPreparation.Agent = elementFromQueue.Agent;
-                    elementToSetTechPreparation.StockRate = elementFromQueue.StockRate;
-                    elementToSetTechPreparation.Note = elementFromQueue.Note;
-                    elementToSetTechPreparation.RouteNote = elementFromQueue.RouteNote;
-                    elementToSetTechPreparation.SampleSize = elementFromQueue.SampleSize;
-                    elementToSetTechPreparation.TechProcessReference = elementFromQueue.TechProcessReference;
-                    elementToSetTechPreparation.TechRoute = elementFromQueue.TechRoute;
-                    elementToSetTechPreparation.ContainsInnerCooperation = elementFromQueue.ContainsInnerCooperation;
-                    elementToSetTechPreparation.InnerCooperation = elementFromQueue.InnerCooperation;
-                    elementToSetTechPreparation.IsPCB = elementFromQueue.IsPCB;
-                    elementToSetTechPreparation.IsToComplect = elementFromQueue.IsToComplect;
-                    elementToSetTechPreparation.TechTask = elementFromQueue.TechTask;
-                }
+            //    foreach (IntermechTreeElement elementToSetTechPreparation in elementsToSetTechPreparation)
+            //    {
+            //        elementToSetTechPreparation.CooperationFlag = elementFromQueue.CooperationFlag;
+            //        elementToSetTechPreparation.Agent = elementFromQueue.Agent;
+            //        elementToSetTechPreparation.StockRate = elementFromQueue.StockRate;
+            //        elementToSetTechPreparation.Note = elementFromQueue.Note;
+            //        elementToSetTechPreparation.RouteNote = elementFromQueue.RouteNote;
+            //        elementToSetTechPreparation.SampleSize = elementFromQueue.SampleSize;
+            //        elementToSetTechPreparation.TechProcessReference = elementFromQueue.TechProcessReference;
+            //        elementToSetTechPreparation.TechRoute = elementFromQueue.TechRoute;
+            //        elementToSetTechPreparation.ContainsInnerCooperation = elementFromQueue.ContainsInnerCooperation;
+            //        elementToSetTechPreparation.InnerCooperation = elementFromQueue.InnerCooperation;
+            //        elementToSetTechPreparation.IsPCB = elementFromQueue.IsPCB;
+            //        elementToSetTechPreparation.IsToComplect = elementFromQueue.IsToComplect;
+            //        elementToSetTechPreparation.TechTask = elementFromQueue.TechTask;
+            //    }
 
-                if (elementFromQueue.Children.Count > 0)
-                {
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-                }
-            }
+            //    if (elementFromQueue.Children.Count > 0)
+            //    {
+            //        foreach (IntermechTreeElement child in elementFromQueue.Children)
+            //        {
+            //            queue.Enqueue(child);
+            //        }
+            //    }
+            //}
 
         }
 
@@ -302,11 +306,10 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
 
-            //TreeComparerView view = new TreeComparerView();
-            //TreeComparerViewModel model = new TreeComparerViewModel();
-            //TreeComparerPresenter presenter = new TreeComparerPresenter(view, model, mainElement, _agents);
-            //presenter.Run();
-
+            // TreeComparerView view = new TreeComparerView();
+            // TreeComparerViewModel model = new TreeComparerViewModel();
+            // TreeComparerPresenter presenter = new TreeComparerPresenter(view, model, mainElement, _agents);
+            // presenter.Run();
             IPresenter presenter = _presentationFactory.GetPresenter<TreeComparerPresenter>();
             presenter.Run();
 
@@ -340,14 +343,14 @@ namespace NavisElectronics.TechPreparation.Presenters
             parameter.AddParameter(_rootElement);
             
             // кто главный
-            parameter.AddParameter(new IntermechTreeElement()
-                                       {
+            parameter.AddParameter(new IntermechTreeElement
+            {
                                            Agent = ((int)AgentsId.Kb).ToString()
                                        });
             
             // по кому фильтруем
-            parameter.AddParameter(new IntermechTreeElement()
-                                       {
+            parameter.AddParameter(new IntermechTreeElement
+            {
                                            Name = filterAgent.Name,
                                            Agent = filterAgent.Id.ToString()
                                        });
@@ -379,6 +382,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                     }
                 }
             }
+
             _mainView.FillAgent(_globalTreeElement.Agent);
         }
 
@@ -405,12 +409,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
             parameter.AddParameter(_rootElement);
-            parameter.AddParameter(new IntermechTreeElement()
-                                       {
+            parameter.AddParameter(new IntermechTreeElement
+            {
                                            Agent = ((int)AgentsId.Kb).ToString()
                                        });
-            parameter.AddParameter(new IntermechTreeElement()
-                                       {
+            parameter.AddParameter(new IntermechTreeElement
+            {
                                            Name = filterAgent.Name,
                                            Agent = filterAgent.Id.ToString()
                                        });
@@ -463,6 +467,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 {
                     return;
                 }
+
                 string agents = GatherAgents(new TreeNodeAgentValueEventArgs(parent, key));
                 parent.Agent = agents;
                 SetParentCooperationRecursive(parent, key);
@@ -521,7 +526,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             IntermechTreeElement mainTreeElement = (IntermechTreeElement)_mainView.GetMainTreeElement().Tag;
             mainTreeElement.Note = _mainView.GetNote();
-            _model.WriteDatasetIntoDatabase(_rootVersionId, mainTreeElement);
+            _model.WriteIntoFileAttribute(_rootVersionId, mainTreeElement);
         }
 
         private void _mainView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -544,26 +549,20 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             _mainView.FillTree(new TreeNode("Пожалуйста, подождите. Идет загрузка данных"));
             _mainView.LockButtons();
-            bool fromDataset = false;
+            bool fromDataset = true;
             IntermechTreeElement orderElement = null;
-            DataSet dataset = null;
             try
             {
-                dataset = await _model.GetDataSetAsync(_rootVersionId);
+                orderElement = await _model.GetTreeFromFileAsync(_rootVersionId);
                 fromDataset = true;
             }
-            catch (DataSetIsEmptyException)
+            catch (FileAttributeIsEmptyException)
             {
-                // если атрибут пуст, то набор данных будет неоткуда загрузить
+                fromDataset = false;
             }
 
-            if (fromDataset)
+            if (!fromDataset)
             {
-                orderElement = await _model.GetFullOrderAsync(dataset, CancellationToken.None);
-
-            }
-            else
-            {         
                 // получаем всё, что сидит в заказе
                 orderElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
             }
@@ -598,7 +597,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
                 TreeNode childNode = new TreeNode
                 {
-                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB, description).Trim(),
+                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB, description).Trim()
                 };
 
                 childNode.Tag = node;

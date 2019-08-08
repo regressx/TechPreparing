@@ -1,35 +1,30 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IntermechReader.cs" company="">
-//   
+// <copyright file="IntermechReader.cs" company="NavisElectronics">
+//   Cherkashin I.V.
 // </copyright>
 // <summary>
 //   Реализует чтение составов отдельных элементов, целого заказа
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.TechPreparation.IO
+namespace NavisElectronics.TechPreparing.Data
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
-
+    using Helpers;
     using ICSharpCode.SharpZipLib.Zip.Compression;
-
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.Exceptions;
-    using NavisElectronics.TechPreparation.IO;
-
     using Substitutes;
+    using TechPreparation.Entities;
+    using TechPreparation.Exceptions;
+    using TechPreparation.Interfaces;
 
     /// <summary>
     /// Реализует чтение составов отдельных элементов, целого заказа
@@ -50,7 +45,6 @@ namespace NavisElectronics.TechPreparation.IO
             _substituteDecriptorService = new SubsituteDecryptorService(new ActualSubsitutesDecryptor(), new SubGroupsDecryptor(new SubGroupDecryptor()));
         }
 
-
         /// <summary>
         /// Асинхронный метод получения полного заказа
         /// </summary>
@@ -66,6 +60,20 @@ namespace NavisElectronics.TechPreparation.IO
         public Task<IntermechTreeElement> GetFullOrderAsync(long versionId, CancellationToken token)
         {
             return Task.Run(() => GetFullOrder(versionId));
+        }
+
+        /// <summary>
+        /// Асинхронный метод получения полного заказа
+        /// </summary>
+        /// <param name="versionId">
+        /// The version id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<IntermechTreeElement> GetFullOrderAsync(long versionId)
+        {
+            return GetFullOrderAsync(versionId, CancellationToken.None);
         }
 
         /// <summary>
@@ -97,16 +105,16 @@ namespace NavisElectronics.TechPreparation.IO
             orderElement.StockRate = 1;
             orderElement.TotalAmount = orderElement.StockRate * orderElement.AmountWithUse;
 
+            // загрузка всего остального дерева
             FetchNodeRecursive(orderElement, downloadedParts);
 
+            // расчет применяемостей
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
             queue.Enqueue(orderElement);
-
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
                 IntermechTreeElement parent = elementFromQueue.Parent;
-
                 if (parent != null)
                 {
                     elementFromQueue.AmountWithUse = parent.AmountWithUse * elementFromQueue.Amount;
@@ -118,8 +126,6 @@ namespace NavisElectronics.TechPreparation.IO
                     queue.Enqueue(child);
                 }
             }
-
-
 
             return orderElement;
         }
@@ -162,6 +168,8 @@ namespace NavisElectronics.TechPreparation.IO
                     new ColumnDescriptor(1098, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Класс
                     new ColumnDescriptor(17784, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // PartNumber
                     new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
+                    new ColumnDescriptor(18079, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Флаг печатной платы
+                    new ColumnDescriptor(17965, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Версия печатной платы
                 };
 
                 // Поиск состава
@@ -212,57 +220,6 @@ namespace NavisElectronics.TechPreparation.IO
                                         {
                                             element.ChangeNumber = Convert.ToString(dataRow[2]);
                                         }
-                                        break;
-                                    case 1682:
-                                        if (element.Type == 1052)
-                                        {
-                                            element.IsPCB = true;
-                                        }
-                                        else
-                                        {
-                                            DataTable schemes = compositionService.LoadComposition(keeper.Session.SessionGUID, Convert.ToInt64(element.Id), 1004, new List<ColumnDescriptor>(specificationColumns), string.Empty, 1307);
-                                            if (schemes.Rows.Count == 0)
-                                            {
-                                                element.IsPCB = true;
-                                            }
-                                        }
-
-
-                                        if (element.IsPCB)
-                                        {
-                                            IDBObject pcbProject = keeper.Session.GetObject(Convert.ToInt64(dataRow[0]));
-
-                                            int versionPcb = 0;
-
-                                            IDBAttribute pcbVersionAttribute = pcbProject.GetAttributeByID(17965);
-                                            if (pcbVersionAttribute != null)
-                                            {
-                                                versionPcb = (int)pcbVersionAttribute.AsInteger;
-                                            }
-
-                                            IDBAttribute fileAttribute = pcbProject.GetAttributeByID(1002);
-                                            if (fileAttribute != null)
-                                            {
-                                                object[] data = fileAttribute.Values;
-                                                foreach (object o in data)
-                                                {
-                                                    string str = (string)o;
-                                                    if (str.Contains("PcbDoc"))
-                                                    {
-                                                        if (versionPcb != ExtractPcbVersion(str))
-                                                        {
-                                                            throw new Exception(string.Format("Присвоенный атрибут Версия печатной платы не соответствует тому, что указан в прикрепленном файле {0}", str));
-                                                        }
-                                                        else
-                                                        {
-                                                            element.PcbVersion = (byte)versionPcb;
-                                                        }
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        }
-
                                         break;
                                 }
                             }
@@ -319,6 +276,11 @@ namespace NavisElectronics.TechPreparation.IO
             return await Task.Run(myFuncDelegate).ConfigureAwait(false);
         }
 
+        public ICollection<Agent> GetAgents()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// The get dataset.
         /// </summary>
@@ -333,18 +295,18 @@ namespace NavisElectronics.TechPreparation.IO
         /// </returns>
         /// <exception cref="DataSetIsEmptyException">
         /// </exception>
-        public DataSet GetDataset(long orderId, int dataAttributeId)
+        public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId)
         {
             // получаем из базы
             byte[] bytes = null;
             using (SessionKeeper keeper = new SessionKeeper())
             {
-                IDBObject orderObject = keeper.Session.GetObject(orderId);
-                IDBAttribute binaryAtt = orderObject.GetAttributeByID(dataAttributeId);
+                IDBObject orderObject = keeper.Session.GetObject(versionId);
+                IDBAttribute fileAttribute = orderObject.GetAttributeByID(fileAttributeId);
 
-                if (binaryAtt != null)
+                if (fileAttribute != null)
                 {
-                    IBlobReader blobReader = binaryAtt as IBlobReader;
+                    IBlobReader blobReader = fileAttribute as IBlobReader;
                     blobReader.OpenBlob(0);
                     bytes = blobReader.ReadDataBlock();
                     blobReader.CloseBlob();
@@ -353,7 +315,7 @@ namespace NavisElectronics.TechPreparation.IO
 
             if (bytes == null)
             {
-                throw new DataSetIsEmptyException("Атрибута нет, поэтому нет и данных");
+                throw new FileAttributeIsEmptyException("К заказу еще не прикреплен атрибут Файл");
             }
 
             // распаковываем
@@ -381,19 +343,19 @@ namespace NavisElectronics.TechPreparation.IO
 
             // пакуем в Dataset
             BinaryFormatter binFormatter = new BinaryFormatter();
-            DataSet dataSet;
+            IntermechTreeElement root;
             using (MemoryStream ms = new MemoryStream(unpackedBytes))
             {
-                dataSet = (DataSet)binFormatter.Deserialize(ms);
+                root = (IntermechTreeElement)binFormatter.Deserialize(ms);
             }
-            return dataSet;
+            return root;
         }
 
-        public Task<DataSet> GetDatasetAsync(long orderId, int dataAttributeId)
+        public Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId)
         {
-            return Task.Run<DataSet>(() =>
+            return Task.Run<IntermechTreeElement>(() =>
             {
-                return GetDataset(orderId, dataAttributeId);
+                return GetDataFromFile(versionId, dataAttributeId);
             });
         }
 
@@ -729,47 +691,6 @@ namespace NavisElectronics.TechPreparation.IO
             return elements;
         }
 
-
-        /// <summary>
-        /// Метод выцепляет версию печатной платы из обозначения файла проекта
-        /// </summary>
-        /// <param name="str">
-        /// Обозначение файла pcbDoc
-        /// </param>
-        /// <returns>
-        /// The <see cref="int"/>.
-        /// </returns>
-        internal int ExtractPcbVersion(string str)
-        {
-            int version = 0;
-            
-            // Разрежем по символу '.'
-            string[] lines = str.Split(new char[] { '.' });
-            if (lines.Length > 0)
-            {
-                int length = 0;
-
-                for (var i = lines[lines.Length - 2].Length - 1; i >= 0; i--)
-                {
-                    if (char.IsDigit(lines[lines.Length - 2][i]))
-                    {
-                        length++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                // нас интересует вторая часть строки
-                string value = lines[lines.Length - 2].Substring(lines[lines.Length - 2].Length - length, length);
-                version = int.Parse(value);
-            }
-
-            return version;
-        }
-
-
         /// <summary>
         /// Рекурсивная загрузка заказа
         /// </summary>
@@ -929,7 +850,7 @@ namespace NavisElectronics.TechPreparation.IO
                 {
                     long materialId = materialAttribute.AsInteger;
                             
-                    if (materialId != (int)MaterialTypes.Zero && materialId != (int)MaterialTypes.NotDefined) 
+                    if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
                     {
                         IDBObject materialObject = session.GetObject(materialId);
 

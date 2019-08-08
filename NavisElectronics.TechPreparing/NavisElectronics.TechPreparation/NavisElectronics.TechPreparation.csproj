@@ -91,12 +91,8 @@
     <Compile Include="CommonModule.cs" />
     <Compile Include="Entities\ExtractedObject.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
-    <Compile Include="Entities\WithdrawalType.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />
-    <Compile Include="Helpers\ConstHelper.cs" />
-    <Compile Include="IO\IDataRepository.cs" />
-    <Compile Include="IO\IDatabaseWriter.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
@@ -118,7 +114,6 @@
     <Compile Include="Reports\CooperationList\MyPageDescription.cs" />
     <Compile Include="Services\ITechPreparingSelector.cs" />
     <Compile Include="Services\OpenFolderService.cs" />
-    <Compile Include="Services\SaveTreeService.cs" />
     <Compile Include="Services\TechPreparingSelector.cs" />
     <Compile Include="Services\TechRouteManager.cs" />
     <Compile Include="ViewInterfaces\EditTechRouteEventArgs.cs" />
@@ -131,20 +126,15 @@
     <Compile Include="Views\AddNoteForm.Designer.cs">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Agent.cs" />
     <Compile Include="Views\CooperationView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\CooperationView.Designer.cs">
       <DependentUpon>CooperationView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Document.cs" />
-    <Compile Include="Entities\TechProcess.cs" />
-    <Compile Include="Entities\TechRouteNode.cs" />
     <Compile Include="Enums\AgentsId.cs" />
     <Compile Include="Enums\IntermechObjectTypes.cs" />
     <Compile Include="Enums\MaterialTypes.cs" />
-    <Compile Include="Enums\NodeStates.cs" />
     <Compile Include="EventArguments\MultipleNodesSelectedEventArgs.cs" />
     <Compile Include="EventArguments\ClipboardEventArgs.cs" />
     <Compile Include="EventArguments\TreeNodeAgentValueEventArgs.cs" />
@@ -226,20 +216,13 @@
     <Compile Include="Presenters\TechRouteMapPresenter.cs" />
     <Compile Include="EventArguments\RemoveNodeEventArgs.cs" />
     <Compile Include="Reports\IReport.cs" />
-    <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Services\CooperationSetter.cs" />
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="ViewInterfaces\ICooperationView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
-    <Compile Include="Services\DataSetGatheringService.cs" />
-    <Compile Include="Exceptions\DataSetIsEmptyException.cs" />
     <Compile Include="ViewInterfaces\IMainView.cs" />
-    <Compile Include="IO\IntermechReader.cs" />
-    <Compile Include="Entities\IntermechTreeElement.cs" />
-    <Compile Include="IO\IntermechWriter.cs" />
     <Compile Include="Services\ChangesDefiner.cs" />
-    <Compile Include="Services\TreeBuilderService.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -361,12 +344,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NavisElectronics.Substitutes\NavisElectronics.Substitutes.csproj">
-      <Project>{228c1b09-9e36-4cf7-b0b6-0e45dd4233ad}</Project>
-      <Name>NavisElectronics.Substitutes</Name>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
+      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
+      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparing.Data.csproj">
+      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
+      <Name>NavisElectronics.TechPreparing.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Options.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

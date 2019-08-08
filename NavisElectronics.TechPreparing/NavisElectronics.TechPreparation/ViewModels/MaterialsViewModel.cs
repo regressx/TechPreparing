@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparing.Data;
+
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
@@ -28,10 +30,8 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
         public void Save(IntermechTreeElement mainElement)
         {
-            DataSetGatheringService gatheringService = new DataSetGatheringService();
-            System.Data.DataSet ds = gatheringService.Gather(mainElement);
             IntermechWriter writer = new IntermechWriter();
-            writer.WriteDataSet(mainElement.Id, ds);
+            writer.WriteFileAttribute(mainElement.Id, mainElement);
         }
     }
 }

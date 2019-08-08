@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System;
@@ -15,11 +17,11 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Helpers;
-    using NavisElectronics.TechPreparation.IO;
-    using NavisElectronics.TechPreparation.Services;
+    using Interfaces;
+    using Entities;
+    using IO;
+    using Services;
+    using TechPreparing.Data.Helpers;
 
     /// <summary>
     /// Модель для обслуживания запросов формы MainView
@@ -30,18 +32,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// Репозиторий с деревом заказа
         /// </summary>
         private readonly IDataRepository _reader;
-
-        /// <summary>
-        /// Сервис, умеющий собирать Dataset из заказа
-        /// </summary>
-        private readonly DataSetGatheringService _gatheringService;
-
+        
         /// <summary>
         /// Сервис, умеющий писать Dataset в базу данных
         /// </summary>
         private readonly IDatabaseWriter _writer;
 
-        private readonly TreeBuilderService _treeBuilderService;
+
         private readonly ITechPreparingSelector<IdOrPath> _selector;
 
         /// <summary>
@@ -50,41 +47,20 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="reader">
         /// Репозиторий с деревом заказа
         /// </param>
-        /// <param name="gatheringService">
-        /// Сервис, умеющий собирать Dataset из заказа
-        /// </param>
         /// <param name="writer">
         /// Интерфейс для записи в базу данных
         /// </param>
-        /// <param name="treeBuilderService">
-        /// Сервис построения дерева из Dataset
+        /// <param name="selector">
+        /// The selector.
         /// </param>
-        public MainViewModel(IDataRepository reader, DataSetGatheringService gatheringService, IDatabaseWriter writer, TreeBuilderService treeBuilderService, ITechPreparingSelector<IdOrPath> selector)
+        public MainViewModel(IDataRepository reader, IDatabaseWriter writer, ITechPreparingSelector<IdOrPath> selector)
         {
             _reader = reader;
-            _gatheringService = gatheringService;
+
             _writer = writer;
-            _treeBuilderService = treeBuilderService;
+
             _selector = selector;
         }
-
-        /// <summary>
-        /// Построение представления дерева из состава заказа
-        /// </summary>
-        /// <param name="mainElement">
-        /// Дерево заказа
-        /// </param>
-        /// <returns>
-        /// The <see cref="TreeNode"/>.
-        /// </returns>
-        public TreeNode BuildTree(IntermechTreeElement mainElement)
-        {
-            TreeNode mainNode = new TreeNode(mainElement.Name);
-            mainNode.Tag = mainElement;
-            BuildTreeRecursive(mainNode, mainElement);
-            return mainNode;
-        }
-
 
         public IList<IdOrPath> Select()
         {
@@ -100,10 +76,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <returns>
         /// The <see cref="TreeNode"/>.
         /// </returns>
-        public TreeNode BuildTree(DataSet dataset)
+        public MyNode BuildTree(IntermechTreeElement mainElement)
         {
-            IntermechTreeElement mainElement = _treeBuilderService.Build(dataset, CancellationToken.None);
-            return BuildTree(mainElement);
+
         }
 
 
@@ -116,9 +91,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<TreeNode> BuildTreeAsync(DataSet dataset)
+        public Task<TreeNode> BuildTreeAsync(IntermechTreeElement root)
         {
-            return BuildTreeAsync(dataset, CancellationToken.None);
+            return BuildTreeAsync(root, CancellationToken.None);
         }
 
         /// <summary>
@@ -131,10 +106,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<TreeNode> BuildTreeAsync(DataSet dataset, CancellationToken token)
+        public async Task<TreeNode> BuildTreeAsync(IntermechTreeElement root, CancellationToken token)
         {
-            IntermechTreeElement mainElement = await _treeBuilderService.BuildAsync(dataset, token);
-            Func<TreeNode> func = () => { return BuildTree(mainElement); };
+            Func<TreeNode> func = () => { return BuildTree(root); };
 
             return await Task.Run(func, token);
         }
@@ -156,24 +130,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             return await _reader.GetFullOrderAsync(versionId, token);
         }
-
-        /// <summary>
-        /// Асинхронно получает заказ
-        /// </summary>
-        /// <param name="dataSet">
-        /// Dataset
-        /// </param>
-        /// <param name="token">
-        /// Токен отмемы
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public async Task<IntermechTreeElement> GetFullOrderAsync(DataSet dataSet, CancellationToken token)
-        {
-            return await _treeBuilderService.BuildAsync(dataSet, token);
-        }
-
 
         /// <summary>
         /// Пересчитать данные о входимости, а также с учетом тех. запаса
@@ -209,9 +165,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return await _reader.GetWithdrawalTypesAsync();
         }
 
-        public async Task<DataSet> GetDataSetAsync(long orderVersionId)
+        public async Task<IntermechTreeElement> GetTreeFromFileAsync(long orderVersionId)
         {
-            return await _reader.GetDatasetAsync(orderVersionId, ConstHelper.BinaryDataOfOrder);
+            return await _reader.GetDataFromFileAsync(orderVersionId, ConstHelper.FileAttribute);
         }
 
         public async Task<ICollection<Agent>> GetAllAgentsAsync()
@@ -228,10 +184,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="mainTreeElement">
         /// The main tree element.
         /// </param>
-        public void WriteDatasetIntoDatabase(long orderVersionId, IntermechTreeElement mainTreeElement)
+        public void WriteIntoFileAttribute(long orderVersionId, IntermechTreeElement mainTreeElement)
         {
-            DataSet ds = _gatheringService.Gather(mainTreeElement);
-            _writer.WriteDataSet(orderVersionId, ds);
+            _writer.WriteFileAttribute(orderVersionId, mainTreeElement);
         }
 
         /// <summary>
@@ -243,7 +198,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="mainElement">
         /// Главный элемент, из которого строим дерево
         /// </param>
-        private void BuildTreeRecursive(TreeNode mainNode, IntermechTreeElement mainElement)
+        private void BuildTreeRecursive(MyNode mainNode, IntermechTreeElement mainElement)
         {
             ICollection<IntermechTreeElement> nodes = mainElement.Children;
 

@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using NavisArchiveWork.Data;
+using NavisElectronics.TechPreparing.Data;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -363,10 +364,8 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _view_SaveClick(object sender, SaveClickEventArgs e)
         {
             IntermechTreeElement rootElement = e.Node.Tag as IntermechTreeElement;
-            DataSetGatheringService gatheringService = new DataSetGatheringService();
-            System.Data.DataSet ds = gatheringService.Gather(rootElement);
             IntermechWriter writer = new IntermechWriter();
-            writer.WriteDataSet(rootElement.Id, ds);
+            writer.WriteFileAttribute(rootElement.Id, rootElement);
         }
 
         private async void _view_Load(object sender, System.EventArgs e)

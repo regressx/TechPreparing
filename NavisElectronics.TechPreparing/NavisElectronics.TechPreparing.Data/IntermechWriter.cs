@@ -1,14 +1,16 @@
-﻿namespace NavisElectronics.TechPreparation.IO
+﻿using System.Threading.Tasks;
+
+namespace NavisElectronics.TechPreparing.Data
 {
     using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
-
+    using Helpers;
     using Intermech;
     using Intermech.Interfaces;
     using Intermech.Interfaces.BlobStream;
-
-    using NavisElectronics.TechPreparation.Helpers;
+    using TechPreparation.Entities;
+    using TechPreparation.Interfaces;
 
     /// <summary>
     /// Класс для записи технологического атрибута в базу IPS
@@ -21,10 +23,10 @@
         /// <param name="orderId">
         /// Идентификатор версии объекта заказа, к которому будем прикреплять бинарный атрибут 
         /// </param>
-        /// <param name="ds">
-        /// Dataset
+        /// <param name="element">
+        /// Элемент для записи
         /// </param>
-        public void WriteDataSet(long orderId, System.Data.DataSet ds)
+        public void WriteFileAttribute(long orderId, IntermechTreeElement element)
         {
             using (SessionKeeper keeper = new SessionKeeper())
             {
@@ -40,38 +42,56 @@
             byte[] bytes;
             using (MemoryStream ms = new MemoryStream())
             {
-                binaryFormatter.Serialize(ms, ds);
+                binaryFormatter.Serialize(ms, element);
                 bytes = ms.ToArray();
             }
 
             // если есть, что писать, пишем в базу
             if (bytes.Length > 0)
             {
-                BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now,string.Empty, ArcMethods.ZLibPacked,  string.Format("Dataset от {0}", DateTime.Now));
-
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
-                    if (orderId > 0)
-                    {
-                        orderId = -orderId;
-                    }
                     IDBObject orderObject = keeper.Session.GetObject(orderId);
-                    IDBAttribute binaryAttribute = orderObject.GetAttributeByID(ConstHelper.ShortNameAttribute);
+                    IDBAttribute fileAttribute = orderObject.GetAttributeByID(ConstHelper.FileAttribute);
 
-                    if (binaryAttribute != null)
+                    if (fileAttribute != null)
                     {
-                        binaryAttribute.Delete(0L);
+                        fileAttribute.Delete(0L);
                     }
 
-                    IDBAttribute newBinaryAttribute = orderObject.Attributes.AddAttribute(ConstHelper.ShortNameAttribute, false);
 
+                    fileAttribute = orderObject.Attributes.AddAttribute(ConstHelper.FileAttribute, false);
+
+                    string fileName = string.Format("{0}_{1}_изм_{2}", element.Name, element.Id, orderObject.VersionID);
+
+                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный IntermechTreeElement от {0}", DateTime.Now));
                     using (BlobWriterStream bws =
-                        new BlobWriterStream(newBinaryAttribute, bytes.Length, info, keeper.Session))
+                        new BlobWriterStream(fileAttribute, bytes.Length, info, keeper.Session))
                     {
                         bws.Write(bytes, 0, bytes.Length);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// The write file attribute async.
+        /// </summary>
+        /// <param name="orderId">
+        /// The order id.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task WriteFileAttributeAsync(long orderId, IntermechTreeElement element)
+        {
+            return Task.Run(() =>
+            {
+                WriteFileAttribute(orderId, element);
+            });
         }
     }
 }

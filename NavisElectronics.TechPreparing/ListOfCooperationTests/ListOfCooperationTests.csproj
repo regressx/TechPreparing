@@ -61,18 +61,23 @@
     <Compile Include="CooperationSetterTests.cs" />
     <Compile Include="DataExtractorTests.cs" />
     <Compile Include="FindNodeTest.cs" />
-    <Compile Include="GatherDatasetFromTreeTest.cs" />
-    <Compile Include="GatherTreeTest.cs" />
     <Compile Include="InfoInTableModelTests.cs" />
-    <Compile Include="IntermechReaderTest.cs" />
     <Compile Include="MergeNodesServiceTests.cs" />
     <Compile Include="NumberResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
+      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
+      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NavisElectronics.TechPreparation\NavisElectronics.TechPreparation.csproj">
       <Project>{ad2aa800-fa78-40ed-aa16-7c0bcc6f6a86}</Project>
       <Name>NavisElectronics.TechPreparation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparing.Data.csproj">
+      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
+      <Name>NavisElectronics.TechPreparing.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

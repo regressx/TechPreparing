@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.ViewModels
+﻿using NavisElectronics.TechPreparation.Interfaces;
+
+namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System;
     using System.Collections.Generic;
