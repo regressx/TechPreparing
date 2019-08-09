@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Aga.Controls.Tree;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.ViewModels
@@ -66,53 +67,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             return _selector.Select();
         }
-
-        /// <summary>
-        /// Построение представления дерева из Dataset
-        /// </summary>
-        /// <param name="dataset">
-        /// Набор данных из заказа
-        /// </param>
-        /// <returns>
-        /// The <see cref="TreeNode"/>.
-        /// </returns>
-        public MyNode BuildTree(IntermechTreeElement mainElement)
-        {
-
-        }
-
-
-        /// <summary>
-        /// Создание представления дерева асинхронно
-        /// </summary>
-        /// <param name="dataset">
-        /// Набор данных
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public Task<TreeNode> BuildTreeAsync(IntermechTreeElement root)
-        {
-            return BuildTreeAsync(root, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Создание представления дерева асинхронно
-        /// </summary>
-        /// <param name="dataset">
-        /// Набор данных
-        /// </param>
-        /// <param name="token">Токен отмены</param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public async Task<TreeNode> BuildTreeAsync(IntermechTreeElement root, CancellationToken token)
-        {
-            Func<TreeNode> func = () => { return BuildTree(root); };
-
-            return await Task.Run(func, token);
-        }
-
 
         /// <summary>
         /// Асинхронно получает заказ
@@ -198,29 +152,35 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="mainElement">
         /// Главный элемент, из которого строим дерево
         /// </param>
-        private void BuildTreeRecursive(MyNode mainNode, IntermechTreeElement mainElement)
+        private void BuildTreeRecursive(ViewNode mainNode, IntermechTreeElement mainElement)
         {
             ICollection<IntermechTreeElement> nodes = mainElement.Children;
 
             foreach (IntermechTreeElement node in nodes)
             {
-                string description = node.SubstituteInfo;
-
-                TreeNode childNode = new TreeNode
-                {
-                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB,
-                        description).Trim(),
-                };
-
-                childNode.Tag = node;
-
-                mainNode.Nodes.Add(childNode);
-
+                ViewNode viewNode = new ViewNode();
+                viewNode.Name = node.Name;
+                viewNode.Designation = node.Designation;
+                viewNode.Amount = node.Amount;
+                viewNode.AmountWithUse = node.AmountWithUse;
+                viewNode.Tag = node;
+                mainNode.Nodes.Add(viewNode);
                 if (node.Children.Count > 0)
                 {
-                    BuildTreeRecursive(childNode, node);
+                    BuildTreeRecursive(viewNode, node);
                 }
             }
+        }
+
+        public TreeModel GetTreeModel(IntermechTreeElement rootElement)
+        {
+            TreeModel model = new TreeModel();
+            ViewNode root = new ViewNode();
+            root.Name = root.Name;
+            root.Designation = root.Designation;
+            model.Nodes.Add(root);
+            BuildTreeRecursive(root, rootElement);
+            return model;
         }
     }
 }

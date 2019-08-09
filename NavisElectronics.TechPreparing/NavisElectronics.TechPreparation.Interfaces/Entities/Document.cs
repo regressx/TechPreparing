@@ -9,12 +9,10 @@
 
 namespace NavisElectronics.TechPreparation.Entities
 {
-    using NavisElectronics.TechPreparation.Views;
-
     /// <summary>
     /// Сущность для документа
     /// </summary>
-    public class Document : IObjectView
+    public class Document
     {
         /// <summary>
         /// Идентификатор из IPS

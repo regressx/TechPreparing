@@ -52,10 +52,18 @@
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
+            this.designationTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amounTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.nodeTextBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nodeTextBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -84,7 +92,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView1.Size = new System.Drawing.Size(539, 251);
+            this.dataGridView1.Size = new System.Drawing.Size(773, 251);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
             // 
@@ -119,7 +127,7 @@
             this.textBoxNote.Location = new System.Drawing.Point(3, 53);
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
-            this.textBoxNote.Size = new System.Drawing.Size(888, 122);
+            this.textBoxNote.Size = new System.Drawing.Size(1268, 122);
             this.textBoxNote.TabIndex = 3;
             // 
             // label1
@@ -152,7 +160,7 @@
             this.toolStripProgressBar1});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(894, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1274, 25);
             this.toolStrip.TabIndex = 4;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -285,7 +293,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(894, 476);
+            this.splitContainer1.Size = new System.Drawing.Size(1274, 476);
             this.splitContainer1.SplitterDistance = 294;
             this.splitContainer1.TabIndex = 6;
             // 
@@ -302,9 +310,37 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer2.Size = new System.Drawing.Size(894, 294);
-            this.splitContainer2.SplitterDistance = 345;
+            this.splitContainer2.Size = new System.Drawing.Size(1274, 294);
+            this.splitContainer2.SplitterDistance = 491;
             this.splitContainer2.TabIndex = 7;
+            // 
+            // treeViewAdv
+            // 
+            this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
+            this.treeViewAdv.ColumnHeaderHeight = 19;
+            this.treeViewAdv.Columns.Add(this.designationTreeColumn);
+            this.treeViewAdv.Columns.Add(this.nameTreeColumn);
+            this.treeViewAdv.Columns.Add(this.amounTreeColumn);
+            this.treeViewAdv.Columns.Add(this.amountWithUseTreeColumn);
+            this.treeViewAdv.DefaultToolTipProvider = null;
+            this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
+            this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
+            this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
+            this.treeViewAdv.LineColor = System.Drawing.SystemColors.ControlDark;
+            this.treeViewAdv.Location = new System.Drawing.Point(0, 0);
+            this.treeViewAdv.Model = null;
+            this.treeViewAdv.Name = "treeViewAdv";
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBoxDesignation);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBoxName);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmount);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
+            this.treeViewAdv.NodeFilter = null;
+            this.treeViewAdv.SelectedNode = null;
+            this.treeViewAdv.Size = new System.Drawing.Size(491, 294);
+            this.treeViewAdv.TabIndex = 0;
+            this.treeViewAdv.Text = "treeViewAdv";
+            this.treeViewAdv.UseColumns = true;
             // 
             // tableLayoutPanel1
             // 
@@ -318,7 +354,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(545, 294);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(779, 294);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // flowLayoutPanel1
@@ -327,7 +363,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 260);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(539, 31);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(773, 31);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
             // tableLayoutPanel3
@@ -342,33 +378,69 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(894, 178);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1274, 178);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
-            // treeViewAdv
+            // designationTreeColumn
             // 
-            this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
-            this.treeViewAdv.ColumnHeaderHeight = 0;
-            this.treeViewAdv.DefaultToolTipProvider = null;
-            this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
-            this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
-            this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
-            this.treeViewAdv.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.treeViewAdv.Location = new System.Drawing.Point(0, 0);
-            this.treeViewAdv.Model = null;
-            this.treeViewAdv.Name = "treeViewAdv";
-            this.treeViewAdv.NodeFilter = null;
-            this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(345, 294);
-            this.treeViewAdv.TabIndex = 0;
-            this.treeViewAdv.Text = "treeViewAdv";
+            this.designationTreeColumn.Header = "Обозначение";
+            this.designationTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.designationTreeColumn.TooltipText = null;
+            this.designationTreeColumn.Width = 150;
+            // 
+            // nameTreeColumn
+            // 
+            this.nameTreeColumn.Header = "Наименование";
+            this.nameTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.nameTreeColumn.TooltipText = null;
+            this.nameTreeColumn.Width = 200;
+            // 
+            // amounTreeColumn
+            // 
+            this.amounTreeColumn.Header = "Кол-во";
+            this.amounTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.amounTreeColumn.TooltipText = null;
+            // 
+            // amountWithUseTreeColumn
+            // 
+            this.amountWithUseTreeColumn.Header = "Кол-во с прим";
+            this.amountWithUseTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.amountWithUseTreeColumn.TooltipText = null;
+            this.amountWithUseTreeColumn.Width = 90;
+            // 
+            // nodeTextBoxDesignation
+            // 
+            this.nodeTextBoxDesignation.DataPropertyName = "Designation";
+            this.nodeTextBoxDesignation.IncrementalSearchEnabled = true;
+            this.nodeTextBoxDesignation.LeftMargin = 3;
+            this.nodeTextBoxDesignation.ParentColumn = this.designationTreeColumn;
+            // 
+            // nodeTextBoxName
+            // 
+            this.nodeTextBoxName.DataPropertyName = "Name";
+            this.nodeTextBoxName.IncrementalSearchEnabled = true;
+            this.nodeTextBoxName.LeftMargin = 3;
+            this.nodeTextBoxName.ParentColumn = this.nameTreeColumn;
+            // 
+            // nodeTextBoxAmount
+            // 
+            this.nodeTextBoxAmount.DataPropertyName = "Amount";
+            this.nodeTextBoxAmount.IncrementalSearchEnabled = true;
+            this.nodeTextBoxAmount.LeftMargin = 3;
+            this.nodeTextBoxAmount.ParentColumn = this.amounTreeColumn;
+            // 
+            // nodeTextBoxAmountWithUse
+            // 
+            this.nodeTextBoxAmountWithUse.DataPropertyName = "AmountWithUse";
+            this.nodeTextBoxAmountWithUse.IncrementalSearchEnabled = true;
+            this.nodeTextBoxAmountWithUse.LeftMargin = 3;
+            this.nodeTextBoxAmountWithUse.ParentColumn = this.amountWithUseTreeColumn;
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 501);
+            this.ClientSize = new System.Drawing.Size(1274, 501);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip);
             this.Name = "MainView";
@@ -423,5 +495,13 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv;
+        private Aga.Controls.Tree.TreeColumn designationTreeColumn;
+        private Aga.Controls.Tree.TreeColumn nameTreeColumn;
+        private Aga.Controls.Tree.TreeColumn amounTreeColumn;
+        private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxDesignation;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxName;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmount;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmountWithUse;
     }
 }

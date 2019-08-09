@@ -7,7 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparing.Data.Helpers;
+using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -72,7 +73,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Словарик агентов
         /// </summary>
         private IDictionary<long, Agent> _agents;
-
 
 
         /// <summary>
@@ -184,10 +184,12 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_RefreshClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
-            _model.RecountAmount(mainElement);
-            TreeNode mainNode = _model.BuildTree(mainElement);
-            _mainView.FillTree(mainNode);
+            //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
+            //_model.RecountAmount(mainElement);
+            //TreeNode mainNode = _model.BuildTree(mainElement);
+            //_mainView.FillTree(mainNode);
+
+            throw new NotImplementedException();
         }
 
         private async void _mainView_EditWithdrawalTypeClick(object sender, EventArgs e)
@@ -547,7 +549,12 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private async void _view_Load(object sender, EventArgs e)
         {
-            _mainView.FillTree(new TreeNode("Пожалуйста, подождите. Идет загрузка данных"));
+            TreeModel treeModel = new TreeModel();
+            ViewNode waitingNode = new ViewNode();
+            waitingNode.Name = "Пожалуйста, подождите. Идет загрузка данных";
+            treeModel.Nodes.Add(waitingNode);
+            _mainView.FillTree(treeModel);
+
             _mainView.LockButtons();
             bool fromDataset = true;
             IntermechTreeElement orderElement = null;
@@ -580,34 +587,9 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             _mainView.FillGridColumns(agents);
 
-            TreeNode mainNode = new TreeNode(orderElement.Name);
-            mainNode.Tag = orderElement;
-            FillTreeRecursive(mainNode, orderElement);
-            _mainView.FillTree(mainNode);
+            treeModel = _model.GetTreeModel(_rootElement);
+            _mainView.FillTree(treeModel);
             _mainView.UnLockButtons();
-        }
-
-        private void FillTreeRecursive(TreeNode mainNode, IntermechTreeElement element)
-        {
-            ICollection<IntermechTreeElement> nodes = element.Children;
-
-            foreach (IntermechTreeElement node in nodes)
-            {
-                string description = node.SubstituteInfo;
-
-                TreeNode childNode = new TreeNode
-                {
-                    Text = string.Format("{0} {1} {2} {3} ", node.Name, node.Designation, node.IsPCB, description).Trim()
-                };
-
-                childNode.Tag = node;
-
-                mainNode.Nodes.Add(childNode);
-                if (node.Children.Count > 0)
-                {
-                    FillTreeRecursive(childNode, node);
-                }
-            }
         }
 
         /// <summary>

@@ -120,6 +120,7 @@
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\InfoInTableModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
+    <Compile Include="ViewModels\TreeNodes\ViewNode.cs" />
     <Compile Include="Views\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>

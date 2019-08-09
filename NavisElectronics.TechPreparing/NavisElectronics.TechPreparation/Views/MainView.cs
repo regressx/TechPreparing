@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿using Aga.Controls.Tree;
+
+namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
@@ -68,11 +70,12 @@
 
         public TreeNode GetMainTreeElement()
         {
-            if (treeView1.Nodes.Count == 0)
-            {
-                throw new IndexOutOfRangeException("У Вас нет в дереве ни одного элемента");
-            }
-            return treeView1.Nodes[0];
+            //if (treeView1.Nodes.Count == 0)
+            //{
+            //    throw new IndexOutOfRangeException("У Вас нет в дереве ни одного элемента");
+            //}
+            //return treeView1.Nodes[0];
+            throw new NotImplementedException();
         }
 
         public string GetNote()
@@ -101,10 +104,10 @@
             }
         }
 
-        public void FillTree(TreeNode mainNode)
+        public void FillTree(TreeModel model)
         {
-            treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(mainNode);
+            treeViewAdv.Model = null;
+            treeViewAdv.Model = model;
         }
 
         public void FillGridColumns(ICollection<Agent> agents)
@@ -186,14 +189,16 @@
 
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == 0)
-            {
-                if (CellValueChanged != null)
-                {
-                    IntermechTreeElement element = treeView1.SelectedNode.Tag as IntermechTreeElement;
-                    CellValueChanged(sender, new TreeNodeAgentValueEventArgs(element, dataGridView1.Columns[e.ColumnIndex].Name));
-                }
-            }
+            //if (e.RowIndex == 0)
+            //{
+            //    if (CellValueChanged != null)
+            //    {
+            //        IntermechTreeElement element = treeView1.SelectedNode.Tag as IntermechTreeElement;
+            //        CellValueChanged(sender, new TreeNodeAgentValueEventArgs(element, dataGridView1.Columns[e.ColumnIndex].Name));
+            //    }
+            //}
+
+            throw new NotImplementedException();
         }
 
 

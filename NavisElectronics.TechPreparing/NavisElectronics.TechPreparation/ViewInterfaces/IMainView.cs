@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
 namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
@@ -37,7 +40,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler CheckAllReadyClick;
 
         void Show();
-        void FillTree(TreeNode mainNode);
+        void FillTree(TreeModel mainNode);
         void FillGridColumns(ICollection<Agent> agents);
         void FillAgent(string agentId);
         TreeNode GetMainTreeElement();
