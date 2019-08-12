@@ -16,16 +16,37 @@
     {
         private readonly string _data;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechRouteEditView"/> class.
+        /// </summary>
+        /// <param name="data">
+        /// The data.
+        /// </param>
+        /// <param name="node">
+        /// The node.
+        /// </param>
         public TechRouteEditView(string data, TechRouteNode node)
         {
             _data = data;
             InitializeComponent();
         }
 
+        /// <summary>
+        /// The route node click.
+        /// </summary>
         public event EventHandler<RouteNodeClickEventAgrs> RouteNodeClick;
+
+        /// <summary>
+        /// The remove node click.
+        /// </summary>
         public event EventHandler<RemoveNodeEventArgs> RemoveNodeClick;
 
-
+        /// <summary>
+        /// The fill work shop.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
         public void FillWorkShop(TreeModel model)
         {
             treeViewAdv1.Model = null;
@@ -33,6 +54,12 @@
             treeViewAdv1.ExpandAll();
         }
 
+        /// <summary>
+        /// The fill list box.
+        /// </summary>
+        /// <param name="nodes">
+        /// The nodes.
+        /// </param>
         public void FillListBox(IList<TechRouteNode> nodes)
         {
             listBox1.Items.Clear();
@@ -42,6 +69,12 @@
             }
         }
 
+        /// <summary>
+        /// The fill text box.
+        /// </summary>
+        /// <param name="nodes">
+        /// The nodes.
+        /// </param>
         public void FillTextBox(IList<TechRouteNode> nodes)
         {
             textBox1.Text = string.Empty;

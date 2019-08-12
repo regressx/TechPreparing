@@ -12,6 +12,9 @@ namespace NavisElectronics.TechPreparation.Views
 {
     public partial class OrganizationStructView : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationStructView"/> class.
+        /// </summary>
         public OrganizationStructView()
         {
             InitializeComponent();

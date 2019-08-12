@@ -318,6 +318,9 @@
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrganizationStructView.resx">
+      <DependentUpon>OrganizationStructView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ParametersView.resx">
       <DependentUpon>ParametersView.cs</DependentUpon>
     </EmbeddedResource>
