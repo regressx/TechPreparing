@@ -35,7 +35,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Входной параметр
         /// </param>
         void Run(TParameter parameter);
-
     }
 
 }

@@ -62,7 +62,7 @@ namespace NavisElectronics.TechPreparing.Data
 
                     fileAttribute = orderObject.Attributes.AddAttribute(ConstHelper.FileAttribute, false);
 
-                    string fileName = string.Format("{0}_{1}_изм_{2}", element.Name, element.Id, orderObject.VersionID);
+                    string fileName = string.Format("{0}_{1}_изм_{2}.dat", element.Name, element.Id, orderObject.VersionID);
 
                     BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный IntermechTreeElement от {0}", DateTime.Now));
                     using (BlobWriterStream bws =

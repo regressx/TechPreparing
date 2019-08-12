@@ -43,73 +43,19 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <returns>
         /// Модель дерева для отображения
         /// </returns>
-        public TreeModel GetModel(IntermechTreeElement element, string whoIsMainInOrder, string agentFilter)
+        public TreeModel GetModel(IntermechTreeElement element, string whoIsMainInOrder)
         {
             TreeModel model = new TreeModel();
+            CooperationNode mainNode = new CooperationNode();
+            mainNode.Designation = element.Designation;
+            mainNode.Name = element.Name;
+            mainNode.Amount = element.Amount.ToString();
+            mainNode.Note = element.RouteNote;
+            mainNode.CooperationFlag = element.CooperationFlag;
+            mainNode.Tag = element;
+            BuildNodeRecursive(mainNode, element, whoIsMainInOrder);
 
-            if (whoIsMainInOrder != agentFilter)
-            {
-                ICollection<IntermechTreeElement> cooperationElements = new List<IntermechTreeElement>();
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                queue.Enqueue(element);
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement elementFromQueue = queue.Dequeue();
-                    if (elementFromQueue.Agent == agentFilter)
-                    {
-                        cooperationElements.Add(elementFromQueue);
-                        continue;
-                    }
-
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-
-                }
-
-                foreach (IntermechTreeElement cooperationElement in cooperationElements)
-                {
-                    CooperationNode cooperationNode = new CooperationNode();
-                    cooperationNode.Id = cooperationElement.Id;
-                    cooperationNode.Type = cooperationElement.Type;
-                    cooperationNode.Designation = cooperationElement.Designation;
-                    cooperationNode.Name = cooperationElement.Name;
-                    cooperationNode.Amount = cooperationElement.Amount.ToString("F3");
-                    cooperationNode.AmountWithUse = cooperationElement.AmountWithUse.ToString("F3");
-                    cooperationNode.TotalAmount = cooperationElement.TotalAmount.ToString("F3");
-                    cooperationNode.StockRate = cooperationElement.StockRate.ToString("F3");
-                    cooperationNode.SampleSize = cooperationElement.SampleSize;
-                    cooperationNode.TechProcessReference = cooperationElement.TechProcessReference;
-                    cooperationNode.Note = cooperationElement.Note;
-                    cooperationNode.SubstituteInfo = cooperationElement.SubstituteInfo;
-                    cooperationNode.CooperationFlag = cooperationElement.CooperationFlag;
-                    cooperationNode.IsPcb = cooperationElement.IsPCB;
-                    cooperationNode.PcbVersion = cooperationElement.PcbVersion;
-                    cooperationNode.TechTask = cooperationElement.TechTask;
-                    cooperationNode.Tag = cooperationElement;
-
-                    BuildNodeRecursive(cooperationNode, cooperationElement, agentFilter);
-                    model.Nodes.Add(cooperationNode);
-                }
-            }
-            else
-            {
-                CooperationNode mainNode = new CooperationNode();
-                mainNode.Designation = element.Designation;
-                mainNode.Name = element.Name;
-                mainNode.Amount = element.Amount.ToString();
-                mainNode.Note = element.RouteNote;
-                mainNode.CooperationFlag = element.CooperationFlag;
-                mainNode.Tag = element;
-                
-                // строим всё
-                BuildNodeRecursive(mainNode, element, agentFilter);
-                model.Nodes.Add(mainNode);
-            }
-
-
-
+            model.Nodes.Add(mainNode);
             return model;
         }
 
@@ -122,45 +68,42 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="element">
         /// Элемент, из которого получаем данные
         /// </param>
-        private void BuildNodeRecursive(CooperationNode mainNode, IntermechTreeElement element, string agentFilter)
+        private void BuildNodeRecursive(CooperationNode mainNode, IntermechTreeElement element, string whoIsMainInOrder)
         {
-            if (element.Children.Count > 0)
+            foreach (IntermechTreeElement child in element.Children)
             {
-                foreach (IntermechTreeElement child in element.Children)
+                if (child.Type == 1138 || child.Type == 1105 || child.Type == 1128)
                 {
-                    if (child.Type == 1138 || child.Type == 1105 || child.Type == 1128)
-                    {
-                        continue;
-                    }
-
-                    CooperationNode childNode = new CooperationNode();
-                    childNode.Id = child.Id;
-                    childNode.Type = child.Type;
-                    childNode.Designation = child.Designation;
-                    childNode.Name = child.Name;
-                    childNode.Amount = child.Amount.ToString("F3");
-                    childNode.AmountWithUse = child.AmountWithUse.ToString("F3");
-                    childNode.TotalAmount = child.TotalAmount.ToString("F3");
-                    childNode.StockRate = child.StockRate.ToString("F3");
-                    childNode.SampleSize = child.SampleSize;
-                    childNode.TechProcessReference = child.TechProcessReference;
-                    childNode.Note = child.Note;
-                    childNode.SubstituteInfo = child.SubstituteInfo;
-                    childNode.CooperationFlag = child.CooperationFlag;
-                    childNode.IsPcb = child.IsPCB;
-                    childNode.PcbVersion = child.PcbVersion;
-                    childNode.TechTask = child.TechTask;
-                    childNode.Tag = child;
-
-                    if (!child.Agent.Contains(agentFilter))
-                    {
-                        childNode.CooperationFlag = true;
-                    }
-
-                    mainNode.Nodes.Add(childNode);
-                    BuildNodeRecursive(childNode, child, agentFilter);
+                    continue;
                 }
+
+                CooperationNode childNode = new CooperationNode();
+                childNode.Id = child.Id;
+                childNode.Type = child.Type;
+                childNode.Designation = child.Designation;
+                childNode.Name = child.Name;
+                childNode.Amount = child.Amount.ToString("F3");
+                childNode.AmountWithUse = child.AmountWithUse.ToString("F3");
+                childNode.TotalAmount = child.TotalAmount.ToString("F3");
+                childNode.StockRate = child.StockRate.ToString("F3");
+                childNode.SampleSize = child.SampleSize;
+                childNode.TechProcessReference = child.TechProcessReference;
+                childNode.Note = child.Note;
+                childNode.SubstituteInfo = child.SubstituteInfo;
+                childNode.CooperationFlag = child.CooperationFlag;
+                childNode.IsPcb = child.IsPCB;
+                childNode.PcbVersion = child.PcbVersion;
+                childNode.TechTask = child.TechTask;
+                childNode.Tag = child;
+
+                if (!child.Agent.Contains(whoIsMainInOrder))
+                {
+                    childNode.CooperationFlag = true;
+                }
+                mainNode.Nodes.Add(childNode);
+                BuildNodeRecursive(childNode, child, whoIsMainInOrder);
             }
+
         }
 
         /// <summary>

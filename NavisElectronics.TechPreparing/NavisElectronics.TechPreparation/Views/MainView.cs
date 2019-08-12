@@ -104,6 +104,11 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
+        public void UpdateCaptionText(string orderName)
+        {
+            this.Text = orderName;
+        }
+
         public void FillTree(TreeModel model)
         {
             treeViewAdv.Model = null;

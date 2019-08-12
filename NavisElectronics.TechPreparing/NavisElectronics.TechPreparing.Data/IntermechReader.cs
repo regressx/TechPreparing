@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Net.Configuration;
+
 namespace NavisElectronics.TechPreparing.Data
 {
     using System;
@@ -223,10 +225,8 @@ namespace NavisElectronics.TechPreparing.Data
                                         break;
                                 }
                             }
-
                         }
                     }
-
                     elements.Add(element);
                 }
 
@@ -284,21 +284,16 @@ namespace NavisElectronics.TechPreparing.Data
         /// <summary>
         /// The get dataset.
         /// </summary>
-        /// <param name="orderId">
-        /// The order id.
-        /// </param>
-        /// <param name="dataAttributeId">
-        /// The data attribute id.
-        /// </param>
+        /// <param name="versionId"></param>
+        /// <param name="fileAttributeId"></param>
         /// <returns>
         /// The <see cref="DataSet"/>.
         /// </returns>
-        /// <exception cref="DataSetIsEmptyException">
-        /// </exception>
         public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId)
         {
             // получаем из базы
             byte[] bytes = null;
+            bool isDataset = false;
             using (SessionKeeper keeper = new SessionKeeper())
             {
                 IDBObject orderObject = keeper.Session.GetObject(versionId);
@@ -310,6 +305,11 @@ namespace NavisElectronics.TechPreparing.Data
                     blobReader.OpenBlob(0);
                     bytes = blobReader.ReadDataBlock();
                     blobReader.CloseBlob();
+
+                    if (((string) fileAttribute.Value).Contains(".blb"))
+                    {
+                        isDataset = true;
+                    }
                 }
             }
 
@@ -337,18 +337,91 @@ namespace NavisElectronics.TechPreparing.Data
                         break;
                     }
                 }
+                unpackedBytes = memory.ToArray();
+            }
+
+            // десериализуем
+            BinaryFormatter binFormatter = new BinaryFormatter();
+            IntermechTreeElement root = null;
+            using (MemoryStream ms = new MemoryStream(unpackedBytes))
+            {
+                if (!isDataset)
+                {
+                    root = (IntermechTreeElement)binFormatter.Deserialize(ms);
+                }
+                else
+                {
+                    DataSet ds = (DataSet)binFormatter.Deserialize(ms);
+                    TreeBuilderService treeBuilderService = new TreeBuilderService();
+                    root = treeBuilderService.Build(ds);
+                }
+            }
+            return root;
+        }
+
+
+        public DataSet GetDataset(long orderId, int dataAttributeId)
+        {
+            // получаем из базы
+            byte[] bytes = null;
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                IDBObject orderObject = keeper.Session.GetObject(orderId);
+                IDBAttribute binaryAtt = orderObject.GetAttributeByID((int)dataAttributeId);
+
+                if (binaryAtt != null)
+                {
+                    IBlobReader blobReader = binaryAtt as IBlobReader;
+                    blobReader.OpenBlob(0);
+                    bytes = blobReader.ReadDataBlock();
+                    blobReader.CloseBlob();
+                }
+            }
+
+            if (bytes == null)
+            {
+                throw new FileAttributeIsEmptyException("Атрибута нет, поэтому нет и данных");
+            }
+
+            // распаковываем
+            Inflater inflater = new Inflater();
+            byte[] temp = new byte[1024];
+            byte[] unpackedBytes = null;
+            using (MemoryStream memory = new MemoryStream())
+            {
+                inflater.SetInput(bytes);
+                while (!inflater.IsFinished)
+                {
+                    int extracted = inflater.Inflate(temp);
+                    if (extracted > 0)
+                    {
+                        memory.Write(temp, 0, extracted);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
 
                 unpackedBytes = memory.ToArray();
             }
 
             // пакуем в Dataset
             BinaryFormatter binFormatter = new BinaryFormatter();
-            IntermechTreeElement root;
+            DataSet dataSet;
             using (MemoryStream ms = new MemoryStream(unpackedBytes))
             {
-                root = (IntermechTreeElement)binFormatter.Deserialize(ms);
+                dataSet = (DataSet)binFormatter.Deserialize(ms);
             }
-            return root;
+            return dataSet;
+        }
+
+        public Task<DataSet> GetDatasetAsync(long orderId, int dataAttributeId)
+        {
+            return Task.Run<DataSet>(() =>
+            {
+                return GetDataset(orderId, dataAttributeId);
+            });
         }
 
         public Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId)

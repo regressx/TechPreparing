@@ -159,8 +159,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         }
 
-
-
         private FindNodePresenter _presenter;
         private void _view_GlobalSearchClick(object sender, EventArgs e)
         {
@@ -403,19 +401,17 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_SaveClick(object sender, System.EventArgs e)
         {
-            //ChangesDefiner changesDefiner = new ChangesDefiner();
-            //IntermechTreeElement newTree = changesDefiner.GetChanges(_oldElement, _element);
-            //_oldElement = newTree;
-            //System.Data.DataSet ds = _gatheringService.Gather(newTree);
-            //IntermechWriter writer = new IntermechWriter();
-            //writer.WriteDataSet(newTree.Id, ds);
+            throw new NotImplementedException();
         }
 
         private void _view_Load(object sender, System.EventArgs e)
         {
-            _view.SetWindowCaption(_parameter.GetParameter(2).Name);
-            _view.FillTree(_model.GetModel(new IntermechTreeElement(){Designation = "Пожалуйста, подождите! Идет фильтрация состава"}, string.Empty,string.Empty));
-            _view.FillTree(_model.GetModel(_parameter.GetParameter(0), _parameter.GetParameter(1).Agent, _parameter.GetParameter(2).Agent));
+            _view.FillTree(_model.GetModel(new IntermechTreeElement()
+            {
+                Designation = "Пожалуйста, подождите! Идет фильтрация состава"
+            }, string.Empty));
+
+            _view.FillTree(_model.GetModel(_root, _root.Agent));
         }
 
         /// <summary>
@@ -427,6 +423,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
             _parameter = parameter;
+            // получить заказ
             _root = parameter.GetParameter(0);
             _view.Show();
         }

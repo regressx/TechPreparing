@@ -370,7 +370,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private async void _view_Load(object sender, System.EventArgs e)
         {
-            _techRouteNode = await _model.GetWorkShops();
+            _techRouteNode = await _model.GetWorkShops(); 
             IDictionary<long, Agent> agents = await _model.GetAgents();
             if (_agentFilter == ((int)AgentsId.NavisElectronics).ToString())
             {
@@ -475,8 +475,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
             _root = parameter.GetParameter(0);
-            _mainManufacturer = parameter.GetParameter(1).Agent;
-            _agentFilter = parameter.GetParameter(2).Agent;
             _view.Show();
         }
     }

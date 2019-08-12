@@ -14,7 +14,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
@@ -112,7 +111,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void MainViewCheckAllReadyClick(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
+            IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
             queue.Enqueue(mainElement);
             while (queue.Count > 0)
@@ -197,8 +196,8 @@ namespace NavisElectronics.TechPreparation.Presenters
             WithdrawalType year = await _model.GetWithdrawalTypesAsync();
 
             IntermechObjectExtractor extractor = new IntermechObjectExtractor();
-            ICollection<ExtractedObject> collection = extractor.ExctractObjects(_mainView.GetMainTreeElement().Tag as IntermechTreeElement, IntermechObjectTypes.Other);
-            WithdrawalTypeView view = new WithdrawalTypeView(year, _mainView.GetMainTreeElement().Tag as IntermechTreeElement, collection);
+            ICollection<ExtractedObject> collection = extractor.ExctractObjects(_rootElement, IntermechObjectTypes.Other);
+            WithdrawalTypeView view = new WithdrawalTypeView(year, _rootElement, collection);
             view.Show();
         }
 
@@ -288,7 +287,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
+            IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
             MaterialsView view = new MaterialsView();
             MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.StandartDetails);
             presenter.Run();
@@ -297,8 +296,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditMainMaterialsClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
-
+            IntermechTreeElement mainElement = _rootElement;
             MaterialsView view = new MaterialsView();
             MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.Material);
             presenter.Run();
@@ -306,7 +304,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_UpdateClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
+            IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
 
             // TreeComparerView view = new TreeComparerView();
             // TreeComparerViewModel model = new TreeComparerViewModel();
@@ -319,43 +317,9 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
         {
-
-            Parameter<Agent> agentParameter = new Parameter<Agent>();
-
-            foreach (Agent agent in _agents.Values)
-            {
-                agentParameter.AddParameter(agent);
-            }
-
-            Agent filterAgent = new Agent();
-            agentParameter.AddParameter(filterAgent);
-
-            IPresenter<Parameter<Agent>> agentDialogPresenter = _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>(); 
-            agentDialogPresenter.Run(agentParameter);
-
-            if (filterAgent.Id == 0)
-            {
-                return;
-            }
-
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
-
-            // корень
             parameter.AddParameter(_rootElement);
-            
-            // кто главный
-            parameter.AddParameter(new IntermechTreeElement
-            {
-                                           Agent = ((int)AgentsId.Kb).ToString()
-                                       });
-            
-            // по кому фильтруем
-            parameter.AddParameter(new IntermechTreeElement
-            {
-                                           Name = filterAgent.Name,
-                                           Agent = filterAgent.Id.ToString()
-                                       });
             presenter.Run(parameter);
         }
 
@@ -390,36 +354,9 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_CooperationClick(object sender, EventArgs e)
         {
-            Parameter<Agent> agentParameter = new Parameter<Agent>();
-
-            foreach (Agent agent in _agents.Values)
-            {
-                agentParameter.AddParameter(agent);
-            }
-
-            Agent filterAgent = new Agent();
-            agentParameter.AddParameter(filterAgent);
-
-            IPresenter<Parameter<Agent>> agentDialogPresenter = _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>(); 
-            agentDialogPresenter.Run(agentParameter);
-
-            if (filterAgent.Id == 0)
-            {
-                return;
-            }
-
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
             parameter.AddParameter(_rootElement);
-            parameter.AddParameter(new IntermechTreeElement
-            {
-                                           Agent = ((int)AgentsId.Kb).ToString()
-                                       });
-            parameter.AddParameter(new IntermechTreeElement
-            {
-                                           Name = filterAgent.Name,
-                                           Agent = filterAgent.Id.ToString()
-                                       });
             presenter.Run(parameter);
         }
 
@@ -526,7 +463,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_ApplyButtonClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainTreeElement = (IntermechTreeElement)_mainView.GetMainTreeElement().Tag;
+            IntermechTreeElement mainTreeElement = _rootElement;
             mainTreeElement.Note = _mainView.GetNote();
             _model.WriteIntoFileAttribute(_rootVersionId, mainTreeElement);
         }
@@ -554,30 +491,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             waitingNode.Name = "Пожалуйста, подождите. Идет загрузка данных";
             treeModel.Nodes.Add(waitingNode);
             _mainView.FillTree(treeModel);
-
             _mainView.LockButtons();
-            bool fromDataset = true;
-            IntermechTreeElement orderElement = null;
-            try
-            {
-                orderElement = await _model.GetTreeFromFileAsync(_rootVersionId);
-                fromDataset = true;
-            }
-            catch (FileAttributeIsEmptyException)
-            {
-                fromDataset = false;
-            }
 
-            if (!fromDataset)
-            {
-                // получаем всё, что сидит в заказе
-                orderElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
-            }
-
-            _mainView.FillNote(orderElement.Note);
-
-            _rootElement = orderElement;
-            _rootElement.Agent = ((int)AgentsId.Kb).ToString();
+            // загрузить возможных производителей
             ICollection<Agent> agents = await _model.GetAllAgentsAsync();
             _agents = new Dictionary<long, Agent>();
             foreach (Agent agent in agents)
@@ -585,10 +501,67 @@ namespace NavisElectronics.TechPreparation.Presenters
                 _agents.Add(agent.Id, agent);
             }
 
-            _mainView.FillGridColumns(agents);
+            // пробуем загрузить из файла
+            bool fromFile = false;
 
+            try
+            {
+                _rootElement = await _model.GetTreeFromFileAsync(_rootVersionId);
+                if (_rootElement.Id != _rootVersionId)
+                {
+                    _rootElement.Id = _rootVersionId;
+                }
+                fromFile = true;
+            }
+            catch (FileAttributeIsEmptyException)
+            {
+                fromFile = false;
+            }
+
+            // Если не из файла, то загружаем из базы данных
+            if (!fromFile)
+            {
+                // показываем окно для выбора организации
+                Parameter<Agent> agentParameter = new Parameter<Agent>();
+                foreach (Agent agent in _agents.Values)
+                {
+                    agentParameter.AddParameter(agent);
+                }
+
+                Agent filterAgent = new Agent();
+                agentParameter.AddParameter(filterAgent);
+
+                IPresenter<Parameter<Agent>> agentDialogPresenter =
+                    _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>();
+                agentDialogPresenter.Run(agentParameter);
+
+                // если при загрузке производитель не выбран, то ничего не будем грузить
+                if (filterAgent.Id == 0)
+                {
+                    return;
+                }
+
+                _rootElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
+                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+                queue.Enqueue(_rootElement);
+                while (queue.Count > 0)
+                {
+                    IntermechTreeElement elementFromQueue = queue.Dequeue();
+                    elementFromQueue.Agent = filterAgent.Id.ToString();
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+
+            _mainView.FillNote(_rootElement.Note);
+            _mainView.FillGridColumns(agents);
             treeModel = _model.GetTreeModel(_rootElement);
             _mainView.FillTree(treeModel);
+            //string orderName = string.Format($"{_rootElement.Designation} {_rootElement.Name} {_agents[long.Parse(_rootElement.Agent)]}. Тех. подготовка");
+            //_mainView.UpdateCaptionText(orderName);
             _mainView.UnLockButtons();
         }
 

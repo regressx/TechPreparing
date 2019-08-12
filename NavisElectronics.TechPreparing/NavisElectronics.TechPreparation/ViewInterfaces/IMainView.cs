@@ -16,8 +16,8 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
     using System.Collections.Generic;
     using System.Windows.Forms;
 
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.EventArguments;
+    using Entities;
+    using EventArguments;
 
     /// <summary>
     /// Интерфейс главной формы
@@ -43,12 +43,12 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void FillTree(TreeModel mainNode);
         void FillGridColumns(ICollection<Agent> agents);
         void FillAgent(string agentId);
-        TreeNode GetMainTreeElement();
         string GetNote();
         void FillNote(string orderElementNote);
 
 
         void UnLockButtons();
         void LockButtons();
+        void UpdateCaptionText(string orderName);
     }
 }
