@@ -372,14 +372,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             _techRouteNode = await _model.GetWorkShops(); 
             IDictionary<long, Agent> agents = await _model.GetAgents();
-            if (_agentFilter == ((int)AgentsId.NavisElectronics).ToString())
-            {
-                _techRouteNode.Children.RemoveAt(0);
-            }
-            else
-            {
-                _techRouteNode.Children.RemoveAt(1);
-            }
             TreeModel model = _model.GetTreeModel(_root, _mainManufacturer, _agentFilter, _techRouteNode, agents);
             _view.SetTreeModel(model);
 
