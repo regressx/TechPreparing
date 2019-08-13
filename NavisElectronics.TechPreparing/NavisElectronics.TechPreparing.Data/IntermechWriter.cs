@@ -1,22 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
+using Intermech;
+using Intermech.Interfaces;
+using Intermech.Interfaces.BlobStream;
+using NavisElectronics.TechPreparation.Entities;
+using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparing.Data.Helpers;
 
-namespace NavisElectronics.TechPreparing.Data
+namespace NavisElectronics.TechPreparation.Data
 {
-    using System;
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using Helpers;
-    using Intermech;
-    using Intermech.Interfaces;
-    using Intermech.Interfaces.BlobStream;
-    using TechPreparation.Entities;
-    using TechPreparation.Interfaces;
-
     /// <summary>
     /// Класс для записи технологического атрибута в базу IPS
     /// </summary>
     public class IntermechWriter : IDatabaseWriter
     {
+
+        public void WriteFileAttribute(long orderId, IntermechTreeElement element)
+        {
+            WriteFileAttribute(orderId, element, new Progress<ProgressReport>());
+        }
+
         /// <summary>
         /// Метод записи атрибута в базу данных.
         /// </summary>
@@ -26,7 +31,7 @@ namespace NavisElectronics.TechPreparing.Data
         /// <param name="element">
         /// Элемент для записи
         /// </param>
-        public void WriteFileAttribute(long orderId, IntermechTreeElement element)
+        public void WriteFileAttribute(long orderId, IntermechTreeElement element, IProgress<ProgressReport> progress)
         {
             using (SessionKeeper keeper = new SessionKeeper())
             {
@@ -36,7 +41,10 @@ namespace NavisElectronics.TechPreparing.Data
                     throw new Exception("Объект взят на редактирование не Вами. Вы не можете сохранять данные, пока сами не возьмете на редактирование");
                 }
             }
-
+            ProgressReport progressReport = new ProgressReport();
+            progressReport.Percent = 0;
+            progressReport.Message = "Начинаю сериализацию";
+            progress.Report(progressReport);
             // сериализуем
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             byte[] bytes;
@@ -49,6 +57,10 @@ namespace NavisElectronics.TechPreparing.Data
             // если есть, что писать, пишем в базу
             if (bytes.Length > 0)
             {
+                progressReport.Percent = 50;
+                progressReport.Message = "Записываю в базу данных";
+                progress.Report(progressReport);
+
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
                     IDBObject orderObject = keeper.Session.GetObject(orderId);
@@ -59,10 +71,9 @@ namespace NavisElectronics.TechPreparing.Data
                         fileAttribute.Delete(0L);
                     }
 
-
                     fileAttribute = orderObject.Attributes.AddAttribute(ConstHelper.FileAttribute, false);
 
-                    string fileName = string.Format("{0}_{1}_изм_{2}.dat", element.Name, element.Id, orderObject.VersionID);
+                    string fileName = string.Format("{0}_{1}_изм_{2}.dat", element.Name, Math.Abs(element.Id), orderObject.VersionID);
 
                     BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный IntermechTreeElement от {0}", DateTime.Now));
                     using (BlobWriterStream bws =
@@ -71,6 +82,9 @@ namespace NavisElectronics.TechPreparing.Data
                         bws.Write(bytes, 0, bytes.Length);
                     }
                 }
+                progressReport.Percent = 100;
+                progressReport.Message = "Сохранено в " + DateTime.Now;
+                progress.Report(progressReport);
             }
         }
 
@@ -93,5 +107,29 @@ namespace NavisElectronics.TechPreparing.Data
                 WriteFileAttribute(orderId, element);
             });
         }
+
+        /// <summary>
+        /// The write file attribute async.
+        /// </summary>
+        /// <param name="orderId">
+        /// The order id.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <param name="progress">
+        /// The progress.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task WriteFileAttributeAsync(long orderId, IntermechTreeElement element, IProgress<ProgressReport> progress)
+        {
+            return Task.Run(() =>
+            {
+                WriteFileAttribute(orderId, element, progress);
+            });
+        }
+
     }
 }

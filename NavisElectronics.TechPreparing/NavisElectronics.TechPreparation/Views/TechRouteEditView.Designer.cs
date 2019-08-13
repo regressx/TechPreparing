@@ -47,14 +47,10 @@
             this.nameTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox2 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.loadFactoryStructButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -66,16 +62,15 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.treeViewAdv1, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 166F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 259F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 191F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 224F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(625, 582);
@@ -139,7 +134,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(619, 160);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(619, 185);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // listBox1
@@ -148,7 +143,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(3, 3);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(573, 154);
+            this.listBox1.Size = new System.Drawing.Size(573, 179);
             this.listBox1.TabIndex = 1;
             // 
             // tableLayoutPanel4
@@ -165,14 +160,14 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.53521F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.83099F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.22535F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(34, 154);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(34, 179);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // buttonRemoveNode
             // 
             this.buttonRemoveNode.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
             this.buttonRemoveNode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRemoveNode.Location = new System.Drawing.Point(3, 72);
+            this.buttonRemoveNode.Location = new System.Drawing.Point(3, 82);
             this.buttonRemoveNode.Name = "buttonRemoveNode";
             this.buttonRemoveNode.Size = new System.Drawing.Size(23, 23);
             this.buttonRemoveNode.TabIndex = 0;
@@ -195,7 +190,7 @@
             this.button2.Enabled = false;
             this.button2.Image = global::NavisElectronics.TechPreparation.Properties.Resources.arrow_Down_16xLG;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(3, 38);
+            this.button2.Location = new System.Drawing.Point(3, 43);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(23, 23);
             this.button2.TabIndex = 2;
@@ -222,7 +217,7 @@
             this.treeViewAdv1.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.treeViewAdv1.Location = new System.Drawing.Point(3, 263);
+            this.treeViewAdv1.Location = new System.Drawing.Point(3, 298);
             this.treeViewAdv1.Model = null;
             this.treeViewAdv1.Name = "treeViewAdv1";
             this.treeViewAdv1.NodeControls.Add(this.nameTextBox);
@@ -230,7 +225,7 @@
             this.treeViewAdv1.NodeControls.Add(this.nodeTextBox2);
             this.treeViewAdv1.NodeFilter = null;
             this.treeViewAdv1.SelectedNode = null;
-            this.treeViewAdv1.Size = new System.Drawing.Size(619, 253);
+            this.treeViewAdv1.Size = new System.Drawing.Size(619, 218);
             this.treeViewAdv1.TabIndex = 4;
             this.treeViewAdv1.Text = "treeViewAdv1";
             this.treeViewAdv1.UseColumns = true;
@@ -278,36 +273,6 @@
             this.nodeTextBox2.LeftMargin = 3;
             this.nodeTextBox2.ParentColumn = this.PartitionNameColumn;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.loadFactoryStructButton);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 224);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(619, 33);
-            this.panel1.TabIndex = 5;
-            // 
-            // loadFactoryStructButton
-            // 
-            this.loadFactoryStructButton.Location = new System.Drawing.Point(118, 5);
-            this.loadFactoryStructButton.Name = "loadFactoryStructButton";
-            this.loadFactoryStructButton.Size = new System.Drawing.Size(213, 23);
-            this.loadFactoryStructButton.TabIndex = 1;
-            this.loadFactoryStructButton.Text = "Загрузить структуру предприятия";
-            this.loadFactoryStructButton.UseVisualStyleBackColor = true;
-            this.loadFactoryStructButton.Click += new System.EventHandler(this.loadFactoryStructButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Узлы предприятия";
-            // 
             // TechRouteEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,8 +288,6 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -350,8 +313,5 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox2;
         private Aga.Controls.Tree.TreeColumn nameColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nameTextBox;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button loadFactoryStructButton;
-        private System.Windows.Forms.Label label1;
     }
 }

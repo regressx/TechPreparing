@@ -44,6 +44,15 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler EditWithdrawalTypeClick;
         public event EventHandler RefreshClick;
         public event EventHandler CheckAllReadyClick;
+        public void UpdateLabelText(string message)
+        {
+            toolStripLabel1.Text = message;
+        }
+
+        public void UpdateProgressBar(int progressReportPercent)
+        {
+            toolStripProgressBar1.Value = progressReportPercent;
+        }
 
         #endregion
 

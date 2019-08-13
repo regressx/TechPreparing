@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ClearCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +64,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -94,7 +92,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView1.Size = new System.Drawing.Size(773, 251);
+            this.dataGridView1.Size = new System.Drawing.Size(538, 251);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
             // 
@@ -129,7 +127,7 @@
             this.textBoxNote.Location = new System.Drawing.Point(3, 53);
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
-            this.textBoxNote.Size = new System.Drawing.Size(1268, 122);
+            this.textBoxNote.Size = new System.Drawing.Size(1056, 122);
             this.textBoxNote.TabIndex = 3;
             // 
             // label1
@@ -159,11 +157,10 @@
             this.UpdateButton,
             this.CheckReadyButton,
             this.toolStripLabel1,
-            this.toolStripProgressBar1,
-            this.toolStripButton1});
+            this.toolStripProgressBar1});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1274, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1062, 25);
             this.toolStrip.TabIndex = 4;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -296,7 +293,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(1274, 476);
+            this.splitContainer1.Size = new System.Drawing.Size(1062, 476);
             this.splitContainer1.SplitterDistance = 294;
             this.splitContainer1.TabIndex = 6;
             // 
@@ -313,8 +310,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer2.Size = new System.Drawing.Size(1274, 294);
-            this.splitContainer2.SplitterDistance = 491;
+            this.splitContainer2.Size = new System.Drawing.Size(1062, 294);
+            this.splitContainer2.SplitterDistance = 514;
             this.splitContainer2.TabIndex = 7;
             // 
             // treeViewAdv
@@ -340,7 +337,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(491, 294);
+            this.treeViewAdv.Size = new System.Drawing.Size(514, 294);
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -412,7 +409,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(779, 294);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(544, 294);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // flowLayoutPanel1
@@ -421,7 +418,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 260);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(773, 31);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(538, 31);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
             // tableLayoutPanel3
@@ -436,23 +433,14 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1274, 178);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
             this.tableLayoutPanel3.TabIndex = 7;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Преобразование формата";
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1274, 501);
+            this.ClientSize = new System.Drawing.Size(1062, 501);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip);
             this.Name = "MainView";
@@ -515,6 +503,5 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxName;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmount;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmountWithUse;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

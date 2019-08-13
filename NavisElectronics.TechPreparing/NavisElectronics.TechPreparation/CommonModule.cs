@@ -7,12 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparing.Data;
-
 namespace NavisElectronics.TechPreparation
 {
+    using Data;
     using Entities;
+    using Interfaces;
     using IO;
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
@@ -29,7 +28,7 @@ namespace NavisElectronics.TechPreparation
     public class CommonModule : NinjectModule
     {
         /// <summary>
-        /// Метод регистрации и загрузки основных модулей системы, по сути Composition Root
+        /// Метод регистрации основных модулей системы
         /// </summary>
         public override void Load()
         {
@@ -40,6 +39,7 @@ namespace NavisElectronics.TechPreparation
             Bind<Search>().ToSelf().InSingletonScope();
             Bind<ReportService>().ToSelf().InSingletonScope();
             Bind<OpenFolderService>().ToSelf().InSingletonScope();
+            Bind<SaveService>().ToSelf().InSingletonScope();
             Bind<MainViewModel>().ToSelf();
             Bind<CooperationViewModel>().ToSelf();
             Bind<TreeNodeDialogViewModel>().ToSelf();

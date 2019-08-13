@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using System;
 
 namespace NavisElectronics.TechPreparation.Entities 
 {
@@ -16,6 +17,7 @@ namespace NavisElectronics.TechPreparation.Entities
     /// <summary>
     /// Узел тех. процесса
     /// </summary>
+    [Serializable]
     public class TechRouteNode
     {
         /// <summary>

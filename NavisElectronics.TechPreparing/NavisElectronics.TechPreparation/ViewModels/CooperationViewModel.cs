@@ -68,11 +68,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="element">
         /// Элемент, из которого получаем данные
         /// </param>
+        /// <param name="whoIsMainInOrder"></param>
         private void BuildNodeRecursive(CooperationNode mainNode, IntermechTreeElement element, string whoIsMainInOrder)
         {
             foreach (IntermechTreeElement child in element.Children)
             {
-                if (child.Type == 1138 || child.Type == 1105 || child.Type == 1128)
+                // пропускаем всё неинтересное
+                if (child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
                 {
                     continue;
                 }

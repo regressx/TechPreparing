@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.IPS1C.IntegratorService
+﻿using NavisElectronics.TechPreparation.Data;
+
+namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;

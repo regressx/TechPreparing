@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Aga.Controls.Tree;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -17,13 +14,17 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Text;
     using System.Threading;
     using System.Windows.Forms;
+    using Aga.Controls.Tree;
+    using Data;
     using Entities;
     using Enums;
     using EventArguments;
     using Exceptions;
     using Services;
+    using TechPreparing.Data.Helpers;
     using ViewInterfaces;
     using ViewModels;
+    using ViewModels.TreeNodes;
     using Views;
 
     /// <summary>
@@ -53,11 +54,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         private long _rootVersionId;
 
         /// <summary>
-        /// Для простановки агентов
-        /// </summary>
-        private IntermechTreeElement _globalTreeElement;
-
-        /// <summary>
         /// Корень
         /// </summary>
         private IntermechTreeElement _rootElement;
@@ -73,6 +69,15 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </summary>
         private IDictionary<long, Agent> _agents;
 
+        /// <summary>
+        /// Структура предприятия
+        /// </summary>
+        private TechRouteNode _organizationStruct = null;
+
+        /// <summary>
+        /// Тип тех. отхода
+        /// </summary>
+        private WithdrawalType _withdrawalType = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPresenter"/> class. 
@@ -90,6 +95,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         public MainPresenter(IMainView mainView, MainViewModel model, IPresentationFactory presentationFactory)
         {
             _model = model;
+            _model.Saving += _model_Saving;
             _mainView = mainView;
             _presentationFactory = presentationFactory;
             _mainView.Load += _view_Load;
@@ -106,6 +112,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.EditWithdrawalTypeClick += _mainView_EditWithdrawalTypeClick;
             _mainView.RefreshClick += _mainView_RefreshClick;
             _mainView.CheckAllReadyClick += MainViewCheckAllReadyClick;
+        }
+
+        private void _model_Saving(object sender, SaveServiceEventArgs e)
+        {
+            _mainView.UpdateLabelText(e.Message);
+            _mainView.UpdateProgressBar(e.Percent);
         }
 
         private void MainViewCheckAllReadyClick(object sender, EventArgs e)
@@ -317,6 +329,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
         {
+
             IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
             parameter.AddParameter(_rootElement);
@@ -325,31 +338,33 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_ClearCooperationClick(object sender, EventArgs e)
         {
-            _globalTreeElement.Agent = string.Empty;
-            if (_globalTreeElement.Children.Count > 0)
-            {
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                foreach (IntermechTreeElement child in _globalTreeElement.Children)
-                {
-                    queue.Enqueue(child);
-                }
+            //_globalTreeElement.Agent = string.Empty;
+            //if (_globalTreeElement.Children.Count > 0)
+            //{
+            //    Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            //    foreach (IntermechTreeElement child in _globalTreeElement.Children)
+            //    {
+            //        queue.Enqueue(child);
+            //    }
 
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement child = queue.Dequeue();
-                    child.Agent = string.Empty;
-                    if (child.Children.Count > 0)
-                    {
-                        foreach (IntermechTreeElement childNodes in child.Children)
-                        {
-                            childNodes.Agent = string.Empty;
-                            queue.Enqueue(childNodes);
-                        }
-                    }
-                }
-            }
+            //    while (queue.Count > 0)
+            //    {
+            //        IntermechTreeElement child = queue.Dequeue();
+            //        child.Agent = string.Empty;
+            //        if (child.Children.Count > 0)
+            //        {
+            //            foreach (IntermechTreeElement childNodes in child.Children)
+            //            {
+            //                childNodes.Agent = string.Empty;
+            //                queue.Enqueue(childNodes);
+            //            }
+            //        }
+            //    }
+            //}
 
-            _mainView.FillAgent(_globalTreeElement.Agent);
+            //_mainView.FillAgent(_globalTreeElement.Agent);
+
+            throw new NotImplementedException();
         }
 
         private void _mainView_CooperationClick(object sender, EventArgs e)
@@ -363,38 +378,41 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_CellValueChanged(object sender, TreeNodeAgentValueEventArgs e)
         {
-            string agentsValues = GatherAgents(e);
-            _globalTreeElement.Agent = agentsValues;
+            //string agentsValues = GatherAgents(e);
+            //_globalTreeElement.Agent = agentsValues;
 
-            // Раздаем кооперацию потомкам
-            if (_globalTreeElement.Children.Count > 0)
-            {
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                foreach (IntermechTreeElement child in _globalTreeElement.Children)
-                {
-                    queue.Enqueue(child);
-                }
+            //// Раздаем кооперацию потомкам
+            //if (_globalTreeElement.Children.Count > 0)
+            //{
+            //    Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            //    foreach (IntermechTreeElement child in _globalTreeElement.Children)
+            //    {
+            //        queue.Enqueue(child);
+            //    }
 
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement child = queue.Dequeue();
-                    child.Agent = agentsValues;
-                    if (child.Children.Count > 0)
-                    {
-                        foreach (IntermechTreeElement childNodes in child.Children)
-                        {
-                            childNodes.Agent = agentsValues;
-                            queue.Enqueue(childNodes);
-                        }
-                    }
-                }
+            //    while (queue.Count > 0)
+            //    {
+            //        IntermechTreeElement child = queue.Dequeue();
+            //        child.Agent = agentsValues;
+            //        if (child.Children.Count > 0)
+            //        {
+            //            foreach (IntermechTreeElement childNodes in child.Children)
+            //            {
+            //                childNodes.Agent = agentsValues;
+            //                queue.Enqueue(childNodes);
+            //            }
+            //        }
+            //    }
 
-            }
+            //}
 
-            // раздаем кооперацию родителям
-            SetParentCooperationRecursive(_globalTreeElement, e.Key);
+            //// раздаем кооперацию родителям
+            //SetParentCooperationRecursive(_globalTreeElement, e.Key);
 
-            _mainView.FillAgent(_globalTreeElement.Agent);
+            //_mainView.FillAgent(_globalTreeElement.Agent);
+
+            throw new NotImplementedException();
+
         }
 
         private void SetParentCooperationRecursive(IntermechTreeElement globalTreeElement, string key)
@@ -461,29 +479,38 @@ namespace NavisElectronics.TechPreparation.Presenters
         }
 
 
-        private void _mainView_ApplyButtonClick(object sender, EventArgs e)
+        private async void _mainView_ApplyButtonClick(object sender, EventArgs e)
         {
             IntermechTreeElement mainTreeElement = _rootElement;
             mainTreeElement.Note = _mainView.GetNote();
-            _model.WriteIntoFileAttribute(_rootVersionId, mainTreeElement);
+            await _model.WriteIntoFileAttributeAsync(_rootVersionId, mainTreeElement);
         }
 
         private void _mainView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            // TODO Здесь должна появиться проверка на изменение предыдущего узла, если было какое-либо изменение
-            IntermechTreeElement treeElement = e.Node.Tag as IntermechTreeElement;
+            //// TODO Здесь должна появиться проверка на изменение предыдущего узла, если было какое-либо изменение
+            //IntermechTreeElement treeElement = e.Node.Tag as IntermechTreeElement;
 
-            _globalTreeElement = treeElement;
+            //_globalTreeElement = treeElement;
 
-            if (treeElement != null)
-            {
-                if (treeElement.Agent != null)
-                {
-                    _mainView.FillAgent(treeElement.Agent);
-                }
-            }
+            //if (treeElement != null)
+            //{
+            //    if (treeElement.Agent != null)
+            //    {
+            //        _mainView.FillAgent(treeElement.Agent);
+            //    }
+            //}
         }
 
+        /// <summary>
+        /// The _view_ load.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private async void _view_Load(object sender, EventArgs e)
         {
             TreeModel treeModel = new TreeModel();
@@ -493,12 +520,42 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.FillTree(treeModel);
             _mainView.LockButtons();
 
-            // загрузить возможных производителей
+            // загрузить производителей
             ICollection<Agent> agents = await _model.GetAllAgentsAsync();
             _agents = new Dictionary<long, Agent>();
             foreach (Agent agent in agents)
             {
                 _agents.Add(agent.Id, agent);
+            }
+            
+            // проверка наличия файла со структурой предприятия
+            bool isFileStructEmpty = await _model.CheckAttributeEmpty(_rootVersionId, ConstHelper.OrganizationStructAttribute);
+            if (isFileStructEmpty)
+            {
+                // загрузить структуру предприятия из справочника Imbase
+                _organizationStruct = await _model.GetWorkShopsAsync();
+
+                // TODO Здесь диалог выбора предприятия
+
+            }
+            else
+            {
+                // TODO Здесь чтение из файла
+                //_organizationStruct = await _model.GetWorkShopsAsync();
+            }
+
+            bool _withdrawalTypeFileEmpty = await _model.CheckAttributeEmpty(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
+
+            if (_withdrawalTypeFileEmpty)
+            {
+                _withdrawalType = await _model.GetWithdrawalTypesAsync();
+
+                // TODO Здесь диалог выбора тех. отхода
+            }
+            else
+            {
+                // TODO Здесь чтение из файла
+                //_withdrawalType = await _model.GetWithdrawalTypesAsync();
             }
 
             // пробуем загрузить из файла

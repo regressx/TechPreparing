@@ -7,9 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Net.Configuration;
-
-namespace NavisElectronics.TechPreparing.Data
+namespace NavisElectronics.TechPreparation.Data
 {
     using System;
     using System.Collections.Generic;
@@ -18,15 +16,15 @@ namespace NavisElectronics.TechPreparing.Data
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
-    using Helpers;
+    using Entities;
+    using Exceptions;
     using ICSharpCode.SharpZipLib.Zip.Compression;
+    using Interfaces;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
     using Substitutes;
-    using TechPreparation.Entities;
-    using TechPreparation.Exceptions;
-    using TechPreparation.Interfaces;
+    using TechPreparing.Data.Helpers;
 
     /// <summary>
     /// Реализует чтение составов отдельных элементов, целого заказа

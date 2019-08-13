@@ -1,15 +1,12 @@
-﻿using NavisElectronics.TechPreparing.Data;
-
-namespace NavisElectronics.TechPreparation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-
+    using Data;
     using Intermech.Commands;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.IO;
+    using Entities;
+    using IO;
 
     /// <summary>
     /// Класс-менеджер для просмотра прикрепленных файлов к объекту

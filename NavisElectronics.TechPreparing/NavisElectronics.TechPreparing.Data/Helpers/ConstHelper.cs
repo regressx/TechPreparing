@@ -25,5 +25,14 @@
         /// </summary>
         public const int MaterialNotDefined = 1178678;
 
+        /// <summary>
+        /// Атрибут Файл
+        /// </summary>
+        public const int OrganizationStructAttribute = 18071;
+
+        /// <summary>
+        /// The withdrawal type file attribute.
+        /// </summary>
+        public const int WithdrawalTypeFileAttribute = 18070;
     }
 }

@@ -54,6 +54,8 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="reader">
         /// Репозиторий с данными
         /// </param>
+        /// <param name="search"></param>
+        /// <param name="showFileManager"></param>
         public TechRoutesMapModel(IDataRepository reader, Search search, ShowFileManager showFileManager)
         {
             _reader = reader;
@@ -97,55 +99,24 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="element">
         /// Корень
         /// </param>
+        /// <param name="root"></param>
         /// <param name="whoIsMainInOrder">
         /// Кто главный в заказе
         /// </param>
         /// <param name="agentFilter">
         /// Агент, по которому фильтруем данные
         /// </param>
+        /// <param name="techRouteNode">Структура предприятия, по которому тех. процесс был разработан</param>
+        /// <param name="agents">Набор организаций</param>
         /// <returns>
         /// The <see cref="MyNode"/>.
         /// </returns>
         public TreeModel GetTreeModel(IntermechTreeElement root, string whoIsMainInOrder, string agentFilter, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
         {
             TreeModel model = new TreeModel();
-            if (whoIsMainInOrder != agentFilter)
-            {
-                ICollection<IntermechTreeElement> elements = new List<IntermechTreeElement>();
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                queue.Enqueue(root);
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement elementFromQueue = queue.Dequeue();
-                    if (elementFromQueue.Agent == agentFilter)
-                    {
-                        elements.Add(elementFromQueue);
-                        continue;
-                    }
-
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-                }
-
-                foreach (IntermechTreeElement myElement in elements)
-                {
-                    MyNode myNode = CreateNode(myElement);
-                    BuildNodeRecursive(myNode, myElement, agentFilter, techRouteNode, agents);
-                    model.Nodes.Add(myNode);
-                }
-            }
-            else
-            {
-                MyNode mainNode = CreateNode(root);
-                
-                // строим всё
-                BuildNodeRecursive(mainNode, root, agentFilter, techRouteNode, agents);
-                model.Nodes.Add(mainNode);
-            }
-
-
+            MyNode mainNode = CreateNode(root);
+            BuildNodeRecursive(mainNode, root, root.Agent, techRouteNode, agents);
+            model.Nodes.Add(mainNode);
             return model;
         }
 
@@ -196,10 +167,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="element">
         /// Элемент, из которого получаем данные
         /// </param>
-        /// <param name="agentFilter">
-        /// Фильтр по предприятию-изготовителю
-        /// </param>
-        private void BuildNodeRecursive(MyNode mainNode, IntermechTreeElement element, string agentFilter, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
+        /// <param name="whoIsMainInOrder"><Кто главный в заказе/param>
+        /// <param name="techRouteNode"></param>
+        private void BuildNodeRecursive(MyNode mainNode, IntermechTreeElement element, string whoIsMainInOrder, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
         {
             if (element.Children.Count > 0)
             {
@@ -234,7 +204,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     if (child.TechRoute != null)
                     {
                         // выцепляем данные по фильтру предприятия
-                        string data = _dataExtractor.ExtractData(child.TechRoute, agentFilter);
+                        string data = _dataExtractor.ExtractData(child.TechRoute, whoIsMainInOrder);
 
                         // здесь существующие маршруты по выделенному предприятию
                         string[] routes = data.Split(new char[] { '|', '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -273,7 +243,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
                     if (child.RouteNote != null)
                     {
-                        string routeNote = _dataExtractor.ExtractData(child.RouteNote, agentFilter);
+                        string routeNote = _dataExtractor.ExtractData(child.RouteNote, whoIsMainInOrder);
                         childNode.Note = routeNote;
                     }
                     else
@@ -299,7 +269,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                                 childNode.IsMultipleAgents = true;
                             }
 
-                            if (!child.Agent.Contains(agentFilter))
+                            if (!child.Agent.Contains(whoIsMainInOrder))
                             {
                                 childNode.CooperationFlag = true;
                                 childNode.AnotherAgent = true;
@@ -321,10 +291,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
                                 continue;
                             }
                         }
-
                     }
 
-                    BuildNodeRecursive(childNode, child, agentFilter, techRouteNode, agents);
+                    BuildNodeRecursive(childNode, child, whoIsMainInOrder, techRouteNode, agents);
                 }
             }
         }
@@ -358,12 +327,20 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return agentsDictionary;
         }
 
+        /// <summary>
+        /// Переход в папку старого архива предприятия
+        /// </summary>
+        /// <param name="designation"></param>
         public void GoToOldArchive(string designation)
         {
             FileDesignation fd = _search.GetFileDesignation(designation);
             _search.StepToFolder(_search.GetFullPath(fd));
         }
 
+        /// <summary>
+        /// Показывает карточку изделия
+        /// </summary>
+        /// <param name="element"></param>
         public void ShowProductCard(IntermechTreeElement element)
         {
             _showFileManager.Show(element.Id, element.Type);

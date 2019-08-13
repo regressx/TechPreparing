@@ -7,8 +7,8 @@
     <ProjectGuid>{402C057A-1638-4188-AD50-C75CD1016777}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NavisElectronics.TechPreparing.Data</RootNamespace>
-    <AssemblyName>NavisElectronics.TechPreparing.Data</AssemblyName>
+    <RootNamespace>NavisElectronics.TechPreparation.Data</RootNamespace>
+    <AssemblyName>NavisElectronics.TechPreparation.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

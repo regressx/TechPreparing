@@ -1,10 +1,13 @@
-﻿using System;
-using System.Data;
-using Intermech.Interfaces;
-using NavisElectronics.TechPreparation.Entities;
-
-namespace NavisElectronics.TechPreparing.Data
+﻿namespace NavisElectronics.TechPreparation.Data
 {
+    using System;
+    using System.Data;
+    using Entities;
+    using Intermech.Interfaces;
+
+    /// <summary>
+    /// The tree builder service.
+    /// </summary>
     public class TreeBuilderService
     {
         public IntermechTreeElement Build(DataSet ds)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace NavisElectronics.TechPreparation.Interfaces
 {
@@ -33,5 +34,24 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// The <see cref="Task"/>.
         /// </returns>
         Task WriteFileAttributeAsync(long orderId, IntermechTreeElement element);
+
+
+        /// <summary>
+        /// Асинхронная запись в атрибут Файл
+        /// </summary>
+        /// <param name="orderId">
+        /// Идентификатор версии объекта
+        /// </param>
+        /// <param name="element">
+        /// Элемент для записи
+        /// </param>
+        /// <param name="progress">
+        /// The progress.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task WriteFileAttributeAsync(long orderId, IntermechTreeElement element, IProgress<ProgressReport> progress);
+
     }
 }

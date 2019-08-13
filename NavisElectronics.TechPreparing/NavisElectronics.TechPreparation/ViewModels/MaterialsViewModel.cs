@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparing.Data;
 
 namespace NavisElectronics.TechPreparation.ViewModels

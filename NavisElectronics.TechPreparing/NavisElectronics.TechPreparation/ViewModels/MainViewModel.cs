@@ -7,8 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Aga.Controls.Tree;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+using NavisElectronics.TechPreparation.Data;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
@@ -18,17 +17,21 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Interfaces;
+    using Aga.Controls.Tree;
     using Entities;
-    using IO;
+    using Interfaces;
+    using Intermech.Interfaces;
     using Services;
     using TechPreparing.Data.Helpers;
+    using TreeNodes;
 
     /// <summary>
     /// Модель для обслуживания запросов формы MainView
     /// </summary>
     public class MainViewModel
     {
+        public event EventHandler<SaveServiceEventArgs> Saving; 
+
         /// <summary>
         /// Репозиторий с деревом заказа
         /// </summary>
@@ -37,7 +40,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <summary>
         /// Сервис, умеющий писать Dataset в базу данных
         /// </summary>
-        private readonly IDatabaseWriter _writer;
+        private readonly SaveService _saveService;
 
 
         private readonly ITechPreparingSelector<IdOrPath> _selector;
@@ -54,13 +57,20 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="selector">
         /// The selector.
         /// </param>
-        public MainViewModel(IDataRepository reader, IDatabaseWriter writer, ITechPreparingSelector<IdOrPath> selector)
+        public MainViewModel(IDataRepository reader, SaveService saveService, ITechPreparingSelector<IdOrPath> selector)
         {
             _reader = reader;
-
-            _writer = writer;
-
+            _saveService = saveService;
             _selector = selector;
+            _saveService.Saving += _saveService_Saving;
+        }
+
+        private void _saveService_Saving(object sender, SaveServiceEventArgs e)
+        {
+            if (Saving != null)
+            {
+                Saving(sender, e);
+            }
         }
 
         public IList<IdOrPath> Select()
@@ -138,9 +148,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="mainTreeElement">
         /// The main tree element.
         /// </param>
-        public void WriteIntoFileAttribute(long orderVersionId, IntermechTreeElement mainTreeElement)
+        public Task WriteIntoFileAttributeAsync(long orderVersionId, IntermechTreeElement mainTreeElement)
         {
-            _writer.WriteFileAttribute(orderVersionId, mainTreeElement);
+            return _saveService.SaveAsync(orderVersionId, mainTreeElement);
         }
 
         /// <summary>
@@ -176,11 +186,44 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             TreeModel model = new TreeModel();
             ViewNode root = new ViewNode();
-            root.Name = root.Name;
-            root.Designation = root.Designation;
+            root.Name = rootElement.Name;
+            root.Designation = rootElement.Designation;
+
             model.Nodes.Add(root);
             BuildTreeRecursive(root, rootElement);
             return model;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<TechRouteNode> GetWorkShopsAsync()
+        {
+            return await _reader.GetWorkshopsAsync();
+        }
+
+        public Task<bool> CheckAttributeEmpty(long versionId, int attributeId)
+        {
+            Func<bool> func = () =>
+            {
+                bool result = false;
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject orderObject = keeper.Session.GetObject(versionId);
+                    IDBAttribute attribute =
+                        orderObject.GetAttributeByID(attributeId);
+                    if (attribute != null)
+                    {
+                        result = true;
+                    }
+                }
+
+                return result;
+            };
+
+            return Task.Run(func);
+
         }
     }
 }

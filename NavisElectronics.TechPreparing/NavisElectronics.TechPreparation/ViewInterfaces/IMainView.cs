@@ -38,17 +38,17 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler EditWithdrawalTypeClick;
         event EventHandler RefreshClick;
         event EventHandler CheckAllReadyClick;
-
+        void UpdateLabelText(string message);
+        void UpdateProgressBar(int progressReportPercent);
         void Show();
         void FillTree(TreeModel mainNode);
         void FillGridColumns(ICollection<Agent> agents);
         void FillAgent(string agentId);
         string GetNote();
         void FillNote(string orderElementNote);
-
-
         void UnLockButtons();
         void LockButtons();
         void UpdateCaptionText(string orderName);
+
     }
 }

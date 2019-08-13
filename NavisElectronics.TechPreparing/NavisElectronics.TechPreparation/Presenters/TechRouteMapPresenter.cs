@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using NavisArchiveWork.Data;
+using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparing.Data;
 
 namespace NavisElectronics.TechPreparation.Presenters
@@ -68,11 +69,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Поле служит на передачи параметров
         /// </summary>
         private Parameter<IntermechTreeElement> _parameter;
-
-        /// <summary>
-        /// Переменная, от чьего лица мы смотрим ведомость тех. маршрутов
-        /// </summary>
-        private string _mainManufacturer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TechRouteMapPresenter"/> class. 
@@ -372,7 +368,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             _techRouteNode = await _model.GetWorkShops(); 
             IDictionary<long, Agent> agents = await _model.GetAgents();
-            TreeModel model = _model.GetTreeModel(_root, _mainManufacturer, _agentFilter, _techRouteNode, agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _agentFilter, _techRouteNode, agents);
             _view.SetTreeModel(model);
 
         }
@@ -466,6 +462,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
+            _parameter = parameter;
             _root = parameter.GetParameter(0);
             _view.Show();
         }
