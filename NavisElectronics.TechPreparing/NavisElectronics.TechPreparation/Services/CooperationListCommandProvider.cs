@@ -105,21 +105,8 @@ namespace NavisElectronics.TechPreparation.Services
 
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            //if (id > 0)
-            //{
-            //    throw new Exception("Прежде, чем что-то делать с технологическими ведомостями, возьмите заказ на редактирование с помощью контекстного меню или нажатием кнопки F9");
-            //}
-
-            IDBObject orderObject = null;
-            string name = string.Empty;
-            using (SessionKeeper keeper = new SessionKeeper())
-            {
-                orderObject = keeper.Session.GetObject(id);
-                name = orderObject.Caption;
-            }
 
             IPresenter<long> mainPresenter = _presentationFactory.GetPresenter<MainPresenter, long>();
-
             mainPresenter.Run(id);
 
         }

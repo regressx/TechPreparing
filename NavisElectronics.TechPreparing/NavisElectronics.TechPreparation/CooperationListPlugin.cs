@@ -16,8 +16,8 @@ namespace NavisElectronics.TechPreparation
     using Intermech.Interfaces.Plugins;
     using Intermech.Navigator.ContextMenu;
     using Intermech.Navigator.Interfaces;
-    using NavisElectronics.TechPreparation.Presenters;
-    using NavisElectronics.TechPreparation.Services;
+    using Presenters;
+    using Services;
 
     using Ninject;
 
