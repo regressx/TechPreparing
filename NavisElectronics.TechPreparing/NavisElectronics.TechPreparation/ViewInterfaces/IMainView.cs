@@ -49,6 +49,5 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void UnLockButtons();
         void LockButtons();
         void UpdateCaptionText(string orderName);
-
     }
 }

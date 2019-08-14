@@ -1,6 +1,6 @@
 ﻿namespace NavisElectronics.TechPreparation.Views
 {
-    partial class OrganizationStructView
+    partial class StructDialogView
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,6 @@
             this.treeViewAdv1 = new Aga.Controls.Tree.TreeViewAdv();
             this.applyButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.treeColumnName = new Aga.Controls.Tree.TreeColumn();
-            this.treeColumnWorkshop = new Aga.Controls.Tree.TreeColumn();
-            this.treeColumnPart = new Aga.Controls.Tree.TreeColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,9 +38,6 @@
             // 
             this.treeViewAdv1.BackColor = System.Drawing.SystemColors.Window;
             this.treeViewAdv1.ColumnHeaderHeight = 19;
-            this.treeViewAdv1.Columns.Add(this.treeColumnName);
-            this.treeViewAdv1.Columns.Add(this.treeColumnWorkshop);
-            this.treeViewAdv1.Columns.Add(this.treeColumnPart);
             this.treeViewAdv1.DefaultToolTipProvider = null;
             this.treeViewAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv1.DragDropMarkColor = System.Drawing.Color.Black;
@@ -85,28 +79,7 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(469, 377);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // treeColumnName
-            // 
-            this.treeColumnName.Header = "Наименование";
-            this.treeColumnName.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumnName.TooltipText = null;
-            this.treeColumnName.Width = 200;
-            // 
-            // treeColumnWorkshop
-            // 
-            this.treeColumnWorkshop.Header = "Цех";
-            this.treeColumnWorkshop.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumnWorkshop.TooltipText = null;
-            this.treeColumnWorkshop.Width = 75;
-            // 
-            // treeColumnPart
-            // 
-            this.treeColumnPart.Header = "Участок";
-            this.treeColumnPart.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumnPart.TooltipText = null;
-            this.treeColumnPart.Width = 75;
-            // 
-            // OrganizationStructView
+            // StructDialogView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,7 +88,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "OrganizationStructView";
+            this.Name = "StructDialogView";
             this.Text = "OrganizationStructView";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -127,8 +100,5 @@
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private Aga.Controls.Tree.TreeColumn treeColumnName;
-        private Aga.Controls.Tree.TreeColumn treeColumnWorkshop;
-        private Aga.Controls.Tree.TreeColumn treeColumnPart;
     }
 }

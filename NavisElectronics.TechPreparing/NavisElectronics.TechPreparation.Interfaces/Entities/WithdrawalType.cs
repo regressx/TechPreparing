@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace NavisElectronics.TechPreparation.Entities
 {
     using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace NavisElectronics.TechPreparation.Entities
     /// <summary>
     /// Класс, представляющий тип тех. отхода
     /// </summary>
+    [Serializable]
     public class WithdrawalType
     {
         /// <summary>

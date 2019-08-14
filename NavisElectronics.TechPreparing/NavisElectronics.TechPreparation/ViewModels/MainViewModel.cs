@@ -203,7 +203,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return await _reader.GetWorkshopsAsync();
         }
 
-        public Task<bool> CheckAttributeEmpty(long versionId, int attributeId)
+        public Task<bool> AttributeExist(long versionId, int attributeId)
         {
             Func<bool> func = () =>
             {

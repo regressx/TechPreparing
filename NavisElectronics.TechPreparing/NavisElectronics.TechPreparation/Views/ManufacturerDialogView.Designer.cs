@@ -1,6 +1,6 @@
 ﻿namespace NavisElectronics.TechPreparation.Views
 {
-    partial class SelectManufacturerView
+    partial class ManufacturerDialogView
     {
         /// <summary>
         /// Required designer variable.

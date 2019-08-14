@@ -912,6 +912,16 @@ namespace NavisElectronics.TechPreparation.Data
                 element.Case = Convert.ToString(row[15]);
             }
 
+            if (row[16] != DBNull.Value)
+            {
+                element.IsPCB = Convert.ToByte(row[16]) == 1;
+            }
+
+            if (row[17] != DBNull.Value)
+            {
+                element.PcbVersion = Convert.ToByte(row[17]);
+            }
+
 
             if (element.Type == 1052 || element.Type == 1159)
             {

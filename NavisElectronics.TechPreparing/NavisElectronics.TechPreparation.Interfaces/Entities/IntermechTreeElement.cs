@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Enums;
+﻿using System.Collections;
+using NavisElectronics.TechPreparation.Enums;
 
 namespace NavisElectronics.TechPreparation.Entities
 {
@@ -15,7 +16,7 @@ namespace NavisElectronics.TechPreparation.Entities
     /// Узел дерева из IPS
     /// </summary>
     [Serializable]
-    public class IntermechTreeElement : IProduct, ICloneable
+    public class IntermechTreeElement : IProduct, ICloneable, IEnumerable<IntermechTreeElement>
     {
         IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();
 
@@ -484,10 +485,23 @@ namespace NavisElectronics.TechPreparation.Entities
             }
         }
 
+        public IEnumerator<IntermechTreeElement> GetEnumerator()
+        {
+            return _elements.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+
         public override string ToString()
         {
             return string.Format("{0} {1} {2}", Name, Designation, IsPCB);
         }
+
+
 
         /// <summary>
         /// Получает deep Copy этого объекта

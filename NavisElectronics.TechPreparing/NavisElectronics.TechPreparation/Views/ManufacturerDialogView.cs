@@ -19,9 +19,9 @@ namespace NavisElectronics.TechPreparation.Views
     /// <summary>
     /// The select manufacturer view.
     /// </summary>
-    public partial class SelectManufacturerView : Form, ISelectManufacturerView
+    public partial class ManufacturerDialogView : Form, ISelectManufacturerView
     {
-        public SelectManufacturerView()
+        public ManufacturerDialogView()
         {
             InitializeComponent();
         }

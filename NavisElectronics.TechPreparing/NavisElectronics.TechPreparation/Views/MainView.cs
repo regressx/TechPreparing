@@ -18,6 +18,7 @@ namespace NavisElectronics.TechPreparation.Views
         {
             InitializeComponent();
             cooperationButton.Click += CooperationButton_Click;
+
         }
 
         private void CooperationButton_Click(object sender, EventArgs e)
@@ -262,8 +263,15 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
+
         #endregion
 
-
+        private void MainView_Load(object sender, EventArgs e)
+        {
+            if (!this.IsHandleCreated)
+            {
+                this.CreateHandle();
+            }
+        }
     }
 }

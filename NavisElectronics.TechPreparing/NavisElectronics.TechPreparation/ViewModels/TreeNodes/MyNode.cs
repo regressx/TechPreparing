@@ -7,7 +7,7 @@ namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
     /// <summary>
     /// Наследник Node для компонента Aga.Controls.Tree. Наделяем его всякими свойствами для отображения, а затем строим с его помощью модель
     /// </summary>
-    public class MyNode:Node
+    public class MyNode : Node
     {
         public long Id { get; set; }
         public long ObjectId { get; set; }

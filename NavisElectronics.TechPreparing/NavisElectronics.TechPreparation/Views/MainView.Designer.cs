@@ -278,6 +278,7 @@
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripProgressBar1.Visible = false;
             // 
             // splitContainer1
             // 
@@ -445,6 +446,7 @@
             this.Controls.Add(this.toolStrip);
             this.Name = "MainView";
             this.Text = "Редактор технологических ведомостей";
+            this.Load += new System.EventHandler(this.MainView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);

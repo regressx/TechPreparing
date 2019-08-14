@@ -9,6 +9,7 @@
 
 
 using System;
+using System.Collections;
 
 namespace NavisElectronics.TechPreparation.Entities 
 {
@@ -18,7 +19,7 @@ namespace NavisElectronics.TechPreparation.Entities
     /// Узел тех. процесса
     /// </summary>
     [Serializable]
-    public class TechRouteNode
+    public class TechRouteNode: IEnumerable<TechRouteNode>
     {
         /// <summary>
         /// Дочерние узлы
@@ -152,6 +153,16 @@ namespace NavisElectronics.TechPreparation.Entities
                 }
             }
             return nodeToFind;
+        }
+
+        public IEnumerator<TechRouteNode> GetEnumerator()
+        {
+            return _nodes.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

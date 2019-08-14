@@ -117,7 +117,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _model_Saving(object sender, SaveServiceEventArgs e)
         {
             _mainView.UpdateLabelText(e.Message);
-            _mainView.UpdateProgressBar(e.Percent);
+            //_mainView.UpdateProgressBar(e.Percent);
         }
 
         private void MainViewCheckAllReadyClick(object sender, EventArgs e)
@@ -529,13 +529,23 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
             
             // проверка наличия файла со структурой предприятия
-            bool isFileStructEmpty = await _model.CheckAttributeEmpty(_rootVersionId, ConstHelper.OrganizationStructAttribute);
-            if (isFileStructEmpty)
+            bool fileStructEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.OrganizationStructAttribute);
+            if (!fileStructEmpty)
             {
                 // загрузить структуру предприятия из справочника Imbase
                 _organizationStruct = await _model.GetWorkShopsAsync();
 
                 // TODO Здесь диалог выбора предприятия
+                TreeViewSettings settings = new TreeViewSettings();
+                settings.AddColumn(new TreeColumn("Наименование", 250),"Name");
+                settings.AddColumn(new TreeColumn("Цех", 75),"WorkshopName");
+                settings.AddColumn(new TreeColumn("Участок", 75),"PartitionName");
+                
+                StructDialogViewPresenter<TechRouteNodeView, TechRouteNode> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNode>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNode>());
+                presenter.Run(settings);
+                //IPresenter<Parameter<Agent>> agentDialogPresenter =
+                //    _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>();
+                //agentDialogPresenter.Run(agentParameter);
 
             }
             else
@@ -544,7 +554,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 //_organizationStruct = await _model.GetWorkShopsAsync();
             }
 
-            bool _withdrawalTypeFileEmpty = await _model.CheckAttributeEmpty(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
+            bool _withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
 
             if (_withdrawalTypeFileEmpty)
             {

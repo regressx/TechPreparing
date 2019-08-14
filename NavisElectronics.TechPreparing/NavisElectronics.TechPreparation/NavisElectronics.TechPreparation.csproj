@@ -97,6 +97,7 @@
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
+    <Compile Include="Presenters\StructDialogViewPresenter.cs" />
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="Services\SaveServiceEventArgs.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="ViewInterfaces\EditTechRouteEventArgs.cs" />
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\InfoInTableModel.cs" />
+    <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodes\ViewNode.cs" />
     <Compile Include="Views\AddNoteForm.cs">
@@ -180,11 +182,11 @@
     <Compile Include="Views\MultiplyParametersView.Designer.cs">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\OrganizationStructView.cs">
+    <Compile Include="Views\StructDialogView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\OrganizationStructView.designer.cs">
-      <DependentUpon>OrganizationStructView.cs</DependentUpon>
+    <Compile Include="Views\StructDialogView.designer.cs">
+      <DependentUpon>StructDialogView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ParametersView.cs">
       <SubType>Form</SubType>
@@ -193,12 +195,6 @@
       <DependentUpon>ParametersView.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\TreeComparerPresenter.cs" />
-    <Compile Include="Views\ProcessReportView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ProcessReportView.Designer.cs">
-      <DependentUpon>ProcessReportView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\ReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -256,11 +252,11 @@
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="EventArguments\RouteNodeClickEventAgrs.cs" />
     <Compile Include="EventArguments\SaveClickEventArgs.cs" />
-    <Compile Include="Views\SelectManufacturerView.cs">
+    <Compile Include="Views\ManufacturerDialogView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SelectManufacturerView.Designer.cs">
-      <DependentUpon>SelectManufacturerView.cs</DependentUpon>
+    <Compile Include="Views\ManufacturerDialogView.Designer.cs">
+      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TechRoutesMap.cs">
       <SubType>Form</SubType>
@@ -319,8 +315,8 @@
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrganizationStructView.resx">
-      <DependentUpon>OrganizationStructView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\StructDialogView.resx">
+      <DependentUpon>StructDialogView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ParametersView.resx">
       <DependentUpon>ParametersView.cs</DependentUpon>
@@ -329,14 +325,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProcessReportView.resx">
-      <DependentUpon>ProcessReportView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SelectManufacturerView.resx">
-      <DependentUpon>SelectManufacturerView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\ManufacturerDialogView.resx">
+      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
