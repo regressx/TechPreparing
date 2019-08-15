@@ -32,7 +32,8 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             ICollection<TreeColumn> columnsToBuild = _settings.Columns;
             _view.BuildView(columnsToBuild, _settings);
-            _model.BuildTree((V)_settings.ElementToBuild, _settings);
+            TreeModel model = _model.BuildTree((V)_settings.ElementToBuild, _settings);
+            _view.FillTree(model);
         }
 
         public void Run(TreeViewSettings settings)

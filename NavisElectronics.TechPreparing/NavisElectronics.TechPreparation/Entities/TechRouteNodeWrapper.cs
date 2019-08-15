@@ -17,7 +17,7 @@ namespace NavisElectronics.TechPreparation.Entities
         public TechRouteNodeWrapper Wrap(TechRouteNode nodeToWrap)
         {
             TechRouteNodeWrapper wrapperRoot = new TechRouteNodeWrapper(nodeToWrap);
-            Name = nodeToWrap.Name;
+            wrapperRoot.Name = nodeToWrap.Name;
             WrapRecursive(nodeToWrap, wrapperRoot);
 
             return wrapperRoot;
@@ -28,6 +28,7 @@ namespace NavisElectronics.TechPreparation.Entities
             foreach (TechRouteNode child in node.Children)
             {
                 TechRouteNodeWrapper wrap = new TechRouteNodeWrapper(child);
+                wrap.Name = child.Name;
                 wrapperNode.Add(wrap);
                 WrapRecursive(child, wrap);
             }

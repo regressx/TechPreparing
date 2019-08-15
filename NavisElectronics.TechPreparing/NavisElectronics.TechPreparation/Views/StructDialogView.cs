@@ -29,6 +29,7 @@ namespace NavisElectronics.TechPreparation.Views
                 NodeTextBox control = new NodeTextBox();
                 control.DataPropertyName = settings.DataProperties[i];
                 control.ParentColumn = column;
+                treeViewAdv1.NodeControls.Add(control);
                 i++;
             }
         }

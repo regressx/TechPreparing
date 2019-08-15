@@ -250,7 +250,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// </returns>
         public IntermechTreeElement this [int index]
         {
-            get { return (IntermechTreeElement)_elements[index]; }
+            get { return _elements[index]; }
         }
 
         /// <summary>
