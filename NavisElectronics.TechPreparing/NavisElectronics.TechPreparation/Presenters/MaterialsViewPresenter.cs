@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using NavisElectronics.TechPreparation.Entities;

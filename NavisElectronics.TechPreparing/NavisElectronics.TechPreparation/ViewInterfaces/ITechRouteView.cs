@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Collections.Generic;

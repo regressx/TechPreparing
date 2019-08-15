@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.TechPreparation.Entities
+namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
     /// <summary>
     /// Класс, описывающий изготовителя

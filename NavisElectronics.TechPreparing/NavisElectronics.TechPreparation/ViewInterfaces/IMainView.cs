@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.ViewInterfaces

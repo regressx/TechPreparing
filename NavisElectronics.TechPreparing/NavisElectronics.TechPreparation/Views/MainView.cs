@@ -1,4 +1,5 @@
 ﻿using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Views
 {

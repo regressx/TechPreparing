@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
@@ -774,11 +777,11 @@ namespace NavisElectronics.TechPreparation.Data
         private void FetchNodeRecursive(IntermechTreeElement elementToFetch, IDictionary<long, IntermechTreeElement> fetchedElements)
         {
             // читаем состав
-            ICollection<IntermechTreeElement> elements = null;
+            IEnumerable<IntermechTreeElement> elements = null;
             if (fetchedElements.ContainsKey(elementToFetch.Id))
             {
                 IntermechTreeElement alreadyDownloadedElement = (IntermechTreeElement)fetchedElements[elementToFetch.Id].Clone();
-                elements = alreadyDownloadedElement.Children;
+                elements = alreadyDownloadedElement.Children.Cast<IntermechTreeElement>();
                 
                 // проходим по элементам
                 foreach (IntermechTreeElement element in elements)
@@ -788,34 +791,33 @@ namespace NavisElectronics.TechPreparation.Data
 
                 return;
             }
-            else
+
+            // читаем состав
+            elements = Read(elementToFetch.Id);
+                
+            IDictionary<long, IntermechTreeElement> uniqueElements = new Dictionary<long, IntermechTreeElement>();
+
+            // сжимаем повторяющиеся элементы
+            foreach (IntermechTreeElement element in elements)
             {
-                // читаем состав
-                elements = Read(elementToFetch.Id);
-                
-                IDictionary<long, IntermechTreeElement> uniqueElements = new Dictionary<long, IntermechTreeElement>();
-
-                // сжимаем повторяющиеся элементы
-                foreach (IntermechTreeElement element in elements)
+                if (uniqueElements.ContainsKey(element.Id))
                 {
-                    if (uniqueElements.ContainsKey(element.Id))
-                    {
-                        IntermechTreeElement registeredElement = uniqueElements[element.Id];
-                        registeredElement.Amount += element.Amount;
-                        registeredElement.Position += ", " + element.Position;
-                        registeredElement.PositionDesignation += ", " + element.PositionDesignation;
-                    }
-                    else
-                    {
-                        uniqueElements.Add(element.Id, element);
-                    }
+                    IntermechTreeElement registeredElement = uniqueElements[element.Id];
+                    registeredElement.Amount += element.Amount;
+                    registeredElement.Position += ", " + element.Position;
+                    registeredElement.PositionDesignation += ", " + element.PositionDesignation;
                 }
-
-                elements = uniqueElements.Values;
-                
-                // зарегистрировали, что скачали элемент
-                fetchedElements.Add(elementToFetch.Id, elementToFetch);
+                else
+                {
+                    uniqueElements.Add(element.Id, element);
+                }
             }
+
+            elements = uniqueElements.Values;
+                
+            // зарегистрировали, что скачали элемент
+            fetchedElements.Add(elementToFetch.Id, elementToFetch);
+
 
             // проходим по элементам
             foreach (IntermechTreeElement element in elements)

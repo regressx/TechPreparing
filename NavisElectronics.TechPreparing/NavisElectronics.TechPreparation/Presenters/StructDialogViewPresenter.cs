@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.ViewModels;
+﻿using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.ViewModels;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -15,12 +16,12 @@ namespace NavisElectronics.TechPreparation.Presenters
     /// </typeparam>
     /// <typeparam name="V">
     /// </typeparam>
-    public class StructDialogViewPresenter<T, V> where T : Node, new() where V : IEnumerable<V>
+    public class StructDialogViewPresenter<T, V> where T : Node, new() where V : IStructElement
     {
-        private IStructDialogView _view;
+        private IStructDialogView<IStructElement> _view;
         private TreeViewSettings _settings;
         private StructDialogViewModel<T, V> _model;
-        public StructDialogViewPresenter(IStructDialogView view, StructDialogViewModel<T, V> model)
+        public StructDialogViewPresenter(IStructDialogView<IStructElement> view, StructDialogViewModel<T, V> model)
         {
             _view = view;
             _view.Load += _view_Load;
@@ -31,7 +32,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             ICollection<TreeColumn> columnsToBuild = _settings.Columns;
             _view.BuildView(columnsToBuild, _settings);
-            _model.BuildTree(_settings.Element, _settings);
+            _model.BuildTree((V)_settings.ElementToBuild, _settings);
         }
 
         public void Run(TreeViewSettings settings)
@@ -70,9 +71,13 @@ namespace NavisElectronics.TechPreparation.Presenters
             DataProperties.Add(dataPropertyName);
             Columns.Add(column);
         }
+
+        public IStructElement ElementToBuild { get; set; }
+
+        public IStructElement Result { get; set; }
     }
 
-    public interface IStructDialogView : IView
+    public interface IStructDialogView<T> : IView where T : IStructElement
     {
         event EventHandler Load;
         void BuildView(ICollection<TreeColumn> columnsToBuild, TreeViewSettings settings);

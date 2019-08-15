@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
     using Aga.Controls.Tree;
     using Entities;

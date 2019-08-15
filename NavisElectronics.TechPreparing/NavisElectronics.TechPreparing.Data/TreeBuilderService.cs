@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Data
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.Data
 {
     using System;
     using System.Data;

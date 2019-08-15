@@ -4,13 +4,12 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows.Forms;
-
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Entities;
+    using EventArguments;
+    using Interfaces.Entities;
+    using ViewInterfaces;
+    using ViewModels.TreeNodes;
 
     public partial class TechRouteEditView : Form, ITechRouteView
     {

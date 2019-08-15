@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.EventArguments
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.EventArguments
 {
     using System;
 

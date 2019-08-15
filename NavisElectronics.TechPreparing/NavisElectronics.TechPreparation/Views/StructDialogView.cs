@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
+using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Presenters;
 
 namespace NavisElectronics.TechPreparation.Views
@@ -9,7 +10,7 @@ namespace NavisElectronics.TechPreparation.Views
     /// <summary>
     /// 
     /// </summary>
-    public partial class StructDialogView : Form, IStructDialogView
+    public partial class StructDialogView : Form, IStructDialogView<IStructElement>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StructDialogView"/> class.

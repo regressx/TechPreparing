@@ -1,11 +1,11 @@
-﻿namespace NavisElectronics.TechPreparation.ViewModels
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
 
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using TreeNodes;
 
     public class TechRouteModel
     {

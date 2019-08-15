@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data;
 
 namespace NavisElectronics.TechPreparation.ViewModels

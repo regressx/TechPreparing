@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
 namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System;

@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Services
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.Services
 {
     using System;
     using System.Collections.Generic;

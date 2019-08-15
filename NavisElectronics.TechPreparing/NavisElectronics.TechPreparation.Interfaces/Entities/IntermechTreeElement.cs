@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using NavisElectronics.TechPreparation.Enums;
+﻿using System.Runtime.Serialization.Formatters.Binary;
 
-namespace NavisElectronics.TechPreparation.Entities
+namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
-    using Substitutes;
+    using Enums;
     using Exceptions;
+    using Substitutes;
 
     /// <summary>
     /// Узел дерева из IPS
     /// </summary>
-    [Serializable]
-    public class IntermechTreeElement : IProduct, ICloneable, IEnumerable<IntermechTreeElement>
+    public class IntermechTreeElement : IProduct, ICloneable
     {
         IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();
 
@@ -252,7 +250,7 @@ namespace NavisElectronics.TechPreparation.Entities
         /// </returns>
         public IntermechTreeElement this [int index]
         {
-            get { return _elements[index]; }
+            get { return (IntermechTreeElement)_elements[index]; }
         }
 
         /// <summary>
@@ -276,7 +274,7 @@ namespace NavisElectronics.TechPreparation.Entities
                 {
                     foreach (var element in elementFromQueue.Children)
                     {
-                        queue.Enqueue(element);
+                        queue.Enqueue((IntermechTreeElement)element);
                     }
                 }
             }
@@ -304,7 +302,7 @@ namespace NavisElectronics.TechPreparation.Entities
                 {
                     foreach (var element in elementFromQueue.Children)
                     {
-                        queue.Enqueue(element);
+                        queue.Enqueue((IntermechTreeElement)element);
                     }
                 }
             }
@@ -384,9 +382,10 @@ namespace NavisElectronics.TechPreparation.Entities
         /// Коллекция потомков этого узла
         /// </summary>
         [Browsable(false)]
-        public ICollection<IntermechTreeElement> Children
+        public IList<IntermechTreeElement> Children
         {
             get { return _elements; }
+            set { _elements = value; }
 
         }
 
@@ -454,10 +453,6 @@ namespace NavisElectronics.TechPreparation.Entities
             return sb.ToString().TrimEnd('\\');
         }
 
-
-
-
-
         public string GetFullPathByVersionId()
         {
             Stack<long> stack = new Stack<long>();
@@ -484,17 +479,6 @@ namespace NavisElectronics.TechPreparation.Entities
                 GetFullPathRecursive(stack, parent);
             }
         }
-
-        public IEnumerator<IntermechTreeElement> GetEnumerator()
-        {
-            return _elements.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
 
         public override string ToString()
         {

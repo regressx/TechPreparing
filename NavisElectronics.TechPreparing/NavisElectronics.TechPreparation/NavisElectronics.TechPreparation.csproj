@@ -35,9 +35,6 @@
     <Reference Include="Aga.Controls">
       <HintPath>..\packages\Aga.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="iGrid">
       <HintPath>..\packages\iGrid.dll</HintPath>
     </Reference>
@@ -91,6 +88,9 @@
     <Compile Include="CommonModule.cs" />
     <Compile Include="Entities\ExtractedObject.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
+    <Compile Include="Entities\IntermechTreeElementWrapper.cs" />
+    <Compile Include="Entities\TechRouteNodeWrapper.cs" />
+    <Compile Include="Entities\WithdrawalTypeWrapper.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
@@ -348,16 +348,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
-      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
-      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
-      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
-      <Name>NavisElectronics.TechPreparation.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Options.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -401,6 +391,16 @@
     <None Include="Resources\if_x-office-document_21104.png" />
     <None Include="Resources\if_stock_insert-note_21825.png" />
     <None Include="Resources\if_stock_new-meeting_21476.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
+      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
+      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
+      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
+      <Name>NavisElectronics.TechPreparation.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

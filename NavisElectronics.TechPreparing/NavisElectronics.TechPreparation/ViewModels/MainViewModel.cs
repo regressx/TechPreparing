@@ -7,7 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections;
+using System.Linq;
 using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
@@ -164,7 +167,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// </param>
         private void BuildTreeRecursive(ViewNode mainNode, IntermechTreeElement mainElement)
         {
-            ICollection<IntermechTreeElement> nodes = mainElement.Children;
+            IEnumerable<IntermechTreeElement> nodes = mainElement.Children.Cast<IntermechTreeElement>();
 
             foreach (IntermechTreeElement node in nodes)
             {

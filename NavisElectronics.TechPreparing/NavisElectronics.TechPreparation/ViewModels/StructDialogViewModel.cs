@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Presenters;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
@@ -12,7 +13,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
     /// </summary>
     /// <typeparam name="T">
     /// </typeparam>
-    public class StructDialogViewModel<T,V> where T : Node, new() where V : IEnumerable<V>
+    public class StructDialogViewModel<T,V> where T : Node, new() where V : IStructElement
     {
         /// <summary>
         /// Метод строит дерево из тех. подготовки выбранного заказа
@@ -34,7 +35,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 PropertyInfo propertyInfo = type.GetProperty(dataProperty);
                 if (propertyInfo != null)
                 {
-                    propertyInfo.SetValue(mainNode,"xyz");
+                    propertyInfo.SetValue(mainNode,element.Name);
                 }
 
             }
@@ -56,8 +57,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// </param>
         private void BuildNodeRecursive(T mainNode, V element, TreeViewSettings settings)
         {
-            foreach (V child in element)
+            foreach (var structElement in element.Children)
             {
+                var child = (V)structElement;
                 T childNode = new T();
 
                 Type type = typeof(T);

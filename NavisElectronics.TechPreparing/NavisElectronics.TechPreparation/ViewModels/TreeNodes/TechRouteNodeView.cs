@@ -1,4 +1,7 @@
-﻿namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
+﻿using System.Collections.Generic;
+using NavisElectronics.TechPreparation.Interfaces;
+
+namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
 {
     using Aga.Controls.Tree;
 

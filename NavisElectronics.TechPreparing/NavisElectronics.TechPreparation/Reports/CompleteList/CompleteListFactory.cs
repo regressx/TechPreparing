@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Reports.CompleteList
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.Reports.CompleteList
 {
     using System;
     using System.Collections.Generic;

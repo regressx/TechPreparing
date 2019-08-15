@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparing.Data.Helpers;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -15,13 +18,11 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Threading;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using Data;
     using Entities;
     using Enums;
     using EventArguments;
     using Exceptions;
     using Services;
-    using TechPreparing.Data.Helpers;
     using ViewInterfaces;
     using ViewModels;
     using ViewModels.TreeNodes;
@@ -535,14 +536,17 @@ namespace NavisElectronics.TechPreparation.Presenters
                 // загрузить структуру предприятия из справочника Imbase
                 _organizationStruct = await _model.GetWorkShopsAsync();
 
-                // TODO Здесь диалог выбора предприятия
+                TechRouteNodeWrapper organizationStructWrapper = new TechRouteNodeWrapper(_organizationStruct).Wrap(_organizationStruct);
+
                 TreeViewSettings settings = new TreeViewSettings();
                 settings.AddColumn(new TreeColumn("Наименование", 250),"Name");
-                settings.AddColumn(new TreeColumn("Цех", 75),"WorkshopName");
-                settings.AddColumn(new TreeColumn("Участок", 75),"PartitionName");
+                //settings.AddColumn(new TreeColumn("Цех", 75),"WorkshopName");
+                //settings.AddColumn(new TreeColumn("Участок", 75),"PartitionName");
+                settings.ElementToBuild = organizationStructWrapper;
                 
-                StructDialogViewPresenter<TechRouteNodeView, TechRouteNode> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNode>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNode>());
+                StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNodeWrapper>());
                 presenter.Run(settings);
+
                 //IPresenter<Parameter<Agent>> agentDialogPresenter =
                 //    _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>();
                 //agentDialogPresenter.Run(agentParameter);

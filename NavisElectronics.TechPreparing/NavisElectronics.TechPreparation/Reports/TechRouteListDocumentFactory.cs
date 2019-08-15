@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Reports
+﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
     using System.Drawing;

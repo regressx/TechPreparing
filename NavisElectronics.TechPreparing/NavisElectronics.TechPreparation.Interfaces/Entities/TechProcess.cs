@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.TechPreparation.Entities
-{
-    using System;
+using System;
 
+namespace NavisElectronics.TechPreparation.Interfaces.Entities
+{
     /// <summary>
     /// Класс, описывающий некоторые данные тех. процесса, такие как Id и наименование
     /// </summary>

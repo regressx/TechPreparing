@@ -11,6 +11,7 @@ using Intermech.Navigator.DBObjects;
 using NavisArchiveWork.Data;
 using NavisArchiveWork.Model;
 using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {

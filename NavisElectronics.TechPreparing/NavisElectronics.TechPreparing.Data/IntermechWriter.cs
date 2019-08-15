@@ -7,6 +7,7 @@ using Intermech.Interfaces;
 using Intermech.Interfaces.BlobStream;
 using NavisElectronics.TechPreparation.Entities;
 using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
 
 namespace NavisElectronics.TechPreparation.Data

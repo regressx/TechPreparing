@@ -9,7 +9,7 @@
 
 using NavisArchiveWork.Data;
 using NavisElectronics.TechPreparation.Data;
-using NavisElectronics.TechPreparing.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {

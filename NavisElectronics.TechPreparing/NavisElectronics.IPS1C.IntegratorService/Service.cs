@@ -1,4 +1,5 @@
 ﻿using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.IPS1C.IntegratorService
 {
