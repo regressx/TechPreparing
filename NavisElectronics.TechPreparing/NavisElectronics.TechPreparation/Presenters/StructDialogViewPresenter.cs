@@ -1,5 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparation.ViewModels;
+﻿using NavisElectronics.TechPreparation.Entities;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -7,14 +7,18 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Collections.Generic;
     using Aga.Controls.Tree;
     using Aga.Controls.Tree.NodeControls;
+    using Interfaces;
     using ViewInterfaces;
+    using ViewModels;
 
     /// <summary>
     /// The struct dialog view presenter.
     /// </summary>
     /// <typeparam name="T">
+    /// Узел представления в дереве
     /// </typeparam>
     /// <typeparam name="V">
+    /// Элемент, который надо представить
     /// </typeparam>
     public class StructDialogViewPresenter<T, V> where T : Node, new() where V : IStructElement
     {
@@ -26,6 +30,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view = view;
             _view.Load += _view_Load;
             _model = model;
+            _view.AcceptClick += _view_AcceptClick;
+        }
+
+        private void _view_AcceptClick(object sender, EventArgs e)
+        {
+            _settings.Result = (V)_view.GetSelectedNode().Tag;
         }
 
         private void _view_Load(object sender, EventArgs e)
@@ -44,43 +54,11 @@ namespace NavisElectronics.TechPreparation.Presenters
 
     }
 
-    public class TreeViewSettings
-    {
-        private IList<string> _dataProperties;
-        private IList<TreeColumn> _columns;
-
-        public TreeViewSettings()
-        {
-            _columns = new List<TreeColumn>();
-            _dataProperties = new List<string>();
-        }
-
-        public IList<string> DataProperties
-        {
-            get { return _dataProperties; }
-            set { _dataProperties = value; }
-        }
-
-        public IList<TreeColumn> Columns
-        {
-            get { return _columns; }
-            set { _columns = value; }
-        }
-
-        public void AddColumn(TreeColumn column, string dataPropertyName)
-        {
-            DataProperties.Add(dataPropertyName);
-            Columns.Add(column);
-        }
-
-        public IStructElement ElementToBuild { get; set; }
-
-        public IStructElement Result { get; set; }
-    }
-
     public interface IStructDialogView<T> : IView where T : IStructElement
     {
         event EventHandler Load;
+        event EventHandler AcceptClick;
+        Node GetSelectedNode();
         void BuildView(ICollection<TreeColumn> columnsToBuild, TreeViewSettings settings);
         void FillTree(TreeModel model);
     }

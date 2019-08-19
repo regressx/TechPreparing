@@ -74,5 +74,9 @@ namespace NavisElectronics.TechPreparation.Services
             return _writer.WriteFileAttributeAsync(orderVersionId, mainTreeElement, _progress);
         }
 
+        public Task SaveIntoBlobAttributeAsync<T>(long orderVersionId, T elementToSave, int attributeId, string comment)
+        {
+            return _writer.WriteBlobAttributeAsync<T>(orderVersionId, elementToSave, attributeId, comment);
+        }
     }
 }

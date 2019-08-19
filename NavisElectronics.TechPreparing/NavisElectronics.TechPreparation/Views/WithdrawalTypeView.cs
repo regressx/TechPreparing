@@ -67,11 +67,11 @@ namespace NavisElectronics.TechPreparation.Views
         /// </param>
         private void BuildTreeRecursive(TreeNode node, WithdrawalType typeNode)
         {
-            foreach (WithdrawalType type in typeNode.Types)
+            foreach (WithdrawalType type in typeNode.Children)
             {
                 TreeNode childNode = new TreeNode(type.Description);
                 node.Nodes.Add(childNode);
-                if (type.Types.Count > 0)
+                if (type.Children.Count > 0)
                 {
                     BuildTreeRecursive(childNode, type);
                 }

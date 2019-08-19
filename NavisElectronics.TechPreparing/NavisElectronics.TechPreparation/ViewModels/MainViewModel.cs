@@ -228,5 +228,10 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return Task.Run(func);
 
         }
+
+        public Task WriteBlobAttributeAsync<T>(long rootVersionId, T element, int attrubuteId, string comment)
+        {
+            return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment);
+        }
     }
 }

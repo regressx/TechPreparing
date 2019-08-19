@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
+using NavisElectronics.TechPreparation.Entities;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Presenters;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Views
 {
@@ -18,6 +21,23 @@ namespace NavisElectronics.TechPreparation.Views
         public StructDialogView()
         {
             InitializeComponent();
+        }
+
+        public new void Show()
+        {
+            this.ShowDialog();
+        }
+
+        public event EventHandler AcceptClick;
+
+        public Node GetSelectedNode()
+        {
+            if (treeViewAdv1.SelectedNode != null)
+            {
+                return (Node)treeViewAdv1.SelectedNode.Tag;
+            }
+
+            return null;
         }
 
         public void BuildView(ICollection<TreeColumn> columnsToBuild, TreeViewSettings settings)
@@ -38,6 +58,14 @@ namespace NavisElectronics.TechPreparation.Views
         {
             treeViewAdv1.Model = null;
             treeViewAdv1.Model = model;
+        }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            if (AcceptClick != null)
+            {
+                AcceptClick(sender, e);
+            }
         }
     }
 }

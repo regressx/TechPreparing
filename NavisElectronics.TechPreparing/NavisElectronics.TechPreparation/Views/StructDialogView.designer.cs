@@ -57,12 +57,14 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.applyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.applyButton.Location = new System.Drawing.Point(163, 349);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(142, 25);
             this.applyButton.TabIndex = 1;
             this.applyButton.Text = "Принять";
             this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // tableLayoutPanel1
             // 

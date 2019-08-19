@@ -98,6 +98,7 @@
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\StructDialogViewPresenter.cs" />
+    <Compile Include="Presenters\TreeViewSettings.cs" />
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="Services\SaveServiceEventArgs.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodes\ViewNode.cs" />
+    <Compile Include="ViewModels\TreeNodes\WithdrawalTypeNodeView.cs" />
     <Compile Include="Views\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>

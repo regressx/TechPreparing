@@ -37,6 +37,33 @@ namespace NavisElectronics.TechPreparation.Interfaces
 
 
         /// <summary>
+        /// The write organization struct attribute async.
+        /// </summary>
+        /// <param name="orderId">
+        ///     The order id.
+        /// </param>
+        /// <param name="element">
+        ///     The element.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment);
+
+
+        /// <summary>
+        /// The write organization struct attribute.
+        /// </summary>
+        /// <param name="orderId">
+        /// The order id.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment);
+
+
+        /// <summary>
         /// Асинхронная запись в атрибут Файл
         /// </summary>
         /// <param name="orderId">

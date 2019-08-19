@@ -36,10 +36,10 @@ namespace NavisElectronics.TechPreparation
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
             Bind<ITechPreparingSelector<IdOrPath>>().To<TechPreparingSelector>();
-            Bind<Search>().ToSelf().InSingletonScope();
-            Bind<ReportService>().ToSelf().InSingletonScope();
-            Bind<OpenFolderService>().ToSelf().InSingletonScope();
-            Bind<SaveService>().ToSelf().InSingletonScope();
+            Bind<Search>().ToSelf();
+            Bind<ReportService>().ToSelf();
+            Bind<OpenFolderService>().ToSelf();
+            Bind<SaveService>().ToSelf();
             Bind<MainViewModel>().ToSelf();
             Bind<CooperationViewModel>().ToSelf();
             Bind<TreeNodeDialogViewModel>().ToSelf();

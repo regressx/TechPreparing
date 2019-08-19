@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Intermech.Interfaces;
+using Intermech.Interfaces.Plugins;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
 
@@ -539,18 +541,21 @@ namespace NavisElectronics.TechPreparation.Presenters
                 TechRouteNodeWrapper organizationStructWrapper = new TechRouteNodeWrapper(_organizationStruct).Wrap(_organizationStruct);
 
                 TreeViewSettings settings = new TreeViewSettings();
-                settings.AddColumn(new TreeColumn("Наименование", 250),"Name");
-                //settings.AddColumn(new TreeColumn("Цех", 75),"WorkshopName");
-                //settings.AddColumn(new TreeColumn("Участок", 75),"PartitionName");
+                settings.AddColumn(new TreeColumn("Наименование", 250), "Name");
                 settings.ElementToBuild = organizationStructWrapper;
                 
                 StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNodeWrapper>());
                 presenter.Run(settings);
 
-                //IPresenter<Parameter<Agent>> agentDialogPresenter =
-                //    _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>();
-                //agentDialogPresenter.Run(agentParameter);
-
+                if (settings.Result != null)
+                {
+                    TechRouteNodeWrapper resultNode = (TechRouteNodeWrapper)settings.Result;
+                    await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode,ConstHelper.OrganizationStructAttribute, "Структура предприятия");
+                }
+                else
+                {
+                    MessageBox.Show("Зря не указали структуру предприятия : теперь надо будет опять перезапустить окно");
+                }
             }
             else
             {
@@ -560,11 +565,29 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             bool _withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
 
-            if (_withdrawalTypeFileEmpty)
+            if (!_withdrawalTypeFileEmpty)
             {
+                // грузим тех. отход из imbase
                 _withdrawalType = await _model.GetWithdrawalTypesAsync();
 
-                // TODO Здесь диалог выбора тех. отхода
+                WithdrawalTypeWrapper withdrawalTypeWrapper = new WithdrawalTypeWrapper(_withdrawalType).Wrap(_withdrawalType);
+
+                TreeViewSettings settings = new TreeViewSettings();
+                settings.AddColumn(new TreeColumn("Наименование", 250), "Name");
+                settings.ElementToBuild = withdrawalTypeWrapper;
+                
+                StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeWrapper> presenter = new StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeWrapper>(new StructDialogView(), new StructDialogViewModel<WithdrawalTypeNodeView, WithdrawalTypeWrapper>());
+                presenter.Run(settings);
+
+                if (settings.Result != null)
+                {
+                    WithdrawalTypeWrapper resultNode = (WithdrawalTypeWrapper)settings.Result;
+                    await _model.WriteBlobAttributeAsync<WithdrawalType>(_rootVersionId, resultNode.WithdrawalType,ConstHelper.WithdrawalTypeFileAttribute, "Тип тех. отхода");
+                }
+                else
+                {
+                    MessageBox.Show("Зря не указали тип тех. отхода: теперь надо будет опять перезапустить окно");
+                }
             }
             else
             {

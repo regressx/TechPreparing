@@ -60,7 +60,7 @@ namespace NavisElectronics.TechPreparation.Entities
         /// <summary>
         /// Коллекция типов тех. отхода
         /// </summary>
-        public ICollection<WithdrawalType> Types
+        public ICollection<WithdrawalType> Children
         {
             get { return _types; }
         }

@@ -536,7 +536,7 @@ namespace NavisElectronics.TechPreparation.Data
                         nodeFromQueue.Add(withdrawalType);
                     }
 
-                    foreach (WithdrawalType child in nodeFromQueue.Types)
+                    foreach (WithdrawalType child in nodeFromQueue.Children)
                     {
                         queue.Enqueue(child);
                     }

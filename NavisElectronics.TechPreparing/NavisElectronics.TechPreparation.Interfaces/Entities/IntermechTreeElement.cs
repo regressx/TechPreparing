@@ -14,6 +14,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     /// <summary>
     /// Узел дерева из IPS
     /// </summary>
+    [Serializable]
     public class IntermechTreeElement : IProduct, ICloneable
     {
         IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();

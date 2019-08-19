@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Intermech;
 using Intermech.Interfaces;
 using Intermech.Interfaces.BlobStream;
-using NavisElectronics.TechPreparation.Entities;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
@@ -22,6 +21,63 @@ namespace NavisElectronics.TechPreparation.Data
         {
             WriteFileAttribute(orderId, element, new Progress<ProgressReport>());
         }
+
+        /// <summary>
+        /// The write organization struct attribute.
+        /// </summary>
+        /// <param name="orderId">
+        /// The order id.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <exception cref="Exception">
+        /// </exception>
+        public void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment)
+        {
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                IDBObject orderObject = keeper.Session.GetObject(orderId);
+                if (orderObject.CheckoutBy  != keeper.Session.UserID)
+                {
+                    throw new Exception("Объект взят на редактирование не Вами. Вы не можете сохранять данные, пока сами не возьмете на редактирование");
+                }
+            }
+
+            // сериализуем
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                binaryFormatter.Serialize(ms, element);
+                bytes = ms.ToArray();
+            }
+
+            // если есть, что писать, пишем в базу
+            if (bytes.Length > 0)
+            {
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject orderObject = keeper.Session.GetObject(orderId);
+                    IDBAttribute blobAttribute = orderObject.GetAttributeByID(blobAttributeId);
+
+                    if (blobAttribute != null)
+                    {
+                        blobAttribute.Delete(0L);
+                    }
+
+                    blobAttribute = orderObject.Attributes.AddAttribute(blobAttributeId, false);
+
+                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, comment, ArcMethods.ZLibPacked,  comment);
+                    using (BlobWriterStream bws =
+                        new BlobWriterStream(blobAttribute, bytes.Length, info, keeper.Session))
+                    {
+                        bws.Write(bytes, 0, bytes.Length);
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Метод записи атрибута в базу данных.
@@ -46,6 +102,7 @@ namespace NavisElectronics.TechPreparation.Data
             progressReport.Percent = 0;
             progressReport.Message = "Начинаю сериализацию";
             progress.Report(progressReport);
+            
             // сериализуем
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             byte[] bytes;
@@ -106,6 +163,26 @@ namespace NavisElectronics.TechPreparation.Data
             return Task.Run(() =>
             {
                 WriteFileAttribute(orderId, element);
+            });
+        }
+
+        /// <summary>
+        /// The write organization struct attribute async.
+        /// </summary>
+        /// <param name="orderId">
+        /// The order id.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment)
+        {
+            return Task.Run(() =>
+            {
+                WriteBlobAttribute<T>(orderId, element, blobAttributeId, comment);
             });
         }
 

@@ -69,7 +69,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     PropertyInfo propertyInfo = type.GetProperty(dataProperty);
                     if (propertyInfo != null)
                     {
-                        propertyInfo.SetValue(mainNode, element.Name);
+                        propertyInfo.SetValue(childNode, structElement.Name);
                     }
                 }
                 childNode.Tag = child;
