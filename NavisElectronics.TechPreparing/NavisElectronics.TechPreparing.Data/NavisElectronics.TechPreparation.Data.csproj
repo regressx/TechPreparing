@@ -36,6 +36,9 @@
     <Reference Include="Intermech.Interfaces">
       <HintPath>..\packages\Intermech.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />

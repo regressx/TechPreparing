@@ -8,6 +8,8 @@ using Intermech.Interfaces.BlobStream;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 
 namespace NavisElectronics.TechPreparation.Data
 {
@@ -102,13 +104,19 @@ namespace NavisElectronics.TechPreparation.Data
             progressReport.Percent = 0;
             progressReport.Message = "Начинаю сериализацию";
             progress.Report(progressReport);
-            
+
             // сериализуем
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            //XmlSerializer xmlFormatter = new XmlSerializer(typeof(IntermechTreeElement));
+
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
             byte[] bytes;
             using (MemoryStream ms = new MemoryStream())
             {
-                binaryFormatter.Serialize(ms, element);
+                using (JsonWriter jsonWriter = new BsonWriter(ms))
+                {
+                    jsonSerializer.Serialize(jsonWriter, element);
+                }
                 bytes = ms.ToArray();
             }
 
@@ -131,9 +139,9 @@ namespace NavisElectronics.TechPreparation.Data
 
                     fileAttribute = orderObject.Attributes.AddAttribute(ConstHelper.FileAttribute, false);
 
-                    string fileName = string.Format("{0}_{1}_изм_{2}.dat", element.Name, Math.Abs(element.Id), orderObject.VersionID);
+                    string fileName = string.Format("{0}_{1}_изм_{2}.json", element.Name, Math.Abs(element.Id), orderObject.VersionID);
 
-                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный IntermechTreeElement от {0}", DateTime.Now));
+                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный в xml IntermechTreeElement от {0}", DateTime.Now));
                     using (BlobWriterStream bws =
                         new BlobWriterStream(fileAttribute, bytes.Length, info, keeper.Session))
                     {

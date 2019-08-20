@@ -36,7 +36,7 @@ namespace NavisElectronics.TechPreparation.Entities
         public WithdrawalTypeWrapper Wrap(WithdrawalType withdrawalType)
         {
             WithdrawalTypeWrapper wrapperRoot = new WithdrawalTypeWrapper(withdrawalType);
-            wrapperRoot.Name = withdrawalType.Value;
+            wrapperRoot.Name = withdrawalType.Name;
             WrapRecursive(withdrawalType, wrapperRoot);
 
             return wrapperRoot;
@@ -47,7 +47,7 @@ namespace NavisElectronics.TechPreparation.Entities
             foreach (WithdrawalType child in node.Children)
             {
                 WithdrawalTypeWrapper wrap = new WithdrawalTypeWrapper(child);
-                wrap.Name = child.Value;
+                wrap.Name = child.Name;
                 wrapperNode.Add(wrap);
                 WrapRecursive(child, wrap);
             }

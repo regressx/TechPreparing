@@ -223,7 +223,7 @@
             this.showIntermechCardButton.Name = "showIntermechCardButton";
             this.showIntermechCardButton.Size = new System.Drawing.Size(244, 22);
             this.showIntermechCardButton.Text = "Просмотр";
-            this.showIntermechCardButton.Click += new System.EventHandler(this.SearchInArchiveButton_Click);
+            this.showIntermechCardButton.Click += new System.EventHandler(this.SearchInIpsButton_Click);
             // 
             // GoToTheArchiveButton
             // 

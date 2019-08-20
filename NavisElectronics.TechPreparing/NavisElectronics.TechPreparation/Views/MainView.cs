@@ -1,5 +1,8 @@
 ﻿using Aga.Controls.Tree;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Presenters;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+using TenTec.Windows.iGridLib;
 
 namespace NavisElectronics.TechPreparation.Views
 {
@@ -20,6 +23,10 @@ namespace NavisElectronics.TechPreparation.Views
             InitializeComponent();
             cooperationButton.Click += CooperationButton_Click;
 
+            ImageList imageList = new ImageList();
+            imageList.Images.Add(Properties.Resources.if_stock_new_meeting_21476);
+            iGrid.ImageList = imageList;
+
         }
 
         private void CooperationButton_Click(object sender, EventArgs e)
@@ -35,7 +42,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         public event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;
         public event EventHandler CooperationClick;
-        public event EventHandler<TreeNodeMouseClickEventArgs> NodeMouseClick;
+        public event EventHandler<TreeNodeClickEventArgs> NodeMouseClick;
         public event EventHandler ApplyButtonClick;
         public event EventHandler ClearCooperationClick;
         public event EventHandler EditTechRoutesClick;
@@ -60,33 +67,23 @@ namespace NavisElectronics.TechPreparation.Views
 
         #region Реализация интерфеса
 
-        public void FillAgent(string agent)
+        public void UpdateAgent(long agentId)
         {
-            dataGridView1.Rows.Clear();
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[0].HeaderCell.Value = "Кооперация";
-            string[] agents = agent.Split(';');
-
-            foreach (string s in agents)
+            foreach (iGRow row in iGrid.Rows)
             {
-                for (int i = 0; i<dataGridView1.ColumnCount; i++)
+                row.Cells[1].Value = null;
+            }
+
+            // организаций мало - пойдет и обычный проход за линейное время
+            foreach (iGRow row in iGrid.Rows)
+            {
+                Agent currentAgent = (Agent)row.Tag;
+                if (currentAgent.Id == agentId)
                 {
-                    if (dataGridView1.Columns[i].Name == s)
-                    {
-                        dataGridView1[i, 0].Value = "+";
-                    }
+                    row.Cells[1].ImageIndex = 0;
+                    break;
                 }
             }
-        }
-
-        public TreeNode GetMainTreeElement()
-        {
-            //if (treeView1.Nodes.Count == 0)
-            //{
-            //    throw new IndexOutOfRangeException("У Вас нет в дереве ни одного элемента");
-            //}
-            //return treeView1.Nodes[0];
-            throw new NotImplementedException();
         }
 
         public string GetNote()
@@ -126,23 +123,26 @@ namespace NavisElectronics.TechPreparation.Views
             treeViewAdv.Model = model;
         }
 
-        public void FillGridColumns(ICollection<Agent> agents)
+        public void FillGrid(ICollection<Agent> agents)
         {
-            foreach (Agent agent in agents)
+            iGrid.BeginUpdate();
+            try
             {
-                dataGridView1.Columns.Add(agent.Id.ToString(), agent.Name);
+                iGrid.Rows.Clear();
+                iGrid.Rows.AddRange(agents.Count);
+                int i = 0;
+                foreach (Agent agent in agents)
+                {
+                    iGrid.Rows[i].Cells[0].Value = agent.Name;
+                    iGrid.Rows[i].Tag = agent;
+                    i++;
+                }
+                iGrid.Cols[0].AutoWidth();
             }
-
-            foreach (DataGridViewColumn dataGridViewColumn in dataGridView1.Columns)
+            finally
             {
-                dataGridViewColumn.DefaultCellStyle.Font = new Font("TimesNewRoman", 14, FontStyle.Bold);
-                dataGridViewColumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                iGrid.EndUpdate();
             }
-
-            dataGridView1.Rows.Clear();
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[0].HeaderCell.Value = "Кооперация";
-
         }
 
         #endregion
@@ -186,14 +186,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void TreeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (NodeMouseClick != null)
-            {
-                NodeMouseClick(sender, e);
-            }
-        }
-
         private void ApplyButton_Click(object sender, EventArgs e)
         {
             if (ApplyButtonClick != null)
@@ -205,14 +197,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (e.RowIndex == 0)
-            //{
-            //    if (CellValueChanged != null)
-            //    {
-            //        IntermechTreeElement element = treeView1.SelectedNode.Tag as IntermechTreeElement;
-            //        CellValueChanged(sender, new TreeNodeAgentValueEventArgs(element, dataGridView1.Columns[e.ColumnIndex].Name));
-            //    }
-            //}
+
 
             throw new NotImplementedException();
         }
@@ -223,7 +208,7 @@ namespace NavisElectronics.TechPreparation.Views
         {
             if (ClearCooperationClick != null)
             {
-                ClearCooperationClick(sender, new BoundTreeElementEventArgs(dataGridView1.SelectedCells[0].OwningRow.DataBoundItem as IntermechTreeElement,dataGridView1.SelectedCells[0].OwningRow.Index));
+                ClearCooperationClick(sender, new BoundTreeElementEventArgs(iGrid.SelectedCells[0].Row.Tag as IntermechTreeElement, iGrid.SelectedCells[0].RowIndex));
             }
         }
 
@@ -272,6 +257,40 @@ namespace NavisElectronics.TechPreparation.Views
             if (!this.IsHandleCreated)
             {
                 this.CreateHandle();
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (ApplyButtonClick != null)
+            {
+                ApplyButtonClick(sender, e);
+            }
+        }
+
+        private void iGrid_CellDoubleClick(object sender, iGCellDoubleClickEventArgs e)
+        {
+            if (e.RowIndex == 0)
+            {
+                if (CellValueChanged != null)
+                {
+                    ViewNode selectedTreeNode = (ViewNode)treeViewAdv.SelectedNode.Tag;
+                    //CellValueChanged(sender, new TreeNodeAgentValueEventArgs((IntermechTreeElement)selectedTreeNode.Tag, dataGridView1.Columns[e.ColumnIndex].Name));
+                }
+            }
+        }
+
+        private void treeViewAdv_NodeMouseClick(object sender, TreeNodeAdvMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (NodeMouseClick != null)
+                {
+                    TreeNodeAdv currentNodeView = e.Node;
+                    ViewNode selectedNode = (ViewNode)currentNodeView.Tag;
+                    IntermechTreeElement element = (IntermechTreeElement) selectedNode.Tag;
+                    NodeMouseClick(sender, new TreeNodeClickEventArgs(element));
+                }
             }
         }
     }

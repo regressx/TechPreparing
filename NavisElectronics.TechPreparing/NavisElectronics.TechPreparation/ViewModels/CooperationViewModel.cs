@@ -258,6 +258,12 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
+        public void OpenInOldArchive(string designation)
+        {
+            _openFolderService.OpenFolder(designation);
+        }
+
+
         internal void SetTechProcessReference(IntermechTreeElement root, IntermechTreeElement element, TechProcess techProcess)
         {
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();

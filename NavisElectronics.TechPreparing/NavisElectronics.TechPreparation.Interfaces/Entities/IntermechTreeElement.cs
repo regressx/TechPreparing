@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
 
 namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
@@ -15,6 +16,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     /// Узел дерева из IPS
     /// </summary>
     [Serializable]
+    [JsonObject(IsReference = true)]
     public class IntermechTreeElement : IProduct, ICloneable
     {
         IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();
@@ -383,9 +385,9 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// Коллекция потомков этого узла
         /// </summary>
         [Browsable(false)]
-        public IList<IntermechTreeElement> Children
+        public List<IntermechTreeElement> Children
         {
-            get { return _elements; }
+            get { return (List<IntermechTreeElement>)_elements; }
             set { _elements = value; }
 
         }

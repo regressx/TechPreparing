@@ -120,7 +120,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _model_Saving(object sender, SaveServiceEventArgs e)
         {
             _mainView.UpdateLabelText(e.Message);
-            //_mainView.UpdateProgressBar(e.Percent);
         }
 
         private void MainViewCheckAllReadyClick(object sender, EventArgs e)
@@ -202,7 +201,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             //_model.RecountAmount(mainElement);
             //TreeNode mainNode = _model.BuildTree(mainElement);
             //_mainView.FillTree(mainNode);
-
+            //TODO перестроить дерево и пересчитать количества
             throw new NotImplementedException();
         }
 
@@ -319,15 +318,15 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_UpdateClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
+            //IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
 
             // TreeComparerView view = new TreeComparerView();
             // TreeComparerViewModel model = new TreeComparerViewModel();
             // TreeComparerPresenter presenter = new TreeComparerPresenter(view, model, mainElement, _agents);
             // presenter.Run();
-            IPresenter presenter = _presentationFactory.GetPresenter<TreeComparerPresenter>();
-            presenter.Run();
-
+            //IPresenter presenter = _presentationFactory.GetPresenter<TreeComparerPresenter>();
+            //presenter.Run();
+            MessageBox.Show("Не готово");
         }
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
@@ -489,20 +488,17 @@ namespace NavisElectronics.TechPreparation.Presenters
             await _model.WriteIntoFileAttributeAsync(_rootVersionId, mainTreeElement);
         }
 
-        private void _mainView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void _mainView_NodeMouseClick(object sender, TreeNodeClickEventArgs e)
         {
-            //// TODO Здесь должна появиться проверка на изменение предыдущего узла, если было какое-либо изменение
-            //IntermechTreeElement treeElement = e.Node.Tag as IntermechTreeElement;
+            // TODO Здесь должна появиться проверка на изменение предыдущего узла, если было какое-либо изменение
 
-            //_globalTreeElement = treeElement;
 
-            //if (treeElement != null)
-            //{
-            //    if (treeElement.Agent != null)
-            //    {
-            //        _mainView.FillAgent(treeElement.Agent);
-            //    }
-            //}
+            if (e.Element.Agent != null)
+            {
+                long agendId = long.Parse(e.Element.Agent);
+                _mainView.UpdateAgent(agendId);
+            }
+
         }
 
         /// <summary>
@@ -559,8 +555,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
             else
             {
-                // TODO Здесь чтение из файла
                 //_organizationStruct = await _model.GetWorkShopsAsync();
+
+                //throw new NotImplementedException("Чтение файла со структурой организации еще не реализована");
             }
 
             bool _withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
@@ -591,7 +588,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
             else
             {
-                // TODO Здесь чтение из файла
+                //throw new NotImplementedException("Чтение файла со структурой тех. отхода еще не реализована");
                 //_withdrawalType = await _model.GetWithdrawalTypesAsync();
             }
 
@@ -651,11 +648,11 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
 
             _mainView.FillNote(_rootElement.Note);
-            _mainView.FillGridColumns(agents);
+            _mainView.FillGrid(agents);
             treeModel = _model.GetTreeModel(_rootElement);
             _mainView.FillTree(treeModel);
-            //string orderName = string.Format($"{_rootElement.Designation} {_rootElement.Name} {_agents[long.Parse(_rootElement.Agent)]}. Тех. подготовка");
-            //_mainView.UpdateCaptionText(orderName);
+            string orderName = string.Format($"{_rootElement.Name} {_agents[long.Parse(_rootElement.Agent)]}. Тех. подготовка");
+            _mainView.UpdateCaptionText(orderName);
             _mainView.UnLockButtons();
         }
 

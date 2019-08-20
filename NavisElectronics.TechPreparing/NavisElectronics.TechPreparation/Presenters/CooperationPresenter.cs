@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisArchiveWork.Data;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Presenters
@@ -80,6 +81,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetTechTaskClick += View_SetTechTaskClick;
             _view.SetPcbClick += ViewSetPcbClick;
         }
+
 
         /// <summary>
         /// The view_ set pcb click.
@@ -184,9 +186,14 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_SearchInArchiveClick(object sender, MultipleNodesSelectedEventArgs e)
         {
-            IList<CooperationNode> nodes = new List<CooperationNode>(e.SelectedNodes);
-            ShowFileManager manager = new ShowFileManager();
-            manager.Show(nodes[0].Id, nodes[0].Type);
+            //IList<CooperationNode> nodes = new List<CooperationNode>(e.SelectedNodes);
+            //ShowFileManager manager = new ShowFileManager();
+            //manager.Show(nodes[0].Id, nodes[0].Type);
+
+            List<CooperationNode> nodes = new List<CooperationNode>(e.SelectedNodes);
+            CooperationNode selectedNode = nodes[0];
+            _model.OpenInOldArchive(selectedNode.Designation);
+
         }
 
         private void _view_PutDownCooperation(object sender, System.EventArgs e)

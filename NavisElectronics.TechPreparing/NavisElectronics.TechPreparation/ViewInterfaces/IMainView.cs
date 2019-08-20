@@ -9,6 +9,7 @@
 
 using Aga.Controls.Tree;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Presenters;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.ViewInterfaces
@@ -27,7 +28,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
     {
         event EventHandler CooperationClick;
         event EventHandler Load;
-        event EventHandler<TreeNodeMouseClickEventArgs> NodeMouseClick;
+        event EventHandler<TreeNodeClickEventArgs> NodeMouseClick;
         event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;
         event EventHandler ApplyButtonClick;
         event EventHandler ClearCooperationClick;
@@ -43,8 +44,8 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void UpdateProgressBar(int progressReportPercent);
         void Show();
         void FillTree(TreeModel mainNode);
-        void FillGridColumns(ICollection<Agent> agents);
-        void FillAgent(string agentId);
+        void FillGrid(ICollection<Agent> agents);
+        void UpdateAgent(long agentId);
         string GetNote();
         void FillNote(string orderElementNote);
         void UnLockButtons();

@@ -8,7 +8,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Linq;
+using System.Xml.Serialization;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 
 namespace NavisElectronics.TechPreparation.Data
 {
@@ -307,7 +310,7 @@ namespace NavisElectronics.TechPreparation.Data
                     bytes = blobReader.ReadDataBlock();
                     blobReader.CloseBlob();
 
-                    if (((string) fileAttribute.Value).Contains(".blb"))
+                    if (((string)fileAttribute.Value).Contains(".blb"))
                     {
                         isDataset = true;
                     }
@@ -341,18 +344,23 @@ namespace NavisElectronics.TechPreparation.Data
                 unpackedBytes = memory.ToArray();
             }
 
-            // десериализуем
-            BinaryFormatter binFormatter = new BinaryFormatter();
+
             IntermechTreeElement root = null;
             using (MemoryStream ms = new MemoryStream(unpackedBytes))
             {
                 if (!isDataset)
                 {
-                    root = (IntermechTreeElement)binFormatter.Deserialize(ms);
+                    // десериализуем
+                    JsonSerializer jsonSerializer = new JsonSerializer();
+                    using (JsonReader jsonReader = new BsonReader(ms))
+                    {
+                        root = (IntermechTreeElement)jsonSerializer.Deserialize(jsonReader, typeof(IntermechTreeElement));
+                    }
                 }
                 else
                 {
-                    DataSet ds = (DataSet)binFormatter.Deserialize(ms);
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    DataSet ds = (DataSet)binaryFormatter.Deserialize(ms);
                     TreeBuilderService treeBuilderService = new TreeBuilderService();
                     root = treeBuilderService.Build(ds);
                 }
@@ -521,6 +529,11 @@ namespace NavisElectronics.TechPreparation.Data
                         if (row[5] != DBNull.Value)
                         {
                             withdrawalType.Type = Convert.ToByte(row[5]);
+                        }
+
+                        if (row[2] != DBNull.Value)
+                        {
+                            withdrawalType.Name= Convert.ToString(row[2]);
                         }
 
                         if (row[3] != DBNull.Value)

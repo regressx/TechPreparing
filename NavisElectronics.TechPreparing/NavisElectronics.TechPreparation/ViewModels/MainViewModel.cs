@@ -191,7 +191,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             ViewNode root = new ViewNode();
             root.Name = rootElement.Name;
             root.Designation = rootElement.Designation;
-
+            root.Tag = rootElement;
             model.Nodes.Add(root);
             BuildTreeRecursive(root, rootElement);
             return model;

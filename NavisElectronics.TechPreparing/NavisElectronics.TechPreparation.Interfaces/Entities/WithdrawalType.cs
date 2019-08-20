@@ -52,6 +52,8 @@ namespace NavisElectronics.TechPreparation.Entities
         /// </summary>
         public string Value { get; set; }
 
+        public string Name { get; set; }
+
         /// <summary>
         /// Год, на который действует приказ
         /// </summary>

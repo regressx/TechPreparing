@@ -249,9 +249,9 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void SearchInArchiveButton_Click(object sender, EventArgs e)
+        private void SearchInIpsButton_Click(object sender, EventArgs e)
         {
-            CallEvent(SearchInArchiveClick, sender);
+
         }
 
         private void TreeViewAdv1_RowDraw(object sender, TreeViewRowDrawEventArgs e)
@@ -270,9 +270,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void GoToTheArchiveButton_Click(object sender, EventArgs e)
         {
-            //CooperationNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as CooperationNode;
-            //FileDesignation fd = _search.GetFileDesignation(selectedNode.Designation);
-            //_search.StepToFolder(_search.GetFullPath(fd));
+            CallEvent(SearchInArchiveClick, sender);
         }
 
         private void findInTreeButton_Click(object sender, EventArgs e)

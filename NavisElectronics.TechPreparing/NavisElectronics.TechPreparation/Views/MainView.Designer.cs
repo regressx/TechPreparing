@@ -29,10 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            TenTec.Windows.iGridLib.iGColPattern iGColPattern1 = new TenTec.Windows.iGridLib.iGColPattern();
+            TenTec.Windows.iGridLib.iGColPattern iGColPattern2 = new TenTec.Windows.iGridLib.iGColPattern();
+            this.iGridCol0CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
+            this.iGridCol0ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
+            this.iGridCol1CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
+            this.iGridCol1ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ClearCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.ApplyButton = new System.Windows.Forms.Button();
             this.textBoxNote = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -48,6 +52,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.UpdateButton = new System.Windows.Forms.ToolStripButton();
             this.CheckReadyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -61,10 +67,8 @@
             this.nodeTextBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.iGrid = new TenTec.Windows.iGridLib.iGrid();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -75,26 +79,14 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iGrid)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // iGridCol1CellStyle
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView1.Size = new System.Drawing.Size(538, 251);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
+            this.iGridCol1CellStyle.Flags = TenTec.Windows.iGridLib.iGCellFlags.DisplayImage;
+            this.iGridCol1CellStyle.ImageAlign = TenTec.Windows.iGridLib.iGContentAlignment.MiddleCenter;
             // 
             // contextMenuStrip
             // 
@@ -109,17 +101,6 @@
             this.ClearCooperationButton.Size = new System.Drawing.Size(189, 22);
             this.ClearCooperationButton.Text = "Очистить кооперацию";
             this.ClearCooperationButton.Click += new System.EventHandler(this.ClearCooperationButton_Click);
-            // 
-            // ApplyButton
-            // 
-            this.ApplyButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.ApplyButton.Location = new System.Drawing.Point(3, 3);
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.Size = new System.Drawing.Size(120, 22);
-            this.ApplyButton.TabIndex = 1;
-            this.ApplyButton.Text = "Применить";
-            this.ApplyButton.UseVisualStyleBackColor = true;
-            this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             // 
             // textBoxNote
             // 
@@ -156,6 +137,8 @@
             this.toolStripSeparator1,
             this.UpdateButton,
             this.CheckReadyButton,
+            this.toolStripSeparator4,
+            this.saveButton,
             this.toolStripLabel1,
             this.toolStripProgressBar1});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
@@ -268,6 +251,21 @@
             this.CheckReadyButton.Text = "Проверить, что всё готово";
             this.CheckReadyButton.Click += new System.EventHandler(this.CheckReadyButton_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // saveButton
+            // 
+            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_save_20659;
+            this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(23, 22);
+            this.saveButton.Text = "Сохранить в базу";
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -310,9 +308,9 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer2.Panel2.Controls.Add(this.iGrid);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 294);
-            this.splitContainer2.SplitterDistance = 514;
+            this.splitContainer2.SplitterDistance = 817;
             this.splitContainer2.TabIndex = 7;
             // 
             // treeViewAdv
@@ -338,10 +336,11 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(514, 294);
+            this.treeViewAdv.Size = new System.Drawing.Size(817, 294);
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
+            this.treeViewAdv.NodeMouseClick += new System.EventHandler<Aga.Controls.Tree.TreeNodeAdvMouseEventArgs>(this.treeViewAdv_NodeMouseClick);
             // 
             // designationTreeColumn
             // 
@@ -398,29 +397,27 @@
             this.nodeTextBoxAmountWithUse.LeftMargin = 3;
             this.nodeTextBoxAmountWithUse.ParentColumn = this.amountWithUseTreeColumn;
             // 
-            // tableLayoutPanel1
+            // iGrid
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(544, 294);
-            this.tableLayoutPanel1.TabIndex = 7;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.ApplyButton);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 260);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(538, 31);
-            this.flowLayoutPanel1.TabIndex = 8;
+            iGColPattern1.CellStyle = this.iGridCol0CellStyle;
+            iGColPattern1.ColHdrStyle = this.iGridCol0ColHdrStyle;
+            iGColPattern1.Text = "Наименование";
+            iGColPattern1.Width = 152;
+            iGColPattern2.CellStyle = this.iGridCol1CellStyle;
+            iGColPattern2.ColHdrStyle = this.iGridCol1ColHdrStyle;
+            iGColPattern2.Text = "Статус";
+            this.iGrid.Cols.AddRange(new TenTec.Windows.iGridLib.iGColPattern[] {
+            iGColPattern1,
+            iGColPattern2});
+            this.iGrid.ContextMenuStrip = this.contextMenuStrip;
+            this.iGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.iGrid.Location = new System.Drawing.Point(0, 0);
+            this.iGrid.Name = "iGrid";
+            this.iGrid.ReadOnly = true;
+            this.iGrid.Size = new System.Drawing.Size(241, 294);
+            this.iGrid.TabIndex = 0;
+            this.iGrid.CellDoubleClick += new TenTec.Windows.iGridLib.iGCellDoubleClickEventHandler(this.iGrid_CellDoubleClick);
             // 
             // tableLayoutPanel3
             // 
@@ -447,7 +444,6 @@
             this.Name = "MainView";
             this.Text = "Редактор технологических ведомостей";
             this.Load += new System.EventHandler(this.MainView_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
@@ -459,8 +455,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.iGrid)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
@@ -469,9 +464,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button ApplyButton;
         private System.Windows.Forms.TextBox textBoxNote;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip;
@@ -480,8 +472,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ToolStripButton TechRoutesEditButton;
         private System.Windows.Forms.ToolStripButton MainMaterialsButton;
         private System.Windows.Forms.ToolStripButton standartsButton;
@@ -505,5 +495,12 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxName;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmount;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmountWithUse;
+        private System.Windows.Forms.ToolStripButton saveButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private TenTec.Windows.iGridLib.iGrid iGrid;
+        private TenTec.Windows.iGridLib.iGCellStyle iGridCol0CellStyle;
+        private TenTec.Windows.iGridLib.iGColHdrStyle iGridCol0ColHdrStyle;
+        private TenTec.Windows.iGridLib.iGCellStyle iGridCol1CellStyle;
+        private TenTec.Windows.iGridLib.iGColHdrStyle iGridCol1ColHdrStyle;
     }
 }
