@@ -547,9 +547,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
             else
             {
-                //_organizationStruct = await _model.GetWorkShopsAsync();
-
-                //throw new NotImplementedException("Чтение файла со структурой организации еще не реализована");
+                _organizationStruct = await _model.ReadDataFromBlobAttribute<TechRouteNode>(_rootVersionId, ConstHelper.OrganizationStructAttribute);
             }
 
             bool _withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
@@ -580,8 +578,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
             else
             {
-                //throw new NotImplementedException("Чтение файла со структурой тех. отхода еще не реализована");
-                //_withdrawalType = await _model.GetWithdrawalTypesAsync();
+                _withdrawalType =
+                    await _model.ReadDataFromBlobAttribute<WithdrawalType>(_rootVersionId,
+                        ConstHelper.WithdrawalTypeFileAttribute);
             }
 
             // пробуем загрузить из файла

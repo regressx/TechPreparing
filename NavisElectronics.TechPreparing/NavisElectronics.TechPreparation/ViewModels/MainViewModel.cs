@@ -233,5 +233,11 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment);
         }
+
+        public Task<T> ReadDataFromBlobAttribute<T>(long rootVersionId, int attrubuteId) where T:class
+        {
+            return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId);
+        }
+
     }
 }

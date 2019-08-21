@@ -57,6 +57,16 @@ namespace UI
             throw new NotImplementedException();
         }
 
+        public Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
         public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId, long organization)
         {
             throw new NotImplementedException();
