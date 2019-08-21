@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisArchiveWork.Data;
+
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Presenters
@@ -66,7 +66,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             _model = model;
             _view = view;
             _view.Load += _view_Load;
-            _view.SaveClick += _view_SaveClick;
             _view.SetCooperationClick += _view_SetCooperationClick;
             _view.DeleteCooperationClick += _view_DeleteCooperationClick;
             _view.SetTechProcessReferenceClick += _view_SetTechProcessReferenceClick;
@@ -163,25 +162,10 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         }
 
-        private FindNodePresenter _presenter;
         private void _view_GlobalSearchClick(object sender, EventArgs e)
         {
-            FindNodeView findNodeView = new FindNodeView();
-            _presenter = new FindNodePresenter(findNodeView, _view.GetTreeView());
-            _presenter.Run();
-            _presenter.SearchInitClick += Presenter_SearchInitClick;
-            _presenter.ViewClosing += Presenter_ViewClosing;
-        }
-
-        private void Presenter_ViewClosing(object sender, EventArgs e)
-        {
-            _presenter.SearchInitClick -= Presenter_SearchInitClick;
-            _presenter.ViewClosing -= Presenter_ViewClosing;
-        }
-
-        private void Presenter_SearchInitClick(object sender, CooperationNode e)
-        {
-            _view.JumpToNode(e);
+            FindNodeView findNodeView = new FindNodeView(_view.GetTreeView());
+            findNodeView.Show();
         }
 
         private void _view_SearchInArchiveClick(object sender, MultipleNodesSelectedEventArgs e)
@@ -364,7 +348,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                     }
                 }
             }
-
         }
 
         private void SetTechProcess(ICollection<CooperationNode> nodes, TechProcess techProcess)
@@ -408,10 +391,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             SetCooperation(true, e.SelectedNodes);
         }
 
-        private void _view_SaveClick(object sender, System.EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private void _view_Load(object sender, System.EventArgs e)
         {

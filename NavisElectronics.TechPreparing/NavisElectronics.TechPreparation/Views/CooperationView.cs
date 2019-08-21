@@ -33,11 +33,6 @@ namespace NavisElectronics.TechPreparation.Views
         }
 
         /// <summary>
-        /// Событие сохранения данных
-        /// </summary>
-        public event EventHandler SaveClick;
-
-        /// <summary>
         /// Событие установки кооперации
         /// </summary>
         public event EventHandler<MultipleNodesSelectedEventArgs> SetCooperationClick;
@@ -140,25 +135,6 @@ namespace NavisElectronics.TechPreparation.Views
             return treeViewAdv1;
         }
 
-        /// <summary>
-        /// Прыгнуть на указанный узел
-        /// </summary>
-        /// <param name="cooperationNode">
-        /// The cooperation node.
-        /// </param>
-        public void JumpToNode(CooperationNode cooperationNode)
-        {
-            TreeNodeAdv nodeToFind = treeViewAdv1.FindNodeByTag(cooperationNode);
-            treeViewAdv1.SelectedNode = nodeToFind;
-            treeViewAdv1.EnsureVisible(nodeToFind);
-
-        }
-
-        public void SetWindowCaption(string name)
-        {
-            this.Text = "Фильтр по организации " + name;
-        }
-
         public ICollection<CooperationNode> GetMainNodes()
         {
             IReadOnlyCollection<TreeNodeAdv> collection = treeViewAdv1.Root.Children[0].Children;
@@ -169,15 +145,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
 
             return nodes;
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            EventHandler temp = Volatile.Read(ref SaveClick);
-            if (temp != null)
-            {
-                temp(sender, e);
-            }
         }
 
         private void CallEvent(EventHandler<MultipleNodesSelectedEventArgs> myEvent, object sender)
@@ -251,7 +218,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void SearchInIpsButton_Click(object sender, EventArgs e)
         {
-
+            throw new NotImplementedException("Здесь когда-нибудь появится возможность смотреть файлы из IPS");
         }
 
         private void TreeViewAdv1_RowDraw(object sender, TreeViewRowDrawEventArgs e)
@@ -271,15 +238,6 @@ namespace NavisElectronics.TechPreparation.Views
         private void GoToTheArchiveButton_Click(object sender, EventArgs e)
         {
             CallEvent(SearchInArchiveClick, sender);
-        }
-
-        private void findInTreeButton_Click(object sender, EventArgs e)
-        {
-            if (FindInTreeClick != null)
-            {
-                CooperationNode selectedNode = treeViewAdv1.SelectedNodes[0].Tag as CooperationNode;
-                FindInTreeClick(sender, new MultipleNodesSelectedEventArgs(new List<CooperationNode>() {selectedNode}));
-            }
         }
 
         private void SearchInTreeButton_Click(object sender, EventArgs e)

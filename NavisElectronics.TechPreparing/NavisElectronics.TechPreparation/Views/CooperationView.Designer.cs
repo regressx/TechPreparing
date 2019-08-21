@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.myToolStrip = new System.Windows.Forms.ToolStrip();
-            this.SaveButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.SearchInTreeButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.SetAllCooperationButton = new System.Windows.Forms.ToolStripButton();
@@ -94,8 +92,6 @@
             // myToolStrip
             // 
             this.myToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SaveButton,
-            this.toolStripSeparator3,
             this.SearchInTreeButton,
             this.toolStripSeparator4,
             this.SetAllCooperationButton,
@@ -109,21 +105,6 @@
             this.myToolStrip.Size = new System.Drawing.Size(1412, 25);
             this.myToolStrip.TabIndex = 1;
             this.myToolStrip.Text = "toolStrip1";
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SaveButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_save_20659;
-            this.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(23, 22);
-            this.SaveButton.Text = "Сохранить";
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // SearchInTreeButton
             // 
@@ -215,106 +196,106 @@
             this.SetTechTaskMenuItem,
             this.SetPcbMenuItem});
             this.myContextMenuStrip.Name = "MyContextMenuStrip";
-            this.myContextMenuStrip.Size = new System.Drawing.Size(245, 292);
+            this.myContextMenuStrip.Size = new System.Drawing.Size(236, 270);
             // 
             // showIntermechCardButton
             // 
             this.showIntermechCardButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.Search_16x;
             this.showIntermechCardButton.Name = "showIntermechCardButton";
-            this.showIntermechCardButton.Size = new System.Drawing.Size(244, 22);
+            this.showIntermechCardButton.Size = new System.Drawing.Size(235, 22);
             this.showIntermechCardButton.Text = "Просмотр";
             this.showIntermechCardButton.Click += new System.EventHandler(this.SearchInIpsButton_Click);
             // 
             // GoToTheArchiveButton
             // 
             this.GoToTheArchiveButton.Name = "GoToTheArchiveButton";
-            this.GoToTheArchiveButton.Size = new System.Drawing.Size(244, 22);
+            this.GoToTheArchiveButton.Size = new System.Drawing.Size(235, 22);
             this.GoToTheArchiveButton.Text = "Перейти к архиву предприятия";
             this.GoToTheArchiveButton.Click += new System.EventHandler(this.GoToTheArchiveButton_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(232, 6);
             // 
             // CooperationButton
             // 
             this.CooperationButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_new_meeting_21476;
             this.CooperationButton.Name = "CooperationButton";
-            this.CooperationButton.Size = new System.Drawing.Size(244, 22);
+            this.CooperationButton.Size = new System.Drawing.Size(235, 22);
             this.CooperationButton.Text = "По кооперации";
             this.CooperationButton.Click += new System.EventHandler(this.CooperationButton_Click);
             // 
             // DeleteCoopButton
             // 
             this.DeleteCoopButton.Name = "DeleteCoopButton";
-            this.DeleteCoopButton.Size = new System.Drawing.Size(244, 22);
+            this.DeleteCoopButton.Size = new System.Drawing.Size(235, 22);
             this.DeleteCoopButton.Text = "Убрать кооперацию";
             this.DeleteCoopButton.Click += new System.EventHandler(this.DeleteCoopButton_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(232, 6);
             // 
             // SetTechProcessButton
             // 
             this.SetTechProcessButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_x_office_document_21104;
             this.SetTechProcessButton.Name = "SetTechProcessButton";
-            this.SetTechProcessButton.Size = new System.Drawing.Size(244, 22);
+            this.SetTechProcessButton.Size = new System.Drawing.Size(235, 22);
             this.SetTechProcessButton.Text = "Указать ТТП";
             this.SetTechProcessButton.Click += new System.EventHandler(this.SetTechProcessButton_Click);
             // 
             // ResetTechProcessButton
             // 
             this.ResetTechProcessButton.Name = "ResetTechProcessButton";
-            this.ResetTechProcessButton.Size = new System.Drawing.Size(244, 22);
+            this.ResetTechProcessButton.Size = new System.Drawing.Size(235, 22);
             this.ResetTechProcessButton.Text = "Убрать ТТП";
             this.ResetTechProcessButton.Click += new System.EventHandler(this.ResetTechProcessButton_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(232, 6);
             // 
             // SetNoteButton
             // 
             this.SetNoteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_insert_note_21825;
             this.SetNoteButton.Name = "SetNoteButton";
-            this.SetNoteButton.Size = new System.Drawing.Size(244, 22);
+            this.SetNoteButton.Size = new System.Drawing.Size(235, 22);
             this.SetNoteButton.Text = "Добавить примечание";
             this.SetNoteButton.Click += new System.EventHandler(this.SetNoteButton_Click);
             // 
             // DeleteNoteButton
             // 
             this.DeleteNoteButton.Name = "DeleteNoteButton";
-            this.DeleteNoteButton.Size = new System.Drawing.Size(244, 22);
+            this.DeleteNoteButton.Size = new System.Drawing.Size(235, 22);
             this.DeleteNoteButton.Text = "Очистить примечание";
             this.DeleteNoteButton.Click += new System.EventHandler(this.DeleteNoteButton_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(241, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(232, 6);
             // 
             // SetParametersButton
             // 
             this.SetParametersButton.Name = "SetParametersButton";
-            this.SetParametersButton.Size = new System.Drawing.Size(244, 22);
+            this.SetParametersButton.Size = new System.Drawing.Size(235, 22);
             this.SetParametersButton.Text = "Задать параметры";
             this.SetParametersButton.Click += new System.EventHandler(this.SetParametersButton_Click);
             // 
             // SetTechTaskMenuItem
             // 
             this.SetTechTaskMenuItem.Name = "SetTechTaskMenuItem";
-            this.SetTechTaskMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.SetTechTaskMenuItem.Size = new System.Drawing.Size(235, 22);
             this.SetTechTaskMenuItem.Text = "Указать данные ТЗ";
             this.SetTechTaskMenuItem.Click += new System.EventHandler(this.SetTechTaskMenuItem_Click);
             // 
             // SetPcbMenuItem
             // 
             this.SetPcbMenuItem.Name = "SetPcbMenuItem";
-            this.SetPcbMenuItem.Size = new System.Drawing.Size(244, 22);
+            this.SetPcbMenuItem.Size = new System.Drawing.Size(235, 22);
             this.SetPcbMenuItem.Text = "Указать, что это ПП";
             this.SetPcbMenuItem.Click += new System.EventHandler(this.SetPcbMenuItem_Click);
             // 
@@ -599,7 +580,6 @@
 
         #endregion
         private System.Windows.Forms.ToolStrip myToolStrip;
-        private System.Windows.Forms.ToolStripButton SaveButton;
         private System.Windows.Forms.ContextMenuStrip myContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem CooperationButton;
         private System.Windows.Forms.ToolStripMenuItem DeleteCoopButton;
@@ -609,7 +589,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem SetNoteButton;
         private System.Windows.Forms.ToolStripMenuItem DeleteNoteButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton CheckButtonClick;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem SetParametersButton;

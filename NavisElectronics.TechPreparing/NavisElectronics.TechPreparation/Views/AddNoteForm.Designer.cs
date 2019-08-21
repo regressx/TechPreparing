@@ -28,23 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNoteForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonApply = new System.Windows.Forms.Button();
+            this.noteTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noteTextBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textBox1
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.textBox1, 2);
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(286, 237);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
             // 
             // tableLayoutPanel1
             // 
@@ -52,8 +44,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonApply, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.noteTextBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -85,6 +77,40 @@
             this.buttonApply.Text = "Принять";
             this.buttonApply.UseVisualStyleBackColor = true;
             // 
+            // noteTextBox
+            // 
+            this.noteTextBox.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.noteTextBox.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;=]+);\r\n^\\s*(case|default)\\s*[^:]*" +
+    "(?<range>:)\\s*(?<range>[^;]+);";
+            this.noteTextBox.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.noteTextBox.BackBrush = null;
+            this.noteTextBox.CharHeight = 14;
+            this.noteTextBox.CharWidth = 8;
+            this.tableLayoutPanel1.SetColumnSpan(this.noteTextBox, 2);
+            this.noteTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.noteTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.noteTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noteTextBox.IsReplaceMode = false;
+            this.noteTextBox.Location = new System.Drawing.Point(3, 3);
+            this.noteTextBox.Name = "noteTextBox";
+            this.noteTextBox.Paddings = new System.Windows.Forms.Padding(0);
+            this.noteTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.noteTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("noteTextBox.ServiceColors")));
+            this.noteTextBox.Size = new System.Drawing.Size(286, 237);
+            this.noteTextBox.TabIndex = 4;
+            this.noteTextBox.Zoom = 100;
+            this.noteTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.noteTextBox_KeyDown);
+            // 
             // AddNoteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -95,18 +121,16 @@
             this.Name = "AddNoteForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddNoteForm";
-
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noteTextBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonApply;
+        private FastColoredTextBoxNS.FastColoredTextBox noteTextBox;
     }
 }

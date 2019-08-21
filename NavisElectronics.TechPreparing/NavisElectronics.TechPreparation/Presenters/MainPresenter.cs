@@ -205,14 +205,8 @@ namespace NavisElectronics.TechPreparation.Presenters
             throw new NotImplementedException();
         }
 
-        private async void _mainView_EditWithdrawalTypeClick(object sender, EventArgs e)
+        private void _mainView_EditWithdrawalTypeClick(object sender, EventArgs e)
         {
-            WithdrawalType year = await _model.GetWithdrawalTypesAsync();
-
-            IntermechObjectExtractor extractor = new IntermechObjectExtractor();
-            ICollection<ExtractedObject> collection = extractor.ExctractObjects(_rootElement, IntermechObjectTypes.Other);
-            WithdrawalTypeView view = new WithdrawalTypeView(year, _rootElement, collection);
-            view.Show();
         }
 
         /// <summary>

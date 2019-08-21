@@ -43,7 +43,6 @@ namespace NavisElectronics.TechPreparation
             Bind<MainViewModel>().ToSelf();
             Bind<CooperationViewModel>().ToSelf();
             Bind<TreeNodeDialogViewModel>().ToSelf();
-            Bind<ITreeNodeDialogView>().To<TreeNodeDialogView>();
             Bind<IMainView>().To<MainView>();
             Bind<ISelectManufacturerView>().To<ManufacturerDialogView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();

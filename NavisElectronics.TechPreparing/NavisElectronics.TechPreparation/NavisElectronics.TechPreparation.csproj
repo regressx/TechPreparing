@@ -109,7 +109,6 @@
     <Compile Include="Services\SaveServiceEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
-    <Compile Include="Presenters\FindNodePresenter.cs" />
     <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
     <Compile Include="Presenters\TreeNodeDialogPresenter.cs" />
     <Compile Include="Reports\CompleteList\CompleteListFactory.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="Views\FindNodeView.Designer.cs">
       <DependentUpon>FindNodeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewInterfaces\IFindNodeView.cs" />
     <Compile Include="Views\InfoInTableView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,12 +215,6 @@
     <Compile Include="ViewInterfaces\IMultiplyParametersView.cs" />
     <Compile Include="Presenters\MaterialsViewPresenter.cs" />
     <Compile Include="Presenters\MultiplyParametersViewPresenter.cs" />
-    <Compile Include="Views\TreeNodeDialogView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\TreeNodeDialogView.Designer.cs">
-      <DependentUpon>TreeNodeDialogView.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewInterfaces\IMaterialsView.cs" />
     <Compile Include="ViewInterfaces\ITechRouteMap.cs" />
     <Compile Include="Presenters\TechRouteMapPresenter.cs" />
@@ -293,12 +285,6 @@
     <Compile Include="ViewModels\TreeNodes\TechRouteNodeView.cs" />
     <Compile Include="ViewModels\TechRoutesMapModel.cs" />
     <Compile Include="ViewModels\TreeComparerViewModel.cs" />
-    <Compile Include="Views\WithdrawalTypeView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WithdrawalTypeView.Designer.cs">
-      <DependentUpon>WithdrawalTypeView.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AddNoteForm.resx">
@@ -346,12 +332,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TreeComparerView.resx">
       <DependentUpon>TreeComparerView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TreeNodeDialogView.resx">
-      <DependentUpon>TreeNodeDialogView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WithdrawalTypeView.resx">
-      <DependentUpon>WithdrawalTypeView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

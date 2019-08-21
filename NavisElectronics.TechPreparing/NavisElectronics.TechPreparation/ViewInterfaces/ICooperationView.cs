@@ -14,7 +14,6 @@
     /// </summary>
     public interface ICooperationView
     {
-        event EventHandler SaveClick;
         event EventHandler Load;
         event EventHandler<MultipleNodesSelectedEventArgs> SetCooperationClick;
         event EventHandler<MultipleNodesSelectedEventArgs> DeleteCooperationClick;
@@ -30,8 +29,7 @@
         event EventHandler GlobalSearchClick;
         event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
         event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
-        event EventHandler ExpandAllNodesClick;
-        event EventHandler CollapseAllNodesClick;
+        
         /// <summary>
         /// Заполнить дерево данными
         /// </summary>
@@ -44,10 +42,6 @@
         void Show();
 
         TreeViewAdv GetTreeView();
-
-        void JumpToNode(CooperationNode cooperationNode);
-
-        void SetWindowCaption(string name);
 
         ICollection<CooperationNode> GetMainNodes();
     }

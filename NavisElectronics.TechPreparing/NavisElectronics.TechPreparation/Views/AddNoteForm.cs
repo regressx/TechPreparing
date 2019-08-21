@@ -2,7 +2,7 @@
 {
     using System.Windows.Forms;
 
-    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using ViewInterfaces;
 
     /// <summary>
     /// Форма для добавления данных примечания
@@ -19,8 +19,8 @@
         public AddNoteForm(string text)
         {
             InitializeComponent();
-            textBox1.Text = text;
-            textBox1.Select();
+            noteTextBox.Text = text;
+            noteTextBox.Select();
         }
 
         /// <summary>
@@ -29,17 +29,17 @@
         /// <returns></returns>
         public string GetNote()
         {
-            return textBox1.Text;
+            return noteTextBox.Text;
         }
 
-        private void textBox_KeyDown(object sender, KeyEventArgs e)
+        private void noteTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control)
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                   DialogResult = DialogResult.OK;
-                   Close();
+                    DialogResult = DialogResult.OK;
+                    Close();
                 }
             }
         }
