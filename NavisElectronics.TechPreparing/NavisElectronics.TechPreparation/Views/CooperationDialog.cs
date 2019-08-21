@@ -63,7 +63,7 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 CooperationNode elementFromQueue = queue.Dequeue();
                 elementFromQueue.CooperationFlag = value;
-                IntermechTreeElement taggedElement = (IntermechTreeElement) elementFromQueue.Tag;
+                IntermechTreeElement taggedElement = (IntermechTreeElement)elementFromQueue.Tag;
                 taggedElement.CooperationFlag = value;
                 foreach (var child in elementFromQueue.Nodes)
                 {
