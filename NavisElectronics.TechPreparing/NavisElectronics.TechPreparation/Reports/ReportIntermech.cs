@@ -15,7 +15,7 @@ namespace NavisElectronics.TechPreparation.Reports
 
     using NavisElectronics.TechPreparation.Entities;
     using NavisElectronics.TechPreparation.Reports.CompleteList;
-    using NavisElectronics.TechPreparation.Reports.CooperationList;
+    //using NavisElectronics.TechPreparation.Reports.CooperationList;
 
     /// <summary>
     /// Класс для получения отчета в IPS
@@ -62,7 +62,7 @@ namespace NavisElectronics.TechPreparation.Reports
                     break;
 
                 case ReportType.ListOfCooperation:
-                    _documentTypeFactory = new CooperationListViewInDepth();
+                    //_documentTypeFactory = new CooperationListViewInDepth();
                     //_documentTypeFactory = new CooperationListViewUniqueAssemblies(); 
                     break;
 

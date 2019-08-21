@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
 namespace NavisElectronics.TechPreparation.Entities
 {
     using System.Collections.Generic;
@@ -14,16 +16,26 @@ namespace NavisElectronics.TechPreparation.Entities
     /// <summary>
     /// Сущность описывает извлекаемый из дерева объект
     /// </summary>
-    public class ExtractedObject
+    public class ExtractedObject<T> where T: class
     {
-        private ICollection<ExtractedObject> _elements;
+        private T _intermechTreeElement;
+        private ICollection<ExtractedObject<T>> _elements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractedObject"/> class.
         /// </summary>
         public ExtractedObject()
         {
-            _elements = new List<ExtractedObject>();
+            _elements = new List<ExtractedObject<T>>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtractedObject"/> class.
+        /// </summary>
+        public ExtractedObject(T intermechTreeElement)
+        {
+            _intermechTreeElement = intermechTreeElement;
+            _elements = new List<ExtractedObject<T>>();
         }
 
         /// <summary>
@@ -111,7 +123,7 @@ namespace NavisElectronics.TechPreparation.Entities
         /// <summary>
         /// Получает набор элементов, составляющих этот
         /// </summary>
-        public ICollection<ExtractedObject> Elements
+        public ICollection<ExtractedObject<T>> Elements
         {
             get { return _elements; }
         }
@@ -131,24 +143,19 @@ namespace NavisElectronics.TechPreparation.Entities
         /// </summary>
         public string TechTask { get; set; }
 
+        public T TreeElement
+        {
+            get { return _intermechTreeElement; }
+        }
+
         /// <summary>
         /// Регистрация элемента
         /// </summary>
         /// <param name="parent">
         /// The parent.
         /// </param>
-        public void RegisterElement(ExtractedObject parent)
+        public void RegisterElement(ExtractedObject<T> parent)
         {
-            //if (_elements.ContainsKey(parent.Id))
-            //{
-            //    ExtractedObject parentFromDictionary = _elements[parent.Id];
-                
-            //}
-            //else
-            //{
-            //    _elements.Add(parent.Id, parent);
-            //}
-
             _elements.Add(parent);
         }
 
@@ -156,7 +163,7 @@ namespace NavisElectronics.TechPreparation.Entities
         public double CountElementsAmountWithStockRate()
         {
             double temp = 0;
-            foreach (ExtractedObject element in _elements)
+            foreach (ExtractedObject<T> element in _elements)
             {
                 temp += element.AmountWithUse;
             }

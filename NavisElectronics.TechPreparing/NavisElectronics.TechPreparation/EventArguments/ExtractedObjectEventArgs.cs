@@ -14,23 +14,23 @@ namespace NavisElectronics.TechPreparation.EventArguments
 
     public class ExtractedObjectEventArgs:EventArgs
     {
-        private ExtractedObject _exctractedObject;
-        private int _rowIndex;
+        //private ExtractedObject _exctractedObject;
+        //private int _rowIndex;
 
-        public ExtractedObjectEventArgs(ExtractedObject exctractedObject, int rowIndex)
-        {
-            _exctractedObject = exctractedObject;
-            _rowIndex = rowIndex;
-        }
+        //public ExtractedObjectEventArgs(ExtractedObject exctractedObject, int rowIndex)
+        //{
+        //    _exctractedObject = exctractedObject;
+        //    _rowIndex = rowIndex;
+        //}
 
-        public ExtractedObject ExtractedObject
-        {
-            get { return _exctractedObject; }
-        }
+        //public ExtractedObject ExtractedObject
+        //{
+        //    get { return _exctractedObject; }
+        //}
 
-        public int RowIndex
-        {
-            get { return _rowIndex; }
-        }
+        //public int RowIndex
+        //{
+        //    get { return _rowIndex; }
+        //}
     }
 }

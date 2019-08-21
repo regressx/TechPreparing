@@ -15,16 +15,16 @@ namespace NavisElectronics.TechPreparation.EventArguments
 
     public class ExtractedObjectCollectionEventArgs:EventArgs
     {
-        private ICollection<ExtractedObject> _exctractedObjectsCollection;
+        //private ICollection<ExtractedObject> _exctractedObjectsCollection;
 
-        public ExtractedObjectCollectionEventArgs(ICollection<ExtractedObject> exctractedObjectsCollection)
-        {
-            _exctractedObjectsCollection = exctractedObjectsCollection;
-        }
+        //public ExtractedObjectCollectionEventArgs(ICollection<ExtractedObject> exctractedObjectsCollection)
+        //{
+        //    _exctractedObjectsCollection = exctractedObjectsCollection;
+        //}
 
-        public ICollection<ExtractedObject> ExctractedObjectsCollection
-        {
-            get { return _exctractedObjectsCollection; }
-        }
+        //public ICollection<ExtractedObject> ExctractedObjectsCollection
+        //{
+        //    get { return _exctractedObjectsCollection; }
+        //}
     }
 }

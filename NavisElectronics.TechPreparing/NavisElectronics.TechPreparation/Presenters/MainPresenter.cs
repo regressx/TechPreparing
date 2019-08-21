@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Intermech.Interfaces;
-using Intermech.Interfaces.Plugins;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
 
@@ -295,19 +293,19 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
-            MaterialsView view = new MaterialsView();
-            MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.StandartDetails);
-            presenter.Run();
+            //IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
+            //MaterialsView view = new MaterialsView();
+            //MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.StandartDetails);
+            //presenter.Run();
         }
 
 
         private void _mainView_EditMainMaterialsClick(object sender, EventArgs e)
         {
-            IntermechTreeElement mainElement = _rootElement;
-            MaterialsView view = new MaterialsView();
-            MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.Material);
-            presenter.Run();
+            //IntermechTreeElement mainElement = _rootElement;
+            //MaterialsView view = new MaterialsView();
+            //MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.Material);
+            //presenter.Run();
         }
 
         private void _mainView_UpdateClick(object sender, EventArgs e)
