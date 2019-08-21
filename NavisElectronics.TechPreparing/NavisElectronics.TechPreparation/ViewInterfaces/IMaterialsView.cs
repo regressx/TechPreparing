@@ -17,15 +17,15 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
 
     public interface IMaterialsView
     {
-        event EventHandler Load;
-        event EventHandler SaveClick;
+        //event EventHandler Load;
+        //event EventHandler SaveClick;
 
-        event EventHandler<ExtractedObjectEventArgs> IntermechObjectClick;
-        //event EventHandler<MaterialEventArgs> SetStockRateClick;
-        void Show();
+        //event EventHandler<ExtractedObjectEventArgs> IntermechObjectClick;
+        ////event EventHandler<MaterialEventArgs> SetStockRateClick;
+        //void Show();
 
-        void FillDataGrid(IList<ExtractedObject> materials);
-        //ICollection<Material> GetMaterials();
-        void RedrawRow(int index);
+        //void FillDataGrid(IList<ExtractedObject> materials);
+        ////ICollection<Material> GetMaterials();
+        //void RedrawRow(int index);
     }
 }

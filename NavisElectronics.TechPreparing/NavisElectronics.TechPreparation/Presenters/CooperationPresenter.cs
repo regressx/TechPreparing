@@ -284,35 +284,49 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void SetCooperation(bool cooperationFlag, ICollection<CooperationNode> nodes)
         {
-            IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
+            IList<CooperationNode> rows = new List<CooperationNode>();
             foreach (CooperationNode myNode in nodes)
             {
-                rows.Add(myNode.Tag as IntermechTreeElement);
+                rows.Add(myNode);
             }
 
-            _model.SetCooperationValue(_root, rows, cooperationFlag);
+            //_model.SetCooperationValue(_root, rows, cooperationFlag);
 
-            Queue<CooperationNode> queue = new Queue<CooperationNode>();
+            //Queue<CooperationNode> queue = new Queue<CooperationNode>();
 
-            foreach (CooperationNode node in _view.GetMainNodes())
+            //foreach (CooperationNode node in _view.GetMainNodes())
+            //{
+            //    queue.Enqueue(node);
+            //}
+
+            //while (queue.Count > 0)
+            //{
+            //    CooperationNode nodeFromQueue = queue.Dequeue();
+            //    IntermechTreeElement intermechElement = nodeFromQueue.Tag as IntermechTreeElement;
+            //    nodeFromQueue.CooperationFlag = intermechElement.CooperationFlag;
+
+            //    if (nodeFromQueue.Nodes.Count > 0)
+            //    {
+            //        foreach (Node coopNode in nodeFromQueue.Nodes)
+            //        {
+            //            queue.Enqueue((CooperationNode)coopNode);
+            //        }
+            //    }
+            //}
+
+            Func<CooperationNode, CooperationNode> func = (cooperationNode) =>
             {
-                queue.Enqueue(node);
-            }
-
-            while (queue.Count > 0)
-            {
-                CooperationNode nodeFromQueue = queue.Dequeue();
-                IntermechTreeElement intermechElement = nodeFromQueue.Tag as IntermechTreeElement;
-                nodeFromQueue.CooperationFlag = intermechElement.CooperationFlag;
-
-                if (nodeFromQueue.Nodes.Count > 0)
+                CooperationNode node = cooperationNode;
+                while (node.Type != 0)
                 {
-                    foreach (Node coopNode in nodeFromQueue.Nodes)
-                    {
-                        queue.Enqueue((CooperationNode)coopNode);
-                    }
+                    node = (CooperationNode)node.Parent;
                 }
-            }
+                return node;
+            };
+
+            CooperationDialog dialog = new CooperationDialog(func(rows[0]), rows[0]);
+            dialog.ShowDialog();
+            _view.GetTreeView().Refresh();
         }
 
         private void SetParameters(ICollection<CooperationNode> nodes, double stockRate, string sampleSize)

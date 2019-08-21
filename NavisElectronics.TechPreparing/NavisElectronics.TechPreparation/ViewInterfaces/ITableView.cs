@@ -21,11 +21,11 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
     /// </summary>
     public interface ITableView
     {
-        event EventHandler Load;
-        event EventHandler<ExtractedObjectCollectionEventArgs> EditClick;
-        DialogResult ShowDialog();
-        void Show();
-        void FillGrid(IList<ExtractedObject> elements);
-        void SetFormCaption(string format);
+        //event EventHandler Load;
+        //event EventHandler<ExtractedObjectCollectionEventArgs> EditClick;
+        //DialogResult ShowDialog();
+        //void Show();
+        //void FillGrid(IList<ExtractedObject> elements);
+        //void SetFormCaption(string format);
     }
 }

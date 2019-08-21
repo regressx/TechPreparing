@@ -106,27 +106,18 @@
     <Compile Include="Presenters\TreeViewSettings.cs" />
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\SaveService.cs" />
-    <Compile Include="Services\SaveServiceEventArgs.cs" />
+    <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
     <Compile Include="Presenters\TreeNodeDialogPresenter.cs" />
     <Compile Include="Reports\CompleteList\CompleteListFactory.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListDocument.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListFactoryInDepth.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListFactoryUniqueAssemblies.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListViewFactory.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListViewInDepth.cs" />
-    <Compile Include="Reports\CooperationList\CooperationListViewUniqueAssemblies.cs" />
-    <Compile Include="Reports\CooperationList\MyPageDescription.cs" />
     <Compile Include="Services\ITechPreparingSelector.cs" />
     <Compile Include="Services\OpenFolderService.cs" />
     <Compile Include="Services\TechPreparingSelector.cs" />
     <Compile Include="Services\TechRouteManager.cs" />
     <Compile Include="ViewInterfaces\EditTechRouteEventArgs.cs" />
     <Compile Include="ViewInterfaces\IView.cs" />
-    <Compile Include="ViewModels\InfoInTableModel.cs" />
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodes\ViewNode.cs" />
@@ -136,6 +127,12 @@
     </Compile>
     <Compile Include="Views\AddNoteForm.Designer.cs">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CooperationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CooperationDialog.Designer.cs">
+      <DependentUpon>CooperationDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\CooperationView.cs">
       <SubType>Form</SubType>
@@ -156,31 +153,17 @@
     <Compile Include="Views\FindNodeView.Designer.cs">
       <DependentUpon>FindNodeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\InfoInTableView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\InfoInTableView.Designer.cs">
-      <DependentUpon>InfoInTableView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Reports\IDocumentTypeFactory.cs" />
     <Compile Include="Reports\DividingListFactory.cs" />
     <Compile Include="Reports\TechRouteListDocumentFactory.cs" />
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
-    <Compile Include="Presenters\InfoInTablePresenter.cs" />
     <Compile Include="Services\ClipboardManager.cs" />
-    <Compile Include="Services\IntermechObjectExtractor.cs" />
     <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
     <Compile Include="Services\TechAgentDataExtractor.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
-    <Compile Include="Views\MaterialsView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\MaterialsView.Designer.cs">
-      <DependentUpon>MaterialsView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,7 +196,6 @@
       <DependentUpon>TreeComparerView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\IMultiplyParametersView.cs" />
-    <Compile Include="Presenters\MaterialsViewPresenter.cs" />
     <Compile Include="Presenters\MultiplyParametersViewPresenter.cs" />
     <Compile Include="ViewInterfaces\IMaterialsView.cs" />
     <Compile Include="ViewInterfaces\ITechRouteMap.cs" />
@@ -276,7 +258,6 @@
     <Compile Include="ViewModels\ErrorElement.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MaterialsViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
     <Compile Include="ViewModels\TreeNodes\MyNode.cs" />
     <Compile Include="Services\TechRouteClipBoard.cs" />
@@ -290,20 +271,17 @@
     <EmbeddedResource Include="Views\AddNoteForm.resx">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CooperationDialog.resx">
+      <DependentUpon>CooperationDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CooperationView.resx">
       <DependentUpon>CooperationView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FindNodeView.resx">
       <DependentUpon>FindNodeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\InfoInTableView.resx">
-      <DependentUpon>InfoInTableView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MaterialsView.resx">
-      <DependentUpon>MaterialsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
@@ -392,6 +370,9 @@
       <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
       <Name>NavisElectronics.TechPreparation.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reports\CooperationList\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
