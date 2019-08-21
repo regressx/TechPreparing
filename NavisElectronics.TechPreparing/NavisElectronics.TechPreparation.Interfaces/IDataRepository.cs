@@ -110,6 +110,10 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// </returns>
         Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId);
 
+        Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId) where T : class;
+
+        T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId) where T : class;
+
         /// <summary>
         /// Получение типов тех. отхода
         /// </summary>

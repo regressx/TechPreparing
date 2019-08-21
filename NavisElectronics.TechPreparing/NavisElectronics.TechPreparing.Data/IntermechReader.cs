@@ -7,28 +7,27 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
-using System.Xml.Serialization;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Xml.Serialization;
     using Entities;
     using Exceptions;
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using Interfaces;
+    using Interfaces.Entities;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Bson;
     using Substitutes;
     using TechPreparing.Data.Helpers;
 
@@ -37,7 +36,6 @@ namespace NavisElectronics.TechPreparation.Data
     /// </summary>
     public class IntermechReader : IDataRepository
     {
-
         /// <summary>
         /// Cервис расшифровки доп. замен
         /// </summary>
@@ -368,7 +366,6 @@ namespace NavisElectronics.TechPreparation.Data
             return root;
         }
 
-
         public DataSet GetDataset(long orderId, int dataAttributeId)
         {
             // получаем из базы
@@ -441,11 +438,68 @@ namespace NavisElectronics.TechPreparation.Data
             });
         }
 
+        public Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId) where T:class
+        {
+            return Task.Run<T>(() => { return GetDataFromBinaryAttribute<T>(versionId, dataAttributeId); });
+        }
+
+        public T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId) where T:class
+        {
+            // получаем из базы
+            byte[] bytes = null;
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                IDBObject orderObject = keeper.Session.GetObject(versionId);
+                IDBAttribute binaryAtt = orderObject.GetAttributeByID(dataAttributeId);
+
+                if (binaryAtt != null)
+                {
+                    IBlobReader blobReader = binaryAtt as IBlobReader;
+                    blobReader.OpenBlob(0);
+                    bytes = blobReader.ReadDataBlock();
+                    blobReader.CloseBlob();
+                }
+            }
+
+            // распаковываем
+            Inflater inflater = new Inflater();
+            byte[] temp = new byte[1024];
+            byte[] unpackedBytes = null;
+            using (MemoryStream memory = new MemoryStream())
+            {
+                inflater.SetInput(bytes);
+                while (!inflater.IsFinished)
+                {
+                    int extracted = inflater.Inflate(temp);
+                    if (extracted > 0)
+                    {
+                        memory.Write(temp, 0, extracted);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                unpackedBytes = memory.ToArray();
+            }
+
+            // пакуем в Dataset
+            BinaryFormatter binFormatter = new BinaryFormatter();
+            T deserializedObject;
+            using (MemoryStream ms = new MemoryStream(unpackedBytes))
+            {
+                deserializedObject = (T)binFormatter.Deserialize(ms);
+            }
+            return deserializedObject;
+        }
+
+
         /// <summary>
         /// Получает из IPS данные по запрошенному тех. отходу
         /// </summary>
         /// <returns>
-        /// The <see cref="ICollection"/>.
+        /// The <see cref="WithdrawalType"/>.
         /// </returns>
         public WithdrawalType GetWithdrawalTypes()
         {
