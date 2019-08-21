@@ -7,7 +7,7 @@
         public ReportForm(string str)
         {
             InitializeComponent();
-            textBox1.Text = str;
+            reportTextBox.Text = str;
         }
     }
 }
