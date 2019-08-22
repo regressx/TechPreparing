@@ -31,7 +31,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler<TreeNodeClickEventArgs> NodeMouseClick;
         event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;
         event EventHandler ApplyButtonClick;
-        event EventHandler ClearCooperationClick;
+        event EventHandler<BoundTreeElementEventArgs> ClearManufacturerClick;
         event EventHandler EditTechRoutesClick;
         event EventHandler UpdateClick;
         event EventHandler EditMainMaterialsClick;
@@ -45,7 +45,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void Show();
         void FillTree(TreeModel mainNode);
         void FillGrid(ICollection<Agent> agents);
-        void UpdateAgent(long agentId);
+        void UpdateAgent(string agentsInfo);
         string GetNote();
         void FillNote(string orderElementNote);
         void UnLockButtons();

@@ -29,14 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            TenTec.Windows.iGridLib.iGColPattern iGColPattern1 = new TenTec.Windows.iGridLib.iGColPattern();
-            TenTec.Windows.iGridLib.iGColPattern iGColPattern2 = new TenTec.Windows.iGridLib.iGColPattern();
-            this.iGridCol0CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGridCol0ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
-            this.iGridCol1CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGridCol1ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ClearCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.ClearManufacturerButton = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxNote = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -67,8 +62,10 @@
             this.nodeTextBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.iGrid = new TenTec.Windows.iGridLib.iGrid();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.OrganizationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -79,28 +76,23 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // iGridCol1CellStyle
-            // 
-            this.iGridCol1CellStyle.Flags = TenTec.Windows.iGridLib.iGCellFlags.DisplayImage;
-            this.iGridCol1CellStyle.ImageAlign = TenTec.Windows.iGridLib.iGContentAlignment.MiddleCenter;
             // 
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ClearCooperationButton});
+            this.ClearManufacturerButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(190, 26);
+            this.contextMenuStrip.Size = new System.Drawing.Size(223, 26);
             // 
-            // ClearCooperationButton
+            // ClearManufacturerButton
             // 
-            this.ClearCooperationButton.Name = "ClearCooperationButton";
-            this.ClearCooperationButton.Size = new System.Drawing.Size(189, 22);
-            this.ClearCooperationButton.Text = "Очистить кооперацию";
-            this.ClearCooperationButton.Click += new System.EventHandler(this.ClearCooperationButton_Click);
+            this.ClearManufacturerButton.Name = "ClearManufacturerButton";
+            this.ClearManufacturerButton.Size = new System.Drawing.Size(222, 22);
+            this.ClearManufacturerButton.Text = "Очистить изготовителя узла";
+            this.ClearManufacturerButton.Click += new System.EventHandler(this.ClearManufacturerButton_Click);
             // 
             // textBoxNote
             // 
@@ -308,9 +300,9 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.iGrid);
+            this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 294);
-            this.splitContainer2.SplitterDistance = 817;
+            this.splitContainer2.SplitterDistance = 788;
             this.splitContainer2.TabIndex = 7;
             // 
             // treeViewAdv
@@ -336,7 +328,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(817, 294);
+            this.treeViewAdv.Size = new System.Drawing.Size(788, 294);
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -397,27 +389,25 @@
             this.nodeTextBoxAmountWithUse.LeftMargin = 3;
             this.nodeTextBoxAmountWithUse.ParentColumn = this.amountWithUseTreeColumn;
             // 
-            // iGrid
+            // dataGridView1
             // 
-            iGColPattern1.CellStyle = this.iGridCol0CellStyle;
-            iGColPattern1.ColHdrStyle = this.iGridCol0ColHdrStyle;
-            iGColPattern1.Text = "Наименование";
-            iGColPattern1.Width = 152;
-            iGColPattern2.CellStyle = this.iGridCol1CellStyle;
-            iGColPattern2.ColHdrStyle = this.iGridCol1ColHdrStyle;
-            iGColPattern2.Text = "Статус";
-            this.iGrid.Cols.AddRange(new TenTec.Windows.iGridLib.iGColPattern[] {
-            iGColPattern1,
-            iGColPattern2});
-            this.iGrid.ContextMenuStrip = this.contextMenuStrip;
-            this.iGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.iGrid.Location = new System.Drawing.Point(0, 0);
-            this.iGrid.Name = "iGrid";
-            this.iGrid.ReadOnly = true;
-            this.iGrid.Size = new System.Drawing.Size(241, 294);
-            this.iGrid.TabIndex = 0;
-            this.iGrid.CellDoubleClick += new TenTec.Windows.iGridLib.iGCellDoubleClickEventHandler(this.iGrid_CellDoubleClick);
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.OrganizationName,
+            this.Status});
+            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(270, 294);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             // 
             // tableLayoutPanel3
             // 
@@ -433,6 +423,21 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
             this.tableLayoutPanel3.TabIndex = 7;
+            // 
+            // OrganizationName
+            // 
+            this.OrganizationName.HeaderText = "Наименование организации";
+            this.OrganizationName.Name = "OrganizationName";
+            this.OrganizationName.ReadOnly = true;
+            this.OrganizationName.Width = 200;
+            // 
+            // Status
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Status.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Status.HeaderText = "Статус";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
             // 
             // MainView
             // 
@@ -455,7 +460,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.iGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
@@ -468,7 +473,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem ClearCooperationButton;
+        private System.Windows.Forms.ToolStripMenuItem ClearManufacturerButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
@@ -497,10 +502,8 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxAmountWithUse;
         private System.Windows.Forms.ToolStripButton saveButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private TenTec.Windows.iGridLib.iGrid iGrid;
-        private TenTec.Windows.iGridLib.iGCellStyle iGridCol0CellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGridCol0ColHdrStyle;
-        private TenTec.Windows.iGridLib.iGCellStyle iGridCol1CellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGridCol1ColHdrStyle;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OrganizationName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
     }
 }
