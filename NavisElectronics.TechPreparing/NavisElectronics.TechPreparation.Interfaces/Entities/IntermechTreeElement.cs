@@ -241,6 +241,15 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// </summary>
         public string Case { get; set; }
 
+        /// <summary>
+        /// Признак производства
+        /// </summary>
+        public string ProduseSign { get; set; }
+
+        /// <summary>
+        /// Тип монтажа
+        /// </summary>
+        public string MountingType { get; set; }
 
         /// <summary>
         /// Индексатор

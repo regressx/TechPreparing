@@ -104,7 +104,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
             _mainView.CellValueChanged += _mainView_CellValueChanged;
             _mainView.CooperationClick += _mainView_CooperationClick;
-            _mainView.ClearCooperationClick += _mainView_ClearCooperationClick;
+            _mainView.ClearManufacturerClick += _mainView_ClearManufacturerClick;
             _mainView.EditTechRoutesClick += _mainView_EditTechRoutesClick;
             _mainView.UpdateClick += _mainView_UpdateClick;
             _mainView.EditMainMaterialsClick += _mainView_EditMainMaterialsClick;
@@ -330,35 +330,26 @@ namespace NavisElectronics.TechPreparation.Presenters
             presenter.Run(parameter);
         }
 
-        private void _mainView_ClearCooperationClick(object sender, EventArgs e)
+        private void _mainView_ClearManufacturerClick(object sender, BoundTreeElementEventArgs e)
         {
-            //_globalTreeElement.Agent = string.Empty;
-            //if (_globalTreeElement.Children.Count > 0)
-            //{
-            //    Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            //    foreach (IntermechTreeElement child in _globalTreeElement.Children)
-            //    {
-            //        queue.Enqueue(child);
-            //    }
+            IntermechTreeElement selectedElement = e.Element;
+            
+            // проходом в ширину очистить всем входящим изготовителя
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(selectedElement);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.Agent = string.Empty;
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    child.Agent = string.Empty;
+                    queue.Enqueue(child);
+                }
+            }
+            _mainView.UpdateAgent(string.Empty);
 
-            //    while (queue.Count > 0)
-            //    {
-            //        IntermechTreeElement child = queue.Dequeue();
-            //        child.Agent = string.Empty;
-            //        if (child.Children.Count > 0)
-            //        {
-            //            foreach (IntermechTreeElement childNodes in child.Children)
-            //            {
-            //                childNodes.Agent = string.Empty;
-            //                queue.Enqueue(childNodes);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //_mainView.FillAgent(_globalTreeElement.Agent);
-
-            throw new NotImplementedException();
+            // по идее надо еще и вверх подняться, чтобы убрать 
         }
 
         private void _mainView_CooperationClick(object sender, EventArgs e)
@@ -372,40 +363,33 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_CellValueChanged(object sender, TreeNodeAgentValueEventArgs e)
         {
-            //string agentsValues = GatherAgents(e);
-            //_globalTreeElement.Agent = agentsValues;
+            string agentsValues = GatherAgents(e);
+            e.TreeElement.Agent = agentsValues;
 
-            //// Раздаем кооперацию потомкам
-            //if (_globalTreeElement.Children.Count > 0)
-            //{
-            //    Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            //    foreach (IntermechTreeElement child in _globalTreeElement.Children)
-            //    {
-            //        queue.Enqueue(child);
-            //    }
+            // Раздаем кооперацию потомкам
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            foreach (IntermechTreeElement child in e.TreeElement.Children)
+            {
+                queue.Enqueue(child);
+            }
 
-            //    while (queue.Count > 0)
-            //    {
-            //        IntermechTreeElement child = queue.Dequeue();
-            //        child.Agent = agentsValues;
-            //        if (child.Children.Count > 0)
-            //        {
-            //            foreach (IntermechTreeElement childNodes in child.Children)
-            //            {
-            //                childNodes.Agent = agentsValues;
-            //                queue.Enqueue(childNodes);
-            //            }
-            //        }
-            //    }
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement child = queue.Dequeue();
+                child.Agent = agentsValues;
+                if (child.Children.Count > 0)
+                {
+                    foreach (IntermechTreeElement childNodes in child.Children)
+                    {
+                        childNodes.Agent = agentsValues;
+                        queue.Enqueue(childNodes);
+                    }
+                }
+            }
 
-            //}
-
-            //// раздаем кооперацию родителям
-            //SetParentCooperationRecursive(_globalTreeElement, e.Key);
-
-            //_mainView.FillAgent(_globalTreeElement.Agent);
-
-            throw new NotImplementedException();
+            //раздаем изготовителя родителям
+            SetParentCooperationRecursive(e.TreeElement, e.Key);
+            _mainView.UpdateAgent(e.TreeElement.Agent);
 
         }
 
@@ -487,8 +471,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             if (e.Element.Agent != null)
             {
-                long agendId = long.Parse(e.Element.Agent);
-                _mainView.UpdateAgent(agendId);
+                _mainView.UpdateAgent(e.Element.Agent);
             }
 
         }
