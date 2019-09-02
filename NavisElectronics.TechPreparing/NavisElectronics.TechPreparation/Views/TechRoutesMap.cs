@@ -1,22 +1,19 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
+using Aga.Controls.Tree;
+using Intermech.Interfaces.AutoSelection;
+using Intermech.Interfaces.Client;
+using NavisElectronics.TechPreparation.EventArguments;
+using NavisElectronics.TechPreparation.Reports;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
+namespace NavisElectronics.TechPreparation.Views
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Drawing;
-    using System.Threading;
-    using System.Windows.Forms;
-
-    using Aga.Controls.Tree;
-
-    using Intermech.Interfaces.AutoSelection;
-    using Intermech.Interfaces.Client;
-
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.Reports;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
     public partial class TechRoutesMap : Form, ITechRouteMap
     {
         private readonly string _manufacturerViewSelectedAgentName;
@@ -28,8 +25,7 @@
         /// </summary>
         public event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
 
-        public event EventHandler<SaveClickEventArgs> SaveClick;
-        public event EventHandler<SaveClickEventArgs> EditClick;
+        public event EventHandler<SaveClickEventArgs> EditNoteClick;
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
@@ -62,6 +58,7 @@
                 MyNode currentNode = node.Tag as MyNode;
                 answer.Add(currentNode);
             }
+
             return answer;
         }
 
@@ -80,19 +77,9 @@
             }
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<SaveClickEventArgs> temp = Volatile.Read(ref SaveClick);
-            if (temp != null)
-            {
-                MyNode node = treeViewAdv.Root.Children[0].Tag as MyNode;
-                temp(sender, new SaveClickEventArgs(node));
-            }
-        }
-
         private void EditNote_Click(object sender, EventArgs e)
         {
-            EventHandler<SaveClickEventArgs> temp = Volatile.Read(ref EditClick);
+            EventHandler<SaveClickEventArgs> temp = Volatile.Read(ref EditNoteClick);
             if (temp != null)
             {
                 MyNode node = treeViewAdv.SelectedNode.Tag as MyNode;
@@ -110,6 +97,7 @@
                 {
                     nodes.Add(node.Tag as MyNode);
                 }
+
                 temp(sender, new ClipboardEventArgs(nodes));
             }
         }
@@ -124,6 +112,7 @@
                 {
                     nodes.Add(node.Tag as MyNode);
                 }
+
                 temp(sender, new ClipboardEventArgs(nodes));
             }
         }
@@ -140,28 +129,28 @@
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            IAutoSelectionService autoSelectionService = ServicesManager.GetService(typeof(IAutoSelectionService)) as IAutoSelectionService;
+            //IAutoSelectionService autoSelectionService = ServicesManager.GetService(typeof(IAutoSelectionService)) as IAutoSelectionService;
 
-            if (autoSelectionService == null)
-            {
-                return;
-            }
-
-            List<long> list = autoSelectionService.ExecuteSelection(-1283382, AutoSelectionMode.All);
-
-
-
-            //if (list != null)
+            //if (autoSelectionService == null)
             //{
-            //    if (list.Count != 0)
-            //    {
-            //        INotificationService notificationService = ServicesManager.GetService(typeof(INotificationService)) as INotificationService;
-            //        if (notificationService != null)
-            //        {
-            //            notificationService.FireEvent(null, new DBRelationsEventArgs("RelationsCreated", list));
-            //        }
-            //    }
+            //    return;
             //}
+
+            //List<long> list = autoSelectionService.ExecuteSelection(-1283382, AutoSelectionMode.All);
+
+
+
+            // if (list != null)
+            // {
+            // if (list.Count != 0)
+            // {
+            // INotificationService notificationService = ServicesManager.GetService(typeof(INotificationService)) as INotificationService;
+            // if (notificationService != null)
+            // {
+            // notificationService.FireEvent(null, new DBRelationsEventArgs("RelationsCreated", list));
+            // }
+            // }
+            // }
         }
 
         private void goToArchiveButton_Click(object sender, EventArgs e)
@@ -178,7 +167,7 @@
         {
             if (CreateReportClick != null)
             {
-                CreateReportClick(sender,e);
+                CreateReportClick(sender, e);
             }
         }
 
@@ -214,6 +203,7 @@
                 {
                     nodes.Add(node.Tag as MyNode);
                 }
+
                 SetInnerCooperation(sender, new ClipboardEventArgs(nodes));
             }
         }
@@ -227,6 +217,7 @@
                 {
                     nodes.Add(node.Tag as MyNode);
                 }
+
                 RemoveInnerCooperation(sender, new ClipboardEventArgs(nodes));
             }
         }
@@ -240,9 +231,9 @@
 
         private void createFullCompleteListMenuItem_Click(object sender, EventArgs e)
         {
-            //ReportService reportService = new ReportService();
-            //MyNode selectedNode = treeViewAdv1.SelectedNode.Tag as MyNode;
-            //reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.FullCompleteList, DocumentType.Excel, null);
+            // ReportService reportService = new ReportService();
+            // MyNode selectedNode = treeViewAdv1.SelectedNode.Tag as MyNode;
+            // reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.FullCompleteList, DocumentType.Excel, null);
         }
 
         private void SetNodesForComplectButton_Click(object sender, EventArgs e)

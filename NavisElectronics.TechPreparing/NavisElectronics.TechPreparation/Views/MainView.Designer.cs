@@ -63,9 +63,9 @@
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.OrganizationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -302,7 +302,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 294);
-            this.splitContainer2.SplitterDistance = 788;
+            this.splitContainer2.SplitterDistance = 753;
             this.splitContainer2.TabIndex = 7;
             // 
             // treeViewAdv
@@ -328,7 +328,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(788, 294);
+            this.treeViewAdv.Size = new System.Drawing.Size(753, 294);
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -405,24 +405,9 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(270, 294);
+            this.dataGridView1.Size = new System.Drawing.Size(305, 294);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.textBoxNote, 0, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
-            this.tableLayoutPanel3.TabIndex = 7;
             // 
             // OrganizationName
             // 
@@ -438,6 +423,21 @@
             this.Status.HeaderText = "Статус";
             this.Status.Name = "Status";
             this.Status.ReadOnly = true;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxNote, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
+            this.tableLayoutPanel3.TabIndex = 7;
             // 
             // MainView
             // 

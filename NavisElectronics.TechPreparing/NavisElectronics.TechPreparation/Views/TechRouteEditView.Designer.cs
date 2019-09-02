@@ -73,7 +73,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 224F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(625, 582);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(616, 582);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -88,14 +88,14 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(619, 29);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(610, 29);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // buttonAccept
             // 
             this.buttonAccept.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.buttonAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonAccept.Location = new System.Drawing.Point(231, 3);
+            this.buttonAccept.Location = new System.Drawing.Point(227, 3);
             this.buttonAccept.Name = "buttonAccept";
             this.buttonAccept.Size = new System.Drawing.Size(75, 23);
             this.buttonAccept.TabIndex = 1;
@@ -105,7 +105,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(312, 3);
+            this.buttonCancel.Location = new System.Drawing.Point(308, 3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -134,7 +134,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(619, 185);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(610, 185);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // listBox1
@@ -143,7 +143,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(3, 3);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(573, 179);
+            this.listBox1.Size = new System.Drawing.Size(564, 179);
             this.listBox1.TabIndex = 1;
             // 
             // tableLayoutPanel4
@@ -154,7 +154,7 @@
             this.tableLayoutPanel4.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.button2, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(582, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(573, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.53521F));
@@ -201,7 +201,7 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(3, 30);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(619, 20);
+            this.textBox1.Size = new System.Drawing.Size(610, 20);
             this.textBox1.TabIndex = 0;
             // 
             // treeViewAdv1
@@ -225,7 +225,7 @@
             this.treeViewAdv1.NodeControls.Add(this.nodeTextBox2);
             this.treeViewAdv1.NodeFilter = null;
             this.treeViewAdv1.SelectedNode = null;
-            this.treeViewAdv1.Size = new System.Drawing.Size(619, 218);
+            this.treeViewAdv1.Size = new System.Drawing.Size(610, 218);
             this.treeViewAdv1.TabIndex = 4;
             this.treeViewAdv1.Text = "treeViewAdv1";
             this.treeViewAdv1.UseColumns = true;
@@ -278,7 +278,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(625, 582);
+            this.ClientSize = new System.Drawing.Size(616, 582);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TechRouteEditView";
             this.Text = "TechRouteView";

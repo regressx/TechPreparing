@@ -31,10 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TechRoutesMap));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.SaveButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SetNodesForComplectButton = new System.Windows.Forms.ToolStripButton();
-            this.createCompleteCardsForWholeOrder = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
@@ -43,12 +40,16 @@
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.routeTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.totalTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.innerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.ContainsInnerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.isPcbTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.pcbVersionTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.substituteTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.IsToComplecTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
             this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,7 +67,6 @@
             this.createDevideList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.createSingleCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createFullCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createCooperationListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
@@ -78,10 +78,6 @@
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.isToComplectCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
-            this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.totalTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.isPcbTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.pcbVersionTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -89,10 +85,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SaveButton,
-            this.toolStripSeparator2,
             this.SetNodesForComplectButton,
-            this.createCompleteCardsForWholeOrder,
             this.toolStripSeparator3,
             this.ExpandAllButton,
             this.CollapseAllButton});
@@ -101,21 +94,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(1473, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SaveButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_save_20659;
-            this.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(23, 22);
-            this.SaveButton.Text = "Сохранить";
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // SetNodesForComplectButton
             // 
@@ -126,16 +104,6 @@
             this.SetNodesForComplectButton.Size = new System.Drawing.Size(23, 22);
             this.SetNodesForComplectButton.Text = "Проставить комлпектовочные узлы";
             this.SetNodesForComplectButton.Click += new System.EventHandler(this.SetNodesForComplectButton_Click);
-            // 
-            // createCompleteCardsForWholeOrder
-            // 
-            this.createCompleteCardsForWholeOrder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.createCompleteCardsForWholeOrder.Image = ((System.Drawing.Image)(resources.GetObject("createCompleteCardsForWholeOrder.Image")));
-            this.createCompleteCardsForWholeOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.createCompleteCardsForWholeOrder.Name = "createCompleteCardsForWholeOrder";
-            this.createCompleteCardsForWholeOrder.Size = new System.Drawing.Size(23, 22);
-            this.createCompleteCardsForWholeOrder.Text = "Создать комплектовочные карты на заказ";
-            this.createCompleteCardsForWholeOrder.Click += new System.EventHandler(this.createCompleteCardsForWholeOrder_Click);
             // 
             // toolStripSeparator3
             // 
@@ -239,6 +207,18 @@
             this.routeTreeColumn.TooltipText = null;
             this.routeTreeColumn.Width = 200;
             // 
+            // amountWithUseTreeColumn
+            // 
+            this.amountWithUseTreeColumn.Header = "Кол. с прим.";
+            this.amountWithUseTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.amountWithUseTreeColumn.TooltipText = null;
+            // 
+            // totalTreeColumn
+            // 
+            this.totalTreeColumn.Header = "Всего";
+            this.totalTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.totalTreeColumn.TooltipText = null;
+            // 
             // innerCooperationTreeColumn
             // 
             this.innerCooperationTreeColumn.Header = "Внутр. произв. кооп.";
@@ -253,12 +233,17 @@
             this.ContainsInnerCooperationTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.ContainsInnerCooperationTreeColumn.TooltipText = null;
             // 
-            // noteTreeColumn
+            // isPcbTreeColumn
             // 
-            this.noteTreeColumn.Header = "Примечание";
-            this.noteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.noteTreeColumn.TooltipText = null;
-            this.noteTreeColumn.Width = 200;
+            this.isPcbTreeColumn.Header = "PCB";
+            this.isPcbTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.isPcbTreeColumn.TooltipText = null;
+            // 
+            // pcbVersionTreeColumn
+            // 
+            this.pcbVersionTreeColumn.Header = "Версия PCB";
+            this.pcbVersionTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.pcbVersionTreeColumn.TooltipText = null;
             // 
             // substituteTreeColumn
             // 
@@ -267,18 +252,25 @@
             this.substituteTreeColumn.TooltipText = null;
             this.substituteTreeColumn.Width = 200;
             // 
-            // agentTreeColumn
+            // noteTreeColumn
             // 
-            this.agentTreeColumn.Header = "Изготовитель";
-            this.agentTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.agentTreeColumn.TooltipText = null;
-            this.agentTreeColumn.Width = 200;
+            this.noteTreeColumn.Header = "Примечание";
+            this.noteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.noteTreeColumn.TooltipText = null;
+            this.noteTreeColumn.Width = 200;
             // 
             // IsToComplecTreeColumn
             // 
             this.IsToComplecTreeColumn.Header = "Узел для компл.";
             this.IsToComplecTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.IsToComplecTreeColumn.TooltipText = null;
+            // 
+            // agentTreeColumn
+            // 
+            this.agentTreeColumn.Header = "Изготовитель";
+            this.agentTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.agentTreeColumn.TooltipText = null;
+            this.agentTreeColumn.Width = 200;
             // 
             // contextMenuStrip
             // 
@@ -298,26 +290,26 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(301, 296);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 318);
             // 
             // ShowButton
             // 
             this.ShowButton.Name = "ShowButton";
-            this.ShowButton.Size = new System.Drawing.Size(300, 22);
+            this.ShowButton.Size = new System.Drawing.Size(292, 22);
             this.ShowButton.Text = "Посмотреть";
             this.ShowButton.Click += new System.EventHandler(this.ShowButton_Click);
             // 
             // goToArchiveButton
             // 
             this.goToArchiveButton.Name = "goToArchiveButton";
-            this.goToArchiveButton.Size = new System.Drawing.Size(300, 22);
+            this.goToArchiveButton.Size = new System.Drawing.Size(292, 22);
             this.goToArchiveButton.Text = "Перейти к архиву предприятия";
             this.goToArchiveButton.Click += new System.EventHandler(this.goToArchiveButton_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(297, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
             // 
             // SetTechRouteMenuItem
             // 
@@ -326,41 +318,41 @@
             this.addIntoExistingRouteButton});
             this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
             this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
-            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
             this.SetTechRouteMenuItem.Text = "Маршрут изготовления";
             // 
             // createNewRouteButton
             // 
             this.createNewRouteButton.Name = "createNewRouteButton";
-            this.createNewRouteButton.Size = new System.Drawing.Size(232, 22);
+            this.createNewRouteButton.Size = new System.Drawing.Size(221, 22);
             this.createNewRouteButton.Text = "Добавить новый";
             this.createNewRouteButton.Click += new System.EventHandler(this.createNewRouteButton_Click);
             // 
             // addIntoExistingRouteButton
             // 
             this.addIntoExistingRouteButton.Name = "addIntoExistingRouteButton";
-            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(232, 22);
+            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(221, 22);
             this.addIntoExistingRouteButton.Text = "Добавить к существующему";
             this.addIntoExistingRouteButton.Click += new System.EventHandler(this.addIntoExistingRouteButton_Click);
             // 
             // SetInnerCooperationButton
             // 
             this.SetInnerCooperationButton.Name = "SetInnerCooperationButton";
-            this.SetInnerCooperationButton.Size = new System.Drawing.Size(300, 22);
+            this.SetInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
             this.SetInnerCooperationButton.Text = "Отметить внутрипроизв. кооп.";
             this.SetInnerCooperationButton.Click += new System.EventHandler(this.SetInnerCooperationButton_Click);
             // 
             // RemoveInnerCooperationButton
             // 
             this.RemoveInnerCooperationButton.Name = "RemoveInnerCooperationButton";
-            this.RemoveInnerCooperationButton.Size = new System.Drawing.Size(300, 22);
+            this.RemoveInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
             this.RemoveInnerCooperationButton.Text = "Убрать внутрипроизв. кооп.";
             this.RemoveInnerCooperationButton.Click += new System.EventHandler(this.RemoveInnerCooperationButton_Click);
             // 
             // EditNote
             // 
             this.EditNote.Name = "EditNote";
-            this.EditNote.Size = new System.Drawing.Size(300, 22);
+            this.EditNote.Size = new System.Drawing.Size(292, 22);
             this.EditNote.Text = "Добавить примечание";
             this.EditNote.Click += new System.EventHandler(this.EditNote_Click);
             // 
@@ -368,7 +360,7 @@
             // 
             this.CopyRouteButton.Name = "CopyRouteButton";
             this.CopyRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyRouteButton.Size = new System.Drawing.Size(300, 22);
+            this.CopyRouteButton.Size = new System.Drawing.Size(292, 22);
             this.CopyRouteButton.Text = "Копировать маршрут";
             this.CopyRouteButton.Click += new System.EventHandler(this.CopyRouteButton_Click);
             // 
@@ -376,7 +368,7 @@
             // 
             this.PasteRouteButton.Name = "PasteRouteButton";
             this.PasteRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteRouteButton.Size = new System.Drawing.Size(300, 22);
+            this.PasteRouteButton.Size = new System.Drawing.Size(292, 22);
             this.PasteRouteButton.Text = "Вставить маршрут";
             this.PasteRouteButton.Click += new System.EventHandler(this.PasteRouteButton_Click);
             // 
@@ -384,51 +376,43 @@
             // 
             this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(300, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(292, 22);
             this.toolStripMenuItem1.Text = "Создать ТП по указанному маршруту";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // createReport
             // 
             this.createReport.Name = "createReport";
-            this.createReport.Size = new System.Drawing.Size(300, 22);
+            this.createReport.Size = new System.Drawing.Size(292, 22);
             this.createReport.Text = "Сформировать ВТМ в IPS";
             this.createReport.Click += new System.EventHandler(this.createReport_Click);
             // 
             // createDevideList
             // 
             this.createDevideList.Name = "createDevideList";
-            this.createDevideList.Size = new System.Drawing.Size(300, 22);
+            this.createDevideList.Size = new System.Drawing.Size(292, 22);
             this.createDevideList.Text = "Создать разделительную ведомость в IPS";
             this.createDevideList.Click += new System.EventHandler(this.createDevideList_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createSingleCompleteListMenuItem,
-            this.createFullCompleteListMenuItem});
+            this.createSingleCompleteListMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(300, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(292, 22);
             this.toolStripMenuItem2.Text = "Создание компл. карты";
             // 
             // createSingleCompleteListMenuItem
             // 
             this.createSingleCompleteListMenuItem.Name = "createSingleCompleteListMenuItem";
-            this.createSingleCompleteListMenuItem.Size = new System.Drawing.Size(323, 22);
+            this.createSingleCompleteListMenuItem.Size = new System.Drawing.Size(307, 22);
             this.createSingleCompleteListMenuItem.Text = "Создать одиночную комплектовочную карту";
             this.createSingleCompleteListMenuItem.Click += new System.EventHandler(this.createSingleCompleteListMenuItem_Click);
-            // 
-            // createFullCompleteListMenuItem
-            // 
-            this.createFullCompleteListMenuItem.Name = "createFullCompleteListMenuItem";
-            this.createFullCompleteListMenuItem.Size = new System.Drawing.Size(323, 22);
-            this.createFullCompleteListMenuItem.Text = "Создать полную комплектовочную карту";
-            this.createFullCompleteListMenuItem.Click += new System.EventHandler(this.createFullCompleteListMenuItem_Click);
             // 
             // createCooperationListMenuItem
             // 
             this.createCooperationListMenuItem.Name = "createCooperationListMenuItem";
-            this.createCooperationListMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.createCooperationListMenuItem.Size = new System.Drawing.Size(292, 22);
             this.createCooperationListMenuItem.Text = "Создать ведомость кооперации";
             this.createCooperationListMenuItem.Click += new System.EventHandler(this.createCooperationListMenuItem_Click);
             // 
@@ -500,30 +484,6 @@
             this.isToComplectCheckBox.LeftMargin = 0;
             this.isToComplectCheckBox.ParentColumn = this.IsToComplecTreeColumn;
             // 
-            // amountWithUseTreeColumn
-            // 
-            this.amountWithUseTreeColumn.Header = "Кол. с прим.";
-            this.amountWithUseTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.amountWithUseTreeColumn.TooltipText = null;
-            // 
-            // totalTreeColumn
-            // 
-            this.totalTreeColumn.Header = "Всего";
-            this.totalTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.totalTreeColumn.TooltipText = null;
-            // 
-            // isPcbTreeColumn
-            // 
-            this.isPcbTreeColumn.Header = "PCB";
-            this.isPcbTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.isPcbTreeColumn.TooltipText = null;
-            // 
-            // pcbVersionTreeColumn
-            // 
-            this.pcbVersionTreeColumn.Header = "Версия PCB";
-            this.pcbVersionTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.pcbVersionTreeColumn.TooltipText = null;
-            // 
             // TechRoutesMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -544,7 +504,6 @@
 
         #endregion
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton SaveButton;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv;
         private Aga.Controls.Tree.TreeColumn designationTreeColumn;
         private Aga.Controls.Tree.TreeColumn nameTreeColumn;
@@ -571,7 +530,6 @@
         private System.Windows.Forms.ToolStripMenuItem goToArchiveButton;
         private System.Windows.Forms.ToolStripMenuItem createReport;
         private System.Windows.Forms.ToolStripMenuItem createDevideList;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton ExpandAllButton;
         private System.Windows.Forms.ToolStripButton CollapseAllButton;
         private Aga.Controls.Tree.TreeColumn innerCooperationTreeColumn;
@@ -584,13 +542,11 @@
         private System.Windows.Forms.ToolStripMenuItem addIntoExistingRouteButton;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem createSingleCompleteListMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createFullCompleteListMenuItem;
         private System.Windows.Forms.ToolStripButton SetNodesForComplectButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private Aga.Controls.Tree.TreeColumn IsToComplecTreeColumn;
         private Aga.Controls.Tree.NodeControls.NodeCheckBox isToComplectCheckBox;
         private System.Windows.Forms.ToolStripMenuItem createCooperationListMenuItem;
-        private System.Windows.Forms.ToolStripButton createCompleteCardsForWholeOrder;
         private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
         private Aga.Controls.Tree.TreeColumn totalTreeColumn;
         private Aga.Controls.Tree.TreeColumn isPcbTreeColumn;

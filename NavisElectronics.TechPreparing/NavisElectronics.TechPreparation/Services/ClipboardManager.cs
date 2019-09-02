@@ -32,13 +32,13 @@ namespace NavisElectronics.TechPreparation.Services
             IList<TechRouteClipBoard> clipboardList = new List<TechRouteClipBoard>();
             foreach (MyNode node in nodes)
             {
-                TechRouteClipBoard clipBoard = new TechRouteClipBoard();
-                clipBoard.ForView = node.Route;
-                IntermechTreeElement element = node.Tag as IntermechTreeElement;
-                TechAgentDataExtractor extractor = new TechAgentDataExtractor();
-                string temp = extractor.ExtractData(element.TechRoute, agentFilter);
-                clipBoard.ForDatabase = string.Format("<{0}:{1}/>", agentFilter, temp);
-                clipboardList.Add(clipBoard);
+                //TechRouteClipBoard clipBoard = new TechRouteClipBoard();
+                //clipBoard.ForView = node.Route;
+                //IntermechTreeElement element = node.Tag as IntermechTreeElement;
+                //TechAgentDataExtractor extractor = new TechAgentDataExtractor();
+                //string temp = extractor.ExtractData(element.TechRoute, agentFilter);
+                //clipBoard.ForDatabase = string.Format("<{0}:{1}/>", agentFilter, temp);
+                //clipboardList.Add(clipBoard);
             }
 
             _currentClipboardData = clipboardList;
@@ -57,21 +57,21 @@ namespace NavisElectronics.TechPreparation.Services
 
                 foreach (MyNode node in nodes)
                 {
-                    if (i == _currentClipboardData.Count)
-                    {
-                        break;
-                    }
-                    TechRouteClipBoard clipBoardFromList = _currentClipboardData[i];
-                    node.Route = clipBoardFromList.ForView;
-                    IntermechTreeElement element = node.Tag as IntermechTreeElement;
-                    TechAgentDataExtractor extractor = new TechAgentDataExtractor();
-                    string temp = string.Empty;
-                    if (element.TechRoute != null)
-                    {
-                        temp = extractor.RemoveData(element.TechRoute, agentFilter);
-                    }
-                    element.TechRoute = string.Format("{0}{1}", temp, clipBoardFromList.ForDatabase);
-                    i++;
+                    //if (i == _currentClipboardData.Count)
+                    //{
+                    //    break;
+                    //}
+                    //TechRouteClipBoard clipBoardFromList = _currentClipboardData[i];
+                    //node.Route = clipBoardFromList.ForView;
+                    //IntermechTreeElement element = node.Tag as IntermechTreeElement;
+                    //TechAgentDataExtractor extractor = new TechAgentDataExtractor();
+                    //string temp = string.Empty;
+                    //if (element.TechRoute != null)
+                    //{
+                    //    temp = extractor.RemoveData(element.TechRoute, agentFilter);
+                    //}
+                    //element.TechRoute = string.Format("{0}{1}", temp, clipBoardFromList.ForDatabase);
+                    //i++;
                 }
             }
         }

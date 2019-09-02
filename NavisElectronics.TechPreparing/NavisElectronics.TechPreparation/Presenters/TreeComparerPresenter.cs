@@ -7,23 +7,25 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
+using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.Entities;
+using NavisElectronics.TechPreparation.Enums;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+using NavisElectronics.TechPreparation.ViewModels;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+using NavisElectronics.TechPreparation.Views;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Windows.Forms;
-    using Aga.Controls.Tree;
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-    using NavisElectronics.TechPreparation.Views;
-
-    public class TreeComparerPresenter : IPresenter
+    /// <summary>
+    /// The tree comparer presenter.
+    /// </summary>
+    public class TreeComparerPresenter : IPresenter<IntermechTreeElement, IDictionary<long, Agent>>
     {
         /// <summary>
         /// Представление
@@ -38,24 +40,31 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <summary>
         /// Текущее состояние дерева
         /// </summary>
-        private readonly IntermechTreeElement _oldElement;
+        private IntermechTreeElement _oldElement;
 
         /// <summary>
         /// Набор агентов. Нужен для того, чтобы правильно создавать других представителей
         /// </summary>
-        private readonly IDictionary<long, Agent> _agents;
+        private IDictionary<long, Agent> _agents;
 
         /// <summary>
         /// Новое дерево из базы данных
         /// </summary>
         private IntermechTreeElement _newElement;
 
-        public TreeComparerPresenter(ITreeComparerView view, TreeComparerViewModel model, IntermechTreeElement oldElement, IDictionary<long, Agent> agents)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeComparerPresenter"/> class.
+        /// </summary>
+        /// <param name="view">
+        /// The view.
+        /// </param>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        public TreeComparerPresenter(ITreeComparerView view, TreeComparerViewModel model)
         {
             _view = view;
             _model = model;
-            _oldElement = oldElement;
-            _agents = agents;
             _view.Load += _view_Load;
             _view.Download += _view_Download;
             _view.Compare += _view_Compare;
@@ -155,53 +164,53 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_EditTechRoutesClick(object sender, IntermechTreeElement e)
         {
-            //using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
-            //{
-            //    if (manufacturerView.ShowDialog() == DialogResult.OK)
-            //    {
-            //        string filter = manufacturerView.SelectedAgentId;
-            //        Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            //        queue.Enqueue(e);
-            //        while (queue.Count > 0)
-            //        {
-            //            IntermechTreeElement elementFromQueue = queue.Dequeue();
-            //            elementFromQueue.Agent = filter;
-            //            if (elementFromQueue.Children.Count > 0)
-            //            {
-            //                foreach (IntermechTreeElement child in elementFromQueue.Children)
-            //                {
-            //                    queue.Enqueue(child);
-            //                }
-            //            }
-            //        }
+            // using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
+            // {
+            // if (manufacturerView.ShowDialog() == DialogResult.OK)
+            // {
+            // string filter = manufacturerView.SelectedAgentId;
+            // Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            // queue.Enqueue(e);
+            // while (queue.Count > 0)
+            // {
+            // IntermechTreeElement elementFromQueue = queue.Dequeue();
+            // elementFromQueue.Agent = filter;
+            // if (elementFromQueue.Children.Count > 0)
+            // {
+            // foreach (IntermechTreeElement child in elementFromQueue.Children)
+            // {
+            // queue.Enqueue(child);
+            // }
+            // }
+            // }
 
-            //        TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
-            //        TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
-            //        presenter.Run();
-            //    }
-            //}
+            // TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
+            // TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
+            // presenter.Run();
+            // }
+            // }
         }
 
         private void _view_EditCooperationClick(object sender, IntermechTreeElement e)
         {
-            //CooperationView cooperationView = new CooperationView(false);
-            //CooperationPresenter presenter = new CooperationPresenter(cooperationView, e, null);
-            //presenter.Run();
+            // CooperationView cooperationView = new CooperationView(false);
+            // CooperationPresenter presenter = new CooperationPresenter(cooperationView, e, null);
+            // presenter.Run();
         }
 
         private void _view_PushChanges(object sender, IntermechTreeElement e)
         {
-            _model.Upload(_oldElement,_newElement, e);
+            _model.Upload(_oldElement, _newElement, e);
             _view.FillOldTree(_model.GetModel(_oldElement));
             _view.FillNewTree(_model.GetModel(_newElement));
         }
 
-        private void _view_Upload(object sender, System.EventArgs e)
+        private void _view_Upload(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void _view_Compare(object sender, System.EventArgs e)
+        private void _view_Compare(object sender, EventArgs e)
         {
             _model.Compare(_oldElement, _newElement);
 
@@ -257,7 +266,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.ExpandSecondTree();
         }
 
-        private async void _view_Download(object sender, System.EventArgs e)
+        private async void _view_Download(object sender, EventArgs e)
         {
             TreeModel model = new TreeModel();
             ComparerNode node = new ComparerNode();
@@ -277,13 +286,10 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.FillOldTree(_model.GetModel(_oldElement));
         }
 
-        public DialogResult RunWithDialog()
+        public void Run(IntermechTreeElement root, IDictionary<long,Agent> agents)
         {
-            return _view.ShowDialog();
-        }
-
-        public void Run()
-        {
+            _oldElement = root;
+            _agents = agents;
             _view.Show();
         }
     }

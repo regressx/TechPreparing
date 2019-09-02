@@ -107,6 +107,7 @@
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
+    <Compile Include="Services\TechRouteStringBuilder.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
@@ -162,7 +163,6 @@
     <Compile Include="Services\ClipboardManager.cs" />
     <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
-    <Compile Include="Services\TechAgentDataExtractor.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>

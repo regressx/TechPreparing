@@ -13,8 +13,6 @@
 
     public partial class TechRouteEditView : Form, ITechRouteView
     {
-        private readonly string _data;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TechRouteEditView"/> class.
         /// </summary>
@@ -24,10 +22,14 @@
         /// <param name="node">
         /// The node.
         /// </param>
-        public TechRouteEditView(string data, TechRouteNode node)
+        public TechRouteEditView()
         {
-            _data = data;
             InitializeComponent();
+        }
+
+        public new void Show()
+        {
+            ShowDialog();
         }
 
         /// <summary>
@@ -87,7 +89,6 @@
 
         private void TechRouteView_Load(object sender, EventArgs e)
         {
-            this.Text = _data;
         }
 
         private void buttonRemoveNode_Click(object sender, EventArgs e)
@@ -121,11 +122,6 @@
                     MessageBox.Show("Не стоит пытаться добавить этот узел в маршрут. Выберите тот, у которого нет дочерних узлов");
                 }
             }
-        }
-
-        private void loadFactoryStructButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

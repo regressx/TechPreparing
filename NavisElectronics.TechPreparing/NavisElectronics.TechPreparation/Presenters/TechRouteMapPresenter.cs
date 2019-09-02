@@ -7,22 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisArchiveWork.Data;
-using NavisElectronics.TechPreparation.Data;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Windows.Forms;
     using Aga.Controls.Tree;
     using Entities;
-    using Enums;
     using EventArguments;
-    using IO;
+    using Interfaces.Entities;
     using Reports;
     using Services;
     using ViewInterfaces;
@@ -33,7 +29,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
     /// </summary>
-    public class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>>
+    public class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
     {
         /// <summary>
         /// Интерфейс представления
@@ -46,14 +42,11 @@ namespace NavisElectronics.TechPreparation.Presenters
         private IntermechTreeElement _root;
 
         /// <summary>
-        /// Строка-фильтр для агентов
-        /// </summary>
-        private string _agentFilter;
-
-        /// <summary>
         /// Класс-логика для событий представления
         /// </summary>
         private readonly TechRoutesMapModel _model;
+
+        private readonly IPresentationFactory _presentationFactory;
 
         /// <summary>
         /// Класс, позволяющий по номеру объекта показать его файлы
@@ -70,6 +63,8 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </summary>
         private Parameter<IntermechTreeElement> _parameter;
 
+        private IDictionary<long, Agent> _agents;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TechRouteMapPresenter"/> class. 
         /// Конструктор посредника для ведомости маршрутов
@@ -80,15 +75,14 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="model">
         ///  модель для окна
         /// </param>
-        public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model)
+        public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model, IPresentationFactory presentationFactory)
         {
             _view = view;
             _view.EditTechRouteClick += _view_EditTechRouteClick;
             _view.Load += _view_Load;
-            _view.SaveClick += _view_SaveClick;
-            _view.EditClick += _view_EditClick;
-            _view.CopyClick += _view_CopyClick;
-            _view.PasteClick += _view_PasteClick;
+            _view.EditNoteClick += View_EditNoteClick;
+            _view.CopyClick += View_CopyClick;
+            _view.PasteClick += View_PasteClick;
             _view.ShowClick += _view_ShowClick;
             _view.GoToOldArchive += _view_GoToOldArchive;
             _view.CreateReportClick += View_CreateReportClick;
@@ -98,6 +92,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetNodesToComplectClick += _view_SetNodesToComplectClick;
             _view.CreateCooperationList += _view_CreateCooperationList;
             _model = model;
+            _presentationFactory = presentationFactory;
         }
 
         /// <summary>
@@ -137,54 +132,54 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             MyNode mainNode = _view.GetMainNode();
 
-            switch (_agentFilter)
-            {
-                case "1372599":
-                    Queue<MyNode> queue = new Queue<MyNode>();
-                    queue.Enqueue(mainNode);
-                    while (queue.Count > 0)
-                    {
-                        MyNode nodeFromQueue = queue.Dequeue();
-                        IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
-                        if (nodeFromQueue.Route != null)
-                        {
-                            if (nodeFromQueue.Route.Contains("773") || nodeFromQueue.Route.Contains("774") || nodeFromQueue.Route.Contains("103"))
-                            {
-                                nodeFromQueue.IsToComplect = true;
-                                taggedElement.IsToComplect = true;
-                            }
+            //switch (_agentFilter)
+            //{
+            //    case "1372599":
+            //        Queue<MyNode> queue = new Queue<MyNode>();
+            //        queue.Enqueue(mainNode);
+            //        while (queue.Count > 0)
+            //        {
+            //            MyNode nodeFromQueue = queue.Dequeue();
+            //            IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
+            //            if (nodeFromQueue.Route != null)
+            //            {
+            //                if (nodeFromQueue.Route.Contains("773") || nodeFromQueue.Route.Contains("774") || nodeFromQueue.Route.Contains("103"))
+            //                {
+            //                    nodeFromQueue.IsToComplect = true;
+            //                    taggedElement.IsToComplect = true;
+            //                }
 
-                        }
-                        foreach (Node child in nodeFromQueue.Nodes)
-                        {
-                            queue.Enqueue((MyNode)child);
-                        }
-                    }
+            //            }
+            //            foreach (Node child in nodeFromQueue.Nodes)
+            //            {
+            //                queue.Enqueue((MyNode)child);
+            //            }
+            //        }
 
-                    break;
-                case "1299782":
-                    Queue<MyNode> anotherQueue = new Queue<MyNode>();
-                    anotherQueue.Enqueue(mainNode);
-                    while (anotherQueue.Count > 0)
-                    {
-                        MyNode nodeFromQueue = anotherQueue.Dequeue();
-                        IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
-                        if (nodeFromQueue.Route != null)
-                        {
-                            if (nodeFromQueue.Route.Contains("756") || nodeFromQueue.Route.Contains("106"))
-                            {
-                                nodeFromQueue.IsToComplect = true;
-                                taggedElement.IsToComplect = true;
-                            }
-                        }
+            //        break;
+            //    case "1299782":
+            //        Queue<MyNode> anotherQueue = new Queue<MyNode>();
+            //        anotherQueue.Enqueue(mainNode);
+            //        while (anotherQueue.Count > 0)
+            //        {
+            //            MyNode nodeFromQueue = anotherQueue.Dequeue();
+            //            IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
+            //            if (nodeFromQueue.Route != null)
+            //            {
+            //                if (nodeFromQueue.Route.Contains("756") || nodeFromQueue.Route.Contains("106"))
+            //                {
+            //                    nodeFromQueue.IsToComplect = true;
+            //                    taggedElement.IsToComplect = true;
+            //                }
+            //            }
 
-                        foreach (Node child in nodeFromQueue.Nodes)
-                        {
-                            anotherQueue.Enqueue((MyNode)child);
-                        }
-                    }
-                    break;
-            }
+            //            foreach (Node child in nodeFromQueue.Nodes)
+            //            {
+            //                anotherQueue.Enqueue((MyNode)child);
+            //            }
+            //        }
+            //        break;
+            //}
 
         }
 
@@ -303,155 +298,120 @@ namespace NavisElectronics.TechPreparation.Presenters
             _model.ShowProductCard(element);
         }
 
-        private void _view_PasteClick(object sender, ClipboardEventArgs e)
+        private void View_PasteClick(object sender, ClipboardEventArgs e)
         {
-            _model.Paste(e.Nodes, _agentFilter);
+            //_model.Paste(e.Nodes, _agentFilter);
         }
 
-        private void _view_CopyClick(object sender, ClipboardEventArgs e)
+        private void View_CopyClick(object sender, ClipboardEventArgs e)
         {
-            _model.Copy(e.Nodes, _agentFilter);
+            //_model.Copy(e.Nodes, _agentFilter);
         }
 
-        private void _view_EditClick(object sender, SaveClickEventArgs e)
+        private void View_EditNoteClick(object sender, SaveClickEventArgs e)
         {
             IList<MyNode> elements = _view.GetSelectedRows().ToList();
             string note = string.Empty;
-            TechAgentDataExtractor dataExtractor = new TechAgentDataExtractor();
 
             if (elements.Count == 1)
             {
-                IntermechTreeElement element = elements[0].Tag as IntermechTreeElement;
-
-                note = dataExtractor.ExtractData(element.RouteNote,_agentFilter);
+                IntermechTreeElement element = (IntermechTreeElement)elements[0].Tag;
+                note = element.RouteNote;
             }
 
             using (AddNoteForm noteForm = new AddNoteForm(note))
             {
-
                 AddNotePresenter notePresenter = new AddNotePresenter(noteForm);
                 if (notePresenter.RunDialog() == DialogResult.OK)
                 {
                     foreach (MyNode myNode in elements)
                     {
-                        IntermechTreeElement intermechNode = myNode.Tag as IntermechTreeElement;
+                        IntermechTreeElement intermechNode = (IntermechTreeElement)myNode.Tag;
                         string str = notePresenter.GetNote();
-
-                        StringBuilder sb = new StringBuilder();
-                        sb.AppendFormat("<{0}:{1}/>", _agentFilter, str);
-
-                        string temp = string.Empty;
-
-                        if (intermechNode.RouteNote != null)
-                        {
-                            temp = dataExtractor.RemoveData(intermechNode.RouteNote, _agentFilter);
-                            if (!temp.Contains('<'))
-                            {
-                                temp = string.Empty;
-                            }
-                        }
-                        intermechNode.RouteNote = string.Format("{0}{1}", temp, sb);
+                        intermechNode.RouteNote = str;
                         myNode.Note = str;
                     }
                 }
             }
         }
 
-        private void _view_SaveClick(object sender, SaveClickEventArgs e)
+        private void _view_Load(object sender, EventArgs e)
         {
-            IntermechTreeElement rootElement = e.Node.Tag as IntermechTreeElement;
-            IntermechWriter writer = new IntermechWriter();
-            writer.WriteFileAttribute(rootElement.Id, rootElement);
-        }
-
-        private async void _view_Load(object sender, System.EventArgs e)
-        {
-            _techRouteNode = await _model.GetWorkShops(); 
-            IDictionary<long, Agent> agents = await _model.GetAgents();
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _agentFilter, _techRouteNode, agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
             _view.SetTreeModel(model);
-
         }
 
         private void _view_EditTechRouteClick(object sender, EditTechRouteEventArgs e)
         {
-            using (TechRouteEditView techRouteView = new TechRouteEditView("Маршрут элемента", _techRouteNode))
+            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
+            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
+
+            presenter.Run(_techRouteNode, resultNodesList);
+
+            if (resultNodesList.Count == 0)
             {
-                TechRouteModel techRouteModel = new TechRouteModel();
-                TechRoutePresenter presenter = new TechRoutePresenter(techRouteView, techRouteModel, _techRouteNode);
-                if (presenter.Run() == DialogResult.OK)
+                return;
+            }
+
+            ICollection<MyNode> elements = _view.GetSelectedRows();
+
+            foreach (MyNode element in elements)
+            {
+                IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
+                IList<TechRouteNode> nodes = resultNodesList;
+                StringBuilder stringId = new StringBuilder();
+                StringBuilder caption = new StringBuilder();
+                if (e.Append)
                 {
-                    ICollection<MyNode> elements = _view.GetSelectedRows();
-                    TechAgentDataExtractor dataExtractor = new TechAgentDataExtractor();
+                    //if (nodes.Count > 0)
+                    //{
+                    //    stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
+                    //    caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
+                    //}
 
-                    foreach (MyNode element in elements)
+                    //for (int i = 1; i < nodes.Count; i++)
+                    //{
+                    //    stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
+                    //    caption.AppendFormat("-{0}", nodes[i].GetCaption());
+                    //}
+
+                    //string oldTechRouteCodes = string.Format("<{0}:{1}/>", _agentFilter, dataExtractor.ExtractData(treeElement.TechRoute, _agentFilter));
+                    //int index = oldTechRouteCodes.IndexOf("/>", StringComparison.Ordinal);
+                    //if (index > 0)
+                    //{
+                    //    string newTechRouteCodes = oldTechRouteCodes.Insert(index, stringId.ToString());
+
+                    //    string temp = string.Empty;
+                    //    if (treeElement.TechRoute != null)
+                    //    {
+                    //        temp = dataExtractor.RemoveData(treeElement.TechRoute, _agentFilter);
+                    //    }
+                    //    treeElement.TechRoute = string.Format("{0}{1}", temp, newTechRouteCodes);
+                    //}
+
+                    //string oldCaption = element.Route;
+
+                    //element.Route = oldCaption + caption;
+                }
+                else
+                {
+                    if (nodes.Count > 0)
                     {
-                        IntermechTreeElement treeElement = element.Tag as IntermechTreeElement;
-                        StringBuilder stringId = new StringBuilder();
-                        StringBuilder caption = new StringBuilder();
-                        IList<TechRouteNode> nodes = techRouteModel.GetTechRouteNodes();
-
-                        if (e.Append)
-                        {
-                            if (nodes.Count > 0)
-                            {
-                                stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
-                                caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
-                            }
-
-                            for (int i = 1; i < nodes.Count; i++)
-                            {
-                                stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
-                                caption.AppendFormat("-{0}", nodes[i].GetCaption());
-                            }
-
-                            string oldTechRouteCodes = string.Format("<{0}:{1}/>", _agentFilter, dataExtractor.ExtractData(treeElement.TechRoute, _agentFilter));
-                            int index = oldTechRouteCodes.IndexOf("/>", StringComparison.Ordinal);
-                            if (index > 0)
-                            {
-                                string newTechRouteCodes = oldTechRouteCodes.Insert(index, stringId.ToString());
-
-                                string temp = string.Empty;
-                                if (treeElement.TechRoute != null)
-                                {
-                                    temp = dataExtractor.RemoveData(treeElement.TechRoute, _agentFilter);
-                                }
-                                treeElement.TechRoute = string.Format("{0}{1}", temp, newTechRouteCodes);
-                            }
-
-                            string oldCaption = element.Route;
-
-                            element.Route = oldCaption + caption;
-                        }
-                        else
-                        {
-                            if (nodes.Count > 0)
-                            {
-                                stringId.AppendFormat("<{0}:{1}", _agentFilter, nodes[0].Id.ToString());
-                                caption.AppendFormat(nodes[0].GetCaption());
-                            }
-
-                            for (int i = 1; i < nodes.Count; i++)
-                            {
-                                stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
-                                caption.AppendFormat("-{0}", nodes[i].GetCaption());
-                            }
-
-                            stringId.AppendFormat("/>");
-                            element.Route = caption.ToString();
-                            string temp = string.Empty;
-                            if (treeElement.TechRoute != null)
-                            {
-                                temp = dataExtractor.RemoveData(treeElement.TechRoute, _agentFilter);
-                            }
-
-                            treeElement.TechRoute = string.Format("{0}{1}", temp, stringId);
-                        }
-
-
+                        stringId.Append(nodes[0].Id.ToString());
+                        caption.Append(nodes[0].GetCaption());
                     }
+
+                    for (int i = 1; i < nodes.Count; i++)
+                    {
+                        stringId.Append(";" + nodes[i].Id.ToString());
+                        caption.Append("-" + nodes[i].GetCaption());
+                    }
+
+                    element.Route = caption.ToString();
+                    treeElement.TechRoute = stringId.ToString();
                 }
             }
+
         }
 
         /// <summary>
@@ -460,9 +420,11 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="parameter">
         /// The parameter.
         /// </param>
-        public void Run(Parameter<IntermechTreeElement> parameter)
+        public void Run(Parameter<IntermechTreeElement> parameter, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
         {
+            _agents = agents;
             _parameter = parameter;
+            _techRouteNode = techRouteNode;
             _root = parameter.GetParameter(0);
             _view.Show();
         }

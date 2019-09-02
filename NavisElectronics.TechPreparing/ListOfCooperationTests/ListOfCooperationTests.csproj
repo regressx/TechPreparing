@@ -59,12 +59,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CooperationSetterTests.cs" />
-    <Compile Include="DataExtractorTests.cs" />
     <Compile Include="FindNodeTest.cs" />
     <Compile Include="InfoInTableModelTests.cs" />
     <Compile Include="MergeNodesServiceTests.cs" />
     <Compile Include="NumberResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TechRouteStringBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">

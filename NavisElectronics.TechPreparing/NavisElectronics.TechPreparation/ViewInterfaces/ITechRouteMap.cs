@@ -13,8 +13,7 @@
         event EventHandler<SaveClickEventArgs> GoToOldArchive;
         event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
         event EventHandler Load;
-        event EventHandler<SaveClickEventArgs> SaveClick;
-        event EventHandler<SaveClickEventArgs> EditClick;
+        event EventHandler<SaveClickEventArgs> EditNoteClick;
         event EventHandler<ClipboardEventArgs> CopyClick;
         event EventHandler<ClipboardEventArgs> PasteClick;
         event EventHandler<SaveClickEventArgs> ShowClick;
