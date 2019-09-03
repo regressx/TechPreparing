@@ -141,7 +141,7 @@ namespace NavisElectronics.TechPreparation.Data
 
                     string fileName = string.Format("{0}_{1}_изм_{2}.json", element.Name, Math.Abs(element.Id), orderObject.VersionID);
 
-                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный в xml IntermechTreeElement от {0}", DateTime.Now));
+                    BlobInformation info = new BlobInformation(bytes.Length, 0, DateTime.Now, fileName, ArcMethods.ZLibPacked,  string.Format("Сериализованный в JSON IntermechTreeElement от {0}", DateTime.Now));
                     using (BlobWriterStream bws =
                         new BlobWriterStream(fileAttribute, bytes.Length, info, keeper.Session))
                     {

@@ -74,44 +74,11 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.DeleteNoteClick += _view_DeleteNoteClick;
             _view.CheckListOfCooperation += _view_CheckListOfCooperation;
             _view.SetParametersClick += _view_SetParametersClick;
-            _view.PutDownCooperation += _view_PutDownCooperation;
             _view.SearchInArchiveClick += _view_SearchInArchiveClick;
             _view.GlobalSearchClick += _view_GlobalSearchClick;
             _view.SetTechTaskClick += View_SetTechTaskClick;
-            _view.SetPcbClick += ViewSetPcbClick;
         }
 
-
-        /// <summary>
-        /// The view_ set pcb click.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void ViewSetPcbClick(object sender, MultipleNodesSelectedEventArgs e)
-        {
-            IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
-            foreach (CooperationNode myNode in e.SelectedNodes)
-            {
-                rows.Add(myNode.Tag as IntermechTreeElement);
-            }
-            foreach (IntermechTreeElement element in rows)
-            {
-                element.IsPCB = true;
-                ICollection<IntermechTreeElement> elementsToCheckPcb = _root.Find(element.Id);
-                foreach (IntermechTreeElement temp in elementsToCheckPcb)
-                {
-                    temp.IsPCB = true;
-                }
-            }
-            foreach (CooperationNode myNode in e.SelectedNodes)
-            {
-                myNode.IsPcb = true;
-            }
-        }
 
         /// <summary>
         /// The view_ set tech task click.
@@ -124,7 +91,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private void View_SetTechTaskClick(object sender, MultipleNodesSelectedEventArgs e)
         {
-
             string text = string.Empty;
 
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
@@ -155,11 +121,8 @@ namespace NavisElectronics.TechPreparation.Presenters
                     {
                         myNode.TechTask = notePresenter.GetNote();
                     }
-
                 }
             }
-
-
         }
 
         private void _view_GlobalSearchClick(object sender, EventArgs e)
@@ -170,22 +133,10 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_SearchInArchiveClick(object sender, MultipleNodesSelectedEventArgs e)
         {
-            //IList<CooperationNode> nodes = new List<CooperationNode>(e.SelectedNodes);
-            //ShowFileManager manager = new ShowFileManager();
-            //manager.Show(nodes[0].Id, nodes[0].Type);
-
             List<CooperationNode> nodes = new List<CooperationNode>(e.SelectedNodes);
             CooperationNode selectedNode = nodes[0];
             _model.OpenInOldArchive(selectedNode.Designation);
 
-        }
-
-        private void _view_PutDownCooperation(object sender, System.EventArgs e)
-        {
-            //CooperationNode mainElement = _view.GetMainNode();
-            //CooperationSetter setter = new CooperationSetter();
-            //setter.SetCooperation(mainElement);
-            throw new NotImplementedException();
         }
 
         private void _view_SetParametersClick(object sender, MultipleNodesSelectedEventArgs e)
@@ -290,30 +241,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode);
             }
 
-            //_model.SetCooperationValue(_root, rows, cooperationFlag);
-
-            //Queue<CooperationNode> queue = new Queue<CooperationNode>();
-
-            //foreach (CooperationNode node in _view.GetMainNodes())
-            //{
-            //    queue.Enqueue(node);
-            //}
-
-            //while (queue.Count > 0)
-            //{
-            //    CooperationNode nodeFromQueue = queue.Dequeue();
-            //    IntermechTreeElement intermechElement = nodeFromQueue.Tag as IntermechTreeElement;
-            //    nodeFromQueue.CooperationFlag = intermechElement.CooperationFlag;
-
-            //    if (nodeFromQueue.Nodes.Count > 0)
-            //    {
-            //        foreach (Node coopNode in nodeFromQueue.Nodes)
-            //        {
-            //            queue.Enqueue((CooperationNode)coopNode);
-            //        }
-            //    }
-            //}
-
             Func<CooperationNode, CooperationNode> func = (cooperationNode) =>
             {
                 CooperationNode node = cooperationNode;
@@ -405,8 +332,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             SetCooperation(true, e.SelectedNodes);
         }
 
-
-
         private void _view_Load(object sender, System.EventArgs e)
         {
             _view.FillTree(_model.GetModel(new IntermechTreeElement()
@@ -426,6 +351,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         public void Run(Parameter<IntermechTreeElement> parameter)
         {
             _parameter = parameter;
+            
             // получить заказ
             _root = parameter.GetParameter(0);
             _view.Show();

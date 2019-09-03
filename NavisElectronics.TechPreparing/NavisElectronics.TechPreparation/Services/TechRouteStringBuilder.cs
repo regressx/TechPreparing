@@ -13,31 +13,38 @@
         {
             StringBuilder sb = new StringBuilder();
 
-            string[] routeNodes = data.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            // Делим по ||
+            string[] techProcessStrings = data.Split(new char[] {'|', '|'}, StringSplitOptions.RemoveEmptyEntries);
 
-            if (routeNodes.Length > 0 && routeNodes[0] != string.Empty)
+            foreach (string line in techProcessStrings)
             {
-                TechRouteNode routeNode = organizationStruct.Find(Convert.ToInt64(routeNodes[0]));
-                if (routeNode != null)
-                {
-                    sb.Append(routeNode.GetCaption());
-                }
-            }
+                string[] routeNodes = line.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 1; i < routeNodes.Length; i++)
-            {
-                TechRouteNode routeNode = organizationStruct.Find(Convert.ToInt64(routeNodes[i]));
-                string value = "null";
-                if (routeNode != null)
+                if (routeNodes.Length > 0 && routeNodes[0] != string.Empty)
                 {
-                    value = routeNode.GetCaption();
+                    TechRouteNode routeNode = organizationStruct.Find(Convert.ToInt64(routeNodes[0]));
+                    if (routeNode != null)
+                    {
+                        sb.Append(routeNode.GetCaption());
+                    }
                 }
 
-                sb.AppendFormat("-{0}", value);
+                for (int i = 1; i < routeNodes.Length; i++)
+                {
+                    TechRouteNode routeNode = organizationStruct.Find(Convert.ToInt64(routeNodes[i]));
+                    string value = "null";
+                    if (routeNode != null)
+                    {
+                        value = routeNode.GetCaption();
+                    }
+
+                    sb.AppendFormat("-{0}", value);
+                }
+
+                sb.Append('\\');
             }
 
-            sb.Append('\\');
-            return sb.ToString();
+            return sb.ToString().TrimEnd('\\');
         }
     }
 }

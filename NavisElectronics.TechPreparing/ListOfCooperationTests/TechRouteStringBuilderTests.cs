@@ -32,9 +32,9 @@ namespace ListOfCooperationTests
             root.Add(node1);
             root.Add(node2);
             root.Add(node3);
-            string str = sb.Build("1;2;3", root);
+            string str = sb.Build("1;2;3||1", root);
 
-            Assert.AreEqual("Лучший-участок-в мире\\",str);
+            Assert.AreEqual("Лучший-участок-в мире\\Лучший",str);
 
         }
 
@@ -64,7 +64,7 @@ namespace ListOfCooperationTests
             root.Add(node3);
             string str = sb.Build("1;2;3", root);
 
-            Assert.AreEqual("Лучший-участок-Ошибка\\",str);
+            Assert.AreEqual("Лучший-участок-Ошибка",str);
 
         }
 

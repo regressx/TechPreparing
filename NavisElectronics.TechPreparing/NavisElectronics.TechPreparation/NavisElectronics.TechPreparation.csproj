@@ -104,6 +104,9 @@
     <Compile Include="Presenters\StructDialogViewPresenter.cs" />
     <Compile Include="Presenters\TreeNodeClickEventArgs.cs" />
     <Compile Include="Presenters\TreeViewSettings.cs" />
+    <Compile Include="Reports\CooperationList\CooperationListDocument.cs" />
+    <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
+    <Compile Include="Reports\CooperationList\CooperationListView.cs" />
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
@@ -164,6 +167,12 @@
     <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
+    <Compile Include="Views\ManufacturerDialogView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ManufacturerDialogView.designer.cs">
+      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,12 +242,6 @@
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="EventArguments\RouteNodeClickEventAgrs.cs" />
     <Compile Include="EventArguments\SaveClickEventArgs.cs" />
-    <Compile Include="Views\ManufacturerDialogView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ManufacturerDialogView.Designer.cs">
-      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\TechRoutesMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -283,6 +286,9 @@
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ManufacturerDialogView.resx">
+      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
     </EmbeddedResource>
@@ -299,9 +305,6 @@
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ManufacturerDialogView.resx">
-      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
     </EmbeddedResource>
@@ -313,9 +316,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Options.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Manual\ListOfCooperation %28Руководство пользователя%29 .docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -371,9 +371,7 @@
       <Name>NavisElectronics.TechPreparation.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\CooperationList\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

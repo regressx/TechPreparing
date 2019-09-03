@@ -79,6 +79,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             _view = view;
             _view.EditTechRouteClick += _view_EditTechRouteClick;
+            _view.DeleteRouteClick += View_DeleteRouteClick;
             _view.Load += _view_Load;
             _view.EditNoteClick += View_EditNoteClick;
             _view.CopyClick += View_CopyClick;
@@ -89,10 +90,19 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.CreateDevideList += View_CreateDevideList;
             _view.SetInnerCooperation += View_SetInnerCooperation;
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
-            _view.SetNodesToComplectClick += _view_SetNodesToComplectClick;
             _view.CreateCooperationList += _view_CreateCooperationList;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)
+        {
+            ICollection<MyNode> nodes = e.Nodes;
+            foreach (MyNode node in nodes)
+            {
+                node.Route = string.Empty;
+                ((IntermechTreeElement)node.Tag).TechRoute = string.Empty;
+            }
         }
 
         /// <summary>
@@ -126,61 +136,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             {
                 reportService.CreateReport(node, node.Name, ReportType.ListOfCooperation, DocumentType.Intermech);
             }
-        }
-
-        private void _view_SetNodesToComplectClick(object sender, EventArgs e)
-        {
-            MyNode mainNode = _view.GetMainNode();
-
-            //switch (_agentFilter)
-            //{
-            //    case "1372599":
-            //        Queue<MyNode> queue = new Queue<MyNode>();
-            //        queue.Enqueue(mainNode);
-            //        while (queue.Count > 0)
-            //        {
-            //            MyNode nodeFromQueue = queue.Dequeue();
-            //            IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
-            //            if (nodeFromQueue.Route != null)
-            //            {
-            //                if (nodeFromQueue.Route.Contains("773") || nodeFromQueue.Route.Contains("774") || nodeFromQueue.Route.Contains("103"))
-            //                {
-            //                    nodeFromQueue.IsToComplect = true;
-            //                    taggedElement.IsToComplect = true;
-            //                }
-
-            //            }
-            //            foreach (Node child in nodeFromQueue.Nodes)
-            //            {
-            //                queue.Enqueue((MyNode)child);
-            //            }
-            //        }
-
-            //        break;
-            //    case "1299782":
-            //        Queue<MyNode> anotherQueue = new Queue<MyNode>();
-            //        anotherQueue.Enqueue(mainNode);
-            //        while (anotherQueue.Count > 0)
-            //        {
-            //            MyNode nodeFromQueue = anotherQueue.Dequeue();
-            //            IntermechTreeElement taggedElement = nodeFromQueue.Tag as IntermechTreeElement;
-            //            if (nodeFromQueue.Route != null)
-            //            {
-            //                if (nodeFromQueue.Route.Contains("756") || nodeFromQueue.Route.Contains("106"))
-            //                {
-            //                    nodeFromQueue.IsToComplect = true;
-            //                    taggedElement.IsToComplect = true;
-            //                }
-            //            }
-
-            //            foreach (Node child in nodeFromQueue.Nodes)
-            //            {
-            //                anotherQueue.Enqueue((MyNode)child);
-            //            }
-            //        }
-            //        break;
-            //}
-
         }
 
         /// <summary>
@@ -224,15 +179,11 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void View_SetInnerCooperation(object sender, ClipboardEventArgs e)
         {
-            //SetParametersService parametersService = new SetParametersService(_element);
-
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (MyNode myNode in e.Nodes)
             {
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
-
-            //parametersService.SetInnerCooperationValue(rows, true);
 
             // проходим по дереву и расставляем галки внутрипроизводственной кооперации уже на объекты View
             Queue<MyNode> queue = new Queue<MyNode>();
@@ -300,12 +251,12 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void View_PasteClick(object sender, ClipboardEventArgs e)
         {
-            //_model.Paste(e.Nodes, _agentFilter);
+            _model.Paste(e.Nodes);
         }
 
         private void View_CopyClick(object sender, ClipboardEventArgs e)
         {
-            //_model.Copy(e.Nodes, _agentFilter);
+            _model.Copy(e.Nodes);
         }
 
         private void View_EditNoteClick(object sender, SaveClickEventArgs e)
@@ -363,35 +314,24 @@ namespace NavisElectronics.TechPreparation.Presenters
                 StringBuilder caption = new StringBuilder();
                 if (e.Append)
                 {
-                    //if (nodes.Count > 0)
-                    //{
-                    //    stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
-                    //    caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
-                    //}
+                    if (nodes.Count > 0)
+                    {
+                        stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
+                        caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
+                    }
 
-                    //for (int i = 1; i < nodes.Count; i++)
-                    //{
-                    //    stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
-                    //    caption.AppendFormat("-{0}", nodes[i].GetCaption());
-                    //}
+                    for (int i = 1; i < nodes.Count; i++)
+                    {
+                        stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
+                        caption.AppendFormat("-{0}", nodes[i].GetCaption());
+                    }
 
-                    //string oldTechRouteCodes = string.Format("<{0}:{1}/>", _agentFilter, dataExtractor.ExtractData(treeElement.TechRoute, _agentFilter));
-                    //int index = oldTechRouteCodes.IndexOf("/>", StringComparison.Ordinal);
-                    //if (index > 0)
-                    //{
-                    //    string newTechRouteCodes = oldTechRouteCodes.Insert(index, stringId.ToString());
+                    string oldTechRouteCodes = treeElement.TechRoute;
+                    string newTechRouteCodes = string.Format("{0}{1}", oldTechRouteCodes, stringId.ToString());
+                    treeElement.TechRoute = newTechRouteCodes;
 
-                    //    string temp = string.Empty;
-                    //    if (treeElement.TechRoute != null)
-                    //    {
-                    //        temp = dataExtractor.RemoveData(treeElement.TechRoute, _agentFilter);
-                    //    }
-                    //    treeElement.TechRoute = string.Format("{0}{1}", temp, newTechRouteCodes);
-                    //}
-
-                    //string oldCaption = element.Route;
-
-                    //element.Route = oldCaption + caption;
+                    string oldCaption = element.Route;
+                    element.Route = oldCaption + caption;
                 }
                 else
                 {

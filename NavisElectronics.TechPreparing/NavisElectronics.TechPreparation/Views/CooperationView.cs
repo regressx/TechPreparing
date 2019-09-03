@@ -7,18 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
+using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.EventArguments;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+
 namespace NavisElectronics.TechPreparation.Views
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Threading;
-    using System.Windows.Forms;
-    using Aga.Controls.Tree;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
     /// <summary>
     /// Окно кооперации
     /// </summary>
@@ -73,11 +73,6 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<MultipleNodesSelectedEventArgs> SetParametersClick;
 
         /// <summary>
-        /// Проставляет кооперацию всем узлам, обозначенным в файле
-        /// </summary>
-        public event EventHandler PutDownCooperation;
-
-        /// <summary>
         /// Вызывает папку из старого архива предприятия
         /// </summary>
         public event EventHandler<MultipleNodesSelectedEventArgs> SearchInArchiveClick;
@@ -96,11 +91,6 @@ namespace NavisElectronics.TechPreparation.Views
         /// Событие установки ТЗ
         /// </summary>
         public event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
-
-        /// <summary>
-        /// Установка флага печатной платы
-        /// </summary>
-        public event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
 
         /// <summary>
         /// Раскрыть все узлы
@@ -158,6 +148,7 @@ namespace NavisElectronics.TechPreparation.Views
                     CooperationNode node = nodeAdv.Tag as CooperationNode;
                     nodes.Add(node);
                 }
+
                 temp(sender, new MultipleNodesSelectedEventArgs(nodes));
                 treeViewAdv1.Invalidate();
             }
@@ -207,15 +198,6 @@ namespace NavisElectronics.TechPreparation.Views
             CallEvent(SetParametersClick, sender);
         }
 
-        private void SetAllCooperationButton_Click(object sender, EventArgs e)
-        {
-            EventHandler temp = Volatile.Read(ref PutDownCooperation);
-            if (temp != null)
-            {
-                temp(sender, e);
-            }
-        }
-
         private void SearchInIpsButton_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException("Здесь когда-нибудь появится возможность смотреть файлы из IPS");
@@ -262,11 +244,6 @@ namespace NavisElectronics.TechPreparation.Views
         {
 
             CallEvent(SetTechTaskClick, sender);
-        }
-
-        private void SetPcbMenuItem_Click(object sender, EventArgs e)
-        {
-            CallEvent(SetPcbClick, sender);
         }
     }
 }

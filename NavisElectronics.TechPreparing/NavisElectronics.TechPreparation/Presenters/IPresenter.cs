@@ -63,10 +63,13 @@ namespace NavisElectronics.TechPreparation.Presenters
     /// The Presenter interface.
     /// </summary>
     /// <typeparam name="TParameter">
-    /// Входной параметр для запуска представителя
+    /// Первый параметр для передачи в представителя
     /// </typeparam>
     /// <typeparam name="T1Parameter">
-    /// Еще один параметр для представителя
+    /// Второй параметр для передачи в представителя
+    /// </typeparam>
+    /// <typeparam name="T2Parameter">
+    /// Третий параметр для передачи в представителя
     /// </typeparam>
     public interface IPresenter<in TParameter, in T1Parameter, in T2Parameter>
     {
@@ -74,9 +77,15 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Запускает прикрепленное представление с параметром
         /// </summary>
         /// <param name="parameter">
-        /// Входной параметр
+        /// Первый параметр для передачи в представителя
         /// </param>
-        void Run(TParameter parameter, T1Parameter parameterT1, T2Parameter parameter2);
+        /// <param name="parameterT1">
+        /// Второй параметр для передачи в представителя
+        /// </param>
+        /// <param name="parameterT2">
+        /// Третий параметр для передачи в представителя
+        /// </param>
+        void Run(TParameter parameter, T1Parameter parameterT1, T2Parameter parameterT2);
     }
 
 }

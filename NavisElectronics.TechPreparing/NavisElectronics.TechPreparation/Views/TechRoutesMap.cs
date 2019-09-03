@@ -26,6 +26,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
 
         public event EventHandler<SaveClickEventArgs> EditNoteClick;
+        public event EventHandler<ClipboardEventArgs> DeleteRouteClick;
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
@@ -229,32 +230,12 @@ namespace NavisElectronics.TechPreparation.Views
             reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.CompleteList, DocumentType.Intermech);
         }
 
-        private void createFullCompleteListMenuItem_Click(object sender, EventArgs e)
-        {
-            // ReportService reportService = new ReportService();
-            // MyNode selectedNode = treeViewAdv1.SelectedNode.Tag as MyNode;
-            // reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.FullCompleteList, DocumentType.Excel, null);
-        }
-
-        private void SetNodesForComplectButton_Click(object sender, EventArgs e)
-        {
-            if (SetNodesToComplectClick != null)
-            {
-                SetNodesToComplectClick(sender, e);
-            }
-        }
-
         private void createCooperationListMenuItem_Click(object sender, EventArgs e)
         {
             if (CreateCooperationList != null)
             {
                 CreateCooperationList(sender, e);
             }
-        }
-
-        private void createCompleteCardsForWholeOrder_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void addIntoExistingRouteButton_Click(object sender, EventArgs e)
@@ -272,6 +253,21 @@ namespace NavisElectronics.TechPreparation.Views
             if (temp != null)
             {
                 temp(sender, new EditTechRouteEventArgs(false));
+            }
+        }
+
+        private void deleteRouteMenuItem_Click(object sender, EventArgs e)
+        {
+            EventHandler<ClipboardEventArgs> temp = Volatile.Read(ref DeleteRouteClick);
+            if (temp != null)
+            {
+                ICollection<MyNode> nodes = new List<MyNode>();
+                foreach (TreeNodeAdv node in treeViewAdv.SelectedNodes)
+                {
+                    nodes.Add(node.Tag as MyNode);
+                }
+
+                temp(sender, new ClipboardEventArgs(nodes));
             }
         }
     }

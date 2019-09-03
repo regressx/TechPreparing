@@ -1,25 +1,19 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Reports
+﻿namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
-    using System.Drawing;
-
     using Aga.Controls.Tree;
-
+    using Interfaces.Entities;
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Services;
+    using ViewModels.TreeNodes;
 
     /// <summary>
     /// Класс создает представление документа
     /// </summary>
-    public class TechRouteListDocumentFactory:IDocumentTypeFactory
+    public class TechRouteListDocumentFactory : IDocumentTypeFactory
     {
         private MapTreeOnListService _mapTreeOnListService;
 
@@ -50,8 +44,8 @@ namespace NavisElectronics.TechPreparation.Reports
                 // пока сделаем без связи
 
 
-                //IDBRelationCollection relationCollection = keeper.Session.GetRelationCollection(1003); // по связи "Простая связь с сортировкой"
-                //relationCollection.Create(techRoutesList.MainProductId, newObjectId);
+                // IDBRelationCollection relationCollection = keeper.Session.GetRelationCollection(1003); // по связи "Простая связь с сортировкой"
+                // relationCollection.Create(techRoutesList.MainProductId, newObjectId);
             }
 
             // главный документ
@@ -93,8 +87,6 @@ namespace NavisElectronics.TechPreparation.Reports
             // строку получаю из шаблона документа
             TableData rowTemplate = docTemplate.FindNode("Row") as TableData;
 
-            //IntermechTreeElement deepCopyNode = (node.Tag as IntermechTreeElement).Clone() as IntermechTreeElement;
-
             IList<MyNode> products = _mapTreeOnListService.MapTreeOnList(myNode);
 
             foreach (MyNode product in products)
@@ -122,15 +114,15 @@ namespace NavisElectronics.TechPreparation.Reports
 
 
                 // Красим сборки, комплекты, делаем жирными
-                if (product.Type == 1078 || product.Type == 1074 || product.Type == 1097)
-                {
-                    foreach (var rowInstanseNode in rowInstanse.Nodes)
-                    {
-                        TextData cell = rowInstanseNode as TextData;
-                        cell.CharFormat = new CharFormat(new System.Drawing.Font("Times New Roman", 10, FontStyle.Bold));
-                        cell.overrideFlags |= (OverrideFlags)0x4000; // щелкаем флагом, чтобы закрепить цвет и всё остальное
-                    }
-                }
+                // if (product.Type == 1078 || product.Type == 1074 || product.Type == 1097)
+                // {
+                // foreach (var rowInstanseNode in rowInstanse.Nodes)
+                // {
+                // TextData cell = rowInstanseNode as TextData;
+                // cell.CharFormat = new CharFormat(new System.Drawing.Font("Times New Roman", 10, FontStyle.Bold));
+                // cell.overrideFlags |= (OverrideFlags)0x4000; // щелкаем флагом, чтобы закрепить цвет и всё остальное
+                // }
+                // }
                 mainNode.AddChildNode(rowInstanse, false, false);
             }
 
@@ -148,7 +140,7 @@ namespace NavisElectronics.TechPreparation.Reports
             Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();
             IntermechTreeElement myElement = null;
             stack.Push(element);
-            while (stack.Count>0)
+            while (stack.Count > 0)
             {
                 myElement = stack.Pop();
                 if (myElement.Parent != null)

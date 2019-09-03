@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Reports.CooperationList;
+
 namespace NavisElectronics.TechPreparation.Reports
 {
     using System;
@@ -62,8 +64,7 @@ namespace NavisElectronics.TechPreparation.Reports
                     break;
 
                 case ReportType.ListOfCooperation:
-                    //_documentTypeFactory = new CooperationListViewInDepth();
-                    //_documentTypeFactory = new CooperationListViewUniqueAssemblies(); 
+                    _documentTypeFactory = new CooperationListView();
                     break;
 
                 case ReportType.CompleteList:

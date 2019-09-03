@@ -1,9 +1,7 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Interfaces.Entities;
+    using TreeNodes;
 
     /// <summary>
     /// Модель-фасад для обслуживания окна выбора тех. подготовки из других заказов

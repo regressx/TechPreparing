@@ -1,19 +1,16 @@
-﻿using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.ViewModels
+﻿namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.IO;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Entities;
+    using Interfaces;
+    using Interfaces.Entities;
+    using IO;
+    using Services;
+    using TreeNodes;
 
     /// <summary>
     /// Фасад для основной логики для обслуживания команд от окна TreeComparerView
@@ -25,6 +22,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// </summary>
         private readonly OpenFolderService _openFolderService;
 
+        /// <summary>
+        /// Репозиторий
+        /// </summary>
         private readonly IDataRepository _reader;
 
         /// <summary>
@@ -91,16 +91,37 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return _reader.GetFullOrderAsync(id, token);
         }
 
+        /// <summary>
+        /// Метод сравнения деревьев
+        /// </summary>
+        /// <param name="oldElement">
+        /// Левое дерево
+        /// </param>
+        /// <param name="newElement">
+        /// Правое дерево
+        /// </param>
         public void Compare(IntermechTreeElement oldElement, IntermechTreeElement newElement)
         {
             TreeComparerService comparerService = new TreeComparerService();
             comparerService.Compare(oldElement, newElement);
         }
 
+        /// <summary>
+        /// Метод слияния веток из правого дерева в левое
+        /// </summary>
+        /// <param name="oldElement">
+        /// Левое дерево
+        /// </param>
+        /// <param name="newElement">
+        /// Правое дерево
+        /// </param>
+        /// <param name="elementUpdateInit">
+        /// The element update init.
+        /// </param>
         public void Upload(IntermechTreeElement oldElement, IntermechTreeElement newElement, IntermechTreeElement elementUpdateInit)
         {
             MergeNodesService mergeService = new MergeNodesService();
-            mergeService.Merge(oldElement, newElement ,elementUpdateInit);
+            mergeService.Merge(oldElement, newElement, elementUpdateInit);
         }
 
 

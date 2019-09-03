@@ -7,18 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisArchiveWork.Data;
-using NavisArchiveWork.Model;
-using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.Text;
-    using System.Threading.Tasks;
     using Aga.Controls.Tree;
+    using Interfaces.Entities;
     using Services;
     using TreeNodes;
 
@@ -27,11 +21,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
     /// </summary>
     public class TechRoutesMapModel
     {
-        /// <summary>
-        /// репозиторий с данными
-        /// </summary>
-        private readonly IDataRepository _reader;
-
         private readonly OpenFolderService _openFolderService;
         private readonly ShowFileManager _showFileManager;
 
@@ -43,14 +32,14 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="TechRoutesMapModel"/> class.
         /// </summary>
-        /// <param name="reader">
-        /// Репозиторий с данными
+        /// <param name="openFolderService">
+        /// The open Folder Service.
         /// </param>
-        /// <param name="search"></param>
-        /// <param name="showFileManager"></param>
-        public TechRoutesMapModel(IDataRepository reader, OpenFolderService openFolderService, ShowFileManager showFileManager)
+        /// <param name="showFileManager">
+        /// просмоторщик
+        /// </param>
+        public TechRoutesMapModel(OpenFolderService openFolderService, ShowFileManager showFileManager)
         {
-            _reader = reader;
             _openFolderService = openFolderService;
             _showFileManager = showFileManager;
             _clipboardManager = new ClipboardManager();
@@ -62,12 +51,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="nodes">
         /// The nodes.
         /// </param>
-        /// <param name="agentFilter">
-        /// The agent filter.
-        /// </param>
-        public void Paste(ICollection<MyNode> nodes, string agentFilter)
+        public void Paste(ICollection<MyNode> nodes)
         {
-            _clipboardManager.Paste(nodes, agentFilter);
+            _clipboardManager.Paste(nodes);
         }
 
         /// <summary>
@@ -76,31 +62,29 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="nodes">
         /// The nodes.
         /// </param>
-        /// <param name="agentFilter">
-        /// The agent filter.
-        /// </param>
-        public void Copy(ICollection<MyNode> nodes, string agentFilter)
+        public void Copy(ICollection<MyNode> nodes)
         {
-            _clipboardManager.Copy(nodes, agentFilter);
+            _clipboardManager.Copy(nodes);
         }
 
         /// <summary>
         /// Метод получает модель дерева для отображения
         /// </summary>
-        /// <param name="element">
+        /// <param name="root">
         /// Корень
         /// </param>
-        /// <param name="root"></param>
         /// <param name="whoIsMainInOrder">
         /// Кто главный в заказе
         /// </param>
-        /// <param name="agentFilter">
-        /// Агент, по которому фильтруем данные
+        /// <param name="techRouteNode">
+        /// Структура предприятия, по которому тех. процесс был разработан
         /// </param>
-        /// <param name="techRouteNode">Структура предприятия, по которому тех. процесс был разработан</param>
-        /// <param name="agents">Набор организаций</param>
+        /// <param name="agents">
+        /// Набор организаций
+        /// </param>
         /// <returns>
-        /// The <see cref="MyNode"/>.
+        /// The <see cref="TreeModel"/>.
+        /// Возвращает модель дерева
         /// </returns>
         public TreeModel GetTreeModel(IntermechTreeElement root, string whoIsMainInOrder, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
         {

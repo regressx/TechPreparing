@@ -191,6 +191,7 @@
             // MainMaterialsButton
             // 
             this.MainMaterialsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MainMaterialsButton.Enabled = false;
             this.MainMaterialsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.just_another_layers_16;
             this.MainMaterialsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainMaterialsButton.Name = "MainMaterialsButton";
@@ -201,6 +202,7 @@
             // standartsButton
             // 
             this.standartsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.standartsButton.Enabled = false;
             this.standartsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.iconfinder_Screw_bolts_3605318;
             this.standartsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.standartsButton.Name = "standartsButton";
@@ -211,6 +213,7 @@
             // SetTechWithdrawalButton
             // 
             this.SetTechWithdrawalButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SetTechWithdrawalButton.Enabled = false;
             this.SetTechWithdrawalButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_full_trash_16;
             this.SetTechWithdrawalButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SetTechWithdrawalButton.Name = "SetTechWithdrawalButton";
@@ -419,6 +422,7 @@
             // Status
             // 
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Status.DefaultCellStyle = dataGridViewCellStyle1;
             this.Status.HeaderText = "Статус";
             this.Status.Name = "Status";

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TreeComparerPresenter.cs" company="">
-//   
+// <copyright file="TreeComparerPresenter.cs" company="NavisElectronics">
+//   Cherkashin I.V.
 // </copyright>
 // <summary>
 //   Defines the TreeComparerPresenter type.
