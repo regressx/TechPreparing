@@ -7,17 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Reports.CooperationList;
-
 namespace NavisElectronics.TechPreparation.Reports
 {
     using System;
-
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Reports.CompleteList;
-    //using NavisElectronics.TechPreparation.Reports.CooperationList;
+    using CompleteList;
+    using CooperationList;
 
     /// <summary>
     /// Класс для получения отчета в IPS

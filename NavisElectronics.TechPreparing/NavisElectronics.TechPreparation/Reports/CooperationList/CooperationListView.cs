@@ -70,12 +70,6 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
             // Генерация внутренних элементов документа должна проходить на основе внутреннего шаблона документа
             docTemplate = mainDocument.DocumentTemplate as ImDocument;
 
-            //// получаю главную таблицу напрямую из документа
-            //TableData mainNode = mainDocument.FindNode("WorkPlace") as TableData;
-
-            //// строку получаю из шаблона документа
-            //TableData rowTemplate = docTemplate.FindNode("Row") as TableData;
-
             //DocumentTreeNode titleList = docTemplate.FindNode("Title");
             //DocumentTreeNode titleListInstance = titleList.CloneFromTemplate();
 
@@ -121,23 +115,8 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                 TextData measureUnitsCell = rowInstanse.FindNode("MeasureUnits") as TextData;
                 measureUnitsCell.AssignText(string.Format("{0}", commonObject.MeasureUnits).Trim(), false, false, false);
 
-                TextData stockRateCell = rowInstanse.FindNode("StockRate") as TextData;
-                stockRateCell.AssignText(string.Format("{0:F3}", commonObject.StockRate).Trim(), false, false, false);
-
-
-                TextData totalCell = rowInstanse.FindNode("Total") as TextData;
-                totalCell.AssignText(string.Format("{0:F3}", commonObject.TotalAmount).Trim(), false, false, false);
-
-                TextData sampleSizeCell = rowInstanse.FindNode("SampleSize") as TextData;
-                sampleSizeCell.AssignText(string.Format("{0}", commonObject.SampleSize).Trim(), false, false, false);
-
-                TextData techProcess = rowInstanse.FindNode("TechProcess") as TextData;
-                techProcess.AssignText(string.Format("{0}", commonObject.TechProcessReference).Trim(), false, false, false);
-
-                mainNode.AddChildNode(rowInstanse, false, false);
-
+                // пройтись по родителям и собрать total
                 IDictionary<long, IntermechTreeElement> uniqueParents = new Dictionary<long, IntermechTreeElement>();
-
                 foreach (IntermechTreeElement parent in commonObject.Children)
                 {
                     if (uniqueParents.ContainsKey(parent.Id))
@@ -153,7 +132,26 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
                 foreach (IntermechTreeElement parent in uniqueParents.Values)
                 {
+                    total += parent.AmountWithUse;
+                }
 
+
+                TextData totalCell = rowInstanse.FindNode("Total") as TextData;
+                totalCell.AssignText(string.Format("{0:F3}", total).Trim(), false, false, false);
+
+                TextData stockRateCell = rowInstanse.FindNode("StockRate") as TextData;
+                stockRateCell.AssignText(string.Format("{0:F3}", commonObject.StockRate).Trim(), false, false, false);
+
+                TextData sampleSizeCell = rowInstanse.FindNode("SampleSize") as TextData;
+                sampleSizeCell.AssignText(string.Format("{0}", commonObject.SampleSize).Trim(), false, false, false);
+
+                TextData techProcess = rowInstanse.FindNode("TechProcess") as TextData;
+                techProcess.AssignText(string.Format("{0}", commonObject.TechProcessReference).Trim(), false, false, false);
+
+                mainNode.AddChildNode(rowInstanse, false, false);
+
+                foreach (IntermechTreeElement parent in uniqueParents.Values)
+                {
                     TableData parentRowInstance = rowTemplate.CloneFromTemplate() as TableData;
                     if (parentRowInstance != null)
                     {
@@ -187,10 +185,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                             amountWithUseCell.AssignText(string.Format("{0:F3}", parent.AmountWithUse).Trim(), false, false,
                                 false);
                         }
-
                     }
-
-                    total += parent.AmountWithUse;
                     mainNode.AddChildNode(parentRowInstance, false, false);
                 }
                 i++;
@@ -208,9 +203,9 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
             // получаю главную таблицу основных элементов напрямую из документа
             TableData mainNodePCb = mainDocument.FindNode("WorkPlacePCB") as TableData;
 
-
             foreach (IntermechTreeElement pcbObject in pcbObjects)
             {
+                double total = 0;
                 TableData rowInstanse = rowPcbTemplate.CloneFromTemplate() as TableData;
 
                 TextData numberCell = rowInstanse.FindNode("NumberInOrderPCB") as TextData;
@@ -228,18 +223,38 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                 TextData stockRateCell = rowInstanse.FindNode("StockRatePCB") as TextData;
                 stockRateCell.AssignText(string.Format("{0:F3}", pcbObject.StockRate).Trim(), false, false, false);
 
-                TextData totalCell = rowInstanse.FindNode("TotalPCB") as TextData;
-                totalCell.AssignText(string.Format("{0:F3}", pcbObject.TotalAmount).Trim(), false, false, false);
-
                 TextData sampleSizeCell = rowInstanse.FindNode("SampleSizePCB") as TextData;
                 sampleSizeCell.AssignText(string.Format("{0}", pcbObject.SampleSize).Trim(), false, false, false);
 
                 TextData techProcessPCB = rowInstanse.FindNode("TechProcessPCB") as TextData;
                 techProcessPCB.AssignText(string.Format("{0}", pcbObject.TechProcessReference).Trim(), false, false, false);
 
-                mainNodePCb.AddChildNode(rowInstanse, false, false);
+                IDictionary<long, IntermechTreeElement> uniquePcbParents = new Dictionary<long, IntermechTreeElement>();
 
                 foreach (IntermechTreeElement parent in pcbObject.Children)
+                {
+                    if (uniquePcbParents.ContainsKey(parent.Id))
+                    {
+                        IntermechTreeElement parentFromDictionary = uniquePcbParents[parent.Id];
+                        parentFromDictionary.AmountWithUse += parent.AmountWithUse;
+                    }
+                    else
+                    {
+                        uniquePcbParents.Add(parent.Id, parent);
+                    }
+                }
+
+                foreach (IntermechTreeElement parent in uniquePcbParents.Values)
+                {
+                    total += parent.AmountWithUse;
+                }
+
+                TextData totalCell = rowInstanse.FindNode("TotalPCB") as TextData;
+                totalCell.AssignText(string.Format("{0:F3}", total).Trim(), false, false, false);
+
+                mainNodePCb.AddChildNode(rowInstanse, false, false);
+
+                foreach (IntermechTreeElement parent in uniquePcbParents.Values)
                 {
                     TableData parentRowInstance = rowPcbTemplate.CloneFromTemplate() as TableData;
                     TextData parentDataCell = parentRowInstance.FindNode("ParentPCB") as TextData;
@@ -256,9 +271,6 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
                 i++;
             }
-
-
-
 
             mainDocument.UpdateLayout(true);
 

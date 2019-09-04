@@ -34,25 +34,51 @@
         /// </returns>
         public CooperationListDocument Create()
         {
-
+            // Элемент, который выбрал пользователь для работы
             IntermechTreeElement taggedElement = (IntermechTreeElement)_mainNode.Tag;
+
+            // делаем полную его копию
+            IntermechTreeElement clonedElement = (IntermechTreeElement)taggedElement.Clone();
+            clonedElement.Amount = 1;
+            
+            // пересчитаем количества
+            Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();
+            stack.Push(clonedElement);
+            while (stack.Count > 0)
+            {
+                IntermechTreeElement elementFromStack = stack.Pop();
+
+                IntermechTreeElement parent = elementFromStack.Parent;
+                if (parent != null)
+                {
+                    elementFromStack.AmountWithUse = parent.AmountWithUse * elementFromStack.Amount;
+                    elementFromStack.TotalAmount = elementFromStack.AmountWithUse * elementFromStack.StockRate;
+                }
+
+                foreach (IntermechTreeElement child in elementFromStack.Children)
+                {
+                    stack.Push(child);
+                }
+            }
 
             // заполнить словарик уникальных элементов, делающихся по кооперации
             IDictionary<long, IntermechTreeElement> uniqueCooperationElements = new Dictionary<long, IntermechTreeElement>();
 
             // Очередь для прохода в ширину
-            Queue<MyNode> queue = new Queue<MyNode>();
-            queue.Enqueue(_mainNode);
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(clonedElement);
             while (queue.Count > 0)
             {
-                MyNode nodeFromQueue = queue.Dequeue();
+                IntermechTreeElement nodeFromQueue = queue.Dequeue();
 
                 if (nodeFromQueue.Type == 1078 || nodeFromQueue.Type == 1074 || nodeFromQueue.Type == 1159 ||
                     nodeFromQueue.Type == 1052 || nodeFromQueue.Type == 1097)
                 {
                     if (nodeFromQueue.CooperationFlag)
                     {
-                        IntermechTreeElement parentElement = (IntermechTreeElement)nodeFromQueue.Parent.Tag;
+                        IntermechTreeElement parentElement = (IntermechTreeElement)nodeFromQueue.Parent.Clone();
+                        parentElement.Amount = nodeFromQueue.Amount;
+                        parentElement.AmountWithUse = nodeFromQueue.AmountWithUse;
                         if (!uniqueCooperationElements.ContainsKey(nodeFromQueue.Id))
                         {
                             IntermechTreeElement currentObject = new IntermechTreeElement()
@@ -62,13 +88,10 @@
                                 Name = nodeFromQueue.Name,
                                 Designation = nodeFromQueue.Designation,
                                 CooperationFlag = nodeFromQueue.CooperationFlag,
-                                IsPCB = nodeFromQueue.IsPcb,
-                                PcbVersion = (byte)nodeFromQueue.PcbVersion,
-                                MeasureUnits = ((IntermechTreeElement)nodeFromQueue.Tag).MeasureUnits,
-                                TechProcessReference = new TechProcess()
-                                {
-                                    Name = nodeFromQueue.TechProcessReference
-                                },
+                                IsPCB = nodeFromQueue.IsPCB,
+                                PcbVersion = nodeFromQueue.PcbVersion,
+                                MeasureUnits = nodeFromQueue.MeasureUnits,
+                                TechProcessReference = nodeFromQueue.TechProcessReference,
                                 StockRate = nodeFromQueue.StockRate,
                                 SampleSize = nodeFromQueue.SampleSize
                             };
@@ -87,13 +110,9 @@
                 // все потомки кооперационных сборок и деталей не должны попасть в очередь
                 if (!nodeFromQueue.CooperationFlag)
                 {
-                    if (nodeFromQueue.Nodes.Count > 0)
+                    foreach (IntermechTreeElement node in nodeFromQueue.Children)
                     {
-                        foreach (var node in nodeFromQueue.Nodes)
-                        {
-                            var child = (MyNode)node;
-                            queue.Enqueue(child);
-                        }
+                        queue.Enqueue(node);
                     }
                 }
             }
@@ -121,7 +140,5 @@
 
             return document;
         }
-
-
     }
 }

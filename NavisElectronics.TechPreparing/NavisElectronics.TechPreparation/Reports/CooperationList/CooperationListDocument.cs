@@ -1,25 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using NavisElectronics.TechPreparation.Entities;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Reports.CooperationList
+﻿namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using Interfaces.Entities;
+
     /// <summary>
     /// Документ ведомости кооперации
     /// </summary>
     public class CooperationListDocument
     {
-        /// <summary>
-        /// Обычные страницы
-        /// </summary>
-        //private IList<MyPageDescription<IntermechTreeElement>> _commonPages;
-
-        /// <summary>
-        /// Страницы с печатными платами
-        /// </summary>
-        //private IList<MyPageDescription<IntermechTreeElement> _pcbPages;
-
         /// <summary>
         /// Набор обычных элементов
         /// </summary>
@@ -35,8 +24,6 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
         /// </summary>
         public CooperationListDocument()
         {
-            //_commonPages = new List<MyPageDescription<IntermechTreeElement>>();
-            //_pcbPages = new List<MyPageDescription<IntermechTreeElement>>();
             _commonObjects = new List<IntermechTreeElement>();
             _pcbObjects = new List<IntermechTreeElement>();
         }
@@ -75,22 +62,5 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
             _pcbObjects = pcbObjects;
         }
 
-        /// <summary>
-        /// Получить страницы обычных данных
-        /// </summary>
-        /// <returns></returns>
-        //public IEnumerable<MyPageDescription<ExtractedObject>> GetCommonPages()
-        //{
-        //    return _commonPages;
-        //}
-
-        /// <summary>
-        /// Получить страницы печатных плат
-        /// </summary>
-        /// <returns></returns>
-        //public IEnumerable<MyPageDescription<ExtractedObject>> GetPcbPages()
-        //{
-        //    return _pcbPages;
-        //}
     }
 }
