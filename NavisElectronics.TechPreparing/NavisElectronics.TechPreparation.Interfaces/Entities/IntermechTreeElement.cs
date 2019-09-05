@@ -19,7 +19,10 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     [JsonObject(IsReference = true)]
     public class IntermechTreeElement : IProduct, ICloneable
     {
-        IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();
+        /// <summary>
+        /// The _elements.
+        /// </summary>
+        private IList<IntermechTreeElement> _elements = new List<IntermechTreeElement>();
 
         /// <summary>
         /// Id версии объекта
@@ -391,7 +394,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
 
 
         /// <summary>
-        /// Коллекция потомков этого узла
+        /// Коллекция потомков этого узла. Указан List, потому что не могу нормально сериализовать в другие
         /// </summary>
         [Browsable(false)]
         public List<IntermechTreeElement> Children
@@ -491,13 +494,6 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
                 GetFullPathRecursive(stack, parent);
             }
         }
-
-        public override string ToString()
-        {
-            return string.Format("{0} {1} {2}", Name, Designation, IsPCB);
-        }
-
-
 
         /// <summary>
         /// Получает deep Copy этого объекта

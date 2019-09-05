@@ -187,9 +187,27 @@ namespace NavisElectronics.IPS1C.IntegratorService.Entities
         [DataMember]
         public string Case { get; set; }
 
-
         [DataMember]
         public ProductTreeNode Parent { get; set; }
+
+
+        /// <summary>
+        /// Признак производства
+        /// </summary>
+        [DataMember]
+        public string ProduseSign { get; set; }
+
+        /// <summary>
+        /// Тип монтажа
+        /// </summary>
+        [DataMember]
+        public string MountingType { get; set; }
+
+        /// <summary>
+        /// Маршрут
+        /// </summary>
+        [DataMember]
+        public string TechRoute { get; set; }
 
         [DataMember]
         public ICollection<ProductTreeNode> Products

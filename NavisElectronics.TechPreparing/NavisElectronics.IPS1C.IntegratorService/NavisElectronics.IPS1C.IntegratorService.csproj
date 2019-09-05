@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,19 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\DataBaseProduct.cs" />
     <Compile Include="Entities\LifeCycleSteps.cs" />
+    <Compile Include="Entities\OrganizationNode.cs" />
     <Compile Include="Entities\ProductTreeNode.cs" />
     <Compile Include="Exceptions\OrderInfoException.cs" />
     <Compile Include="Exceptions\TechDataNotExistedException.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Exceptions\WrongTypeCallException.cs" />
     <Compile Include="IService.cs" />
-    <Compile Include="Logic\Changes.cs" />
+    <Compile Include="Services\OrganizationNodeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Services\ProductTreeNodeMapper.cs" />
-    <Compile Include="Services\ServiceIntermechReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Manual\Описание сервиса.docx" />

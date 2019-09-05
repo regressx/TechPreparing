@@ -1,25 +1,17 @@
-﻿using NavisElectronics.TechPreparation.Data;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.IPS1C.IntegratorService
+﻿namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Threading;
     using Entities;
     using Exceptions;
-    using Intermech;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
     using Services;
-    using TechPreparation.Entities;
-    using TechPreparation.Enums;
-    using TechPreparation.Services;
-    using TechPreparing.Data;
-    using Changes = Logic.Changes;
-
+    using TechPreparation.Data;
+    using TechPreparation.Interfaces.Entities;
+    using TechPreparing.Data.Helpers;
 
     /// <summary>
     /// Реализация интерфейса IService
@@ -175,6 +167,126 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return treeNode;
         }
 
+        /// <summary>
+        /// Возвращает дерево заказа
+        /// </summary>
+        /// <param name="versionId">
+        /// Идентификатор версии заказа.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ProductTreeNode"/>.
+        /// Дерево заказа
+        /// </returns>
+        public ProductTreeNode GetOrder(long versionId)
+        {
+            IDBObject orderObject = null;
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                orderObject = keeper.Session.GetObject(versionId, true);
+
+                // если шаг ЖЦ не производство, то выбрасываем исключение
+                if (orderObject.LCStep != (int)LifeCycleSteps.Manufacturing && orderObject.LCStep != (int)LifeCycleSteps.Keeping)
+                {
+                    throw new OrderInfoException("Шаг жизненного цикла указанной версии заказа отличается от Производство и эксплуатация или от Хранения" );
+                }
+            }
+
+            // технологические данные заказа: сведения о кооперации, тех. маршруты
+            IntermechTreeElement techDataOrderElement = null;
+
+            IntermechReader reader = new IntermechReader();
+
+            // Асинхронно получаем файлик
+            reader.GetDataFromFileAsync(versionId, ConstHelper.FileAttribute)
+                .ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        AggregateException aggregateException = t.Exception;
+                        
+                        // повторно выбросить исключение
+                        throw aggregateException.InnerException;
+                    }
+
+                    // здесь получаем результат
+                    techDataOrderElement = t.Result;
+                });
+
+            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
+            ProductTreeNode root = mapper.Map(techDataOrderElement);
+            return root;
+        }
+
+        public OrganizationNode GetOrganizationStruct(long orderVersionId)
+        {
+            IntermechReader reader = new IntermechReader();
+            TechRouteNode organizationStruct = null;
+            reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute).ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        AggregateException aggregateException = t.Exception;
+                        
+                        // повторно выбросить исключение
+                        throw aggregateException.InnerException;
+                    }
+
+                    // здесь получаем результат
+                    organizationStruct = t.Result;
+                });
+
+            OrganizationNodeMapper mapper = new OrganizationNodeMapper();
+            OrganizationNode root = mapper.Map(organizationStruct);
+            return root;
+
+        }
+
+        /// <summary>
+        /// The get last numbers of designation.
+        /// </summary>
+        /// <param name="str">
+        /// The str.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        internal string GetLastNumbersOfDesignation(string str)
+        {
+            string resultString = string.Empty;
+
+            if (str != string.Empty)
+            {
+                int lastIndex = str.LastIndexOf('.');
+
+                resultString = str.Substring(lastIndex + 1);
+
+                if (resultString.Contains("-"))
+                {
+                    resultString = resultString.Remove(resultString.IndexOf('-'));
+                }
+
+            }
+            return resultString;
+        }
+
+        /// <summary>
+        /// The pick version.
+        /// </summary>
+        /// <param name="versionNode">
+        /// The version node.
+        /// </param>
+        /// <param name="treeNodeType">
+        /// The tree node type.
+        /// </param>
+        /// <param name="mainObjectVersion">
+        /// The main object version.
+        /// </param>
+        /// <param name="session">
+        /// The session.
+        /// </param>
+        /// <param name="compositionService">
+        /// The composition service.
+        /// </param>
         private void PickVersion(ProductTreeNode versionNode, int treeNodeType, long mainObjectVersion, IUserSession session, ICompositionLoadService compositionService)
         {
             // если объект может содержать другие объекты, то смотрим его состав документации. По спецификации определяем номер изменения
@@ -211,97 +323,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     }
                 }
             }
-        }
-
-        internal string GetLastNumbersOfDesignation(string str)
-        {
-            string resultString = string.Empty;
-
-            if (str != string.Empty)
-            {
-                int lastIndex = str.LastIndexOf('.');
-
-                resultString = str.Substring(lastIndex + 1);
-
-                if (resultString.Contains("-"))
-                {
-                    resultString = resultString.Remove(resultString.IndexOf('-'));
-                }
-
-            }
-            return resultString;
-        }
-
-        /// <summary>
-        /// Получает отфильтрованный заказ для КБ НАВИС
-        /// </summary>
-        /// <param name="versionId">
-        /// The version id.
-        /// </param>
-        /// <returns>
-        /// The <see cref="ProductTreeNode"/>.
-        /// </returns>
-        public ProductTreeNode GetFilteredOrderForKB(long versionId)
-        {
-            return GetFilteredOrder(versionId, ((int)AgentsId.Kb).ToString());
-        }
-
-        /// <summary>
-        /// Получает отфильтрованный заказ для НЭ
-        /// </summary>
-        /// <param name="versionId">
-        /// The version id.
-        /// </param>
-        /// <returns>
-        /// The <see cref="ProductTreeNode"/>.
-        /// </returns>
-        public ProductTreeNode GetFilteredOrderForElectronics(long versionId)
-        {
-            return GetFilteredOrder(versionId, ((int)AgentsId.NavisElectronics).ToString());
-        }
-
-        /// <summary>
-        /// Получает отфильтрованный в соответствии с технологическими данными готовый состав заказа
-        /// </summary>
-        /// <param name="versionId">
-        /// The id.
-        /// </param>
-        /// <param name="agentFilter">
-        /// фильтр по агенту
-        /// </param>
-        /// <returns>
-        /// The <see cref="ProductTreeNode"/>.
-        /// Возвращает узел главный узел дерева
-        /// </returns>
-        private ProductTreeNode GetFilteredOrder(long versionId, string agentFilter)
-        {
-            if (versionId < 0)
-            {
-                throw new OrderInfoException("На данный момент заказ находится на редактировании. Скорее всего, он еще не готов для передачи. Для уточнения информации о статусе заказа свяжитесь с технологами");
-            }
-           
-            // технологические данные заказа: сведения о кооперации, тех. маршруты
-            IntermechTreeElement techDataOrderElement = null;
-
-            IntermechReader reader = new IntermechReader();
-            long organization = long.Parse(agentFilter);
-
-            // Асинхронно получаем файлик
-            reader.GetDataFromFileAsync(versionId, 1006)
-                .ContinueWith(t =>
-                {
-                    // здесь получаем результат
-                    techDataOrderElement = t.Result;
-                });
-
-            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
-            ProductTreeNode root = mapper.Map(techDataOrderElement);
-
-            Changes changesDefiner = new Changes();
-
-            ProductTreeNode updatedTreeElement = changesDefiner.Filter(root, agentFilter);
-
-            return updatedTreeElement;
         }
     }
 }
