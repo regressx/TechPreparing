@@ -991,6 +991,21 @@ namespace NavisElectronics.TechPreparation.Data
                 element.PcbVersion = Convert.ToByte(row[17]);
             }
 
+            if (element.IsPCB)
+            {
+                IDBObject currentObject = session.GetObject(element.Id);
+                IDBAttribute techTaskOnPcbAttribute = currentObject.GetAttributeByID(18086);
+                if (techTaskOnPcbAttribute != null)
+                {
+                    char[] textBytes = null;
+                    IMemoReader memoReader = techTaskOnPcbAttribute as IMemoReader;
+                    memoReader.OpenMemo(0);
+                    textBytes = memoReader.ReadDataBlock();
+                    memoReader.CloseMemo();
+                    element.TechTask = new string(textBytes);
+                }
+            }
+
 
             if (element.Type == 1052 || element.Type == 1159)
             {
