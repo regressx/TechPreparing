@@ -1,8 +1,13 @@
-﻿using NavisElectronics.IPS1C.IntegratorService.Entities;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.IPS1C.IntegratorService.Services
+﻿namespace NavisElectronics.IPS1C.IntegratorService.Services
 {
+    using System;
+    using System.Reflection;
+    using Entities;
+    using TechPreparation.Interfaces.Entities;
+
+    /// <summary>
+    /// Маппер для узла структуры предприятия
+    /// </summary>
     public class OrganizationNodeMapper
     {
 
@@ -28,16 +33,37 @@ namespace NavisElectronics.IPS1C.IntegratorService.Services
             {
                 foreach (TechRouteNode node in product.Children)
                 {
-                    OrganizationNode childTreeNode = CreateOrganizationNode(product);
+                    OrganizationNode childTreeNode = CreateOrganizationNode(node);
                     root.Add(childTreeNode);
-                    MapRecursive(childTreeNode, product);
+                    MapRecursive(childTreeNode, node);
                 }
             }
         }
 
         private OrganizationNode CreateOrganizationNode(TechRouteNode product)
         {
-            throw new System.NotImplementedException();
+            OrganizationNode root = new OrganizationNode();
+            root.Id = product.Id.ToString();
+            root.Type = product.Type.ToString();
+            root.Name = product.Name;
+            root.PartitionId = product.PartitionId.ToString();
+            root.PartitionName = product.PartitionName;
+            root.WorkshopId = product.WorkshopId.ToString();
+            root.WorkshopName = product.WorkshopName;
+
+            // для всех остальных свойств, которые строковые и с нулевым указателем проставить значение string.Empty
+            Type type = typeof(ProductTreeNode);
+            PropertyInfo[] properties = type.GetProperties();
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.PropertyType == typeof(string) && property.GetValue(root) == null)
+                {
+                    property.SetValue(root, string.Empty);
+                }
+            }
+
+            return root;
         }
     }
 }

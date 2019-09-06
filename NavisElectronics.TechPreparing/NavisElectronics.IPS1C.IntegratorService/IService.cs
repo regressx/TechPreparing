@@ -24,10 +24,22 @@
         string GetMessage(string message);
 
 
+        /// <summary>
+        /// The get all products.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ProductTreeNode"/>.
+        /// </returns>
         [OperationContract]
         ProductTreeNode GetAllProducts();
 
 
+        /// <summary>
+        /// The get used types.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ProductTreeNode"/>.
+        /// </returns>
         [OperationContract]
         ProductTreeNode GetUsedTypes();
 
@@ -39,8 +51,7 @@
         /// Id объекта
         /// </param>
         /// <returns>
-        /// The <see cref="string[]"/>.
-        /// Массив строк с соответствующим содержимым
+        /// The <see cref="ProductTreeNode"/>.
         /// </returns>
         [OperationContract]
         ProductTreeNode GetProductInfo(long objectId);
