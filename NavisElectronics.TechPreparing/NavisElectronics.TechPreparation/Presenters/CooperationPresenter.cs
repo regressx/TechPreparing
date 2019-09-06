@@ -16,12 +16,11 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System.Collections.Generic;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
+    using Entities;
+    using EventArguments;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Client;
     using Intermech.Navigator;
-    using Entities;
-    using EventArguments;
-    using Services;
     using ViewInterfaces;
     using ViewModels;
     using ViewModels.TreeNodes;
@@ -102,7 +101,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             if (rows.Count == 1)
             {
-                text = rows[0].Note;
+                text = rows[0].TechTask;
             }
 
             using (AddNoteForm noteForm = new AddNoteForm(text))
