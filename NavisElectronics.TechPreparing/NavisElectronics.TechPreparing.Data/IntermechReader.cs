@@ -1028,6 +1028,7 @@ namespace NavisElectronics.TechPreparation.Data
                                 }
                             }
 
+                            string units = string.Empty;
                             if (unitsAttribute != null)
                             {
                                 // надо теперь выцепить по атрибуту ед. измерения сам объект единиц измерения
@@ -1036,6 +1037,21 @@ namespace NavisElectronics.TechPreparation.Data
                                 {
                                     IDBAttribute shortNameUnit = unitsObject.GetAttributeByID(13);
                                     detailMaterialNode.MeasureUnits = shortNameUnit.AsString;
+                                    units = shortNameUnit.AsString;
+                                }
+                            }
+
+                            // Количество материала на единицу изделия
+                            IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
+                            if (amountOnOneUnitOfProduct != null)
+                            {
+                                if (amountOnOneUnitOfProduct.AsString.Contains(units))
+                                {
+                                    detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
+                                }
+                                else
+                                {
+                                    throw new MaterialUnitsNotEqualException(string.Format("В детали {0} единицы измерения, указанные в атрибуте Количество на единицу изделия, не совпадают с единицами измерения материала по умолчанию", element.Designation));
                                 }
                             }
 

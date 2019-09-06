@@ -40,6 +40,7 @@
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
     <Compile Include="Exceptions\DataSetIsEmptyException.cs" />
+    <Compile Include="Exceptions\MaterialUnitsNotEqualException.cs" />
     <Compile Include="IDatabaseWriter.cs" />
     <Compile Include="IDataRepository.cs" />
     <Compile Include="Entities\IntermechTreeElement.cs" />
