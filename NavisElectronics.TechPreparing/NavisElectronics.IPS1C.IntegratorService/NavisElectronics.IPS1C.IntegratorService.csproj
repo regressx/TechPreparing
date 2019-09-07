@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\LifeCycleSteps.cs" />
+    <Compile Include="Entities\OrderLifeCycleSteps.cs" />
     <Compile Include="Entities\OrganizationNode.cs" />
     <Compile Include="Entities\ProductTreeNode.cs" />
     <Compile Include="Exceptions\OrderInfoException.cs" />

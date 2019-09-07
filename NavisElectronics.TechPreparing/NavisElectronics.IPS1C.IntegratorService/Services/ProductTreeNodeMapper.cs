@@ -61,6 +61,11 @@
         /// </returns>
         private ProductTreeNode CreateProductTreeNode(IntermechTreeElement product)
         {
+            if (product == null)
+            {
+                throw new ArgumentNullException("product","На стороне сервиса была попытка подать пустой параметр в метод. Обратитесь к разработчику сервиса");
+            }
+
             ProductTreeNode root = new ProductTreeNode();
             root.VersionId = product.Id.ToString();
             root.ObjectId = product.ObjectId.ToString();

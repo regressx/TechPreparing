@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.IPS1C.IntegratorService
+﻿using System.Threading.Tasks;
+
+namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;
@@ -180,12 +182,13 @@
         public ProductTreeNode GetOrder(long versionId)
         {
             IDBObject orderObject = null;
+            ProductTreeNode root = null;
             using (SessionKeeper keeper = new SessionKeeper())
             {
                 orderObject = keeper.Session.GetObject(versionId, true);
 
                 // если шаг ЖЦ не производство, то выбрасываем исключение
-                if (orderObject.LCStep != (int)LifeCycleSteps.Manufacturing && orderObject.LCStep != (int)LifeCycleSteps.Keeping)
+                if (orderObject.LCStep != (int)OrderLifeCycleSteps.Manufacturing && orderObject.LCStep != (int)OrderLifeCycleSteps.Keeping)
                 {
                     throw new OrderInfoException("Шаг жизненного цикла указанной версии заказа отличается от Производство и эксплуатация или от Хранения" );
                 }
@@ -193,27 +196,41 @@
 
             // технологические данные заказа: сведения о кооперации, тех. маршруты
             IntermechTreeElement techDataOrderElement = null;
-
+            AggregateException aggregateException = null;
             IntermechReader reader = new IntermechReader();
-
+            
             // Асинхронно получаем файлик
             reader.GetDataFromFileAsync(versionId, ConstHelper.FileAttribute)
                 .ContinueWith(t =>
                 {
                     if (t.IsFaulted)
                     {
-                        AggregateException aggregateException = t.Exception;
-                        
-                        // повторно выбросить исключение
-                        throw aggregateException.InnerException;
+                        aggregateException = t.Exception;
                     }
-
-                    // здесь получаем результат
-                    techDataOrderElement = t.Result;
+                    else
+                    {
+                        if (t.IsCompleted)
+                        {
+                            // здесь получаем результат
+                            techDataOrderElement = t.Result;
+                            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
+                            root = mapper.Map(techDataOrderElement);
+                        }
+                    }
                 });
 
-            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
-            ProductTreeNode root = mapper.Map(techDataOrderElement);
+            if (aggregateException != null)
+            {
+                // повторно выбросить исключение
+                throw aggregateException.InnerException;
+            }
+
+            if (root == null)
+            {
+                throw new OrderInfoException("При обработке заказа из Task модуль не смог получить данные о дереве заказа");
+            }
+
+
             return root;
         }
 
@@ -221,20 +238,29 @@
         {
             IntermechReader reader = new IntermechReader();
             TechRouteNode organizationStruct = null;
+            AggregateException aggregationException = null;
             reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute).ContinueWith(t =>
                 {
                     if (t.IsFaulted)
                     {
-                        AggregateException aggregateException = t.Exception;
+                        aggregationException = t.Exception;
                         
-                        // повторно выбросить исключение
-                        throw aggregateException.InnerException;
-                    }
 
-                    // здесь получаем результат
-                    organizationStruct = t.Result;
+                    }
+                    else
+                    {
+                        if (t.IsCompleted)
+                        {
+                            organizationStruct = t.Result;
+                        }
+                    }
                 });
 
+            // повторно выбросить исключение
+            if (aggregationException != null)
+            {
+                throw aggregationException;
+            }
             OrganizationNodeMapper mapper = new OrganizationNodeMapper();
             OrganizationNode root = mapper.Map(organizationStruct);
             return root;
