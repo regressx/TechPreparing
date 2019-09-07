@@ -196,40 +196,19 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
             // технологические данные заказа: сведения о кооперации, тех. маршруты
             IntermechTreeElement techDataOrderElement = null;
-            AggregateException aggregateException = null;
             IntermechReader reader = new IntermechReader();
             
-            // Асинхронно получаем файлик
-            reader.GetDataFromFileAsync(versionId, ConstHelper.FileAttribute)
-                .ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                    {
-                        aggregateException = t.Exception;
-                    }
-                    else
-                    {
-                        if (t.IsCompleted)
-                        {
-                            // здесь получаем результат
-                            techDataOrderElement = t.Result;
-                            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
-                            root = mapper.Map(techDataOrderElement);
-                        }
-                    }
-                });
+            Task<IntermechTreeElement> myTask = Task.Run(async () => await reader.GetDataFromFileAsync(versionId, ConstHelper.FileAttribute));
+            techDataOrderElement = myTask.Result;
 
-            if (aggregateException != null)
+
+            if (techDataOrderElement == null)
             {
-                // повторно выбросить исключение
-                throw aggregateException.InnerException;
+                throw new OrderInfoException("При обработке заказа модуль не смог получить данные о дереве заказа. Возможно, файл заказа отсутствует, или в нем испорчены данные");
             }
 
-            if (root == null)
-            {
-                throw new OrderInfoException("При обработке заказа из Task модуль не смог получить данные о дереве заказа");
-            }
-
+            ProductTreeNodeMapper mapper = new ProductTreeNodeMapper();
+            root = mapper.Map(techDataOrderElement);
 
             return root;
         }
@@ -239,22 +218,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
             IntermechReader reader = new IntermechReader();
             TechRouteNode organizationStruct = null;
             AggregateException aggregationException = null;
-            reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute).ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                    {
-                        aggregationException = t.Exception;
-                        
-
-                    }
-                    else
-                    {
-                        if (t.IsCompleted)
-                        {
-                            organizationStruct = t.Result;
-                        }
-                    }
-                });
+            reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute);
 
             // повторно выбросить исключение
             if (aggregationException != null)
