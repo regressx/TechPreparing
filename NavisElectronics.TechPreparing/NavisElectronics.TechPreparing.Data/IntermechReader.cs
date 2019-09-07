@@ -174,6 +174,7 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
                     new ColumnDescriptor(18079, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Флаг печатной платы
                     new ColumnDescriptor(17965, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Версия печатной платы
+                    new ColumnDescriptor(17887, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип монтажа компонента
                 };
 
                 // Поиск состава
@@ -989,6 +990,11 @@ namespace NavisElectronics.TechPreparation.Data
             if (row[17] != DBNull.Value)
             {
                 element.PcbVersion = Convert.ToByte(row[17]);
+            }
+
+            if (row[18] != DBNull.Value)
+            {
+                element.MountingType = Convert.ToString(row[18]);
             }
 
             if (element.IsPCB)
