@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
-using Intermech.Interfaces.AutoSelection;
 using Intermech.Interfaces.Client;
 using NavisElectronics.TechPreparation.EventArguments;
 using NavisElectronics.TechPreparation.Reports;
