@@ -217,14 +217,13 @@ namespace NavisElectronics.IPS1C.IntegratorService
         {
             IntermechReader reader = new IntermechReader();
             TechRouteNode organizationStruct = null;
-            AggregateException aggregationException = null;
-            reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute);
-
-            // повторно выбросить исключение
-            if (aggregationException != null)
+            Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute));
+            organizationStruct = task.Result;
+            if (organizationStruct == null)
             {
-                throw aggregationException;
+                throw new OrderInfoException("При обработке заказа модуль не смог получить данные о структуре предприятия на указанный заказ. Возможно, данные не прикреплены к заказу");
             }
+
             OrganizationNodeMapper mapper = new OrganizationNodeMapper();
             OrganizationNode root = mapper.Map(organizationStruct);
             return root;
