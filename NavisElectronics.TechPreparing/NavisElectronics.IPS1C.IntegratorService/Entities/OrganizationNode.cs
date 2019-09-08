@@ -8,6 +8,7 @@
     /// <summary>
     /// Единица структуры организации
     /// </summary>
+    [DataContract]
     [Serializable]
     public class OrganizationNode
     {

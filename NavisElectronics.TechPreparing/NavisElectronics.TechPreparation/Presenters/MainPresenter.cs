@@ -541,9 +541,9 @@ namespace NavisElectronics.TechPreparation.Presenters
                 _organizationStruct = await _model.ReadDataFromBlobAttribute<TechRouteNode>(_rootVersionId, ConstHelper.OrganizationStructAttribute);
             }
 
-            bool _withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
+            bool withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
 
-            if (!_withdrawalTypeFileEmpty)
+            if (!withdrawalTypeFileEmpty)
             {
                 // грузим тех. отход из imbase
                 _withdrawalType = await _model.GetWithdrawalTypesAsync();

@@ -52,7 +52,7 @@
             root.WorkshopName = product.WorkshopName;
 
             // для всех остальных свойств, которые строковые и с нулевым указателем проставить значение string.Empty
-            Type type = typeof(ProductTreeNode);
+            Type type = typeof(OrganizationNode);
             PropertyInfo[] properties = type.GetProperties();
 
             foreach (PropertyInfo property in properties)
