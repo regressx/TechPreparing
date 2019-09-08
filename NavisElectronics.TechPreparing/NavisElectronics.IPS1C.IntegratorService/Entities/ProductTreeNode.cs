@@ -1,13 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using NavisElectronics.IPS1C.IntegratorService.Exceptions;
-
-
-namespace NavisElectronics.IPS1C.IntegratorService.Entities
+﻿namespace NavisElectronics.IPS1C.IntegratorService.Entities
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using Exceptions;
 
     /// <summary>
     /// Сущность для передачи данных из сервиса в другие приложения. Все поля намеренно являются строками в надежде, что будут везде поняты однозначно
@@ -130,6 +128,9 @@ namespace NavisElectronics.IPS1C.IntegratorService.Entities
         [DataMember]
         public string Class { get; set; }
 
+        /// <summary>
+        /// версия последнего изменения
+        /// </summary>
         [DataMember]
         public string LastVersion { get; set; }
 
@@ -187,9 +188,27 @@ namespace NavisElectronics.IPS1C.IntegratorService.Entities
         [DataMember]
         public string Case { get; set; }
 
-
         [DataMember]
         public ProductTreeNode Parent { get; set; }
+
+
+        /// <summary>
+        /// Признак производства
+        /// </summary>
+        [DataMember]
+        public string ProduseSign { get; set; }
+
+        /// <summary>
+        /// Тип монтажа
+        /// </summary>
+        [DataMember]
+        public string MountingType { get; set; }
+
+        /// <summary>
+        /// Маршрут
+        /// </summary>
+        [DataMember]
+        public string TechRoute { get; set; }
 
         [DataMember]
         public ICollection<ProductTreeNode> Products

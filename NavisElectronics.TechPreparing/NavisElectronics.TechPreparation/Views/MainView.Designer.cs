@@ -63,9 +63,9 @@
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.OrganizationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -191,6 +191,7 @@
             // MainMaterialsButton
             // 
             this.MainMaterialsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MainMaterialsButton.Enabled = false;
             this.MainMaterialsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.just_another_layers_16;
             this.MainMaterialsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainMaterialsButton.Name = "MainMaterialsButton";
@@ -201,6 +202,7 @@
             // standartsButton
             // 
             this.standartsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.standartsButton.Enabled = false;
             this.standartsButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.iconfinder_Screw_bolts_3605318;
             this.standartsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.standartsButton.Name = "standartsButton";
@@ -211,6 +213,7 @@
             // SetTechWithdrawalButton
             // 
             this.SetTechWithdrawalButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SetTechWithdrawalButton.Enabled = false;
             this.SetTechWithdrawalButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_full_trash_16;
             this.SetTechWithdrawalButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SetTechWithdrawalButton.Name = "SetTechWithdrawalButton";
@@ -302,7 +305,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer2.Size = new System.Drawing.Size(1062, 294);
-            this.splitContainer2.SplitterDistance = 788;
+            this.splitContainer2.SplitterDistance = 753;
             this.splitContainer2.TabIndex = 7;
             // 
             // treeViewAdv
@@ -328,7 +331,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(788, 294);
+            this.treeViewAdv.Size = new System.Drawing.Size(753, 294);
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -405,9 +408,25 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(270, 294);
+            this.dataGridView1.Size = new System.Drawing.Size(305, 294);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
+            // 
+            // OrganizationName
+            // 
+            this.OrganizationName.HeaderText = "Наименование организации";
+            this.OrganizationName.Name = "OrganizationName";
+            this.OrganizationName.ReadOnly = true;
+            this.OrganizationName.Width = 200;
+            // 
+            // Status
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Status.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Status.HeaderText = "Статус";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
             // 
             // tableLayoutPanel3
             // 
@@ -423,21 +442,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
             this.tableLayoutPanel3.TabIndex = 7;
-            // 
-            // OrganizationName
-            // 
-            this.OrganizationName.HeaderText = "Наименование организации";
-            this.OrganizationName.Name = "OrganizationName";
-            this.OrganizationName.ReadOnly = true;
-            this.OrganizationName.Width = 200;
-            // 
-            // Status
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Status.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Status.HeaderText = "Статус";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
             // 
             // MainView
             // 

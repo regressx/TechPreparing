@@ -59,6 +59,23 @@ namespace NavisElectronics.TechPreparation.Presenters
             return _container.Get<T>();
         }
 
+        public IPresenter<V, Z> GetPresenter<T, V, Z>() where T : class, IPresenter<V, Z>
+        {
+            if (!_container.CanResolve<T>())
+            {
+                _container.Bind<T>().To<T>();
+            }
+            return _container.Get<T>();
+        }
+
+        public IPresenter<V, Z, W> GetPresenter<T, V, Z, W>() where T : class, IPresenter<V, Z, W>
+        {
+            if (!_container.CanResolve<T>())
+            {
+                _container.Bind<T>().To<T>();
+            }
+            return _container.Get<T>();
+        }
 
         public void ReleasePresenter<TPresenter>()
         {

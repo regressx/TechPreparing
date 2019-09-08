@@ -2,34 +2,103 @@
 {
     using System;
     using System.Collections.Generic;
-
     using Aga.Controls.Tree;
+    using EventArguments;
+    using ViewModels.TreeNodes;
 
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
-    public interface ITechRouteMap
+    /// <summary>
+    /// Интерфейс окна работы с маршрутами изготовления
+    /// </summary>
+    public interface ITechRouteMap : IView
     {
+        /// <summary>
+        /// Переход к старому архиву
+        /// </summary>
         event EventHandler<SaveClickEventArgs> GoToOldArchive;
+
+        /// <summary>
+        /// Удалить выделенные маршруты
+        /// </summary>
+        event EventHandler<ClipboardEventArgs> DeleteRouteClick;
+
+        /// <summary>
+        /// Редактирование маршрутов
+        /// </summary>
         event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
+
+        /// <summary>
+        /// Загрузка формы
+        /// </summary>
         event EventHandler Load;
-        event EventHandler<SaveClickEventArgs> SaveClick;
-        event EventHandler<SaveClickEventArgs> EditClick;
+
+        /// <summary>
+        /// Редактирование примечания
+        /// </summary>
+        event EventHandler<SaveClickEventArgs> EditNoteClick;
+
+        /// <summary>
+        /// Копирование маршрута и примечания
+        /// </summary>
         event EventHandler<ClipboardEventArgs> CopyClick;
+
+        /// <summary>
+        /// Вставка маршрута и примечания
+        /// </summary>
         event EventHandler<ClipboardEventArgs> PasteClick;
+
+        /// <summary>
+        /// Показать чертеж
+        /// </summary>
         event EventHandler<SaveClickEventArgs> ShowClick;
+
+        /// <summary>
+        /// The create report click.
+        /// </summary>
         event EventHandler CreateReportClick;
+
+        /// <summary>
+        /// Создать разделительную ведомость
+        /// </summary>
         event EventHandler CreateDevideList;
-        event EventHandler SetNodesToComplectClick;
+
+        /// <summary>
+        /// Создать ведомость кооперации
+        /// </summary>
         event EventHandler CreateCooperationList;
 
 
+        /// <summary>
+        /// Проставить внутрипроизводственную кооперацию
+        /// </summary>
         event EventHandler<ClipboardEventArgs> SetInnerCooperation;
+
+        /// <summary>
+        /// Убрать внутрипроизводственную кооперацию
+        /// </summary>
         event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
 
-        void Show();
+        /// <summary>
+        /// Установить модель в дерево
+        /// </summary>
+        /// <param name="treeModel">
+        /// The tree model.
+        /// </param>
         void SetTreeModel(TreeModel treeModel);
+
+        /// <summary>
+        /// Получить выбранные строки
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ICollection"/>.
+        /// </returns>
         ICollection<MyNode> GetSelectedRows();
+
+        /// <summary>
+        /// Получить корень дерева
+        /// </summary>
+        /// <returns>
+        /// The <see cref="MyNode"/>.
+        /// </returns>
         MyNode GetMainNode();
     }
 }

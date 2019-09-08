@@ -24,13 +24,14 @@
         string GetMessage(string message);
 
 
+        /// <summary>
+        /// The get all products.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ProductTreeNode"/>.
+        /// </returns>
         [OperationContract]
         ProductTreeNode GetAllProducts();
-
-
-        [OperationContract]
-        ProductTreeNode GetUsedTypes();
-
 
         /// <summary>
         /// Выдает заголовок изделия и тип по его ID
@@ -39,15 +40,14 @@
         /// Id объекта
         /// </param>
         /// <returns>
-        /// The <see cref="string[]"/>.
-        /// Массив строк с соответствующим содержимым
+        /// The <see cref="ProductTreeNode"/>.
         /// </returns>
         [OperationContract]
         ProductTreeNode GetProductInfo(long objectId);
 
 
         /// <summary>
-        /// Получает отфильтрованный в соответствии с технологическими данными готовый состав заказа для КБ
+        /// Получает дерево заказа
         /// </summary>
         /// <param name="versionId">
         /// Идентификатор версии объекта
@@ -57,21 +57,21 @@
         /// Возвращает узел главный узел дерева
         /// </returns>
         [OperationContract]
-        ProductTreeNode GetFilteredOrderForKB(long versionId);
+        ProductTreeNode GetOrder(long versionId);
+
 
         /// <summary>
-        /// Получает отфильтрованный в соответствии с технологическими данными готовый состав заказа для Навис-Электроники
+        /// Получает дерево организации, используемой в заказе
         /// </summary>
-        /// <param name="versionId">
-        /// Идентификатор версии объекта
+        /// <param name="orderVersionId">
+        /// Идентификатор версии объекта заказа
         /// </param>
         /// <returns>
         /// The <see cref="ProductTreeNode"/>.
-        /// Возвращает узел главный узел дерева
+        /// Возвращает дерево организации
         /// </returns>
         [OperationContract]
-        ProductTreeNode GetFilteredOrderForElectronics(long versionId);
-
+        OrganizationNode GetOrganizationStruct(long orderVersionId);
 
     }
 }

@@ -7,44 +7,69 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-
     using Aga.Controls.Tree;
+    using EventArguments;
+    using Interfaces.Entities;
+    using ViewInterfaces;
+    using ViewModels;
 
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels;
-
-    public class TechRoutePresenter
+    /// <summary>
+    /// The tech route presenter.
+    /// </summary>
+    public class TechRoutePresenter : IPresenter<TechRouteNode, IList<TechRouteNode>>
     {
-        private ITechRouteView _view;
-        private TechRouteModel _model;
-        private readonly TechRouteNode _mainNode;
+        /// <summary>
+        /// The _view.
+        /// </summary>
+        private readonly ITechRouteView _view;
 
-        public TechRoutePresenter(ITechRouteView view, TechRouteModel model, TechRouteNode mainNode)
+        /// <summary>
+        /// The _model.
+        /// </summary>
+        private readonly TechRouteModel _model;
+
+        /// <summary>
+        /// The _organization struct.
+        /// </summary>
+        private TechRouteNode _organizationStruct;
+
+        /// <summary>
+        /// The _organization struct.
+        /// </summary>
+        private IList<TechRouteNode> _resultNode;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TechRoutePresenter"/> class.
+        /// </summary>
+        /// <param name="view">
+        /// The view.
+        /// </param>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        public TechRoutePresenter(ITechRouteView view, TechRouteModel model)
         {
             _view = view;
             _view.Load += _view_Load;
             _model = model;
-            _mainNode = mainNode;
             _view.RouteNodeClick += _view_RouteNodeClick;
             _view.RemoveNodeClick += _view_RemoveNodeClick;
         }
 
-        private void _view_Load(object sender, System.EventArgs e)
+        private void _view_Load(object sender, EventArgs e)
         {
-            TreeModel model = _model.GetModel(_mainNode);
+            TreeModel model = _model.GetModel(_organizationStruct);
             _view.FillWorkShop(model);
         }
 
         private void _view_RemoveNodeClick(object sender, RemoveNodeEventArgs e)
         {
+            _resultNode.RemoveAt(e.IndexToRemove);
             _model.Remove(e.IndexToRemove);
             _view.FillListBox(_model.GetTechRouteNodes());
             _view.FillTextBox(_model.GetTechRouteNodes());
@@ -53,18 +78,16 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _view_RouteNodeClick(object sender, RouteNodeClickEventAgrs e)
         {
             _model.Add(e.Node);
+            _resultNode.Add(e.Node);
             _view.FillListBox(_model.GetTechRouteNodes());
             _view.FillTextBox(_model.GetTechRouteNodes());
         }
 
-        public DialogResult Run()
+        public void Run(TechRouteNode parameter, IList<TechRouteNode> resultNode)
         {
-           return _view.ShowDialog();
-        }
-
-        public IList<TechRouteNode> GetTechRoute()
-        {
-            return new List<TechRouteNode>();
+            _organizationStruct = parameter;
+            _resultNode = resultNode;
+            _view.Show();
         }
     }
 }

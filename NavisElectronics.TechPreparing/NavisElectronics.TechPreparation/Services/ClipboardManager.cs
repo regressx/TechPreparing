@@ -1,17 +1,17 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+﻿using System.Collections.Generic;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Services
 {
-    using System.Collections.Generic;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
     /// <summary>
     /// Класс, повторяющий работу буфера обмена, но только в пределах нашего приложения
     /// </summary>
     public class ClipboardManager
     {
+        /// <summary>
+        /// The _current clipboard data.
+        /// </summary>
         private IList<TechRouteClipBoard> _currentClipboardData;
 
         /// <summary>
@@ -26,18 +26,16 @@ namespace NavisElectronics.TechPreparation.Services
         /// Метод копирования элементов в буфере обмена
         /// </summary>
         /// <param name="nodes">Узлы, которые копируем данные</param>
-        /// <param name="agentFilter">Фильтр по изготовителю</param>
-        public void Copy(ICollection<MyNode> nodes, string agentFilter)
+        public void Copy(ICollection<MyNode> nodes)
         {
             IList<TechRouteClipBoard> clipboardList = new List<TechRouteClipBoard>();
             foreach (MyNode node in nodes)
             {
                 TechRouteClipBoard clipBoard = new TechRouteClipBoard();
-                clipBoard.ForView = node.Route;
+                clipBoard.RouteForView = node.Route;
                 IntermechTreeElement element = node.Tag as IntermechTreeElement;
-                TechAgentDataExtractor extractor = new TechAgentDataExtractor();
-                string temp = extractor.ExtractData(element.TechRoute, agentFilter);
-                clipBoard.ForDatabase = string.Format("<{0}:{1}/>", agentFilter, temp);
+                clipBoard.RouteForDatabase = element.TechRoute;
+                clipBoard.Note = element.RouteNote;
                 clipboardList.Add(clipBoard);
             }
 
@@ -48,8 +46,7 @@ namespace NavisElectronics.TechPreparation.Services
         /// Метод вставки из буфера обмена
         /// </summary>
         /// <param name="nodes">Узлы, куда вставляем данные</param>
-        /// <param name="agentFilter">Фильтр по изготовителю</param>
-        public void Paste(ICollection<MyNode> nodes, string agentFilter)
+        public void Paste(ICollection<MyNode> nodes)
         {
             if (_currentClipboardData.Count > 0)
             {
@@ -61,16 +58,19 @@ namespace NavisElectronics.TechPreparation.Services
                     {
                         break;
                     }
+
                     TechRouteClipBoard clipBoardFromList = _currentClipboardData[i];
-                    node.Route = clipBoardFromList.ForView;
+                    node.Route = clipBoardFromList.RouteForView;
+                    node.Note = clipBoardFromList.Note;
                     IntermechTreeElement element = node.Tag as IntermechTreeElement;
-                    TechAgentDataExtractor extractor = new TechAgentDataExtractor();
                     string temp = string.Empty;
                     if (element.TechRoute != null)
                     {
-                        temp = extractor.RemoveData(element.TechRoute, agentFilter);
+                        temp = element.TechRoute;
                     }
-                    element.TechRoute = string.Format("{0}{1}", temp, clipBoardFromList.ForDatabase);
+
+                    element.TechRoute = string.Format("{0}{1}", temp, clipBoardFromList.RouteForDatabase);
+                    element.RouteNote = clipBoardFromList.Note;
                     i++;
                 }
             }

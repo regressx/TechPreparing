@@ -105,7 +105,7 @@
             this.noteTextBox.Name = "noteTextBox";
             this.noteTextBox.Paddings = new System.Windows.Forms.Padding(0);
             this.noteTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.noteTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("noteTextBox.ServiceColors")));
+            this.noteTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("noteTextBox.serviceColors")));
             this.noteTextBox.Size = new System.Drawing.Size(286, 237);
             this.noteTextBox.TabIndex = 4;
             this.noteTextBox.Zoom = 100;

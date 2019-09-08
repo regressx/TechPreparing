@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IDBObjectMock.cs" />
+    <Compile Include="MappingTests.cs" />
     <Compile Include="VersionParsingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj">
       <Project>{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}</Project>
       <Name>NavisElectronics.IPS1C.IntegratorService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
+      <Project>{bf44efa3-b4c0-41d7-87f2-a987359402e1}</Project>
+      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

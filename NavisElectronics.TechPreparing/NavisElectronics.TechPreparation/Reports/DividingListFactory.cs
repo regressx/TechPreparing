@@ -1,19 +1,14 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Reports
+﻿namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
-
     using Aga.Controls.Tree;
-
+    using Interfaces.Entities;
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Services;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Services;
+    using ViewModels.TreeNodes;
 
     /// <summary>
     /// Фабрика для создания разделительной ведомости
@@ -34,12 +29,9 @@ namespace NavisElectronics.TechPreparation.Reports
         /// <param name="name">
         /// Под каким именем будет сохранен документ
         /// </param>
-        /// <param name="currentManufacturer">
-        /// Производитель, от лица которого идет формирование ведомости
-        /// </param>
         public void Create(Node mainElement, string name)
         {
-            MyNode myNode = mainElement as MyNode;
+            MyNode myNode = (MyNode)mainElement;
             IntermechTreeElement root = (IntermechTreeElement)myNode.Tag;
             string mainAgent = root.Agent;
             long newObjectId = -1;
@@ -52,8 +44,8 @@ namespace NavisElectronics.TechPreparation.Reports
                 IDBAttribute nameAttribute = myTestDbObject.Attributes.FindByID(10);
                 nameAttribute.Value = name;
 
-                //IDBRelationCollection relationCollection = keeper.Session.GetRelationCollection(1003); // по связи "Простая связь с сортировкой"
-                //relationCollection.Create(techRoutesList.MainProductId, newObjectId);
+                // IDBRelationCollection relationCollection = keeper.Session.GetRelationCollection(1003); // по связи "Простая связь с сортировкой"
+                // relationCollection.Create(techRoutesList.MainProductId, newObjectId);
             }
 
             // главный документ
@@ -128,6 +120,7 @@ namespace NavisElectronics.TechPreparation.Reports
                 {
                     noteCell.AssignText(product.Note, false, false, false);
                 }
+
                 mainNode.AddChildNode(rowInstanse, false, false);
             }
 

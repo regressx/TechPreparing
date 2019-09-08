@@ -23,13 +23,11 @@
         event EventHandler<MultipleNodesSelectedEventArgs> DeleteNoteClick;
         event EventHandler CheckListOfCooperation;
         event EventHandler<MultipleNodesSelectedEventArgs> SetParametersClick;
-        event EventHandler PutDownCooperation;
         event EventHandler<MultipleNodesSelectedEventArgs> SearchInArchiveClick;
         event EventHandler<MultipleNodesSelectedEventArgs> FindInTreeClick;
         event EventHandler GlobalSearchClick;
         event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
-        event EventHandler<MultipleNodesSelectedEventArgs> SetPcbClick;
-        
+
         /// <summary>
         /// Заполнить дерево данными
         /// </summary>

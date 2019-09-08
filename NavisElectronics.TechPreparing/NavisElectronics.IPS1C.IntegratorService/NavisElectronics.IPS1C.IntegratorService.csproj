@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,19 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\DataBaseProduct.cs" />
-    <Compile Include="Entities\LifeCycleSteps.cs" />
+    <Compile Include="Entities\OrderLifeCycleSteps.cs" />
+    <Compile Include="Entities\OrganizationNode.cs" />
     <Compile Include="Entities\ProductTreeNode.cs" />
     <Compile Include="Exceptions\OrderInfoException.cs" />
     <Compile Include="Exceptions\TechDataNotExistedException.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Exceptions\WrongTypeCallException.cs" />
     <Compile Include="IService.cs" />
-    <Compile Include="Logic\Changes.cs" />
+    <Compile Include="Services\OrganizationNodeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Services\ProductTreeNodeMapper.cs" />
-    <Compile Include="Services\ServiceIntermechReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Manual\Описание сервиса.docx" />
@@ -63,10 +63,6 @@
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
       <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
       <Name>NavisElectronics.TechPreparation.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NavisElectronics.TechPreparation\NavisElectronics.TechPreparation.csproj">
-      <Project>{ad2aa800-fa78-40ed-aa16-7c0bcc6f6a86}</Project>
-      <Name>NavisElectronics.TechPreparation</Name>
     </ProjectReference>
     <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
       <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>

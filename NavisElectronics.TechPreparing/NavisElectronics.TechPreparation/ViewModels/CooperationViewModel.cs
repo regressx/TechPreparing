@@ -7,14 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
     using System.IO;
     using Aga.Controls.Tree;
-    using Entities;
+    using Interfaces.Entities;
     using Services;
     using TreeNodes;
 
@@ -39,9 +37,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="whoIsMainInOrder">
         /// Кто главный в заказе
         /// </param>
-        /// <param name="agentFilter">
-        /// The agent Filter.
-        /// </param>
         /// <returns>
         /// Модель дерева для отображения
         /// </returns>
@@ -56,7 +51,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
             mainNode.CooperationFlag = element.CooperationFlag;
             mainNode.Tag = element;
             BuildNodeRecursive(mainNode, element, whoIsMainInOrder);
-
             model.Nodes.Add(mainNode);
             return model;
         }
@@ -258,12 +252,30 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
+        /// <summary>
+        /// Открыть папку старого архива предприятия
+        /// </summary>
+        /// <param name="designation">
+        /// Обозначение изделия
+        /// </param>
         public void OpenInOldArchive(string designation)
         {
             _openFolderService.OpenFolder(designation);
         }
 
 
+        /// <summary>
+        /// Указать ссылку на тех. процесс
+        /// </summary>
+        /// <param name="root">
+        /// The root.
+        /// </param>
+        /// <param name="element">
+        /// The element.
+        /// </param>
+        /// <param name="techProcess">
+        /// The tech process.
+        /// </param>
         internal void SetTechProcessReference(IntermechTreeElement root, IntermechTreeElement element, TechProcess techProcess)
         {
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();

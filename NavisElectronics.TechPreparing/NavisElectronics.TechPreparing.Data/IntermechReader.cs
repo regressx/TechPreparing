@@ -174,6 +174,7 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
                     new ColumnDescriptor(18079, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Флаг печатной платы
                     new ColumnDescriptor(17965, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Версия печатной платы
+                    new ColumnDescriptor(17887, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип монтажа компонента
                 };
 
                 // Поиск состава
@@ -991,6 +992,26 @@ namespace NavisElectronics.TechPreparation.Data
                 element.PcbVersion = Convert.ToByte(row[17]);
             }
 
+            if (row[18] != DBNull.Value)
+            {
+                element.MountingType = Convert.ToString(row[18]);
+            }
+
+            if (element.IsPCB)
+            {
+                IDBObject currentObject = session.GetObject(element.Id);
+                IDBAttribute techTaskOnPcbAttribute = currentObject.GetAttributeByID(18086);
+                if (techTaskOnPcbAttribute != null)
+                {
+                    char[] textBytes = null;
+                    IMemoReader memoReader = techTaskOnPcbAttribute as IMemoReader;
+                    memoReader.OpenMemo(0);
+                    textBytes = memoReader.ReadDataBlock();
+                    memoReader.CloseMemo();
+                    element.TechTask = new string(textBytes);
+                }
+            }
+
 
             if (element.Type == 1052 || element.Type == 1159)
             {
@@ -1028,6 +1049,7 @@ namespace NavisElectronics.TechPreparation.Data
                                 }
                             }
 
+                            string units = string.Empty;
                             if (unitsAttribute != null)
                             {
                                 // надо теперь выцепить по атрибуту ед. измерения сам объект единиц измерения
@@ -1036,6 +1058,21 @@ namespace NavisElectronics.TechPreparation.Data
                                 {
                                     IDBAttribute shortNameUnit = unitsObject.GetAttributeByID(13);
                                     detailMaterialNode.MeasureUnits = shortNameUnit.AsString;
+                                    units = shortNameUnit.AsString;
+                                }
+                            }
+
+                            // Количество материала на единицу изделия
+                            IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
+                            if (amountOnOneUnitOfProduct != null)
+                            {
+                                if (amountOnOneUnitOfProduct.AsString.Contains(units))
+                                {
+                                    detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
+                                }
+                                else
+                                {
+                                    throw new MaterialUnitsNotEqualException(string.Format("В детали {0} единицы измерения, указанные в атрибуте Количество на единицу изделия, не совпадают с единицами измерения материала по умолчанию", element.Designation));
                                 }
                             }
 
