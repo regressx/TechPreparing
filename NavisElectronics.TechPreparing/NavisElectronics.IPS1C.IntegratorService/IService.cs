@@ -33,17 +33,6 @@
         [OperationContract]
         ProductTreeNode GetAllProducts();
 
-
-        /// <summary>
-        /// The get used types.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="ProductTreeNode"/>.
-        /// </returns>
-        [OperationContract]
-        ProductTreeNode GetUsedTypes();
-
-
         /// <summary>
         /// Выдает заголовок изделия и тип по его ID
         /// </summary>

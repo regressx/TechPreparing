@@ -42,12 +42,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return resultNode;
         }
 
-        public ProductTreeNode GetUsedTypes()
-        {
-            ProductTreeNode resultNode = new ProductTreeNode();
-            return resultNode;
-        }
-
         /// <summary>
         /// Метод позволяет получить данные о наименовании, обозначении и типе по указанному Id
         /// </summary>
