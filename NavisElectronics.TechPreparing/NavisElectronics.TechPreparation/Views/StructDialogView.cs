@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
-using NavisElectronics.TechPreparation.Entities;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Presenters;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Views
 {

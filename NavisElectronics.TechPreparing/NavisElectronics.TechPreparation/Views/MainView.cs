@@ -1,8 +1,4 @@
-﻿using Aga.Controls.Tree;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparation.Presenters;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-using TenTec.Windows.iGridLib;
+﻿using NavisElectronics.TechPreparation.EventArguments;
 
 namespace NavisElectronics.TechPreparation.Views
 {
@@ -11,10 +7,11 @@ namespace NavisElectronics.TechPreparation.Views
     using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.EventArguments;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
+    using Aga.Controls.Tree;
+    using Interfaces.Entities;
+    using Presenters;
+    using ViewInterfaces;
+    using ViewModels.TreeNodes;
 
     public partial class MainView : Form, IMainView
     {
@@ -112,7 +109,10 @@ namespace NavisElectronics.TechPreparation.Views
         {
             foreach (ToolStripItem button in toolStrip.Items)
             {
-                button.Enabled = true;
+                if (button.Name != "MainMaterialsButton" && button.Name != "standartsButton")
+                {
+                    button.Enabled = true;
+                }
             }
         }
 

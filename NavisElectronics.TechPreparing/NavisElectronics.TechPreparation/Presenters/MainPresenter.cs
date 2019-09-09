@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Intermech.PropertyEditors;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -57,12 +59,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Корень
         /// </summary>
         private IntermechTreeElement _rootElement;
-
-
-        /// <summary>
-        /// Нужен для того, чтобы понять, откуда копировать тех. подготовку
-        /// </summary>
-        private IntermechTreeElement _elementToCopy;
 
         /// <summary>
         /// Словарик агентов
@@ -253,57 +249,30 @@ namespace NavisElectronics.TechPreparation.Presenters
                 return;
             }
 
-            Parameter<IntermechTreeElement> myParameter = new Parameter<IntermechTreeElement>();
-            myParameter.AddParameter(oldPreparation);
-            _elementToCopy = new IntermechTreeElement();
-            myParameter.AddParameter(_elementToCopy);
-            IPresenter<Parameter<IntermechTreeElement>> treeNodeDialogPresenter = _presentationFactory.GetPresenter<TreeNodeDialogPresenter, Parameter<IntermechTreeElement>>();
-            treeNodeDialogPresenter.Run(myParameter);
-            _elementToCopy = myParameter.GetParameter(1);
 
-            if (_elementToCopy.Id == 0)
+            IntermechTreeElementWrapper intermechTreeElementWrapper = new IntermechTreeElementWrapper(oldPreparation).Wrap(oldPreparation);
+
+            TreeViewSettings settings = new TreeViewSettings();
+            settings.AddColumn(new TreeColumn("Обозначение + наименование", 250), "Name");
+            settings.ElementToBuild = intermechTreeElementWrapper;
+                
+            StructDialogViewPresenter<ViewNode, IntermechTreeElementWrapper> presenter = new StructDialogViewPresenter<ViewNode, IntermechTreeElementWrapper>(new StructDialogView(), new StructDialogViewModel<ViewNode, IntermechTreeElementWrapper>());
+            presenter.Run(settings);
+
+            if (settings.Result == null)
             {
                 return;
+
             }
 
-            // не хочу заморачиваться с сохранением уже заполненных узлов. Пройдем в ширину по указанному в предложенном окне дереву, 
-            // каждый из узлов в очереди будем искать в основном дереве и проставлять нужные свойства
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(_elementToCopy);
-            while (queue.Count > 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
+            IntermechTreeElementWrapper resultNode = (IntermechTreeElementWrapper)settings.Result;
 
-                // ищем все-все узлы из главного дерева, которые совпадают с узлом из очереди
-                ICollection<IntermechTreeElement> elementsToSetTechPreparation = _rootElement.Find(elementFromQueue.ObjectId);
-
-                foreach (IntermechTreeElement elementToSetTechPreparation in elementsToSetTechPreparation)
-                {
-                    elementToSetTechPreparation.CooperationFlag = elementFromQueue.CooperationFlag;
-                    elementToSetTechPreparation.Agent = elementFromQueue.Agent;
-                    elementToSetTechPreparation.StockRate = elementFromQueue.StockRate;
-                    elementToSetTechPreparation.Note = elementFromQueue.Note;
-                    elementToSetTechPreparation.RouteNote = elementFromQueue.RouteNote;
-                    elementToSetTechPreparation.SampleSize = elementFromQueue.SampleSize;
-                    elementToSetTechPreparation.TechProcessReference = elementFromQueue.TechProcessReference;
-                    elementToSetTechPreparation.TechRoute = elementFromQueue.TechRoute;
-                    elementToSetTechPreparation.ContainsInnerCooperation = elementFromQueue.ContainsInnerCooperation;
-                    elementToSetTechPreparation.InnerCooperation = elementFromQueue.InnerCooperation;
-                    elementToSetTechPreparation.IsPCB = elementFromQueue.IsPCB;
-                    elementToSetTechPreparation.IsToComplect = elementFromQueue.IsToComplect;
-                    elementToSetTechPreparation.TechTask = elementFromQueue.TechTask;
-                }
-
-                if (elementFromQueue.Children.Count > 0)
-                {
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-                }
-            }
-
+            _model.CopyTechPreparation(resultNode.Root, _rootElement);
         }
+
+
+
+
 
         private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
         {
