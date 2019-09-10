@@ -23,20 +23,19 @@ namespace NavisElectronics.TechPreparation.Views
         /// Событие при редактировании тех. маршрута
         /// </summary>
         public event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
-
+        public event EventHandler<EditTechRouteEventArgs> EditMassTechRouteClick;
         public event EventHandler<SaveClickEventArgs> EditNoteClick;
         public event EventHandler<ClipboardEventArgs> DeleteRouteClick;
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
+        public event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
         public event EventHandler<SaveClickEventArgs> GoToOldArchive;
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
-        public event EventHandler SetNodesToComplectClick;
         public event EventHandler CreateCooperationList;
         public event EventHandler<ClipboardEventArgs> SetInnerCooperation;
         public event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
-        public event EventHandler<SaveClickEventArgs> CreateCooperationListClick;
 
         public TechRoutesMap()
         {
@@ -66,6 +65,11 @@ namespace NavisElectronics.TechPreparation.Views
         {
             MyNode node = treeViewAdv.Root.Children[0].Tag as MyNode;
             return node;
+        }
+
+        public TreeViewAdv GetTreeView()
+        {
+            return treeViewAdv;
         }
 
         private void treeViewAdv1_RowDraw(object sender, TreeViewRowDrawEventArgs e)
@@ -267,6 +271,24 @@ namespace NavisElectronics.TechPreparation.Views
                 }
 
                 temp(sender, new ClipboardEventArgs(nodes));
+            }
+        }
+
+        private void DefaultCoopRouteButton_Click(object sender, EventArgs e)
+        {
+            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref SetCooperationNodesDefaultRoute);
+            if (temp != null)
+            {
+                temp(sender, new EditTechRouteEventArgs(false));
+            }
+        }
+
+        private void editTechRoutesButton_Click(object sender, EventArgs e)
+        {
+            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref EditMassTechRouteClick);
+            if (temp != null)
+            {
+                temp(sender, new EditTechRouteEventArgs(false));
             }
         }
     }

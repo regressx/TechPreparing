@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.DefaultCoopRouteButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
@@ -50,6 +51,7 @@
             this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
             this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.editTechRoutesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.SetTechRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createNewRouteButton = new System.Windows.Forms.ToolStripMenuItem();
             this.addIntoExistingRouteButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,10 +74,10 @@
             this.innerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.ContainsInnerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.pcbCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.pcbVersionTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +85,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DefaultCoopRouteButton,
             this.ExpandAllButton,
             this.CollapseAllButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -90,6 +93,16 @@
             this.toolStrip1.Size = new System.Drawing.Size(1473, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // DefaultCoopRouteButton
+            // 
+            this.DefaultCoopRouteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DefaultCoopRouteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
+            this.DefaultCoopRouteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DefaultCoopRouteButton.Name = "DefaultCoopRouteButton";
+            this.DefaultCoopRouteButton.Size = new System.Drawing.Size(23, 22);
+            this.DefaultCoopRouteButton.Text = "Проставить кооперации путь по умолчанию";
+            this.DefaultCoopRouteButton.Click += new System.EventHandler(this.DefaultCoopRouteButton_Click);
             // 
             // ExpandAllButton
             // 
@@ -253,6 +266,7 @@
             this.ShowButton,
             this.goToArchiveButton,
             this.toolStripSeparator1,
+            this.editTechRoutesButton,
             this.SetTechRouteMenuItem,
             this.deleteRouteMenuItem,
             this.SetInnerCooperationButton,
@@ -266,7 +280,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 318);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 340);
             // 
             // ShowButton
             // 
@@ -286,6 +300,13 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
+            // 
+            // editTechRoutesButton
+            // 
+            this.editTechRoutesButton.Name = "editTechRoutesButton";
+            this.editTechRoutesButton.Size = new System.Drawing.Size(292, 22);
+            this.editTechRoutesButton.Text = "Редактировать маршруты";
+            this.editTechRoutesButton.Click += new System.EventHandler(this.editTechRoutesButton_Click);
             // 
             // SetTechRouteMenuItem
             // 
@@ -450,20 +471,6 @@
             this.textBoxNote.LeftMargin = 3;
             this.textBoxNote.ParentColumn = this.noteTreeColumn;
             // 
-            // textBoxSubstitute
-            // 
-            this.textBoxSubstitute.DataPropertyName = "SubInfo";
-            this.textBoxSubstitute.IncrementalSearchEnabled = true;
-            this.textBoxSubstitute.LeftMargin = 3;
-            this.textBoxSubstitute.ParentColumn = this.substituteTreeColumn;
-            // 
-            // agentTextbox
-            // 
-            this.agentTextbox.DataPropertyName = "Agent";
-            this.agentTextbox.IncrementalSearchEnabled = true;
-            this.agentTextbox.LeftMargin = 3;
-            this.agentTextbox.ParentColumn = this.agentTreeColumn;
-            // 
             // pcbCheckBox
             // 
             this.pcbCheckBox.DataPropertyName = "IsPcb";
@@ -477,6 +484,20 @@
             this.pcbVersionTextBox.IncrementalSearchEnabled = true;
             this.pcbVersionTextBox.LeftMargin = 3;
             this.pcbVersionTextBox.ParentColumn = this.pcbVersionTreeColumn;
+            // 
+            // textBoxSubstitute
+            // 
+            this.textBoxSubstitute.DataPropertyName = "SubInfo";
+            this.textBoxSubstitute.IncrementalSearchEnabled = true;
+            this.textBoxSubstitute.LeftMargin = 3;
+            this.textBoxSubstitute.ParentColumn = this.substituteTreeColumn;
+            // 
+            // agentTextbox
+            // 
+            this.agentTextbox.DataPropertyName = "Agent";
+            this.agentTextbox.IncrementalSearchEnabled = true;
+            this.agentTextbox.LeftMargin = 3;
+            this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
             // TechRoutesMap
             // 
@@ -544,5 +565,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbCheckBox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbVersionTextBox;
+        private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
+        private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
     }
 }

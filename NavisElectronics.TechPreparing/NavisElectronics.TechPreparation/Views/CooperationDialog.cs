@@ -1,20 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Resources;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using NavisElectronics.TechPreparation.Entities;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-using TenTec.Windows.iGridLib;
-
-namespace NavisElectronics.TechPreparation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Entities;
+    using Interfaces.Entities;
+    using TenTec.Windows.iGridLib;
+    using ViewModels.TreeNodes;
+
+    /// <summary>
+    /// The cooperation dialog.
+    /// </summary>
     public partial class CooperationDialog : Form
     {
+        /// <summary>
+        /// The _root.
+        /// </summary>
         private readonly CooperationNode _root;
+
+        /// <summary>
+        /// The _element to show cooperation.
+        /// </summary>
         private readonly CooperationNode _elementToShowCooperation;
-        private ContextMenuStrip _menuStrip;
+
+        /// <summary>
+        /// The _menu strip.
+        /// </summary>
+        private readonly ContextMenuStrip _menuStrip;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CooperationDialog"/> class.
+        /// </summary>
+        /// <param name="root">
+        /// The root.
+        /// </param>
+        /// <param name="elementToShowCooperation">
+        /// The element to show cooperation.
+        /// </param>
         public CooperationDialog(CooperationNode root, CooperationNode elementToShowCooperation)
         {
             _root = root;
@@ -32,7 +55,6 @@ namespace NavisElectronics.TechPreparation.Views
                     }
                 });
 
-
             ToolStripMenuItem menuItemSetCooperation = new ToolStripMenuItem("Проставить кооперацию",Properties.Resources.if_stock_new_meeting_21476,
                 (sender, args) =>
                 {
@@ -46,6 +68,7 @@ namespace NavisElectronics.TechPreparation.Views
                     iGRow row = iGrid1.SelectedCells[0].Row;
                     SetCooperation(false, row);
                 });
+
             _menuStrip.Items.Add(menuItemSetCooperation);
             _menuStrip.Items.Add(menuItemSetAllCooperation);
             _menuStrip.Items.Add(menuItemRemoveCooperation);
@@ -73,7 +96,6 @@ namespace NavisElectronics.TechPreparation.Views
 
             row.Cells[2].Value = value;
         }
-
 
         private async void CooperationDialog_Load(object sender, System.EventArgs e)
         {

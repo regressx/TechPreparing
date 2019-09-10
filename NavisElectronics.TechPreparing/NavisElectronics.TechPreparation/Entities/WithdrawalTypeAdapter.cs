@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Entities
+﻿namespace NavisElectronics.TechPreparation.Entities
 {
-    public class WithdrawalTypeWrapper:IStructElement
-    {
+    using System.Collections.Generic;
+    using Interfaces;
 
+    /// <summary>
+    /// The withdrawal type adapter.
+    /// </summary>
+    public class WithdrawalTypeAdapter : IStructElement
+    {
         private IList<IStructElement> _children;
 
-        public WithdrawalTypeWrapper(WithdrawalType withdrawalType)
+        public WithdrawalTypeAdapter(WithdrawalType withdrawalType)
         {
             WithdrawalType = withdrawalType;
             _children = new List<IStructElement>();
@@ -33,20 +34,20 @@ namespace NavisElectronics.TechPreparation.Entities
             _children.Add(element);
         }
 
-        public WithdrawalTypeWrapper Wrap(WithdrawalType withdrawalType)
+        public WithdrawalTypeAdapter Wrap(WithdrawalType withdrawalType)
         {
-            WithdrawalTypeWrapper wrapperRoot = new WithdrawalTypeWrapper(withdrawalType);
+            WithdrawalTypeAdapter wrapperRoot = new WithdrawalTypeAdapter(withdrawalType);
             wrapperRoot.Name = withdrawalType.Name;
             WrapRecursive(withdrawalType, wrapperRoot);
 
             return wrapperRoot;
         }
 
-        private void WrapRecursive(WithdrawalType node, WithdrawalTypeWrapper wrapperNode)
+        private void WrapRecursive(WithdrawalType node, WithdrawalTypeAdapter wrapperNode)
         {
             foreach (WithdrawalType child in node.Children)
             {
-                WithdrawalTypeWrapper wrap = new WithdrawalTypeWrapper(child);
+                WithdrawalTypeAdapter wrap = new WithdrawalTypeAdapter(child);
                 wrap.Name = child.Name;
                 wrapperNode.Add(wrap);
                 WrapRecursive(child, wrap);

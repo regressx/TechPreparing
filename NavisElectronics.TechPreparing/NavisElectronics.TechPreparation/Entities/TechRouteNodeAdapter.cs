@@ -4,30 +4,33 @@ using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Entities
 {
-    public class TechRouteNodeWrapper : IStructElement
+    /// <summary>
+    /// The tech route node adapter.
+    /// </summary>
+    public class TechRouteNodeAdapter : IStructElement
     {
         private IList<IStructElement> _children;
 
-        public TechRouteNodeWrapper(TechRouteNode techRouteNode)
+        public TechRouteNodeAdapter(TechRouteNode techRouteNode)
         {
             TechRouteNode = techRouteNode;
             _children = new List<IStructElement>();
         }
 
-        public TechRouteNodeWrapper Wrap(TechRouteNode nodeToWrap)
+        public TechRouteNodeAdapter Wrap(TechRouteNode nodeToWrap)
         {
-            TechRouteNodeWrapper wrapperRoot = new TechRouteNodeWrapper(nodeToWrap);
+            TechRouteNodeAdapter wrapperRoot = new TechRouteNodeAdapter(nodeToWrap);
             wrapperRoot.Name = nodeToWrap.Name;
             WrapRecursive(nodeToWrap, wrapperRoot);
 
             return wrapperRoot;
         }
 
-        private void WrapRecursive(TechRouteNode node, TechRouteNodeWrapper wrapperNode)
+        private void WrapRecursive(TechRouteNode node, TechRouteNodeAdapter wrapperNode)
         {
             foreach (TechRouteNode child in node.Children)
             {
-                TechRouteNodeWrapper wrap = new TechRouteNodeWrapper(child);
+                TechRouteNodeAdapter wrap = new TechRouteNodeAdapter(child);
                 wrap.Name = child.Name;
                 wrapperNode.Add(wrap);
                 WrapRecursive(child, wrap);

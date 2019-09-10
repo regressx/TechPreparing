@@ -7,14 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
     using Aga.Controls.Tree;
     using Entities;
     using EventArguments;
@@ -91,8 +90,62 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetInnerCooperation += View_SetInnerCooperation;
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.CreateCooperationList += _view_CreateCooperationList;
+            _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
+            _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
+        {
+            IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
+            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _techRouteNode);
+            dialog.ShowDialog();
+            _view.GetTreeView().Refresh();
+
+        }
+
+        private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)
+        {
+
+            ICollection<MyNode> elements = new List<MyNode>();
+
+            Queue<MyNode> queue = new Queue<MyNode>();
+            queue.Enqueue(_view.GetMainNode());
+
+            while (queue.Count > 0)
+            {
+                MyNode nodeFromQueue = queue.Dequeue();
+                if (nodeFromQueue.CooperationFlag)
+                {
+                    elements.Add(nodeFromQueue);
+                }
+
+                foreach (var currentNode in nodeFromQueue.Nodes)
+                {
+
+                    queue.Enqueue((MyNode)currentNode);
+                }
+            }
+
+            if (elements.Count == 0)
+            {
+                return;
+            }
+
+
+            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
+            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
+
+            presenter.Run(_techRouteNode, resultNodesList);
+
+            if (resultNodesList.Count == 0)
+            {
+                return;
+            }
+            TechRouteSetService setTechRouteService = new TechRouteSetService();
+            setTechRouteService.SetTechRoute(elements, resultNodesList, false);
+
         }
 
         private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)

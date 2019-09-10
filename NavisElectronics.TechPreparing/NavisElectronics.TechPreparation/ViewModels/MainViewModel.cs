@@ -239,5 +239,59 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId);
         }
 
+        public void CopyTechPreparation(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
+        {
+            IDictionary<long, IntermechTreeElement> registeredElements = new Dictionary<long, IntermechTreeElement>();
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(elementWithout);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+
+                CopyTechPreparation(elementWithTechPrep, elementFromQueue, registeredElements);
+
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+        }
+
+        private void CopyTechPreparation(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout, IDictionary<long, IntermechTreeElement> registeredElements)
+        {
+            if (!registeredElements.ContainsKey(elementWithout.ObjectId))
+            {
+                // ищем все-все узлы из главного дерева c тех. подготовкой, которые совпадают с узлом без тех. подготовки
+                ICollection<IntermechTreeElement> elementsToSetTechPreparation = elementWithTechPrep.Find(elementWithout.ObjectId);
+
+                foreach (IntermechTreeElement element in elementsToSetTechPreparation)
+                {
+                    CopyTechPrepSingle(element, elementWithout);
+                    registeredElements.Add(element.ObjectId, elementWithout);
+                    break;
+                }
+            }
+            else
+            {
+                IntermechTreeElement element = registeredElements[elementWithout.ObjectId];
+                CopyTechPrepSingle(elementWithout, element);
+            }
+        }
+
+        private void CopyTechPrepSingle(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
+        {
+            elementWithout.CooperationFlag = elementWithTechPrep.CooperationFlag;
+            elementWithout.Agent = elementWithTechPrep.Agent;
+            elementWithout.StockRate = elementWithTechPrep.StockRate;
+            elementWithout.SampleSize = elementWithTechPrep.SampleSize;
+            elementWithout.TechProcessReference = elementWithTechPrep.TechProcessReference;
+            elementWithout.Note = elementWithTechPrep.Note;
+            elementWithout.RouteNote = elementWithTechPrep.RouteNote;
+            elementWithout.TechRoute = elementWithTechPrep.TechRoute;
+            elementWithout.ContainsInnerCooperation = elementWithTechPrep.ContainsInnerCooperation;
+            elementWithout.InnerCooperation = elementWithTechPrep.InnerCooperation;
+        }
     }
 }

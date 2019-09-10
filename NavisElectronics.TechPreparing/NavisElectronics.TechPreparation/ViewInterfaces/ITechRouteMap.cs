@@ -11,6 +11,10 @@
     /// </summary>
     public interface ITechRouteMap : IView
     {
+        event EventHandler<EditTechRouteEventArgs> EditMassTechRouteClick;
+
+        event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
+
         /// <summary>
         /// Переход к старому архиву
         /// </summary>
@@ -100,5 +104,7 @@
         /// The <see cref="MyNode"/>.
         /// </returns>
         MyNode GetMainNode();
+
+        TreeViewAdv GetTreeView();
     }
 }
