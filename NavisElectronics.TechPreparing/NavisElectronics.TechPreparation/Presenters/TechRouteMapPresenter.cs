@@ -91,8 +91,18 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.CreateCooperationList += _view_CreateCooperationList;
             _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
+            _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
+        {
+            IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
+            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _techRouteNode);
+            dialog.ShowDialog();
+            _view.GetTreeView().Refresh();
+
         }
 
         private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)
@@ -133,53 +143,8 @@ namespace NavisElectronics.TechPreparation.Presenters
             {
                 return;
             }
-
-
-            foreach (MyNode element in elements)
-            {
-                IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
-                IList<TechRouteNode> nodes = resultNodesList;
-                StringBuilder stringId = new StringBuilder();
-                StringBuilder caption = new StringBuilder();
-                if (e.Append)
-                {
-                    if (nodes.Count > 0)
-                    {
-                        stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
-                        caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
-                    }
-
-                    for (int i = 1; i < nodes.Count; i++)
-                    {
-                        stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
-                        caption.AppendFormat("-{0}", nodes[i].GetCaption());
-                    }
-
-                    string oldTechRouteCodes = treeElement.TechRoute;
-                    string newTechRouteCodes = string.Format("{0}{1}", oldTechRouteCodes, stringId.ToString());
-                    treeElement.TechRoute = newTechRouteCodes;
-
-                    string oldCaption = element.Route;
-                    element.Route = oldCaption + caption;
-                }
-                else
-                {
-                    if (nodes.Count > 0)
-                    {
-                        stringId.Append(nodes[0].Id.ToString());
-                        caption.Append(nodes[0].GetCaption());
-                    }
-
-                    for (int i = 1; i < nodes.Count; i++)
-                    {
-                        stringId.Append(";" + nodes[i].Id.ToString());
-                        caption.Append("-" + nodes[i].GetCaption());
-                    }
-
-                    element.Route = caption.ToString();
-                    treeElement.TechRoute = stringId.ToString();
-                }
-            }
+            TechRouteSetService setTechRouteService = new TechRouteSetService();
+            setTechRouteService.SetTechRoute(elements, resultNodesList, false);
 
         }
 

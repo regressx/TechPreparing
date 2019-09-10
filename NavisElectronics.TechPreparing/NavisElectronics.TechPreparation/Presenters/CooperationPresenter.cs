@@ -232,7 +232,13 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
         }
 
-        private void SetCooperation(bool cooperationFlag, ICollection<CooperationNode> nodes)
+        /// <summary>
+        /// The set cooperation.
+        /// </summary>
+        /// <param name="nodes">
+        /// The nodes.
+        /// </param>
+        private void SetCooperation(ICollection<CooperationNode> nodes)
         {
             IList<CooperationNode> rows = new List<CooperationNode>();
             foreach (CooperationNode myNode in nodes)
@@ -323,12 +329,12 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_DeleteCooperationClick(object sender, MultipleNodesSelectedEventArgs e)
         {
-            SetCooperation(false, e.SelectedNodes);
+            SetCooperation(e.SelectedNodes);
         }
 
         private void _view_SetCooperationClick(object sender, MultipleNodesSelectedEventArgs e)
         {
-            SetCooperation(true, e.SelectedNodes);
+            SetCooperation(e.SelectedNodes);
         }
 
         private void _view_Load(object sender, System.EventArgs e)

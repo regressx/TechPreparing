@@ -107,6 +107,7 @@
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
+    <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
@@ -194,6 +195,12 @@
     </Compile>
     <Compile Include="Views\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TechRouteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TechRouteDialog.Designer.cs">
+      <DependentUpon>TechRouteDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeComparerView.cs">
       <SubType>Form</SubType>
@@ -301,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TechRouteDialog.resx">
+      <DependentUpon>TechRouteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>

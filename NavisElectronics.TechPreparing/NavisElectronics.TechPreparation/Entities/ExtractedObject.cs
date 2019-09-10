@@ -143,6 +143,9 @@ namespace NavisElectronics.TechPreparation.Entities
         /// </summary>
         public string TechTask { get; set; }
 
+        public string TechRoute { get; set; }
+
+
         public T TreeElement
         {
             get { return _intermechTreeElement; }
