@@ -32,16 +32,24 @@
             TenTec.Windows.iGridLib.iGColPattern iGColPattern1 = new TenTec.Windows.iGridLib.iGColPattern();
             TenTec.Windows.iGridLib.iGColPattern iGColPattern2 = new TenTec.Windows.iGridLib.iGColPattern();
             TenTec.Windows.iGridLib.iGColPattern iGColPattern3 = new TenTec.Windows.iGridLib.iGColPattern();
-            this.iGrid1 = new TenTec.Windows.iGridLib.iGrid();
+            TenTec.Windows.iGridLib.iGColPattern iGColPattern4 = new TenTec.Windows.iGridLib.iGColPattern();
             this.iGrid1Col0CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
             this.iGrid1Col0ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
             this.iGrid1Col1CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
             this.iGrid1Col1ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
             this.iGrid1Col2CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
             this.iGrid1Col2ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
+            this.iGrid1 = new TenTec.Windows.iGridLib.iGrid();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.iGrid1Col3CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
+            this.iGrid1Col3ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
             ((System.ComponentModel.ISupportInitialize)(this.iGrid1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // iGrid1Col2CellStyle
+            // 
+            this.iGrid1Col2CellStyle.ImageAlign = TenTec.Windows.iGridLib.iGContentAlignment.MiddleCenter;
+            this.iGrid1Col2CellStyle.Type = TenTec.Windows.iGridLib.iGCellType.Check;
             // 
             // iGrid1
             // 
@@ -57,34 +65,34 @@
             iGColPattern3.ColHdrStyle = this.iGrid1Col2ColHdrStyle;
             iGColPattern3.Text = "Кооперация";
             iGColPattern3.Width = 75;
+            iGColPattern4.CellStyle = this.iGrid1Col3CellStyle;
+            iGColPattern4.ColHdrStyle = this.iGrid1Col3ColHdrStyle;
+            iGColPattern4.Text = "Маршрут";
+            iGColPattern4.Width = 140;
             this.iGrid1.Cols.AddRange(new TenTec.Windows.iGridLib.iGColPattern[] {
             iGColPattern1,
             iGColPattern2,
-            iGColPattern3});
+            iGColPattern3,
+            iGColPattern4});
             this.iGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iGrid1.Location = new System.Drawing.Point(0, 0);
             this.iGrid1.Name = "iGrid1";
             this.iGrid1.ReadOnly = true;
             this.iGrid1.RowMode = true;
             this.iGrid1.SelectionMode = TenTec.Windows.iGridLib.iGSelectionMode.MultiExtended;
-            this.iGrid1.Size = new System.Drawing.Size(381, 365);
+            this.iGrid1.Size = new System.Drawing.Size(522, 365);
             this.iGrid1.TabIndex = 0;
-            // 
-            // iGrid1Col2CellStyle
-            // 
-            this.iGrid1Col2CellStyle.ImageAlign = TenTec.Windows.iGridLib.iGContentAlignment.MiddleCenter;
-            this.iGrid1Col2CellStyle.Type = TenTec.Windows.iGridLib.iGCellType.Check;
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // CooperationDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 365);
+            this.ClientSize = new System.Drawing.Size(522, 365);
             this.Controls.Add(this.iGrid1);
             this.Name = "CooperationDialog";
             this.Text = "CooperationDialog";
@@ -104,5 +112,7 @@
         private TenTec.Windows.iGridLib.iGCellStyle iGrid1Col2CellStyle;
         private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1Col2ColHdrStyle;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private TenTec.Windows.iGridLib.iGCellStyle iGrid1Col3CellStyle;
+        private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1Col3ColHdrStyle;
     }
 }

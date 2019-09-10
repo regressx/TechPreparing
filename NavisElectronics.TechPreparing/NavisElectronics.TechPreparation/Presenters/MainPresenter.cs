@@ -250,13 +250,13 @@ namespace NavisElectronics.TechPreparation.Presenters
             }
 
 
-            IntermechTreeElementWrapper intermechTreeElementWrapper = new IntermechTreeElementWrapper(oldPreparation).Wrap(oldPreparation);
+            IntermechTreeElementAdapter intermechTreeElementWrapper = new IntermechTreeElementAdapter(oldPreparation).Wrap(oldPreparation);
 
             TreeViewSettings settings = new TreeViewSettings();
             settings.AddColumn(new TreeColumn("Обозначение + наименование", 250), "Name");
             settings.ElementToBuild = intermechTreeElementWrapper;
                 
-            StructDialogViewPresenter<ViewNode, IntermechTreeElementWrapper> presenter = new StructDialogViewPresenter<ViewNode, IntermechTreeElementWrapper>(new StructDialogView(), new StructDialogViewModel<ViewNode, IntermechTreeElementWrapper>());
+            StructDialogViewPresenter<ViewNode, IntermechTreeElementAdapter> presenter = new StructDialogViewPresenter<ViewNode, IntermechTreeElementAdapter>(new StructDialogView(), new StructDialogViewModel<ViewNode, IntermechTreeElementAdapter>());
             presenter.Run(settings);
 
             if (settings.Result == null)
@@ -265,7 +265,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             }
 
-            IntermechTreeElementWrapper resultNode = (IntermechTreeElementWrapper)settings.Result;
+            IntermechTreeElementAdapter resultNode = (IntermechTreeElementAdapter)settings.Result;
 
             _model.CopyTechPreparation(resultNode.Root, _rootElement);
         }
@@ -300,7 +300,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
         {
-
             IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>();
             Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
             parameter.AddParameter(_rootElement);
@@ -486,18 +485,18 @@ namespace NavisElectronics.TechPreparation.Presenters
                 // загрузить структуру предприятия из справочника Imbase
                 _organizationStruct = await _model.GetWorkShopsAsync();
 
-                TechRouteNodeWrapper organizationStructWrapper = new TechRouteNodeWrapper(_organizationStruct).Wrap(_organizationStruct);
+                TechRouteNodeAdapter organizationStructWrapper = new TechRouteNodeAdapter(_organizationStruct).Wrap(_organizationStruct);
 
                 TreeViewSettings settings = new TreeViewSettings();
                 settings.AddColumn(new TreeColumn("Наименование", 250), "Name");
                 settings.ElementToBuild = organizationStructWrapper;
                 
-                StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeWrapper>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNodeWrapper>());
+                StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeAdapter> presenter = new StructDialogViewPresenter<TechRouteNodeView, TechRouteNodeAdapter>(new StructDialogView(), new StructDialogViewModel<TechRouteNodeView, TechRouteNodeAdapter>());
                 presenter.Run(settings);
 
                 if (settings.Result != null)
                 {
-                    TechRouteNodeWrapper resultNode = (TechRouteNodeWrapper)settings.Result;
+                    TechRouteNodeAdapter resultNode = (TechRouteNodeAdapter)settings.Result;
                     await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode,ConstHelper.OrganizationStructAttribute, "Структура предприятия");
                 }
                 else
@@ -517,18 +516,18 @@ namespace NavisElectronics.TechPreparation.Presenters
                 // грузим тех. отход из imbase
                 _withdrawalType = await _model.GetWithdrawalTypesAsync();
 
-                WithdrawalTypeWrapper withdrawalTypeWrapper = new WithdrawalTypeWrapper(_withdrawalType).Wrap(_withdrawalType);
+                WithdrawalTypeAdapter withdrawalTypeWrapper = new WithdrawalTypeAdapter(_withdrawalType).Wrap(_withdrawalType);
 
                 TreeViewSettings settings = new TreeViewSettings();
                 settings.AddColumn(new TreeColumn("Наименование", 250), "Name");
                 settings.ElementToBuild = withdrawalTypeWrapper;
                 
-                StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeWrapper> presenter = new StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeWrapper>(new StructDialogView(), new StructDialogViewModel<WithdrawalTypeNodeView, WithdrawalTypeWrapper>());
+                StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeAdapter> presenter = new StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeAdapter>(new StructDialogView(), new StructDialogViewModel<WithdrawalTypeNodeView, WithdrawalTypeAdapter>());
                 presenter.Run(settings);
 
                 if (settings.Result != null)
                 {
-                    WithdrawalTypeWrapper resultNode = (WithdrawalTypeWrapper)settings.Result;
+                    WithdrawalTypeAdapter resultNode = (WithdrawalTypeAdapter)settings.Result;
                     await _model.WriteBlobAttributeAsync<WithdrawalType>(_rootVersionId, resultNode.WithdrawalType,ConstHelper.WithdrawalTypeFileAttribute, "Тип тех. отхода");
                 }
                 else

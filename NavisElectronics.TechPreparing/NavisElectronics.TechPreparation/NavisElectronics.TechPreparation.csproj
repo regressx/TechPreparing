@@ -88,9 +88,9 @@
     <Compile Include="CommonModule.cs" />
     <Compile Include="Entities\ExtractedObject.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
-    <Compile Include="Entities\IntermechTreeElementWrapper.cs" />
-    <Compile Include="Entities\TechRouteNodeWrapper.cs" />
-    <Compile Include="Entities\WithdrawalTypeWrapper.cs" />
+    <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
+    <Compile Include="Entities\TechRouteNodeAdapter.cs" />
+    <Compile Include="Entities\WithdrawalTypeAdapter.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
@@ -368,7 +368,9 @@
       <Name>NavisElectronics.TechPreparation.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\road.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

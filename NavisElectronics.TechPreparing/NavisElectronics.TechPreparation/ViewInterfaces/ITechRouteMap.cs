@@ -11,6 +11,8 @@
     /// </summary>
     public interface ITechRouteMap : IView
     {
+        event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
+
         /// <summary>
         /// Переход к старому архиву
         /// </summary>

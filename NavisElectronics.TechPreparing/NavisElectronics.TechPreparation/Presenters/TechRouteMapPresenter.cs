@@ -7,14 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
     using Aga.Controls.Tree;
     using Entities;
     using EventArguments;
@@ -91,8 +90,97 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetInnerCooperation += View_SetInnerCooperation;
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.CreateCooperationList += _view_CreateCooperationList;
+            _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)
+        {
+
+            ICollection<MyNode> elements = new List<MyNode>();
+
+            Queue<MyNode> queue = new Queue<MyNode>();
+            queue.Enqueue(_view.GetMainNode());
+
+            while (queue.Count > 0)
+            {
+                MyNode nodeFromQueue = queue.Dequeue();
+                if (nodeFromQueue.CooperationFlag)
+                {
+                    elements.Add(nodeFromQueue);
+                }
+
+                foreach (var currentNode in nodeFromQueue.Nodes)
+                {
+
+                    queue.Enqueue((MyNode)currentNode);
+                }
+            }
+
+            if (elements.Count == 0)
+            {
+                return;
+            }
+
+
+            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
+            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
+
+            presenter.Run(_techRouteNode, resultNodesList);
+
+            if (resultNodesList.Count == 0)
+            {
+                return;
+            }
+
+
+            foreach (MyNode element in elements)
+            {
+                IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
+                IList<TechRouteNode> nodes = resultNodesList;
+                StringBuilder stringId = new StringBuilder();
+                StringBuilder caption = new StringBuilder();
+                if (e.Append)
+                {
+                    if (nodes.Count > 0)
+                    {
+                        stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
+                        caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
+                    }
+
+                    for (int i = 1; i < nodes.Count; i++)
+                    {
+                        stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
+                        caption.AppendFormat("-{0}", nodes[i].GetCaption());
+                    }
+
+                    string oldTechRouteCodes = treeElement.TechRoute;
+                    string newTechRouteCodes = string.Format("{0}{1}", oldTechRouteCodes, stringId.ToString());
+                    treeElement.TechRoute = newTechRouteCodes;
+
+                    string oldCaption = element.Route;
+                    element.Route = oldCaption + caption;
+                }
+                else
+                {
+                    if (nodes.Count > 0)
+                    {
+                        stringId.Append(nodes[0].Id.ToString());
+                        caption.Append(nodes[0].GetCaption());
+                    }
+
+                    for (int i = 1; i < nodes.Count; i++)
+                    {
+                        stringId.Append(";" + nodes[i].Id.ToString());
+                        caption.Append("-" + nodes[i].GetCaption());
+                    }
+
+                    element.Route = caption.ToString();
+                    treeElement.TechRoute = stringId.ToString();
+                }
+            }
+
         }
 
         private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)

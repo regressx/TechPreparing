@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
@@ -50,10 +48,6 @@
             this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
             this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.SetTechRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createNewRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.addIntoExistingRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SetInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
             this.EditNote = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,10 +66,17 @@
             this.innerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.ContainsInnerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.pcbCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.pcbVersionTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.SetTechRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.addIntoExistingRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DefaultCoopRouteButton = new System.Windows.Forms.ToolStripButton();
+            this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
+            this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +84,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DefaultCoopRouteButton,
             this.ExpandAllButton,
             this.CollapseAllButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -90,26 +92,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(1473, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // ExpandAllButton
-            // 
-            this.ExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ExpandAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_flow_chart_16;
-            this.ExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ExpandAllButton.Name = "ExpandAllButton";
-            this.ExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.ExpandAllButton.Text = "Раскрыть все узлы";
-            this.ExpandAllButton.Click += new System.EventHandler(this.ExpandAllButton_Click);
-            // 
-            // CollapseAllButton
-            // 
-            this.CollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CollapseAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_simple_tree_16;
-            this.CollapseAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CollapseAllButton.Name = "CollapseAllButton";
-            this.CollapseAllButton.Size = new System.Drawing.Size(23, 22);
-            this.CollapseAllButton.Text = "Свернуть все узлы";
-            this.CollapseAllButton.Click += new System.EventHandler(this.CollapseAllButton_Click);
             // 
             // treeViewAdv
             // 
@@ -287,38 +269,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
             // 
-            // SetTechRouteMenuItem
-            // 
-            this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createNewRouteButton,
-            this.addIntoExistingRouteButton});
-            this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
-            this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
-            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.SetTechRouteMenuItem.Text = "Маршрут изготовления";
-            // 
-            // createNewRouteButton
-            // 
-            this.createNewRouteButton.Name = "createNewRouteButton";
-            this.createNewRouteButton.Size = new System.Drawing.Size(221, 22);
-            this.createNewRouteButton.Text = "Создать новый";
-            this.createNewRouteButton.Click += new System.EventHandler(this.createNewRouteButton_Click);
-            // 
-            // addIntoExistingRouteButton
-            // 
-            this.addIntoExistingRouteButton.Name = "addIntoExistingRouteButton";
-            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(221, 22);
-            this.addIntoExistingRouteButton.Text = "Добавить к существующему";
-            this.addIntoExistingRouteButton.Click += new System.EventHandler(this.addIntoExistingRouteButton_Click);
-            // 
-            // deleteRouteMenuItem
-            // 
-            this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
-            this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
-            this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.deleteRouteMenuItem.Text = "Удалить маршрут";
-            this.deleteRouteMenuItem.Click += new System.EventHandler(this.deleteRouteMenuItem_Click);
-            // 
             // SetInnerCooperationButton
             // 
             this.SetInnerCooperationButton.Enabled = false;
@@ -450,6 +400,20 @@
             this.textBoxNote.LeftMargin = 3;
             this.textBoxNote.ParentColumn = this.noteTreeColumn;
             // 
+            // pcbCheckBox
+            // 
+            this.pcbCheckBox.DataPropertyName = "IsPcb";
+            this.pcbCheckBox.IncrementalSearchEnabled = true;
+            this.pcbCheckBox.LeftMargin = 3;
+            this.pcbCheckBox.ParentColumn = this.isPcbTreeColumn;
+            // 
+            // pcbVersionTextBox
+            // 
+            this.pcbVersionTextBox.DataPropertyName = "PcbVersion";
+            this.pcbVersionTextBox.IncrementalSearchEnabled = true;
+            this.pcbVersionTextBox.LeftMargin = 3;
+            this.pcbVersionTextBox.ParentColumn = this.pcbVersionTreeColumn;
+            // 
             // textBoxSubstitute
             // 
             this.textBoxSubstitute.DataPropertyName = "SubInfo";
@@ -464,19 +428,67 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
-            // pcbCheckBox
+            // SetTechRouteMenuItem
             // 
-            this.pcbCheckBox.DataPropertyName = "IsPcb";
-            this.pcbCheckBox.IncrementalSearchEnabled = true;
-            this.pcbCheckBox.LeftMargin = 3;
-            this.pcbCheckBox.ParentColumn = this.isPcbTreeColumn;
+            this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createNewRouteButton,
+            this.addIntoExistingRouteButton});
+            this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
+            this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
+            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.SetTechRouteMenuItem.Text = "Маршрут изготовления";
             // 
-            // pcbVersionTextBox
+            // createNewRouteButton
             // 
-            this.pcbVersionTextBox.DataPropertyName = "PcbVersion";
-            this.pcbVersionTextBox.IncrementalSearchEnabled = true;
-            this.pcbVersionTextBox.LeftMargin = 3;
-            this.pcbVersionTextBox.ParentColumn = this.pcbVersionTreeColumn;
+            this.createNewRouteButton.Name = "createNewRouteButton";
+            this.createNewRouteButton.Size = new System.Drawing.Size(221, 22);
+            this.createNewRouteButton.Text = "Создать новый";
+            this.createNewRouteButton.Click += new System.EventHandler(this.createNewRouteButton_Click);
+            // 
+            // addIntoExistingRouteButton
+            // 
+            this.addIntoExistingRouteButton.Name = "addIntoExistingRouteButton";
+            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(221, 22);
+            this.addIntoExistingRouteButton.Text = "Добавить к существующему";
+            this.addIntoExistingRouteButton.Click += new System.EventHandler(this.addIntoExistingRouteButton_Click);
+            // 
+            // deleteRouteMenuItem
+            // 
+            this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
+            this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
+            this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.deleteRouteMenuItem.Text = "Удалить маршрут";
+            this.deleteRouteMenuItem.Click += new System.EventHandler(this.deleteRouteMenuItem_Click);
+            // 
+            // DefaultCoopRouteButton
+            // 
+            this.DefaultCoopRouteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DefaultCoopRouteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
+            this.DefaultCoopRouteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DefaultCoopRouteButton.Name = "DefaultCoopRouteButton";
+            this.DefaultCoopRouteButton.Size = new System.Drawing.Size(23, 22);
+            this.DefaultCoopRouteButton.Text = "Проставить кооперации путь по умолчанию";
+            this.DefaultCoopRouteButton.Click += new System.EventHandler(this.DefaultCoopRouteButton_Click);
+            // 
+            // ExpandAllButton
+            // 
+            this.ExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ExpandAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_flow_chart_16;
+            this.ExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ExpandAllButton.Name = "ExpandAllButton";
+            this.ExpandAllButton.Size = new System.Drawing.Size(23, 22);
+            this.ExpandAllButton.Text = "Раскрыть все узлы";
+            this.ExpandAllButton.Click += new System.EventHandler(this.ExpandAllButton_Click);
+            // 
+            // CollapseAllButton
+            // 
+            this.CollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CollapseAllButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_simple_tree_16;
+            this.CollapseAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CollapseAllButton.Name = "CollapseAllButton";
+            this.CollapseAllButton.Size = new System.Drawing.Size(23, 22);
+            this.CollapseAllButton.Text = "Свернуть все узлы";
+            this.CollapseAllButton.Click += new System.EventHandler(this.CollapseAllButton_Click);
             // 
             // TechRoutesMap
             // 
@@ -544,5 +556,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbCheckBox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbVersionTextBox;
+        private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
     }
 }

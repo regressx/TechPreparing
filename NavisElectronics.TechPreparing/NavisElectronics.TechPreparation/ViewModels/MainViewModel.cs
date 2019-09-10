@@ -280,7 +280,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public void CopyTechPrepSingle(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
+        private void CopyTechPrepSingle(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
         {
             elementWithout.CooperationFlag = elementWithTechPrep.CooperationFlag;
             elementWithout.Agent = elementWithTechPrep.Agent;

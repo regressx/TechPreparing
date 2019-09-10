@@ -29,6 +29,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
+        public event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
         public event EventHandler<SaveClickEventArgs> GoToOldArchive;
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
@@ -267,6 +268,15 @@ namespace NavisElectronics.TechPreparation.Views
                 }
 
                 temp(sender, new ClipboardEventArgs(nodes));
+            }
+        }
+
+        private void DefaultCoopRouteButton_Click(object sender, EventArgs e)
+        {
+            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref SetCooperationNodesDefaultRoute);
+            if (temp != null)
+            {
+                temp(sender, new EditTechRouteEventArgs(false));
             }
         }
     }
