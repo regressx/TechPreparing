@@ -109,7 +109,7 @@ namespace NavisElectronics.TechPreparation.Views
         {
             foreach (ToolStripItem button in toolStrip.Items)
             {
-                if (button.Name != "MainMaterialsButton" && button.Name != "standartsButton")
+                if (button.Name != "MainMaterialsButton" && button.Name != "standartsButton" && button.Name !="SetTechWithdrawalButton")
                 {
                     button.Enabled = true;
                 }
