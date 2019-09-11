@@ -202,7 +202,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private void View_RemoveInnerCooperation(object sender, ClipboardEventArgs e)
         {
-            //SetParametersService parametersService = new SetParametersService(_element);
 
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (MyNode myNode in e.Nodes)
@@ -210,16 +209,21 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
 
-            //parametersService.SetInnerCooperationValue(rows, false);
+            foreach (IntermechTreeElement element in rows)
+            {
+                _model.SetInnerCooperation(element, false);
+            }
 
+
+            // проходим по дереву и расставляем галки внутрипроизводственной кооперации уже на объекты View
             Queue<MyNode> queue = new Queue<MyNode>();
             queue.Enqueue(_view.GetMainNode());
             while (queue.Count > 0)
             {
                 MyNode nodeFromQueue = queue.Dequeue();
-                IntermechTreeElement intermechElement = nodeFromQueue.Tag as IntermechTreeElement;
+                IntermechTreeElement intermechElement = (IntermechTreeElement)nodeFromQueue.Tag;
                 nodeFromQueue.InnerCooperation = intermechElement.InnerCooperation;
-
+                nodeFromQueue.ContainsInnerCooperation = intermechElement.ContainsInnerCooperation;
                 if (nodeFromQueue.Nodes.Count > 0)
                 {
                     foreach (Node coopNode in nodeFromQueue.Nodes)
@@ -238,15 +242,20 @@ namespace NavisElectronics.TechPreparation.Presenters
                 rows.Add(myNode.Tag as IntermechTreeElement);
             }
 
+            foreach (IntermechTreeElement element in rows)
+            {
+                _model.SetInnerCooperation(element, true);
+            }
+
             // проходим по дереву и расставляем галки внутрипроизводственной кооперации уже на объекты View
             Queue<MyNode> queue = new Queue<MyNode>();
             queue.Enqueue(_view.GetMainNode());
             while (queue.Count > 0)
             {
                 MyNode nodeFromQueue = queue.Dequeue();
-                IntermechTreeElement intermechElement = nodeFromQueue.Tag as IntermechTreeElement;
+                IntermechTreeElement intermechElement = (IntermechTreeElement)nodeFromQueue.Tag;
                 nodeFromQueue.InnerCooperation = intermechElement.InnerCooperation;
-
+                nodeFromQueue.ContainsInnerCooperation = intermechElement.ContainsInnerCooperation;
                 if (nodeFromQueue.Nodes.Count > 0)
                 {
                     foreach (Node coopNode in nodeFromQueue.Nodes)

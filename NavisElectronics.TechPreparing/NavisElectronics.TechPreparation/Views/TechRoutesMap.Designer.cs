@@ -280,7 +280,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 340);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 362);
             // 
             // ShowButton
             // 
@@ -342,7 +342,6 @@
             // 
             // SetInnerCooperationButton
             // 
-            this.SetInnerCooperationButton.Enabled = false;
             this.SetInnerCooperationButton.Name = "SetInnerCooperationButton";
             this.SetInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
             this.SetInnerCooperationButton.Text = "Отметить внутрипроизв. кооп.";
@@ -350,7 +349,6 @@
             // 
             // RemoveInnerCooperationButton
             // 
-            this.RemoveInnerCooperationButton.Enabled = false;
             this.RemoveInnerCooperationButton.Name = "RemoveInnerCooperationButton";
             this.RemoveInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
             this.RemoveInnerCooperationButton.Text = "Убрать внутрипроизв. кооп.";

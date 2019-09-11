@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Reports
+﻿using System;
+
+namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
     using Aga.Controls.Tree;
@@ -32,8 +34,19 @@
         public void Create(Node mainElement, string name)
         {
             MyNode myNode = (MyNode)mainElement;
-            IntermechTreeElement root = (IntermechTreeElement)myNode.Tag;
-            string mainAgent = root.Agent;
+            IntermechTreeElement parentElement = ((IntermechTreeElement)myNode.Tag).Parent;
+
+            string mainAgent = myNode.Agent;
+            
+            // подняться вверх до заказа и посмотреть, кто главный в заказе
+            while (parentElement != null)
+            {
+                mainAgent = parentElement.Agent;
+                parentElement = parentElement.Parent;
+            }
+
+
+
             long newObjectId = -1;
             IDBObject myTestDbObject;
             using (SessionKeeper keeper = new SessionKeeper())
@@ -64,14 +77,13 @@
             // Генерация внутренних элементов документа должна проходить на основе внутреннего шаблона документа
             docTemplate = mainDocument.DocumentTemplate as ImDocument;
 
-
             TextData deviceDesignationText = mainDocument.FindNode("DeviceDesignation") as TextData;
             deviceDesignationText.AssignText(myNode.Designation, false, false, false);
 
             TextData deviceName = mainDocument.FindNode("DeviceName") as TextData;
             deviceName.AssignText(myNode.Name, false, false, false);
 
-            // хочу заполнить графу производителя в заголовке, хочу заметить, что следует сделать это в копии шаблона документа, а не просто в документе
+            // хочу заполнить графу производителя в заголовке. Надо заметить, что следует сделать это в копии шаблона документа, а не просто в документе
             TableData tableHeader = docTemplate.FindNode("TableHeader") as TableData;
             TextData manufacturerNode = tableHeader.FindNode("Manufacturer") as TextData;
             manufacturerNode.AssignText(mainAgent, false, false, false);
@@ -85,7 +97,6 @@
 
             // делаем глубокую копию дерева, но не всего, а лишь тех узлов, которые подходят под условие
             MyNode deepCopyNode = GetNodeDeepCopy(myNode);
-
 
             // после всего этого отмапим его на список
             MapTreeOnListService treeOnListService = new MapTreeOnListService();
@@ -102,12 +113,20 @@
                 TextData captionCell = rowInstanse.Nodes[1] as TextData;
                 captionCell.AssignText(string.Format("{0} {1}", product.Name, product.Designation), false, false, false);
 
-                TextData agentCell = rowInstanse.Nodes[2] as TextData;
+                TextData agentCell = rowInstanse.Nodes[3] as TextData;
+
                 agentCell.AssignText(product.Agent, false, false, false);
 
-                if (product.Agent == null)
+                // сотрем, если совпадает с изготовителем заказа
+                if (product.Agent == mainAgent)
                 {
-                    TextData manufacturerCell = rowInstanse.Nodes[3] as TextData;
+                    agentCell.AssignText(string.Empty, false, false, false);
+                }
+
+                // если изготовитель отсутствует или равен mainAgent, отмечает +
+                if (product.Agent == null || product.Agent == mainAgent)
+                {
+                    TextData manufacturerCell = rowInstanse.Nodes[2] as TextData;
                     manufacturerCell.AssignText("+", false, false, false);
                 }
 
@@ -160,25 +179,23 @@
 
         private void GetNodeDeepCopyRecursive(MyNode node, MyNode nodeToCopy)
         {
-            if (nodeToCopy.Nodes.Count > 0)
+            if (nodeToCopy.ContainsInnerCooperation || nodeToCopy.IsMultipleAgents)
             {
                 foreach (var node1 in nodeToCopy.Nodes)
                 {
                     var childNode = (MyNode)node1;
 
-                    if (childNode.AnotherAgent)
+                    MyNode newNode = null;
+                    
+                    // добавить кооперационный элемент
+                    if (childNode.AnotherAgent || childNode.ContainsInnerCooperation)
                     {
-                        MyNode newNode = CreateNewNode(childNode);
+                        newNode = CreateNewNode(childNode);
                         node.Nodes.Add(newNode);
                     }
 
-                    // если уровень выше, то надо уже по ситуации смотреть.
-                    // Если несколько изготовителей у узла, то его раскрываем,
-                    // также раскрываем, если элемент с внутрипроизводственной кооперацией
-                    if (childNode.IsMultipleAgents || childNode.ContainsInnerCooperation)
+                    if (newNode != null)
                     {
-                        MyNode newNode = CreateNewNode(childNode);
-                        node.Nodes.Add(newNode);
                         GetNodeDeepCopyRecursive(newNode, childNode);
                     }
 

@@ -90,6 +90,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             TreeModel model = new TreeModel();
             MyNode mainNode = CreateNode(root);
+            mainNode.Agent = agents[long.Parse(mainNode.Agent)].Name;
             BuildNodeRecursive(mainNode, root, root.Agent, techRouteNode, agents);
             model.Nodes.Add(mainNode);
             return model;
@@ -276,6 +277,18 @@ namespace NavisElectronics.TechPreparation.ViewModels
         }
 
 
+        public void SetInnerCooperation(IntermechTreeElement element, bool value)
+        {
+            element.InnerCooperation = value;
+            element.ContainsInnerCooperation = value;
+            IntermechTreeElement parent = element.Parent;
 
+            while (parent != null)
+            {
+                parent.ContainsInnerCooperation = value;
+                parent = parent.Parent;
+            }
+
+        }
     }
 }
