@@ -63,7 +63,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// </returns>
         public Task<IntermechTreeElement> GetFullOrderAsync(long versionId, CancellationToken token)
         {
-            return Task.Run(() => GetFullOrder(versionId));
+            return Task.Run(() => GetFullOrder(versionId, token));
         }
 
         /// <summary>
@@ -80,6 +80,12 @@ namespace NavisElectronics.TechPreparation.Data
             return GetFullOrderAsync(versionId, CancellationToken.None);
         }
 
+
+        public IntermechTreeElement GetFullOrder(long versionId)
+        {
+            return GetFullOrder(versionId, CancellationToken.None);
+        }
+
         /// <summary>
         /// Метод получения заказа
         /// </summary>
@@ -89,7 +95,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
         /// </returns>
-        public IntermechTreeElement GetFullOrder(long versionId)
+        private IntermechTreeElement GetFullOrder(long versionId, CancellationToken token)
         {
             IDictionary<long, IntermechTreeElement> downloadedParts = new Dictionary<long, IntermechTreeElement>();
             IntermechTreeElement orderElement = new IntermechTreeElement();
@@ -110,7 +116,7 @@ namespace NavisElectronics.TechPreparation.Data
             orderElement.TotalAmount = orderElement.StockRate * orderElement.AmountWithUse;
 
             // загрузка всего остального дерева
-            FetchNodeRecursive(orderElement, downloadedParts);
+            FetchNodeRecursive(orderElement, downloadedParts, token);
 
             // расчет применяемостей
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
@@ -134,6 +140,11 @@ namespace NavisElectronics.TechPreparation.Data
             return orderElement;
         }
 
+        public ICollection<IntermechTreeElement> Read(long id)
+        {
+            return Read(id, CancellationToken.None);
+        }
+
         /// <summary>
         /// Метод получения состава изделия по его идентификатору версии объекта
         /// </summary>
@@ -143,8 +154,9 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        public ICollection<IntermechTreeElement> Read(long id)
+        private ICollection<IntermechTreeElement> Read(long id, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             ICollection<IntermechTreeElement> elements = new List<IntermechTreeElement>();
             using (SessionKeeper keeper = new SessionKeeper())
             {
@@ -842,7 +854,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <param name="fetchedElements">
         /// Зарегистрированные уже загруженные элементы
         /// </param>
-        private void FetchNodeRecursive(IntermechTreeElement elementToFetch, IDictionary<long, IntermechTreeElement> fetchedElements)
+        private void FetchNodeRecursive(IntermechTreeElement elementToFetch, IDictionary<long, IntermechTreeElement> fetchedElements, CancellationToken token)
         {
             // читаем состав
             IEnumerable<IntermechTreeElement> elements = null;
@@ -895,7 +907,7 @@ namespace NavisElectronics.TechPreparation.Data
                 // если у объекта есть состав, то спускаемся рекурсивно
                 if (element.Type == 1019 || element.Type == 1078 || element.Type == 1074 || element.Type == 1097)
                 {
-                    FetchNodeRecursive(element, fetchedElements);
+                    FetchNodeRecursive(element, fetchedElements, token);
                 }
             }
         }

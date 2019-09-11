@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.Orders
 {
@@ -9,7 +11,7 @@ namespace NavisElectronics.Orders
     {
         private readonly IMainView _view;
         private CancellationToken _token;
-
+        private long _orderVersionId;
         public MainFormPresenter(IMainView view)
         {
             _view = view;
@@ -18,12 +20,14 @@ namespace NavisElectronics.Orders
 
         private async void View_Load(object sender, System.EventArgs e)
         {
-            await Task.Delay(-1, _token);
-            MessageBox.Show("Задача прервана");
+            IntermechReader reader = new IntermechReader();
+            IntermechTreeElement root = await reader.GetFullOrderAsync(_orderVersionId, _token);
+            MessageBox.Show(root.Name);
         }
 
         public void Run(long parameter, CancellationToken token)
         {
+            _orderVersionId = parameter;
             _token = token;
             _view.Show();
         }

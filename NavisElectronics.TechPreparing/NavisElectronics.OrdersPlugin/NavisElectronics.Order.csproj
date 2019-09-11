@@ -80,6 +80,16 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
+      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
+      <Name>NavisElectronics.TechPreparation.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
+      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
+      <Name>NavisElectronics.TechPreparation.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
