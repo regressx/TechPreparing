@@ -127,6 +127,13 @@
             }
 
             mainDocument.UpdateLayout(true);
+
+            // добавляем лист регистрации изменений
+            DocumentTreeNode regListInstance = null;
+            DocumentTreeNode regList = docTemplate.FindNode("LRI");
+            regListInstance = regList.CloneFromTemplate();
+            mainDocument.AddChildNode(regListInstance, false, false);
+
             DocumentEditorPlugin.SaveImDocumentObjectFile(newObjectId, mainDocument, name, 0, false);
             using (SessionKeeper keeper = new SessionKeeper())
             {

@@ -3,6 +3,7 @@ using System.Threading;
 using Intermech.Extensions;
 using Intermech.Navigator.ContextMenu;
 using Intermech.Navigator.Interfaces;
+using NavisElectronics.Orders.ViewModels;
 
 namespace NavisElectronics.Orders
 {
@@ -39,7 +40,7 @@ namespace NavisElectronics.Orders
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
             CancellationTokenSource tokenSource = new CancellationTokenSource();
-            IPresenter<long, CancellationToken> mainPResenter = new MainFormPresenter(new MainForm(tokenSource));
+            IPresenter<long, CancellationToken> mainPResenter = new MainFormPresenter(new MainForm(tokenSource), new MainFormModel());
             mainPResenter.Run(id, tokenSource.Token);
         }
 

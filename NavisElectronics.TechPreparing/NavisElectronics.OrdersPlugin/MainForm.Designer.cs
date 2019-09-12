@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.treeViewAdv1 = new Aga.Controls.Tree.TreeViewAdv();
-            this.treeColumn1 = new Aga.Controls.Tree.TreeColumn();
-            this.treeColumn2 = new Aga.Controls.Tree.TreeColumn();
-            this.treeColumn3 = new Aga.Controls.Tree.TreeColumn();
-            this.treeColumn4 = new Aga.Controls.Tree.TreeColumn();
+            this.designationColumn = new Aga.Controls.Tree.TreeColumn();
+            this.nameColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amountColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amountWithUseColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,55 +41,73 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.saveORderButton = new System.Windows.Forms.ToolStripButton();
+            this.saveInfoLabel = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.designationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nameTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.amountTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.contextMenuStrip.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeViewAdv1
             // 
             this.treeViewAdv1.BackColor = System.Drawing.SystemColors.Window;
-            this.treeViewAdv1.ColumnHeaderHeight = 0;
-            this.treeViewAdv1.Columns.Add(this.treeColumn1);
-            this.treeViewAdv1.Columns.Add(this.treeColumn2);
-            this.treeViewAdv1.Columns.Add(this.treeColumn3);
-            this.treeViewAdv1.Columns.Add(this.treeColumn4);
+            this.treeViewAdv1.ColumnHeaderHeight = 25;
+            this.treeViewAdv1.Columns.Add(this.designationColumn);
+            this.treeViewAdv1.Columns.Add(this.nameColumn);
+            this.treeViewAdv1.Columns.Add(this.amountColumn);
+            this.treeViewAdv1.Columns.Add(this.amountWithUseColumn);
             this.treeViewAdv1.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv1.DefaultToolTipProvider = null;
             this.treeViewAdv1.DragDropMarkColor = System.Drawing.Color.Black;
             this.treeViewAdv1.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.treeViewAdv1.Location = new System.Drawing.Point(12, 12);
+            this.treeViewAdv1.Location = new System.Drawing.Point(12, 38);
             this.treeViewAdv1.Model = null;
             this.treeViewAdv1.Name = "treeViewAdv1";
+            this.treeViewAdv1.NodeControls.Add(this.designationTextBox);
+            this.treeViewAdv1.NodeControls.Add(this.nameTextBox);
+            this.treeViewAdv1.NodeControls.Add(this.amountTextBox);
+            this.treeViewAdv1.NodeControls.Add(this.amountWithUseTextBox);
             this.treeViewAdv1.NodeFilter = null;
             this.treeViewAdv1.SelectedNode = null;
-            this.treeViewAdv1.Size = new System.Drawing.Size(759, 249);
+            this.treeViewAdv1.Size = new System.Drawing.Size(759, 327);
             this.treeViewAdv1.TabIndex = 0;
             this.treeViewAdv1.Text = "treeViewAdv";
+            this.treeViewAdv1.UseColumns = true;
             // 
-            // treeColumn1
+            // designationColumn
             // 
-            this.treeColumn1.Header = "";
-            this.treeColumn1.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumn1.TooltipText = null;
+            this.designationColumn.Header = "Обозначение";
+            this.designationColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.designationColumn.TooltipText = null;
+            this.designationColumn.Width = 150;
             // 
-            // treeColumn2
+            // nameColumn
             // 
-            this.treeColumn2.Header = "";
-            this.treeColumn2.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumn2.TooltipText = null;
+            this.nameColumn.Header = "Наименование";
+            this.nameColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.nameColumn.TooltipText = null;
+            this.nameColumn.Width = 250;
             // 
-            // treeColumn3
+            // amountColumn
             // 
-            this.treeColumn3.Header = "";
-            this.treeColumn3.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumn3.TooltipText = null;
+            this.amountColumn.Header = "Кол-во по СП";
+            this.amountColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.amountColumn.TooltipText = null;
+            this.amountColumn.Width = 75;
             // 
-            // treeColumn4
+            // amountWithUseColumn
             // 
-            this.treeColumn4.Header = "";
-            this.treeColumn4.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.treeColumn4.TooltipText = null;
+            this.amountWithUseColumn.Header = "Кол-во с прим.";
+            this.amountWithUseColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.amountWithUseColumn.TooltipText = null;
+            this.amountWithUseColumn.Width = 75;
             // 
             // contextMenuStrip
             // 
@@ -99,7 +117,7 @@
             this.toolStripMenuItem3,
             this.toolStripMenuItem4});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(186, 92);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 114);
             // 
             // toolStripMenuItem1
             // 
@@ -125,42 +143,106 @@
             this.toolStripMenuItem5,
             this.toolStripMenuItem6});
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(185, 22);
-            this.toolStripMenuItem4.Text = "Создать отчет";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(245, 22);
+            this.toolStripMenuItem4.Text = "Создать отчет по составу заказа";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "в Excel";
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveORderButton,
+            this.saveInfoLabel,
+            this.toolStripProgressBar1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(783, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // saveORderButton
+            // 
+            this.saveORderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveORderButton.Image = global::NavisElectronics.Orders.Properties.Resources.if_stock_save_20659;
+            this.saveORderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveORderButton.Name = "saveORderButton";
+            this.saveORderButton.Size = new System.Drawing.Size(23, 22);
+            this.saveORderButton.Text = "Сохранить";
+            // 
+            // saveInfoLabel
+            // 
+            this.saveInfoLabel.Name = "saveInfoLabel";
+            this.saveInfoLabel.Size = new System.Drawing.Size(76, 22);
+            this.saveInfoLabel.Text = "Не сохранено";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
+            // 
+            // designationTextBox
+            // 
+            this.designationTextBox.DataPropertyName = "Designation";
+            this.designationTextBox.IncrementalSearchEnabled = true;
+            this.designationTextBox.LeftMargin = 3;
+            this.designationTextBox.ParentColumn = this.designationColumn;
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.DataPropertyName = "Name";
+            this.nameTextBox.IncrementalSearchEnabled = true;
+            this.nameTextBox.LeftMargin = 3;
+            this.nameTextBox.ParentColumn = this.nameColumn;
+            // 
+            // amountTextBox
+            // 
+            this.amountTextBox.DataPropertyName = "Amount";
+            this.amountTextBox.IncrementalSearchEnabled = true;
+            this.amountTextBox.LeftMargin = 3;
+            this.amountTextBox.ParentColumn = this.amountColumn;
+            // 
+            // amountWithUseTextBox
+            // 
+            this.amountWithUseTextBox.DataPropertyName = "AmountWithUse";
+            this.amountWithUseTextBox.IncrementalSearchEnabled = true;
+            this.amountWithUseTextBox.LeftMargin = 3;
+            this.amountWithUseTextBox.ParentColumn = this.amountWithUseColumn;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 273);
+            this.ClientSize = new System.Drawing.Size(783, 377);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.treeViewAdv1);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.contextMenuStrip.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
-        private Aga.Controls.Tree.TreeColumn treeColumn1;
-        private Aga.Controls.Tree.TreeColumn treeColumn2;
-        private Aga.Controls.Tree.TreeColumn treeColumn3;
-        private Aga.Controls.Tree.TreeColumn treeColumn4;
+        private Aga.Controls.Tree.TreeColumn designationColumn;
+        private Aga.Controls.Tree.TreeColumn nameColumn;
+        private Aga.Controls.Tree.TreeColumn amountColumn;
+        private Aga.Controls.Tree.TreeColumn amountWithUseColumn;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
@@ -168,5 +250,13 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton saveORderButton;
+        private System.Windows.Forms.ToolStripLabel saveInfoLabel;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox designationTextBox;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nameTextBox;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox amountTextBox;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox amountWithUseTextBox;
     }
 }

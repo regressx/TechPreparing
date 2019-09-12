@@ -137,10 +137,10 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
 
                 TextData totalCell = rowInstanse.FindNode("Total") as TextData;
-                totalCell.AssignText(string.Format("{0:F3}", total).Trim(), false, false, false);
+                totalCell.AssignText(string.Format("{0:F0}", total).Trim(), false, false, false);
 
                 TextData stockRateCell = rowInstanse.FindNode("StockRate") as TextData;
-                stockRateCell.AssignText(string.Format("{0:F3}", commonObject.StockRate).Trim(), false, false, false);
+                stockRateCell.AssignText(string.Format("{0:F2}", commonObject.StockRate).Trim(), false, false, false);
 
                 TextData sampleSizeCell = rowInstanse.FindNode("SampleSize") as TextData;
                 sampleSizeCell.AssignText(string.Format("{0}", commonObject.SampleSize).Trim(), false, false, false);
@@ -172,7 +172,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                         TextData amountCell = parentRowInstance.FindNode("Amount") as TextData;
                         if (amountCell != null)
                         {
-                            amountCell.AssignText(string.Format("{0:F3}", parent.Amount).Trim(), false, false, false);
+                            amountCell.AssignText(string.Format("{0:F0}", parent.Amount).Trim(), false, false, false);
                         }
 
                     }
@@ -182,7 +182,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                         TextData amountWithUseCell = parentRowInstance.FindNode("AmountInOrder") as TextData;
                         if (amountWithUseCell != null)
                         {
-                            amountWithUseCell.AssignText(string.Format("{0:F3}", parent.AmountWithUse).Trim(), false, false,
+                            amountWithUseCell.AssignText(string.Format("{0:F0}", parent.AmountWithUse).Trim(), false, false,
                                 false);
                         }
                     }
@@ -221,7 +221,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                 measureUnitsCell.AssignText(string.Format("{0}", pcbObject.MeasureUnits).Trim(), false, false, false);
 
                 TextData stockRateCell = rowInstanse.FindNode("StockRatePCB") as TextData;
-                stockRateCell.AssignText(string.Format("{0:F3}", pcbObject.StockRate).Trim(), false, false, false);
+                stockRateCell.AssignText(string.Format("{0:F2}", pcbObject.StockRate).Trim(), false, false, false);
 
                 TextData sampleSizeCell = rowInstanse.FindNode("SampleSizePCB") as TextData;
                 sampleSizeCell.AssignText(string.Format("{0}", pcbObject.SampleSize).Trim(), false, false, false);
@@ -250,7 +250,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                 }
 
                 TextData totalCell = rowInstanse.FindNode("TotalPCB") as TextData;
-                totalCell.AssignText(string.Format("{0:F3}", total).Trim(), false, false, false);
+                totalCell.AssignText(string.Format("{0:F0}", total).Trim(), false, false, false);
 
                 mainNodePCb.AddChildNode(rowInstanse, false, false);
 
@@ -261,10 +261,22 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                     parentDataCell.AssignText(string.Format("{0} {1}", parent.Designation, parent.Name).Trim(), false, false, false);
 
                     TextData amountCell = parentRowInstance.FindNode("AmountPCB") as TextData;
-                    amountCell.AssignText(string.Format("{0:F3}", parent.Amount).Trim(), false, false, false);
+                    amountCell.AssignText(string.Format("{0:F0}", parent.Amount).Trim(), false, false, false);
+
+                    if (parent.TechTask == null)
+                    {
+                        parent.TechTask = string.Empty;
+                    }
+
+
+                    if (parent.TechTask != string.Empty)
+                    {
+                        TextData techTaskCell = parentRowInstance.FindNode("TechTask") as TextData;
+                        techTaskCell.AssignText(string.Format("{0}", "X").Trim(), false, false, false);
+                    }
 
                     TextData amountWithUseCell = parentRowInstance.FindNode("AmountInOrderPCB") as TextData;
-                    amountWithUseCell.AssignText(string.Format("{0:F3}", parent.AmountWithUse).Trim(), false, false, false);
+                    amountWithUseCell.AssignText(string.Format("{0:F0}", parent.AmountWithUse).Trim(), false, false, false);
 
                     mainNodePCb.AddChildNode(parentRowInstance, false, false);
                 }
@@ -273,6 +285,14 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
             }
 
             mainDocument.UpdateLayout(true);
+
+
+            // добавляем лист регистрации изменений
+            DocumentTreeNode regListInstance = null;
+            DocumentTreeNode regList = docTemplate.FindNode("LRI");
+            regListInstance = regList.CloneFromTemplate();
+            mainDocument.AddChildNode(regListInstance, false, false);
+
 
             DocumentEditorPlugin.SaveImDocumentObjectFile(newObjectId, mainDocument, name, 0, false);
             using (SessionKeeper keeper = new SessionKeeper())

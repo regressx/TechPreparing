@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using Aga.Controls.Tree;
 
 namespace NavisElectronics.Orders
 {
@@ -18,6 +19,13 @@ namespace NavisElectronics.Orders
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _tokenSource.Cancel();
+        }
+
+        public void UpdateTreeModel(TreeModel treeModel)
+        {
+            treeViewAdv1.Model = null;
+            treeViewAdv1.Model = treeModel;
+
         }
     }
 }

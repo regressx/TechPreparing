@@ -79,6 +79,7 @@
                         IntermechTreeElement parentElement = (IntermechTreeElement)nodeFromQueue.Parent.Clone();
                         parentElement.Amount = nodeFromQueue.Amount;
                         parentElement.AmountWithUse = nodeFromQueue.AmountWithUse;
+                        parentElement.TechTask = nodeFromQueue.TechTask;
                         if (!uniqueCooperationElements.ContainsKey(nodeFromQueue.Id))
                         {
                             IntermechTreeElement currentObject = new IntermechTreeElement()
@@ -93,7 +94,8 @@
                                 MeasureUnits = nodeFromQueue.MeasureUnits,
                                 TechProcessReference = nodeFromQueue.TechProcessReference,
                                 StockRate = nodeFromQueue.StockRate,
-                                SampleSize = nodeFromQueue.SampleSize
+                                SampleSize = nodeFromQueue.SampleSize,
+                                TechTask = nodeFromQueue.TechTask
                             };
 
                             uniqueCooperationElements.Add(nodeFromQueue.Id, currentObject);

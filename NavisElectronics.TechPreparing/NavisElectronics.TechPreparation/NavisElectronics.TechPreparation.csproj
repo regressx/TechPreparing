@@ -215,7 +215,6 @@
     <Compile Include="Presenters\TechRouteMapPresenter.cs" />
     <Compile Include="EventArguments\RemoveNodeEventArgs.cs" />
     <Compile Include="Reports\IReport.cs" />
-    <Compile Include="Services\CooperationSetter.cs" />
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="ViewInterfaces\ICooperationView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />

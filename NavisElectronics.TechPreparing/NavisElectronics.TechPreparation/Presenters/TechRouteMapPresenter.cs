@@ -116,7 +116,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             while (queue.Count > 0)
             {
                 MyNode nodeFromQueue = queue.Dequeue();
-                if (nodeFromQueue.CooperationFlag)
+                if (nodeFromQueue.CooperationFlag && !nodeFromQueue.IsPcb)
                 {
                     elements.Add(nodeFromQueue);
                 }

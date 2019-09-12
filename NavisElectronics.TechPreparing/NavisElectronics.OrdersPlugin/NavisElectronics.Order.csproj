@@ -69,8 +69,14 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainFormPresenter.cs" />
-    <Compile Include="OrderNode.cs" />
+    <Compile Include="ViewModels\MainFormModel.cs" />
+    <Compile Include="Views\OrderNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="InformDialogForm.resx">
@@ -79,16 +85,26 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
-      <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
+      <Project>{bf44efa3-b4c0-41d7-87f2-a987359402e1}</Project>
       <Name>NavisElectronics.TechPreparation.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
-      <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>
+      <Project>{402c057a-1638-4188-ad50-c75cd1016777}</Project>
       <Name>NavisElectronics.TechPreparation.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_stock_save_20659.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

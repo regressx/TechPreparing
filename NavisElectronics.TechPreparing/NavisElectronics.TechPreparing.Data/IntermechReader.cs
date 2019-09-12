@@ -237,6 +237,7 @@ namespace NavisElectronics.TechPreparation.Data
                                         {
                                             element.ChangeNumber = Convert.ToString(dataRow[2]);
                                         }
+
                                         break;
                                 }
                             }
@@ -856,6 +857,8 @@ namespace NavisElectronics.TechPreparation.Data
         /// </param>
         private void FetchNodeRecursive(IntermechTreeElement elementToFetch, IDictionary<long, IntermechTreeElement> fetchedElements, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+            
             // читаем состав
             IEnumerable<IntermechTreeElement> elements = null;
             if (fetchedElements.ContainsKey(elementToFetch.Id))
@@ -873,7 +876,7 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // читаем состав
-            elements = Read(elementToFetch.Id);
+            elements = Read(elementToFetch.Id, token);
                 
             IDictionary<long, IntermechTreeElement> uniqueElements = new Dictionary<long, IntermechTreeElement>();
 
