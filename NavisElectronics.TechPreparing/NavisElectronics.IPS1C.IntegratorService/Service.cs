@@ -39,6 +39,42 @@ namespace NavisElectronics.IPS1C.IntegratorService
         {
             ProductTreeNode resultNode = new ProductTreeNode();
             resultNode.Designation = "Результат";
+
+            int countOfitems = 3;
+
+            IDBObjectCollection[] objectCollection = new IDBObjectCollection[countOfitems];
+
+            DataTable [] tables = new DataTable[countOfitems];
+
+
+            using (SessionKeeper sessionKeeper = new SessionKeeper())
+            {
+                objectCollection[0] = sessionKeeper.Session.GetObjectCollection(1138);
+                objectCollection[1] = sessionKeeper.Session.GetObjectCollection(1105);
+                objectCollection[2] = sessionKeeper.Session.GetObjectCollection(1128);
+
+                // -2 идентификатор версии объекта, -3 - индентификатор объекта
+                DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2, -3 }, null, null);
+
+                for (int i = 0; i < objectCollection.Length; i++)
+                {
+                    tables[i] = objectCollection[i].Select(pars);
+                }
+            }
+
+            foreach (DataTable table in tables)
+            {
+                foreach (DataRow row in table.Rows)
+                {
+                    ProductTreeNode node = new ProductTreeNode()
+                    {
+                        VersionId = Convert.ToInt64(row[0]).ToString(),
+                        ObjectId = Convert.ToInt64(row[1]).ToString()
+                    };
+                    resultNode.Add(node);
+                }
+            }
+
             return resultNode;
         }
 
