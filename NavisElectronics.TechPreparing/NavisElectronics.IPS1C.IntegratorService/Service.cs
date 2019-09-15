@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Intermech;
 
 namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Threading.Tasks;
     using Entities;
     using Exceptions;
     using Intermech.Interfaces;
@@ -35,6 +36,12 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return message;
         }
 
+        /// <summary>
+        /// Получает набор материалов, прочих изделий и стандартных
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ProductTreeNode"/>.
+        /// </returns>
         public ProductTreeNode GetAllProducts()
         {
             ProductTreeNode resultNode = new ProductTreeNode();
@@ -44,7 +51,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
             IDBObjectCollection[] objectCollection = new IDBObjectCollection[countOfitems];
 
-            DataTable [] tables = new DataTable[countOfitems];
+            DataTable[] tables = new DataTable[countOfitems];
 
 
             using (SessionKeeper sessionKeeper = new SessionKeeper())
@@ -156,7 +163,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 // 10 - наименование
                 // 17965 - Версия печатной платы
                 // 18079 - флаг печатной платы
-
                 DBRecordSetParams pars = new DBRecordSetParams(conditions, new object[] { -2, 9, 10, 17784, 1035, 18079, 17965 }, null, null);
                 table = objectCollection.Select(pars);
                 foreach (DataRow row in table.Rows)
@@ -243,6 +249,18 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return root;
         }
 
+        /// <summary>
+        /// Получить структуру организации
+        /// </summary>
+        /// <param name="orderVersionId">
+        /// The order version id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OrganizationNode"/>.
+        /// </returns>
+        /// <exception cref="OrderInfoException">
+        /// Если что-то не так, выбросить исключение о неправильной информации в заказе
+        /// </exception>
         public OrganizationNode GetOrganizationStruct(long orderVersionId)
         {
             IntermechReader reader = new IntermechReader();
