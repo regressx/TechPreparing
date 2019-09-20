@@ -121,7 +121,7 @@ namespace NavisElectronics.TechPreparation.Data
                             childElement.InnerCooperation = (bool)ds.Tables["ProductRelations"].Rows[i]["InnerCooperation"];
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         childElement.InnerCooperation = false;
                     }

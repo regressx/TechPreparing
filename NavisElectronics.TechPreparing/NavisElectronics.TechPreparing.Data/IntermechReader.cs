@@ -151,6 +151,9 @@ namespace NavisElectronics.TechPreparation.Data
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="token">
+        /// Токен отмены
+        /// </param>
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
@@ -948,9 +951,13 @@ namespace NavisElectronics.TechPreparation.Data
             if (row[5] != DBNull.Value)
             {
                 string amount = Convert.ToString(row[5]);
-                string[] amountSplit = amount.Split(' ');
-                element.Amount = Convert.ToSingle(amountSplit[0]);
-                element.MeasureUnits = amountSplit[1];
+
+                MeasuredValue currentValue = MeasureHelper.ConvertToMeasuredValue(amount);
+
+                element.Amount = (float)currentValue.Value;
+
+                IDBObject measureObject = session.GetObject(currentValue.MeasureID);
+                element.MeasureUnits = measureObject.Caption;
             }
             else
             {
@@ -1012,6 +1019,7 @@ namespace NavisElectronics.TechPreparation.Data
                 element.MountingType = Convert.ToString(row[18]);
             }
 
+            // если это печатная плата, то надо забрать тех. задание
             if (element.IsPCB)
             {
                 IDBObject currentObject = session.GetObject(element.Id);
@@ -1027,10 +1035,11 @@ namespace NavisElectronics.TechPreparation.Data
                 }
             }
 
-
+            // если деталь или Б/Ч деталь
             if (element.Type == 1052 || element.Type == 1159)
             {
                 IDBObject detailObject = session.GetObject(element.Id);
+
                 IDBAttribute materialAttribute = detailObject.GetAttributeByID(1181);
                 if (materialAttribute != null)
                 {
@@ -1042,8 +1051,7 @@ namespace NavisElectronics.TechPreparation.Data
 
                         if (materialObject != null)
                         {
-                            // забрать единицы измерения
-                            IDBAttribute unitsAttribute = materialObject.GetAttributeByID(1254);
+
                             IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
                             {
                                 Id = materialObject.ObjectID,
@@ -1064,6 +1072,8 @@ namespace NavisElectronics.TechPreparation.Data
                                 }
                             }
 
+                            // забрать единицы измерения
+                            IDBAttribute unitsAttribute = materialObject.GetAttributeByID(1254);
                             string units = string.Empty;
                             if (unitsAttribute != null)
                             {

@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation.Entities
 {
     using System.Collections.Generic;
@@ -22,16 +20,11 @@ namespace NavisElectronics.TechPreparation.Entities
         private ICollection<ExtractedObject<T>> _elements;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractedObject"/> class.
+        /// Initializes a new instance of the <see cref="ExtractedObject{T}"/> class.
         /// </summary>
-        public ExtractedObject()
-        {
-            _elements = new List<ExtractedObject<T>>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractedObject"/> class.
-        /// </summary>
+        /// <param name="intermechTreeElement">
+        /// The intermech Tree Element.
+        /// </param>
         public ExtractedObject(T intermechTreeElement)
         {
             _intermechTreeElement = intermechTreeElement;

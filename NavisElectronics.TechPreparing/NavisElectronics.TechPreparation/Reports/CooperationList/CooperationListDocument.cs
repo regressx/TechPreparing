@@ -56,7 +56,7 @@
         /// <summary>
         /// Присвоить объекты печатных плат
         /// </summary>
-        /// <param name = "pcbObjects" >Печатные платы</ param >
+        /// <param name = "pcbObjects" >Печатные платы</param >
         public void SetPcbObjects(IList<IntermechTreeElement> pcbObjects)
         {
             _pcbObjects = pcbObjects;
