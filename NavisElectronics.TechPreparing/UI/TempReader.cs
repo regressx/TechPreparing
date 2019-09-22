@@ -97,6 +97,11 @@ namespace UI
             throw new NotImplementedException();
         }
 
+        public Task<IntermechTreeElement> GetElementDataAsync(long versionId)
+        {
+            throw new NotImplementedException();
+        }
+
         Task<WithdrawalType> IDataRepository.GetWithdrawalTypesAsync()
         {
             throw new NotImplementedException();
