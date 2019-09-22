@@ -88,9 +88,11 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler GlobalSearchClick;
 
         /// <summary>
-        /// Событие установки ТЗ
+        /// Синхронизируемся с IPS
         /// </summary>
-        public event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
+        public event EventHandler<MultipleNodesSelectedEventArgs> SyncObjectsWithIPS;
+
+        public event EventHandler SetCooperationToPcb;
 
         /// <summary>
         /// Раскрыть все узлы
@@ -240,10 +242,18 @@ namespace NavisElectronics.TechPreparation.Views
             treeViewAdv1.CollapseAll();
         }
 
-        private void SetTechTaskMenuItem_Click(object sender, EventArgs e)
+        private void SyncWithIPSkMenuItem_Click(object sender, EventArgs e)
         {
+            CallEvent(SyncObjectsWithIPS, sender);
+        }
 
-            CallEvent(SetTechTaskClick, sender);
+        private void setCooperationToPcbButton_Click(object sender, EventArgs e)
+        {
+            if (SetCooperationToPcb != null)
+            {
+                SetCooperationToPcb(sender, e);
+            }
+
         }
     }
 }

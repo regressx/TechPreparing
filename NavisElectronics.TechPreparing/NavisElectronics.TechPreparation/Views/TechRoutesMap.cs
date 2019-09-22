@@ -36,6 +36,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler CreateCooperationList;
         public event EventHandler<ClipboardEventArgs> SetInnerCooperation;
         public event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
+        public event EventHandler RefreshTree;
 
         public TechRoutesMap()
         {
@@ -290,6 +291,15 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 temp(sender, new EditTechRouteEventArgs(false));
             }
+        }
+
+        private void refreshTreeButton_Click(object sender, EventArgs e)
+        {
+            if (RefreshTree != null)
+            {
+                RefreshTree(sender, e);
+            }
+
         }
     }
 }

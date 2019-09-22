@@ -32,6 +32,7 @@
             this.myToolStrip = new System.Windows.Forms.ToolStrip();
             this.SearchInTreeButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.setCooperationToPcbButton = new System.Windows.Forms.ToolStripButton();
             this.CheckButtonClick = new System.Windows.Forms.ToolStripButton();
             this.CheckingModeOn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -51,7 +52,7 @@
             this.DeleteNoteButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.SetParametersButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.SetTechTaskMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SyncWithDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.DesignationColumn = new Aga.Controls.Tree.TreeColumn();
             this.NameColumn = new Aga.Controls.Tree.TreeColumn();
             this.CooperationColumn = new Aga.Controls.Tree.TreeColumn();
@@ -80,9 +81,9 @@
             this.pcbCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.pcbVersionTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.TechTaskTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.treeViewAdv1 = new Aga.Controls.Tree.TreeViewAdv();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.treeViewAdv1 = new Aga.Controls.Tree.TreeViewAdv();
             this.myToolStrip.SuspendLayout();
             this.myContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +93,7 @@
             this.myToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SearchInTreeButton,
             this.toolStripSeparator4,
+            this.setCooperationToPcbButton,
             this.CheckButtonClick,
             this.CheckingModeOn,
             this.toolStripSeparator7,
@@ -117,6 +119,16 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // setCooperationToPcbButton
+            // 
+            this.setCooperationToPcbButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.setCooperationToPcbButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.pcb_16;
+            this.setCooperationToPcbButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.setCooperationToPcbButton.Name = "setCooperationToPcbButton";
+            this.setCooperationToPcbButton.Size = new System.Drawing.Size(23, 22);
+            this.setCooperationToPcbButton.Text = "Проставить кооперацию всем PCB";
+            this.setCooperationToPcbButton.Click += new System.EventHandler(this.setCooperationToPcbButton_Click);
             // 
             // CheckButtonClick
             // 
@@ -180,9 +192,9 @@
             this.DeleteNoteButton,
             this.toolStripSeparator5,
             this.SetParametersButton,
-            this.SetTechTaskMenuItem});
+            this.SyncWithDatabase});
             this.myContextMenuStrip.Name = "MyContextMenuStrip";
-            this.myContextMenuStrip.Size = new System.Drawing.Size(236, 248);
+            this.myContextMenuStrip.Size = new System.Drawing.Size(242, 270);
             // 
             // showIntermechCardButton
             // 
@@ -271,12 +283,12 @@
             this.SetParametersButton.Text = "Задать параметры";
             this.SetParametersButton.Click += new System.EventHandler(this.SetParametersButton_Click);
             // 
-            // SetTechTaskMenuItem
+            // SyncWithDatabase
             // 
-            this.SetTechTaskMenuItem.Name = "SetTechTaskMenuItem";
-            this.SetTechTaskMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.SetTechTaskMenuItem.Text = "Указать данные ТЗ";
-            this.SetTechTaskMenuItem.Click += new System.EventHandler(this.SetTechTaskMenuItem_Click);
+            this.SyncWithDatabase.Name = "SyncWithDatabase";
+            this.SyncWithDatabase.Size = new System.Drawing.Size(241, 22);
+            this.SyncWithDatabase.Text = "Синхронизировать элемент с IPS";
+            this.SyncWithDatabase.Click += new System.EventHandler(this.SyncWithIPSkMenuItem_Click);
             // 
             // DesignationColumn
             // 
@@ -469,24 +481,6 @@
             this.TechTaskTextBox.LeftMargin = 3;
             this.TechTaskTextBox.ParentColumn = this.techTaskColumn;
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_report3_16x16_9951;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "ВК";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_report1_16x16_9945;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "ВТМ";
-            // 
             // treeViewAdv1
             // 
             this.treeViewAdv1.BackColor = System.Drawing.SystemColors.Window;
@@ -539,6 +533,24 @@
             this.treeViewAdv1.Text = "treeViewAdv1";
             this.treeViewAdv1.UseColumns = true;
             this.treeViewAdv1.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.TreeViewAdv1_RowDraw);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_report3_16x16_9951;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "ВК";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_report1_16x16_9945;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "ВТМ";
             // 
             // CooperationView
             // 
@@ -610,7 +622,8 @@
         private Aga.Controls.Tree.TreeColumn techTaskColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbVersionTextbox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox TechTaskTextBox;
-        private System.Windows.Forms.ToolStripMenuItem SetTechTaskMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SyncWithDatabase;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
+        private System.Windows.Forms.ToolStripButton setCooperationToPcbButton;
     }
 }

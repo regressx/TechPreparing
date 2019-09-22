@@ -144,5 +144,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <param name="id">Идентификатор изделия</param>
         /// <returns>Возвращает коллекцию прикрепленных документов</returns>
         ICollection<Document> GetDocuments(long id);
+
+        Task<IntermechTreeElement> GetElementDataAsync(long versionId);
     }
 }

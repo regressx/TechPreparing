@@ -60,16 +60,13 @@ namespace NavisElectronics.TechPreparation.Services
                     }
 
                     TechRouteClipBoard clipBoardFromList = _currentClipboardData[i];
+                    node.Route = string.Empty;
                     node.Route = clipBoardFromList.RouteForView;
                     node.Note = clipBoardFromList.Note;
-                    IntermechTreeElement element = node.Tag as IntermechTreeElement;
-                    string temp = string.Empty;
-                    if (element.TechRoute != null)
-                    {
-                        temp = element.TechRoute;
-                    }
+                    IntermechTreeElement element = (IntermechTreeElement)node.Tag;
 
-                    element.TechRoute = string.Format("{0}{1}", temp, clipBoardFromList.RouteForDatabase);
+                    element.TechRoute = string.Empty;
+                    element.TechRoute = clipBoardFromList.RouteForDatabase;
                     element.RouteNote = clipBoardFromList.Note;
                     i++;
                 }

@@ -26,7 +26,8 @@
         event EventHandler<MultipleNodesSelectedEventArgs> SearchInArchiveClick;
         event EventHandler<MultipleNodesSelectedEventArgs> FindInTreeClick;
         event EventHandler GlobalSearchClick;
-        event EventHandler<MultipleNodesSelectedEventArgs> SetTechTaskClick;
+        event EventHandler<MultipleNodesSelectedEventArgs> SyncObjectsWithIPS;
+        event EventHandler SetCooperationToPcb;
 
         /// <summary>
         /// Заполнить дерево данными

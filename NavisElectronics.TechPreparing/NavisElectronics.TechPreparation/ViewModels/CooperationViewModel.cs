@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Threading.Tasks;
+using NavisElectronics.TechPreparation.Interfaces;
+
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
@@ -22,10 +25,12 @@ namespace NavisElectronics.TechPreparation.ViewModels
     public class CooperationViewModel
     {
         private readonly OpenFolderService _openFolderService;
+        private readonly IDataRepository _repository;
 
-        public CooperationViewModel(OpenFolderService openFolderService)
+        public CooperationViewModel(OpenFolderService openFolderService, IDataRepository repository)
         {
             _openFolderService = openFolderService;
+            _repository = repository;
         }
 
         /// <summary>
@@ -330,5 +335,36 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 }
             }
         }
+
+        public void SetCooperationToPcb(IntermechTreeElement root)
+        {
+            // Присваиваем сначала данным
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                if (elementFromQueue.IsPCB)
+                {
+                    elementFromQueue.CooperationFlag = true;
+                }
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+        }
+
+        public async Task UpdateElementDataFromDatabase(long versionId, IntermechTreeElement elementToUpdate)
+        {
+            IntermechTreeElement element = await _repository.GetElementDataAsync(versionId);
+            elementToUpdate.Name = element.Name;
+            elementToUpdate.TechTask = element.TechTask;
+            elementToUpdate.PcbVersion = element.PcbVersion;
+            elementToUpdate.IsPCB = element.IsPCB;
+        }
+
+
     }
 }

@@ -92,8 +92,15 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.CreateCooperationList += _view_CreateCooperationList;
             _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
             _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
+            _view.RefreshTree += View_RefreshTree;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_RefreshTree(object sender, EventArgs e)
+        {
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
+            _view.SetTreeModel(model);
         }
 
         private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)

@@ -75,7 +75,45 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetParametersClick += _view_SetParametersClick;
             _view.SearchInArchiveClick += _view_SearchInArchiveClick;
             _view.GlobalSearchClick += _view_GlobalSearchClick;
-            _view.SetTechTaskClick += View_SetTechTaskClick;
+            _view.SyncObjectsWithIPS += View_SyncWithIPS;
+            _view.SetCooperationToPcb += View_SetCooperationToPcb;
+        }
+
+        /// <summary>
+        /// The view_ set cooperation to pcb.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void View_SetCooperationToPcb(object sender, EventArgs e)
+        {
+            _model.SetCooperationToPcb(_root);
+
+            Queue<CooperationNode> queue = new Queue<CooperationNode>();
+            foreach (CooperationNode node in _view.GetMainNodes())
+            {
+                queue.Enqueue(node);
+            }
+            while (queue.Count > 0)
+            {
+                CooperationNode nodeFromQueue = queue.Dequeue();
+                IntermechTreeElement intermechElement = (IntermechTreeElement)nodeFromQueue.Tag;
+
+                nodeFromQueue.CooperationFlag = intermechElement.CooperationFlag;
+
+                if (nodeFromQueue.Nodes.Count > 0)
+                {
+                    foreach (Node coopNode in nodeFromQueue.Nodes)
+                    {
+                        queue.Enqueue((CooperationNode)coopNode);
+                    }
+                }
+            }
+
+
         }
 
 
@@ -88,40 +126,18 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="e">
         /// The e.
         /// </param>
-        private void View_SetTechTaskClick(object sender, MultipleNodesSelectedEventArgs e)
+        private async void View_SyncWithIPS(object sender, MultipleNodesSelectedEventArgs e)
         {
-            string text = string.Empty;
-
-            IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
-
             foreach (CooperationNode myNode in e.SelectedNodes)
             {
-                rows.Add(myNode.Tag as IntermechTreeElement);
+                IntermechTreeElement synchronizedElement = (IntermechTreeElement)myNode.Tag;
+                await _model.UpdateElementDataFromDatabase(synchronizedElement.Id, synchronizedElement);
+                myNode.TechTask = synchronizedElement.TechTask;
+                myNode.PcbVersion = synchronizedElement.PcbVersion;
+                myNode.IsPcb = synchronizedElement.IsPCB;
+                myNode.Name = synchronizedElement.Name;
             }
 
-            if (rows.Count == 1)
-            {
-                text = rows[0].TechTask;
-            }
-
-            using (AddNoteForm noteForm = new AddNoteForm(text))
-            {
-                AddNotePresenter notePresenter = new AddNotePresenter(noteForm);
-
-                if (notePresenter.RunDialog() == DialogResult.OK)
-                {
-
-                    foreach (IntermechTreeElement element in rows)
-                    {
-                        element.TechTask = notePresenter.GetNote();
-                    }
-
-                    foreach (CooperationNode myNode in e.SelectedNodes)
-                    {
-                        myNode.TechTask = notePresenter.GetNote();
-                    }
-                }
-            }
         }
 
         private void _view_GlobalSearchClick(object sender, EventArgs e)

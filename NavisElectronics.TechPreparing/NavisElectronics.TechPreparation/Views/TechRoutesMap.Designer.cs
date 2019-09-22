@@ -78,6 +78,7 @@
             this.pcbVersionTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +88,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DefaultCoopRouteButton,
             this.ExpandAllButton,
-            this.CollapseAllButton});
+            this.CollapseAllButton,
+            this.refreshTreeButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1473, 25);
@@ -280,7 +282,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 362);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 340);
             // 
             // ShowButton
             // 
@@ -497,6 +499,16 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
+            // refreshTreeButton
+            // 
+            this.refreshTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_repeat_16;
+            this.refreshTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshTreeButton.Name = "refreshTreeButton";
+            this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
+            this.refreshTreeButton.Text = "Обновить дерево";
+            this.refreshTreeButton.Click += new System.EventHandler(this.refreshTreeButton_Click);
+            // 
             // TechRoutesMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -565,5 +577,6 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox pcbVersionTextBox;
         private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
         private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
+        private System.Windows.Forms.ToolStripButton refreshTreeButton;
     }
 }

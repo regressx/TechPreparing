@@ -849,6 +849,54 @@ namespace NavisElectronics.TechPreparation.Data
             return elements;
         }
 
+        public Task<IntermechTreeElement> GetElementDataAsync(long versionId)
+        {
+            Func<IntermechTreeElement> func = () =>
+            {
+                IntermechTreeElement elementToReturn = null;
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject objectToGet = keeper.Session.GetObject(versionId,true);
+
+                    elementToReturn = new IntermechTreeElement();
+
+                    IDBAttribute nameAttribute = objectToGet.GetAttributeByID(10);
+                    elementToReturn.Name = nameAttribute.AsString;
+
+
+                    IDBAttribute pcbAttribute = objectToGet.GetAttributeByID(18079);
+                    if (pcbAttribute != null)
+                    {
+                        elementToReturn.IsPCB = pcbAttribute.AsInteger == 1;
+                    }
+
+                    if (elementToReturn.IsPCB)
+                    {
+                        IDBAttribute pcbVersionAttribute = objectToGet.GetAttributeByID(17965);
+                        if (pcbVersionAttribute != null)
+                        {
+                            elementToReturn.PcbVersion = (byte)pcbVersionAttribute.AsInteger;
+                        }
+
+                        IDBAttribute pcbTechTaskAttribute = objectToGet.GetAttributeByID(18086);
+                        if (pcbTechTaskAttribute != null)
+                        {
+                            char[] textBytes = null;
+                            IMemoReader memoReader = pcbTechTaskAttribute as IMemoReader;
+                            memoReader.OpenMemo(0);
+                            textBytes = memoReader.ReadDataBlock();
+                            memoReader.CloseMemo();
+                            elementToReturn.TechTask = new string(textBytes);
+                        }
+                    }
+                }
+
+                return elementToReturn;
+            };
+
+            return Task.Run(func);
+        }
+
         /// <summary>
         /// Рекурсивная загрузка заказа
         /// </summary>
