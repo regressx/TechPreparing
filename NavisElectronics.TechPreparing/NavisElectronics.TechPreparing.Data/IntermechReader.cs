@@ -301,12 +301,13 @@ namespace NavisElectronics.TechPreparation.Data
         }
 
         /// <summary>
-        /// The get dataset.
+        /// Получить Dataset
         /// </summary>
-        /// <param name="versionId"></param>
-        /// <param name="fileAttributeId"></param>
+        /// <param name="versionId">Идентификатор версии объекта</param>
+        /// <param name="fileAttributeId">файловый атрибут</param>
         /// <returns>
         /// The <see cref="DataSet"/>.
+        /// Dataset
         /// </returns>
         public IntermechTreeElement GetDataFromFile(long versionId, int fileAttributeId)
         {

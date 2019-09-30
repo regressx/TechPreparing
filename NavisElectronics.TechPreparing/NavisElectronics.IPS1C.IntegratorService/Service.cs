@@ -1,4 +1,6 @@
-﻿using Intermech;
+﻿using System.Security.Authentication;
+using NavisElectronics.TechPreparation.Interfaces;
+
 
 namespace NavisElectronics.IPS1C.IntegratorService
 {
@@ -15,7 +17,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
     using TechPreparation.Data;
     using TechPreparation.Interfaces.Entities;
     using TechPreparing.Data.Helpers;
-
+    using Intermech.Interfaces.Server;
     /// <summary>
     /// Реализация интерфейса IService
     /// </summary>
@@ -276,6 +278,57 @@ namespace NavisElectronics.IPS1C.IntegratorService
             OrganizationNode root = mapper.Map(organizationStruct);
             return root;
 
+        }
+
+        /// <summary>
+        /// Получить хэш заказа
+        /// </summary>
+        /// <param name="orderVersionId">
+        /// The order version id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="HashAlgorithmNode"/>.
+        /// </returns>
+        public HashAlgorithmNode GetOrderFileHash(long orderVersionId)
+        {
+            byte[] bytes = null;
+            IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
+            IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
+            try
+            {
+                IDBObject orderObject = session.GetObject(orderVersionId);
+                IDBAttribute fileAttribute = orderObject.GetAttributeByID(ConstHelper.FileAttribute);
+
+                if (fileAttribute != null)
+                {
+                    IBlobReader blobReader = fileAttribute as IBlobReader;
+                    blobReader.OpenBlob(0);
+                    bytes = blobReader.ReadDataBlock();
+                    blobReader.CloseBlob();
+                }
+            }
+            finally
+            {
+                session.Logout();
+            }
+
+            CheckSumService checkSumService = new CheckSumService();
+            HashAlgorithmNode hashResultNode = new HashAlgorithmNode();
+
+            if (bytes != null)
+            {
+                HashAlgorithmNode md5Node = new HashAlgorithmNode();
+                md5Node.Name = "MD5";
+                md5Node.Value = checkSumService.ComputeHash(new byte[0], HashAlgorithmType.Md5);
+
+                HashAlgorithmNode sha1Node = new HashAlgorithmNode();
+                sha1Node.Name = "SHA1";
+                sha1Node.Value = checkSumService.ComputeHash(new byte[0], HashAlgorithmType.Md5);
+                hashResultNode.Add(md5Node);
+                hashResultNode.Add(sha1Node);
+            }
+
+            return hashResultNode;
         }
 
         /// <summary>

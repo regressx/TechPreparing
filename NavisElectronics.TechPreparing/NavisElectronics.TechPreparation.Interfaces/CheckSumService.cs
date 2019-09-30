@@ -1,10 +1,10 @@
-﻿using System;
-using System.Security.Authentication;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace NavisElectronics.TechPreparation.Services
+﻿namespace NavisElectronics.TechPreparation.Interfaces
 {
+    using System;
+    using System.Security.Authentication;
+    using System.Security.Cryptography;
+    using System.Text;
+
     public class CheckSumService
     {
         public string ComputeHash(byte[] bytes, HashAlgorithmType type)

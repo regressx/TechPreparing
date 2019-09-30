@@ -1,6 +1,5 @@
 ﻿namespace NavisElectronics.IPS1C.IntegratorService
 {
-    using System.Collections.Generic;
     using System.ServiceModel;
     using Entities;
 
@@ -73,5 +72,16 @@
         [OperationContract]
         OrganizationNode GetOrganizationStruct(long orderVersionId);
 
+        /// <summary>
+        /// Получить хэши файла заказа
+        /// </summary>
+        /// <param name="orderVersionId">
+        /// The order version id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="HashAlgorithmNode"/>.
+        /// </returns>
+        [OperationContract]
+        HashAlgorithmNode GetOrderFileHash(long orderVersionId);
     }
 }

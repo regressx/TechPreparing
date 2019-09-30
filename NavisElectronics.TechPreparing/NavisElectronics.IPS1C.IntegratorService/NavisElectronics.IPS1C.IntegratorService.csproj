@@ -35,6 +35,9 @@
     <Reference Include="Intermech.Interfaces">
       <HintPath>..\packages\Intermech.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Intermech.Interfaces.Server">
+      <HintPath>..\packages\Intermech.Interfaces.Server.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -43,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\HashAlgorithmNode.cs" />
     <Compile Include="Entities\OrderLifeCycleSteps.cs" />
     <Compile Include="Entities\OrganizationNode.cs" />
     <Compile Include="Entities\ProductTreeNode.cs" />
@@ -63,6 +67,10 @@
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
       <Project>{BF44EFA3-B4C0-41D7-87F2-A987359402E1}</Project>
       <Name>NavisElectronics.TechPreparation.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NavisElectronics.TechPreparation\NavisElectronics.TechPreparation.csproj">
+      <Project>{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}</Project>
+      <Name>NavisElectronics.TechPreparation</Name>
     </ProjectReference>
     <ProjectReference Include="..\NavisElectronics.TechPreparing.Data\NavisElectronics.TechPreparation.Data.csproj">
       <Project>{402C057A-1638-4188-AD50-C75CD1016777}</Project>

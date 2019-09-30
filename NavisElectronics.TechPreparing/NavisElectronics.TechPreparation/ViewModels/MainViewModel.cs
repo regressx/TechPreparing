@@ -239,47 +239,48 @@ namespace NavisElectronics.TechPreparation.ViewModels
             return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId);
         }
 
+        /// <summary>
+        /// Метод копирования одной тех. подготовки в другую
+        /// </summary>
+        /// <param name="elementWithTechPrep">
+        /// Элемент с технологической подготовкой
+        /// </param>
+        /// <param name="elementWithout">
+        /// Элемент без технологической подготовки
+        /// </param>
         public void CopyTechPreparation(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
         {
-            IDictionary<long, IntermechTreeElement> registeredElements = new Dictionary<long, IntermechTreeElement>();
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
             queue.Enqueue(elementWithout);
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
 
-                CopyTechPreparation(elementWithTechPrep, elementFromQueue, registeredElements);
+                // ищем все-все узлы из дерева c тех. подготовкой, которые совпадают с узлом без тех. подготовки
+                ICollection<IntermechTreeElement> elementsToSetTechPreparation = elementWithTechPrep.Find(elementFromQueue.ObjectId);
 
+                foreach (IntermechTreeElement element in elementsToSetTechPreparation)
+                {
+                    CopyTechPrepSingle(element, elementFromQueue);
+                    break;
+                }
 
                 foreach (IntermechTreeElement child in elementFromQueue.Children)
                 {
                     queue.Enqueue(child);
                 }
             }
-
         }
 
-        private void CopyTechPreparation(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout, IDictionary<long, IntermechTreeElement> registeredElements)
-        {
-            if (!registeredElements.ContainsKey(elementWithout.ObjectId))
-            {
-                // ищем все-все узлы из главного дерева c тех. подготовкой, которые совпадают с узлом без тех. подготовки
-                ICollection<IntermechTreeElement> elementsToSetTechPreparation = elementWithTechPrep.Find(elementWithout.ObjectId);
-
-                foreach (IntermechTreeElement element in elementsToSetTechPreparation)
-                {
-                    CopyTechPrepSingle(element, elementWithout);
-                    registeredElements.Add(element.ObjectId, elementWithout);
-                    break;
-                }
-            }
-            else
-            {
-                IntermechTreeElement element = registeredElements[elementWithout.ObjectId];
-                CopyTechPrepSingle(elementWithout, element);
-            }
-        }
-
+        /// <summary>
+        /// The copy tech prep single.
+        /// </summary>
+        /// <param name="elementWithTechPrep">
+        /// The element with tech prep.
+        /// </param>
+        /// <param name="elementWithout">
+        /// The element without.
+        /// </param>
         private void CopyTechPrepSingle(IntermechTreeElement elementWithTechPrep, IntermechTreeElement elementWithout)
         {
             elementWithout.CooperationFlag = elementWithTechPrep.CooperationFlag;

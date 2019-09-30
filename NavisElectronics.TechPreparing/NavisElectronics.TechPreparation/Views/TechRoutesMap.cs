@@ -46,7 +46,6 @@ namespace NavisElectronics.TechPreparation.Views
         public void SetTreeModel(TreeModel treeModel)
         {
             treeViewAdv.Model = treeModel;
-
         }
 
         public ICollection<MyNode> GetSelectedRows()

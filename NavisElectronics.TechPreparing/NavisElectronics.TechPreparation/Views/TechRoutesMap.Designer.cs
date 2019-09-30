@@ -33,6 +33,7 @@
             this.DefaultCoopRouteButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
+            this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
@@ -42,8 +43,6 @@
             this.totalTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.innerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.ContainsInnerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.isPcbTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.pcbVersionTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.substituteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
@@ -67,6 +66,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.createSingleCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createCooperationListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nodeIcon = new Aga.Controls.Tree.NodeControls.NodeIcon();
             this.textBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
@@ -74,11 +74,10 @@
             this.innerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.ContainsInnerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.pcbCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.pcbVersionTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
+            this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.iconColumn = new Aga.Controls.Tree.TreeColumn();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -126,20 +125,29 @@
             this.CollapseAllButton.Text = "Свернуть все узлы";
             this.CollapseAllButton.Click += new System.EventHandler(this.CollapseAllButton_Click);
             // 
+            // refreshTreeButton
+            // 
+            this.refreshTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_repeat_16;
+            this.refreshTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshTreeButton.Name = "refreshTreeButton";
+            this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
+            this.refreshTreeButton.Text = "Обновить дерево";
+            this.refreshTreeButton.Click += new System.EventHandler(this.refreshTreeButton_Click);
+            // 
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
             this.treeViewAdv.ColumnHeaderHeight = 17;
             this.treeViewAdv.Columns.Add(this.designationTreeColumn);
             this.treeViewAdv.Columns.Add(this.nameTreeColumn);
+            this.treeViewAdv.Columns.Add(this.iconColumn);
             this.treeViewAdv.Columns.Add(this.amountTreeColumn);
             this.treeViewAdv.Columns.Add(this.routeTreeColumn);
             this.treeViewAdv.Columns.Add(this.amountWithUseTreeColumn);
             this.treeViewAdv.Columns.Add(this.totalTreeColumn);
             this.treeViewAdv.Columns.Add(this.innerCooperationTreeColumn);
             this.treeViewAdv.Columns.Add(this.ContainsInnerCooperationTreeColumn);
-            this.treeViewAdv.Columns.Add(this.isPcbTreeColumn);
-            this.treeViewAdv.Columns.Add(this.pcbVersionTreeColumn);
             this.treeViewAdv.Columns.Add(this.substituteTreeColumn);
             this.treeViewAdv.Columns.Add(this.noteTreeColumn);
             this.treeViewAdv.Columns.Add(this.agentTreeColumn);
@@ -155,6 +163,7 @@
             this.treeViewAdv.Location = new System.Drawing.Point(0, 25);
             this.treeViewAdv.Model = null;
             this.treeViewAdv.Name = "treeViewAdv";
+            this.treeViewAdv.NodeControls.Add(this.nodeIcon);
             this.treeViewAdv.NodeControls.Add(this.textBoxDesignation);
             this.treeViewAdv.NodeControls.Add(this.textBoxName);
             this.treeViewAdv.NodeControls.Add(this.textBoxAmount);
@@ -162,10 +171,9 @@
             this.treeViewAdv.NodeControls.Add(this.innerCoopCheckBox);
             this.treeViewAdv.NodeControls.Add(this.ContainsInnerCoopCheckBox);
             this.treeViewAdv.NodeControls.Add(this.textBoxNote);
-            this.treeViewAdv.NodeControls.Add(this.pcbCheckBox);
-            this.treeViewAdv.NodeControls.Add(this.pcbVersionTextBox);
             this.treeViewAdv.NodeControls.Add(this.textBoxSubstitute);
             this.treeViewAdv.NodeControls.Add(this.agentTextbox);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBox1);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
@@ -228,18 +236,6 @@
             this.ContainsInnerCooperationTreeColumn.IsVisible = false;
             this.ContainsInnerCooperationTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.ContainsInnerCooperationTreeColumn.TooltipText = null;
-            // 
-            // isPcbTreeColumn
-            // 
-            this.isPcbTreeColumn.Header = "PCB";
-            this.isPcbTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.isPcbTreeColumn.TooltipText = null;
-            // 
-            // pcbVersionTreeColumn
-            // 
-            this.pcbVersionTreeColumn.Header = "Версия PCB";
-            this.pcbVersionTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.pcbVersionTreeColumn.TooltipText = null;
             // 
             // substituteTreeColumn
             // 
@@ -423,6 +419,13 @@
             this.createCooperationListMenuItem.Text = "Создать ведомость кооперации";
             this.createCooperationListMenuItem.Click += new System.EventHandler(this.createCooperationListMenuItem_Click);
             // 
+            // nodeIcon
+            // 
+            this.nodeIcon.DataPropertyName = "Image";
+            this.nodeIcon.LeftMargin = 1;
+            this.nodeIcon.ParentColumn = this.iconColumn;
+            this.nodeIcon.ScaleMode = Aga.Controls.Tree.ImageScaleMode.Clip;
+            // 
             // textBoxDesignation
             // 
             this.textBoxDesignation.DataPropertyName = "Designation";
@@ -471,20 +474,6 @@
             this.textBoxNote.LeftMargin = 3;
             this.textBoxNote.ParentColumn = this.noteTreeColumn;
             // 
-            // pcbCheckBox
-            // 
-            this.pcbCheckBox.DataPropertyName = "IsPcb";
-            this.pcbCheckBox.IncrementalSearchEnabled = true;
-            this.pcbCheckBox.LeftMargin = 3;
-            this.pcbCheckBox.ParentColumn = this.isPcbTreeColumn;
-            // 
-            // pcbVersionTextBox
-            // 
-            this.pcbVersionTextBox.DataPropertyName = "PcbVersion";
-            this.pcbVersionTextBox.IncrementalSearchEnabled = true;
-            this.pcbVersionTextBox.LeftMargin = 3;
-            this.pcbVersionTextBox.ParentColumn = this.pcbVersionTreeColumn;
-            // 
             // textBoxSubstitute
             // 
             this.textBoxSubstitute.DataPropertyName = "SubInfo";
@@ -499,15 +488,17 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
-            // refreshTreeButton
+            // nodeTextBox1
             // 
-            this.refreshTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_repeat_16;
-            this.refreshTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshTreeButton.Name = "refreshTreeButton";
-            this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
-            this.refreshTreeButton.Text = "Обновить дерево";
-            this.refreshTreeButton.Click += new System.EventHandler(this.refreshTreeButton_Click);
+            this.nodeTextBox1.IncrementalSearchEnabled = true;
+            this.nodeTextBox1.LeftMargin = 3;
+            this.nodeTextBox1.ParentColumn = null;
+            // 
+            // iconColumn
+            // 
+            this.iconColumn.Header = "";
+            this.iconColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.iconColumn.TooltipText = null;
             // 
             // TechRoutesMap
             // 
@@ -570,13 +561,12 @@
         private System.Windows.Forms.ToolStripMenuItem createCooperationListMenuItem;
         private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
         private Aga.Controls.Tree.TreeColumn totalTreeColumn;
-        private Aga.Controls.Tree.TreeColumn isPcbTreeColumn;
-        private Aga.Controls.Tree.TreeColumn pcbVersionTreeColumn;
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox pcbCheckBox;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox pcbVersionTextBox;
         private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
         private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
+        private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
+        private Aga.Controls.Tree.TreeColumn iconColumn;
     }
 }

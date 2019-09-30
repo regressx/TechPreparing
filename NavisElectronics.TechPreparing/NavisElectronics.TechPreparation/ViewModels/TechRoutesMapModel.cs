@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Drawing;
+using NavisElectronics.TechPreparation.Properties;
+
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
@@ -177,6 +180,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.TechPreparing = child.TechTask;
                     childNode.StockRate = child.StockRate;
                     childNode.SampleSize = childNode.SampleSize;
+
+                    if (childNode.IsPcb)
+                    {
+                        childNode.Image = Properties.Resources.pcb_16;
+                        string pcbName = string.Format("{0} (V{1})", childNode.Name, child.PcbVersion);
+                        childNode.Name = pcbName;
+                    }
 
                     if (child.TechProcessReference != null)
                     {

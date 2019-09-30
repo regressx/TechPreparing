@@ -104,7 +104,6 @@
     <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
     <Compile Include="Reports\CooperationList\CooperationListView.cs" />
     <Compile Include="Reports\IReportService.cs" />
-    <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
