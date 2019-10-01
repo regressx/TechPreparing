@@ -118,8 +118,16 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// <summary>
         /// Примечание
         /// </summary>
-        [DisplayName("Примечание")]
+        [DisplayName("Примечание объекта")]
         public string Note { get; set; }
+
+
+        /// <summary>
+        /// Примечание
+        /// </summary>
+        [DisplayName("Примечание в составе")]
+        public string RelationNote { get; set; }
+
 
         /// <summary>
         /// Номер группы допустимых замен

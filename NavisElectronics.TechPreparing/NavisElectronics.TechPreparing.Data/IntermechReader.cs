@@ -190,6 +190,8 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(18079, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Флаг печатной платы
                     new ColumnDescriptor(17965, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Версия печатной платы
                     new ColumnDescriptor(17887, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип монтажа компонента
+                    new ColumnDescriptor(11, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание
+                    new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи "Состав изделия"
                 };
 
                 // Поиск состава
@@ -864,6 +866,8 @@ namespace NavisElectronics.TechPreparation.Data
                     IDBAttribute nameAttribute = objectToGet.GetAttributeByID(10);
                     elementToReturn.Name = nameAttribute.AsString;
 
+                    IDBAttribute noteAttribute = objectToGet.GetAttributeByID(11);
+                    elementToReturn.Note = noteAttribute.AsString;
 
                     IDBAttribute pcbAttribute = objectToGet.GetAttributeByID(18079);
                     if (pcbAttribute != null)
@@ -1005,8 +1009,8 @@ namespace NavisElectronics.TechPreparation.Data
 
                 element.Amount = (float)currentValue.Value;
 
-                IDBObject measureObject = session.GetObject(currentValue.MeasureID);
-                element.MeasureUnits = measureObject.Caption;
+                MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
+                element.MeasureUnits = measureDescriptor.ShortName;
             }
             else
             {
@@ -1068,6 +1072,17 @@ namespace NavisElectronics.TechPreparation.Data
                 element.MountingType = Convert.ToString(row[18]);
             }
 
+            if (row[19] != DBNull.Value)
+            {
+                element.Note = Convert.ToString(row[19]);
+            }
+
+            if (row[20] != DBNull.Value)
+            {
+                element.RelationNote = Convert.ToString(row[20]);
+            }
+
+
             // если это печатная плата, то надо забрать тех. задание
             if (element.IsPCB)
             {
@@ -1093,14 +1108,14 @@ namespace NavisElectronics.TechPreparation.Data
                 if (materialAttribute != null)
                 {
                     long materialId = materialAttribute.AsInteger;
-                            
+                     
+                    // если это не пустой материал или не неопределенный, то заходим
                     if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
                     {
                         IDBObject materialObject = session.GetObject(materialId);
 
                         if (materialObject != null)
                         {
-
                             IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
                             {
                                 Id = materialObject.ObjectID,
@@ -1109,7 +1124,7 @@ namespace NavisElectronics.TechPreparation.Data
                                 Type = materialObject.TypeID,
                                 StockRate = 1
                             };
-
+                            
                             // есть совпадение с изделием-заготовкой
                             foreach (IntermechTreeElement elementForDetail in elementsForDetails)
                             {
@@ -1121,33 +1136,16 @@ namespace NavisElectronics.TechPreparation.Data
                                 }
                             }
 
-                            // забрать единицы измерения
-                            IDBAttribute unitsAttribute = materialObject.GetAttributeByID(1254);
-                            string units = string.Empty;
-                            if (unitsAttribute != null)
-                            {
-                                // надо теперь выцепить по атрибуту ед. измерения сам объект единиц измерения
-                                IDBObject unitsObject = session.GetObject(unitsAttribute.AsInteger, false);
-                                if (unitsObject != null)
-                                {
-                                    IDBAttribute shortNameUnit = unitsObject.GetAttributeByID(13);
-                                    detailMaterialNode.MeasureUnits = shortNameUnit.AsString;
-                                    units = shortNameUnit.AsString;
-                                }
-                            }
-
                             // Количество материала на единицу изделия
                             IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
                             if (amountOnOneUnitOfProduct != null)
                             {
-                                if (amountOnOneUnitOfProduct.AsString.Contains(units))
-                                {
-                                    detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
-                                }
-                                else
-                                {
-                                    throw new MaterialUnitsNotEqualException(string.Format("В детали {0} единицы измерения, указанные в атрибуте Количество на единицу изделия, не совпадают с единицами измерения материала по умолчанию", element.Designation));
-                                }
+                                MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
+
+                                MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
+
+                                detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
+                                detailMaterialNode.MeasureUnits = descriptor.ShortName;
                             }
 
                             element.Add(detailMaterialNode);
