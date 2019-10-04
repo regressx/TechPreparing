@@ -60,14 +60,16 @@ namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
         /// Уровень в дереве
         /// </summary>
         public int Level { get; set; }
+        
         /// <summary>
         /// Номер узла на уровне
         /// </summary>
         public int NumberOnLevel { get; set; }
+        
         /// <summary>
         /// Количество с применяемостью
         /// </summary>
-        public int AmountWithUse { get; set; }
+        public double AmountWithUse { get; set; }
 
         /// <summary>
         /// True, если узел изготавливает несколько предприятий

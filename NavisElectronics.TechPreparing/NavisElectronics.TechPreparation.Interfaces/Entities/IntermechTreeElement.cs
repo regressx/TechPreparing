@@ -262,6 +262,9 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// </summary>
         public string MountingType { get; set; }
 
+        public int UseAmount { get; set; }
+
+
         /// <summary>
         /// Индексатор
         /// </summary>

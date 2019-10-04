@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Drawing;
-using NavisElectronics.TechPreparation.Properties;
-
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
@@ -119,6 +116,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             myNode.Designation = myElement.Designation;
             myNode.Name = myElement.Name;
             myNode.Amount = myElement.Amount.ToString("F3");
+            myNode.AmountWithUse = myElement.AmountWithUse;
             myNode.Route = myElement.TechRoute;
             myNode.Note = myElement.RouteNote;
             myNode.CooperationFlag = myElement.CooperationFlag;
@@ -176,7 +174,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.Designation = child.Designation;
                     childNode.Name = child.Name;
                     childNode.Amount = child.Amount.ToString("F0");
-                    childNode.AmountWithUse = (int)child.AmountWithUse;
+                    childNode.AmountWithUse = child.AmountWithUse;
                     childNode.TechPreparing = child.TechTask;
                     childNode.StockRate = child.StockRate;
                     childNode.SampleSize = childNode.SampleSize;

@@ -1,19 +1,17 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Reports.CompleteList
+﻿namespace NavisElectronics.TechPreparation.Reports.CompleteList
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
     using Aga.Controls.Tree;
+    using Enums;
+    using Interfaces.Entities;
     using Intermech.Document.Client;
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Interfaces.Document;
     using Intermech.Kernel.Search;
-    using Entities;
-    using Enums;
     using ViewModels.TreeNodes;
 
     /// <summary>
@@ -157,7 +155,7 @@ namespace NavisElectronics.TechPreparation.Reports.CompleteList
             rootNameData2.AssignText(mainParentBeforeOrder.Designation, false, false, false);
 
 
-            IList<IntermechTreeElement> list = mainParentBeforeOrder.Find(root.Id);
+            IList<IntermechTreeElement> list = mainParentBeforeOrder.Find(root.ObjectId);
 
             foreach (IntermechTreeElement node in list)
             {
@@ -235,18 +233,46 @@ namespace NavisElectronics.TechPreparation.Reports.CompleteList
                         {
                             foreach (IntermechTreeElement child in intermechProduct.Children)
                             {
-                                // если прочее, значит это изделие-заготовка, и она тоже должна попасть в спецификацию/комплектовочную карту
-                                if (child.Type == 1138)
+                                // если не материал, значит это изделие-заготовка, и она тоже должна попасть в спецификацию/комплектовочную карту
+                                if (child.Type != 1128 && child.Type != 1088 && child.Type != 1125 && child.Type != 1096)
                                 {
-                                    TableData tempOtherTable = mainNode.FindFirstNodeByName("Прочие изделия") as TableData;
-                                    if (tempOtherTable == null)
+
+                                    IntermechTreeElement cloneElement = (IntermechTreeElement)child.Clone();
+                                    TableData tempOtherTable = null;
+
+                                    switch (child.Type)
                                     {
-                                        // узел нового раздела спецификации
-                                        tempOtherTable = AddNewPart(documentTemplate, mainNode, "PartOfSpecification", "Прочие изделия");
+                                        case 1074:
+                                            tempOtherTable = mainNode.FindFirstNodeByName("Сборочные единицы") as TableData;
+                                            break;
+                                        case 1138:
+                                            tempOtherTable = mainNode.FindFirstNodeByName("Прочие изделия") as TableData;
+                                            break;
+                                        case 1105:
+                                            tempOtherTable = mainNode.FindFirstNodeByName("Стандартные изделия") as TableData;
+                                            break;
                                     }
 
-                                    child.Name = string.Format("{0} (изделие-заготовка для {1})", child.Name, intermechProduct); 
-                                    AddNewRowIntoPart(tempOtherTable, child);
+                                    if (tempOtherTable == null)
+                                    {
+                                        switch (child.Type)
+                                        {
+                                            case 1074:
+                                                tempOtherTable = AddNewPart(documentTemplate, mainNode, "PartOfSpecification", "Сборочные единицы");
+                                                break;
+                                            case 1138:
+                                                tempOtherTable = AddNewPart(documentTemplate, mainNode, "PartOfSpecification", "Прочие изделия");
+                                                break;
+                                            case 1105:
+                                                tempOtherTable = AddNewPart(documentTemplate, mainNode, "PartOfSpecification", "Стандартные изделия");
+                                                break;
+                                        }
+                                    }
+
+                                    cloneElement.Name = string.Format("{0} (изделие-заготовка для {1})", child.Name, intermechProduct.Designation);
+                                    cloneElement.Amount = intermechProduct.Amount;
+
+                                    AddNewRowIntoPart(tempOtherTable, cloneElement);
                                 }
                             }
                         }
@@ -371,7 +397,6 @@ namespace NavisElectronics.TechPreparation.Reports.CompleteList
 
             TextData amountCell = headerRow.Nodes[5] as TextData;
             amountCell.AssignText(product.Amount.ToString(), false, false, false);
-
 
             TextData amountWithUseCell = headerRow.Nodes[6] as TextData;
             amountWithUseCell.AssignText((product.Amount * _amountWithUseInRoot).ToString("F3"), false, false, false);

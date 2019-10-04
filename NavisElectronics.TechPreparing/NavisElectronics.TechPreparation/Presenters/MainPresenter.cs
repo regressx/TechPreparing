@@ -553,6 +553,27 @@ namespace NavisElectronics.TechPreparation.Presenters
                     _rootElement.Id = _rootVersionId;
                 }
                 fromFile = true;
+
+                // расчет применяемостей
+                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+                queue.Enqueue(_rootElement);
+                while (queue.Count > 0)
+                {
+                    IntermechTreeElement elementFromQueue = queue.Dequeue();
+                    IntermechTreeElement parent = elementFromQueue.Parent;
+                    if (parent != null)
+                    {
+                        elementFromQueue.UseAmount = (int)parent.AmountWithUse;
+                        elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
+                        elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
+                    }
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+
             }
             catch (FileAttributeIsEmptyException)
             {

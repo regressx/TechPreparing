@@ -111,8 +111,11 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             orderElement.Amount = 1;
-            orderElement.AmountWithUse = 1;
+            orderElement.UseAmount = 1;
+            orderElement.AmountWithUse = orderElement.Amount * orderElement.UseAmount;
             orderElement.StockRate = 1;
+
+
             orderElement.TotalAmount = orderElement.StockRate * orderElement.AmountWithUse;
 
             // загрузка всего остального дерева
@@ -127,7 +130,8 @@ namespace NavisElectronics.TechPreparation.Data
                 IntermechTreeElement parent = elementFromQueue.Parent;
                 if (parent != null)
                 {
-                    elementFromQueue.AmountWithUse = parent.AmountWithUse * elementFromQueue.Amount;
+                    elementFromQueue.UseAmount = (int)parent.Amount;
+                    elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
                     elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
                 }
 
@@ -1130,7 +1134,8 @@ namespace NavisElectronics.TechPreparation.Data
                             {
                                 if (detailMaterialNode.Id == elementForDetail.Id)
                                 {
-                                    detailMaterialNode.Amount = elementForDetail.Amount;
+                                    // всегда должна быть единица, всегда!
+                                    detailMaterialNode.Amount = 1;
                                     detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
                                     break;
                                 }

@@ -37,6 +37,7 @@
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.iconColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.routeTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
@@ -77,7 +78,7 @@
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.iconColumn = new Aga.Controls.Tree.TreeColumn();
+            this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -174,6 +175,7 @@
             this.treeViewAdv.NodeControls.Add(this.textBoxSubstitute);
             this.treeViewAdv.NodeControls.Add(this.agentTextbox);
             this.treeViewAdv.NodeControls.Add(this.nodeTextBox1);
+            this.treeViewAdv.NodeControls.Add(this.amountWithUseTextBox);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
@@ -196,6 +198,12 @@
             this.nameTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.nameTreeColumn.TooltipText = null;
             this.nameTreeColumn.Width = 300;
+            // 
+            // iconColumn
+            // 
+            this.iconColumn.Header = "";
+            this.iconColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.iconColumn.TooltipText = null;
             // 
             // amountTreeColumn
             // 
@@ -494,11 +502,12 @@
             this.nodeTextBox1.LeftMargin = 3;
             this.nodeTextBox1.ParentColumn = null;
             // 
-            // iconColumn
+            // amountWithUseTextBox
             // 
-            this.iconColumn.Header = "";
-            this.iconColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.iconColumn.TooltipText = null;
+            this.amountWithUseTextBox.DataPropertyName = "AmountWithUse";
+            this.amountWithUseTextBox.IncrementalSearchEnabled = true;
+            this.amountWithUseTextBox.LeftMargin = 3;
+            this.amountWithUseTextBox.ParentColumn = this.amountWithUseTreeColumn;
             // 
             // TechRoutesMap
             // 
@@ -568,5 +577,6 @@
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
         private Aga.Controls.Tree.TreeColumn iconColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox amountWithUseTextBox;
     }
 }
