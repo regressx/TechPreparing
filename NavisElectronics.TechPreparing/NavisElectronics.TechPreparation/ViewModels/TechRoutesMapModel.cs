@@ -112,7 +112,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             myNode.ObjectId = myElement.ObjectId;
             myNode.Type = myElement.Type;
             myNode.PcbVersion = myElement.PcbVersion;
-            myNode.IsPcb = myElement.IsPCB;
+            myNode.IsPcb = myElement.IsPcb;
             myNode.Designation = myElement.Designation;
             myNode.Name = myElement.Name;
             myNode.Amount = myElement.Amount.ToString("F3");
@@ -170,7 +170,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.ObjectId = child.ObjectId;
                     childNode.Type = child.Type;
                     childNode.PcbVersion = child.PcbVersion;
-                    childNode.IsPcb = child.IsPCB;
+                    childNode.IsPcb = child.IsPcb;
                     childNode.Designation = child.Designation;
                     childNode.Name = child.Name;
                     childNode.Amount = child.Amount.ToString("F0");

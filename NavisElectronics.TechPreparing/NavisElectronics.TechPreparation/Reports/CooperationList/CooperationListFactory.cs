@@ -89,7 +89,7 @@
                                 Name = nodeFromQueue.Name,
                                 Designation = nodeFromQueue.Designation,
                                 CooperationFlag = nodeFromQueue.CooperationFlag,
-                                IsPCB = nodeFromQueue.IsPCB,
+                                IsPcb = nodeFromQueue.IsPcb,
                                 PcbVersion = nodeFromQueue.PcbVersion,
                                 MeasureUnits = nodeFromQueue.MeasureUnits,
                                 TechProcessReference = nodeFromQueue.TechProcessReference,
@@ -125,7 +125,7 @@
 
             foreach (KeyValuePair<long, IntermechTreeElement> node in uniqueCooperationElements)
             {
-                if (node.Value.IsPCB)
+                if (node.Value.IsPcb)
                 {
                     pcpQueue.Enqueue(node.Value);
                 }

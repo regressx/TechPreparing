@@ -94,7 +94,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 childNode.Note = child.Note;
                 childNode.SubstituteInfo = child.SubstituteInfo;
                 childNode.CooperationFlag = child.CooperationFlag;
-                childNode.IsPcb = child.IsPCB;
+                childNode.IsPcb = child.IsPcb;
                 childNode.PcbVersion = child.PcbVersion;
                 childNode.TechTask = child.TechTask;
                 childNode.Tag = child;
@@ -344,7 +344,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
-                if (elementFromQueue.IsPCB)
+                if (elementFromQueue.IsPcb)
                 {
                     elementFromQueue.CooperationFlag = true;
                 }
@@ -362,7 +362,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             elementToUpdate.Name = element.Name;
             elementToUpdate.TechTask = element.TechTask;
             elementToUpdate.PcbVersion = element.PcbVersion;
-            elementToUpdate.IsPCB = element.IsPCB;
+            elementToUpdate.IsPcb = element.IsPcb;
         }
 
 

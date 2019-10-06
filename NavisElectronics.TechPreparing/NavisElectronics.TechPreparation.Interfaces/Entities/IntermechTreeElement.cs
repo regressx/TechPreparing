@@ -85,6 +85,14 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         [DisplayName("Количество в СП")]
         public float Amount { get; set; }
 
+
+
+        /// <summary>
+        /// Применяемость
+        /// </summary>
+        [DisplayName("Применяемость")]
+        public int UseAmount { get; set; }
+
         /// <summary>
         /// Количество с применяемостью родителя
         /// </summary>
@@ -175,7 +183,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// Является ли узел печатной платой
         /// </summary>
         [DisplayName("PCB")]
-        public bool IsPCB { get; set; }
+        public bool IsPcb { get; set; }
 
         /// <summary>
         /// Версия печатной платы
@@ -262,8 +270,6 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// </summary>
         public string MountingType { get; set; }
 
-        public int UseAmount { get; set; }
-
 
         /// <summary>
         /// Индексатор
@@ -300,7 +306,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
                 {
                     foreach (var element in elementFromQueue.Children)
                     {
-                        queue.Enqueue((IntermechTreeElement)element);
+                        queue.Enqueue(element);
                     }
                 }
             }
@@ -328,7 +334,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
                 {
                     foreach (var element in elementFromQueue.Children)
                     {
-                        queue.Enqueue((IntermechTreeElement)element);
+                        queue.Enqueue(element);
                     }
                 }
             }

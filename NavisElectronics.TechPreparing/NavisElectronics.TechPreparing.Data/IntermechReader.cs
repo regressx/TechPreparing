@@ -876,10 +876,10 @@ namespace NavisElectronics.TechPreparation.Data
                     IDBAttribute pcbAttribute = objectToGet.GetAttributeByID(18079);
                     if (pcbAttribute != null)
                     {
-                        elementToReturn.IsPCB = pcbAttribute.AsInteger == 1;
+                        elementToReturn.IsPcb = pcbAttribute.AsInteger == 1;
                     }
 
-                    if (elementToReturn.IsPCB)
+                    if (elementToReturn.IsPcb)
                     {
                         IDBAttribute pcbVersionAttribute = objectToGet.GetAttributeByID(17965);
                         if (pcbVersionAttribute != null)
@@ -1063,7 +1063,7 @@ namespace NavisElectronics.TechPreparation.Data
 
             if (row[16] != DBNull.Value)
             {
-                element.IsPCB = Convert.ToByte(row[16]) == 1;
+                element.IsPcb = Convert.ToByte(row[16]) == 1;
             }
 
             if (row[17] != DBNull.Value)
@@ -1088,7 +1088,7 @@ namespace NavisElectronics.TechPreparation.Data
 
 
             // если это печатная плата, то надо забрать тех. задание
-            if (element.IsPCB)
+            if (element.IsPcb)
             {
                 IDBObject currentObject = session.GetObject(element.Id);
                 IDBAttribute techTaskOnPcbAttribute = currentObject.GetAttributeByID(18086);

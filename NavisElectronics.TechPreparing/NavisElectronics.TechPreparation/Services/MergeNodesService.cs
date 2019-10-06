@@ -37,7 +37,7 @@ namespace NavisElectronics.TechPreparation.Services
                     elementFromQueue.Position = elementFromDatabase.Position;
                     elementFromQueue.MeasureUnits = elementFromDatabase.MeasureUnits;
                     elementFromQueue.ChangeNumber = elementFromDatabase.ChangeNumber;
-                    elementFromQueue.IsPCB = elementFromDatabase.IsPCB;
+                    elementFromQueue.IsPcb = elementFromDatabase.IsPcb;
                     elementFromQueue.PcbVersion = elementFromDatabase.PcbVersion;
                     elementFromQueue.Type = elementFromDatabase.Type;
                     elementFromQueue.Class = elementFromDatabase.Class;
@@ -59,7 +59,7 @@ namespace NavisElectronics.TechPreparation.Services
                     elementFromQueue.PositionDesignation = elementFromDatabase.PositionDesignation;
                     elementFromQueue.Position = elementFromDatabase.Position;
                     elementFromQueue.MeasureUnits = elementFromDatabase.MeasureUnits;
-                    elementFromQueue.IsPCB = elementFromDatabase.IsPCB;
+                    elementFromQueue.IsPcb = elementFromDatabase.IsPcb;
                     elementFromQueue.PcbVersion = elementFromDatabase.PcbVersion;
                     elementFromQueue.Type = elementFromDatabase.Type;
                     elementFromQueue.Class = elementFromDatabase.Class;

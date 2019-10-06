@@ -134,7 +134,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 await _model.UpdateElementDataFromDatabase(synchronizedElement.Id, synchronizedElement);
                 myNode.TechTask = synchronizedElement.TechTask;
                 myNode.PcbVersion = synchronizedElement.PcbVersion;
-                myNode.IsPcb = synchronizedElement.IsPCB;
+                myNode.IsPcb = synchronizedElement.IsPcb;
                 myNode.Name = synchronizedElement.Name;
             }
 

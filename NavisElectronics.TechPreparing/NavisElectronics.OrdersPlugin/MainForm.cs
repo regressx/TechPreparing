@@ -23,8 +23,8 @@ namespace NavisElectronics.Orders
 
         public void UpdateTreeModel(TreeModel treeModel)
         {
-            treeViewAdv1.Model = null;
-            treeViewAdv1.Model = treeModel;
+            treeViewAdv.Model = null;
+            treeViewAdv.Model = treeModel;
 
         }
     }

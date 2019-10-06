@@ -89,7 +89,7 @@
             root.StockRate = product.StockRate.ToString("F6");
             root.SampleSize = product.SampleSize;
             root.IsComplectNodeComponent = product.IsToComplect.ToString();
-            root.IsPCB = product.IsPCB.ToString();
+            root.IsPCB = product.IsPcb.ToString();
             root.PcbVersion = product.PcbVersion.ToString();
             root.TechTaskOnPCB = product.TechTask;
             root.TypeOfWithDrawal = product.TypeOfWithDrawal;

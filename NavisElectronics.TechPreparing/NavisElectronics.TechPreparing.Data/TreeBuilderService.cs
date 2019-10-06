@@ -336,16 +336,16 @@ namespace NavisElectronics.TechPreparation.Data
                             {
                                 if (ds.Tables["Product"].Rows[j]["IsPCB"] == DBNull.Value)
                                 {
-                                    childElement.IsPCB = false;
+                                    childElement.IsPcb = false;
                                 }
                                 else
                                 {
-                                    childElement.IsPCB = (bool)ds.Tables["Product"].Rows[j]["IsPCB"];
+                                    childElement.IsPcb = (bool)ds.Tables["Product"].Rows[j]["IsPCB"];
                                 }
                             }
                             catch (Exception)
                             {
-                                childElement.IsPCB = false;
+                                childElement.IsPcb = false;
                             }
 
                             try
