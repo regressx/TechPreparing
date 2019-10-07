@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
@@ -105,8 +106,22 @@ namespace NavisElectronics.TechPreparation.Data
             progressReport.Message = "Начинаю сериализацию";
             progress.Report(progressReport);
 
-            // сериализуем
-            //XmlSerializer xmlFormatter = new XmlSerializer(typeof(IntermechTreeElement));
+            IntermechTreeElement elementToSave = (IntermechTreeElement) element.Clone();
+
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+
+            while (queue.Count != 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.UseAmount = 0;
+                elementFromQueue.AmountWithUse = 0;
+                elementFromQueue.TotalAmount = 0;
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
 
             JsonSerializer jsonSerializer = new JsonSerializer();
             jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
@@ -115,7 +130,7 @@ namespace NavisElectronics.TechPreparation.Data
             {
                 using (JsonWriter jsonWriter = new BsonWriter(ms))
                 {
-                    jsonSerializer.Serialize(jsonWriter, element);
+                    jsonSerializer.Serialize(jsonWriter, elementToSave);
                 }
                 bytes = ms.ToArray();
             }

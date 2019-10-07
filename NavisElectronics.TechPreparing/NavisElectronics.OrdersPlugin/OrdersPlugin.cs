@@ -42,7 +42,7 @@ namespace NavisElectronics.TechPreparation
                     return;
                 }
 
-                menu.Nodes.Add(new MenuTemplateNode("EditOrder", "Сформировать заказ", -1, 2, int.MaxValue));
+                menu.Nodes.Add(new MenuTemplateNode("EditOrder", "Редактировать заказ", -1, 2, int.MaxValue));
 
                 ICommandsProvider prov = new OrderCommandsProvider();
 

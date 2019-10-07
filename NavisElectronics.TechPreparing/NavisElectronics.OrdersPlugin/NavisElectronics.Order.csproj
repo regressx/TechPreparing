@@ -53,13 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ReportElement.cs" />
     <Compile Include="IMainView.cs" />
     <Compile Include="IPresenter.cs" />
-    <Compile Include="ListsComparingForm.cs">
+    <Compile Include="ListsComparerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListsComparingForm.Designer.cs">
-      <DependentUpon>ListsComparingForm.cs</DependentUpon>
+    <Compile Include="ListsComparerForm.Designer.cs">
+      <DependentUpon>ListsComparerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="OrderCommandsProvider.cs" />
     <Compile Include="OrdersPlugin.cs" />
@@ -78,6 +79,8 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainFormPresenter.cs" />
+    <Compile Include="IListsComparerView.cs" />
+    <Compile Include="Presenters\ListsComparerPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,8 +94,8 @@
     <EmbeddedResource Include="InformDialogForm.resx">
       <DependentUpon>InformDialogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListsComparingForm.resx">
-      <DependentUpon>ListsComparingForm.cs</DependentUpon>
+    <EmbeddedResource Include="ListsComparerForm.resx">
+      <DependentUpon>ListsComparerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -39,9 +39,8 @@ namespace NavisElectronics.Orders
         {
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            CancellationTokenSource tokenSource = new CancellationTokenSource();
-            IPresenter<long, CancellationToken> mainPResenter = new MainFormPresenter(new MainForm(tokenSource), new MainFormModel());
-            mainPResenter.Run(id, tokenSource.Token);
+            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel());
+            mainPresenter.Run(id, new CancellationTokenSource());
         }
 
     }

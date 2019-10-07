@@ -128,20 +128,20 @@
             this.toolStripMenuItem3,
             this.toolStripMenuItem4});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(250, 70);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 70);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Image = global::NavisElectronics.Orders.Properties.Resources.AddNode;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(249, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem1.Text = "Добавить в состав новый узел";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Image = global::NavisElectronics.Orders.Properties.Resources.DeleteNode;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(249, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem3.Text = "Не изготавливать";
             // 
             // toolStripMenuItem4
@@ -150,19 +150,19 @@
             this.toolStripMenuItem5,
             this.toolStripMenuItem6});
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(249, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem4.Text = "Создать отчет по составу заказа";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(109, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(109, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "в Excel";
             // 
             // designationTextBox
@@ -225,7 +225,7 @@
             // saveInfoLabel
             // 
             this.saveInfoLabel.Name = "saveInfoLabel";
-            this.saveInfoLabel.Size = new System.Drawing.Size(83, 22);
+            this.saveInfoLabel.Size = new System.Drawing.Size(76, 22);
             this.saveInfoLabel.Text = "Не сохранено";
             // 
             // toolStripProgressBar1
@@ -241,6 +241,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "Начать проверку";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // MainForm
             // 

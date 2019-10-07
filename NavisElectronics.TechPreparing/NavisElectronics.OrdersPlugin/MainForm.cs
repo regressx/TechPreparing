@@ -1,31 +1,40 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Threading;
-using System.Threading.Tasks;
 using Aga.Controls.Tree;
 
 namespace NavisElectronics.Orders
 {
     public partial class MainForm : Form, IMainView
     {
-        CancellationTokenSource _tokenSource;
-
-        public MainForm(CancellationTokenSource tokenSourceToken)
+        public MainForm()
         {
             InitializeComponent();
-            _tokenSource = tokenSourceToken;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _tokenSource.Cancel();
+            if (AbortLoading != null)
+            {
+                AbortLoading(sender, e);
+            }
         }
+
+        public event EventHandler StartChecking;
+        public event EventHandler AbortLoading;
+
 
         public void UpdateTreeModel(TreeModel treeModel)
         {
             treeViewAdv.Model = null;
             treeViewAdv.Model = treeModel;
+        }
 
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (StartChecking != null)
+            {
+                StartChecking(sender, e);
+            }
         }
     }
 }
