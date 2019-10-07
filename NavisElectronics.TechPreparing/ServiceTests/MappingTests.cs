@@ -52,7 +52,7 @@ namespace ServiceTests
                 Supplier = null,
                 PartNumber = null,
                 Case = null,
-                ProduseSign = null,
+                ProduseSign = false,
                 MountingType = null
             };
 
@@ -103,7 +103,7 @@ namespace ServiceTests
                 Supplier = null,
                 PartNumber = null,
                 Case= null,
-                ProduseSign = null,
+                ProduseSign = false,
                 MountingType = null
             };
 

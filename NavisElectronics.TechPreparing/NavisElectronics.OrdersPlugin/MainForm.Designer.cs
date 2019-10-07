@@ -36,8 +36,9 @@
             this.amountWithUseColumn = new Aga.Controls.Tree.TreeColumn();
             this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.produceMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +86,7 @@
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
+            this.treeViewAdv.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.treeViewAdv_RowDraw);
             // 
             // designationColumn
             // 
@@ -124,18 +126,19 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
+            this.produceMenuStrip,
             this.toolStripMenuItem3,
+            this.toolStripSeparator1,
             this.toolStripMenuItem4});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 70);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 76);
             // 
-            // toolStripMenuItem1
+            // produceMenuStrip
             // 
-            this.toolStripMenuItem1.Image = global::NavisElectronics.Orders.Properties.Resources.AddNode;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
-            this.toolStripMenuItem1.Text = "Добавить в состав новый узел";
+            this.produceMenuStrip.Name = "produceMenuStrip";
+            this.produceMenuStrip.Size = new System.Drawing.Size(245, 22);
+            this.produceMenuStrip.Text = "Изготавливать";
+            this.produceMenuStrip.Click += new System.EventHandler(this.produceMenuStrip_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -143,12 +146,19 @@
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem3.Text = "Не изготавливать";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(242, 6);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem5,
             this.toolStripMenuItem6});
+            this.toolStripMenuItem4.Enabled = false;
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem4.Text = "Создать отчет по составу заказа";
@@ -156,13 +166,13 @@
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem6.Text = "в Excel";
             // 
             // designationTextBox
@@ -236,7 +246,7 @@
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::NavisElectronics.Orders.Properties.Resources.Start;
+            this.toolStripButton1.Image = global::NavisElectronics.Orders.Properties.Resources.OK;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
@@ -269,7 +279,6 @@
         private Aga.Controls.Tree.TreeColumn amountColumn;
         private Aga.Controls.Tree.TreeColumn amountWithUseColumn;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
@@ -285,5 +294,7 @@
         private Aga.Controls.Tree.TreeColumn noteTreeColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox noteTextBox;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripMenuItem produceMenuStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

@@ -95,7 +95,7 @@
             root.TypeOfWithDrawal = product.TypeOfWithDrawal;
             root.Case = product.Case;
             root.MountingType = product.MountingType;
-            root.ProduseSign = product.ProduseSign;
+            root.ProduseSign = product.ProduseSign.ToString();
             root.TechRoute = product.TechRoute;
 
             Type type = typeof(ProductTreeNode);

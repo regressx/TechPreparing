@@ -75,7 +75,7 @@ namespace NavisElectronics.Orders
         public event EventHandler LoadCsv;
         public event EventHandler StartComparing;
 
-        private void LoadCsvMenuItem_Click(object sender, EventArgs e)
+        private void LoadCsvMenuItem_Click(object sender, System.EventArgs e)
         {
             if (LoadCsv != null)
             {
@@ -84,7 +84,7 @@ namespace NavisElectronics.Orders
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, System.EventArgs e)
         {
             if (StartComparing != null)
             {

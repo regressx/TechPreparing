@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.Orders.Presenters;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
+using Aga.Controls.Tree;
+using NavisElectronics.Orders.EventArguments;
+using NavisElectronics.Orders.ViewModels;
+using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
 
-namespace NavisElectronics.Orders
+namespace NavisElectronics.Orders.Presenters
 {
-    using System;
-    using System.Threading;
-    using System.Windows.Forms;
-    using Aga.Controls.Tree;
-    using TechPreparation.Data;
-    using TechPreparation.Interfaces.Entities;
-    using ViewModels;
-
     public class MainFormPresenter : IPresenter<long, CancellationTokenSource>
     {
         private readonly IMainView _view;
@@ -27,7 +26,30 @@ namespace NavisElectronics.Orders
             _view.Load += View_Load;
             _view.StartChecking += View_StartChecking;
             _view.AbortLoading += _view_AbortLoading;
+            _view.DoNotProduceClick += _view_DoNotProduceClick;
         }
+
+        private void _view_DoNotProduceClick(object sender, ProduceEventArgs e)
+        {
+            SetNodeProduceSign(e.Element, e.ProduceSign);
+        }
+
+        private void SetNodeProduceSign(IntermechTreeElement element, bool value)
+        {
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(element);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.ProduseSign = value;
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+        }
+
 
         private void _view_AbortLoading(object sender, EventArgs e)
         {

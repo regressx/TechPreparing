@@ -12,6 +12,7 @@ namespace NavisElectronics.Orders.ViewModels
             root.AmountWithUse = elementToView.AmountWithUse;
             root.Name = elementToView.Name;
             root.Designation = elementToView.Designation;
+            root.Tag = elementToView;
             GetOrderNodeRecursive(root, elementToView);
             TreeModel model = new TreeModel();
             model.Nodes.Add(root);
@@ -27,6 +28,7 @@ namespace NavisElectronics.Orders.ViewModels
                 node.AmountWithUse = child.AmountWithUse;
                 node.Name = child.Name;
                 node.Designation = child.Designation;
+                node.Tag = child;
                 root.Nodes.Add(node);
                 GetOrderNodeRecursive(node, child);
             }

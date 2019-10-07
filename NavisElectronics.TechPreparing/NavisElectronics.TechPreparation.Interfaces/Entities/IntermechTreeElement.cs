@@ -263,7 +263,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         /// <summary>
         /// Признак производства
         /// </summary>
-        public string ProduseSign { get; set; }
+        public bool ProduseSign { get; set; }
 
         /// <summary>
         /// Тип монтажа

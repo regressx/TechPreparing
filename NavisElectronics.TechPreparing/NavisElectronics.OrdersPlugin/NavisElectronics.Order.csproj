@@ -54,8 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ReportElement.cs" />
+    <Compile Include="EventArguments\ProduceEventArgs.cs" />
     <Compile Include="IMainView.cs" />
-    <Compile Include="IPresenter.cs" />
+    <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="ListsComparerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,7 +79,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainFormPresenter.cs" />
+    <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="IListsComparerView.cs" />
     <Compile Include="Presenters\ListsComparerPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -129,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-ok-16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

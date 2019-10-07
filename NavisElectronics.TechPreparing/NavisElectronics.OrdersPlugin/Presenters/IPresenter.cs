@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.Orders
+﻿namespace NavisElectronics.Orders.Presenters
 {
     public interface IPresenter
     {
