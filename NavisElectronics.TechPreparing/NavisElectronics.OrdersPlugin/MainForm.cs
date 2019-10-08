@@ -1,12 +1,15 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.Orders.EventArguments;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.Orders
+﻿namespace NavisElectronics.Orders
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using Aga.Controls.Tree;
+    using EventArguments;
+    using TechPreparation.Interfaces.Entities;
+
+    /// <summary>
+    /// Главная форма
+    /// </summary>
     public partial class MainForm : Form, IMainView
     {
         public MainForm()
