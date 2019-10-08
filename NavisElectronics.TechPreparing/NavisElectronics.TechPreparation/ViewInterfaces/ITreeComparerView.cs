@@ -4,12 +4,13 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Windows.Forms;
-
     using Aga.Controls.Tree;
+    using Entities;
+    using ViewModels.TreeNodes;
 
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
+    /// <summary>
+    /// Интерфейс представления сравнения двух деревьев
+    /// </summary>
     public interface ITreeComparerView
     {
         event EventHandler Load;
@@ -22,6 +23,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler<ComparerNode> EditAmount;
         event EventHandler<ComparerNode> JumpInit;
         event EventHandler<ComparerNode> FindInOldArchive;
+        event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;
 
         void FillOldTree(TreeModel mainElement);
         void FillNewTree(TreeModel model);

@@ -48,6 +48,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<ComparerNode> JumpInit;
 
         public event EventHandler<ComparerNode> FindInOldArchive;
+        public event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;
 
 
         public void FillOldTree(TreeModel model)
@@ -67,7 +68,7 @@ namespace NavisElectronics.TechPreparation.Views
         /// </summary>
         public void UnlockButtons()
         {
-            foreach (ToolStripItem button in toolStrip1.Items)
+            foreach (ToolStripItem button in toolStrip.Items)
             {
                 button.Enabled = true;
             }
@@ -78,7 +79,7 @@ namespace NavisElectronics.TechPreparation.Views
         /// </summary>
         public void LockButtons()
         {
-            foreach (ToolStripItem button in toolStrip1.Items)
+            foreach (ToolStripItem button in toolStrip.Items)
             {
                 button.Enabled = false;
             }
@@ -290,6 +291,27 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
                 FindInOldArchive(sender, selectedNode);
+            }
+        }
+
+        private void TreeComparerView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+            {
+                if (treeViewAdv1.SelectedNode != null && treeViewAdv2.SelectedNode != null)
+                {
+                    if (CompareTwoNodesClick != null)
+                    {
+                        IntermechTreeElement leftElement =
+                            (IntermechTreeElement)((ComparerNode)treeViewAdv1.SelectedNode.Tag).Tag;
+
+                        IntermechTreeElement rightElement =
+                            (IntermechTreeElement)((ComparerNode)treeViewAdv2.SelectedNode.Tag).Tag;
+
+
+                        CompareTwoNodesClick(sender, new CompareTwoNodesEventArgs(leftElement, rightElement));
+                    }
+                }
             }
         }
     }

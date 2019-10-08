@@ -13,26 +13,32 @@
         /// Наименование
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// Обозначение
         /// </summary>
         public string Designation { get; set; }
+        
         /// <summary>
         /// Количество
         /// </summary>
         public double Amount { get; set; }
+        
         /// <summary>
         /// Номер изменения
         /// </summary>
         public string ChangeNumber { get; set; }
+        
         /// <summary>
         /// Идентификатор версии объекта
         /// </summary>
         public long Id { get; set; }
+        
         /// <summary>
         /// Идентификатор объекта (заменяет по сути наименование и обозначение)
         /// </summary>
         public long ObjectId { get; set; }
+        
         /// <summary>
         /// Текущее состояние узла
         /// </summary>

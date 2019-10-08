@@ -116,7 +116,7 @@
         /// Правое дерево
         /// </param>
         /// <param name="elementUpdateInit">
-        /// The element update init.
+        /// Элемент для переноса
         /// </param>
         public void Upload(IntermechTreeElement oldElement, IntermechTreeElement newElement, IntermechTreeElement elementUpdateInit)
         {

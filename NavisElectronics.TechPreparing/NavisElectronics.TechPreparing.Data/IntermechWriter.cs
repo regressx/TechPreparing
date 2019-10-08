@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Intermech;
 using Intermech.Interfaces;
 using Intermech.Interfaces.BlobStream;
+using NavisElectronics.TechPreparation.Enums;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparing.Data.Helpers;
@@ -116,7 +117,7 @@ namespace NavisElectronics.TechPreparation.Data
                 elementFromQueue.UseAmount = 0;
                 elementFromQueue.AmountWithUse = 0;
                 elementFromQueue.TotalAmount = 0;
-
+                elementFromQueue.NodeState = NodeStates.Default;
                 foreach (IntermechTreeElement child in elementFromQueue.Children)
                 {
                     queue.Enqueue(child);

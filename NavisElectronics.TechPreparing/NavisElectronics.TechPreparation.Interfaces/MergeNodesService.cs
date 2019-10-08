@@ -1,21 +1,30 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Services
+﻿namespace NavisElectronics.TechPreparation.Interfaces
 {
     using System.Collections.Generic;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
+    using Entities;
+    using Enums;
 
     /// <summary>
-    /// Класс сое
+    /// Сервис для слияния веток
     /// </summary>
     public class MergeNodesService
     {
+        /// <summary>
+        /// Метод слияния деревьев
+        /// </summary>
+        /// <param name="oldElement">
+        /// Старое дерево
+        /// </param>
+        /// <param name="newElement">
+        /// Новое дерево
+        /// </param>
+        /// <param name="elementFromUpdateInitialized">
+        /// Элемент, к которому применяем обновление
+        /// </param>
         public void Merge(IntermechTreeElement oldElement, IntermechTreeElement newElement, IntermechTreeElement elementFromUpdateInitialized)
         {
+            // ищем элемент инициализации в старом дереве
             IntermechTreeElement elementInOldTree = oldElement.FindByObjectIdPath(elementFromUpdateInitialized.GetFullPathByObjectId());
-
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>(); // очередь из элементов старого дерева
             queue.Enqueue(elementInOldTree);
             while (queue.Count > 0)
@@ -87,9 +96,6 @@ namespace NavisElectronics.TechPreparation.Services
                     }
                 }
             }
-
-
-
         }
 
     }

@@ -7,25 +7,25 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.TechPreparation.Entities;
-using NavisElectronics.TechPreparation.Enums;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparation.ViewInterfaces;
-using NavisElectronics.TechPreparation.ViewModels;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-using NavisElectronics.TechPreparation.Views;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Aga.Controls.Tree;
+    using Entities;
+    using Enums;
+    using Interfaces.Entities;
+    using ViewInterfaces;
+    using ViewModels;
+    using ViewModels.TreeNodes;
+    using Views;
+
     /// <summary>
     /// The tree comparer presenter.
     /// </summary>
-    public class TreeComparerPresenter : IPresenter<IntermechTreeElement, IDictionary<long, Agent>>
+    public class TreeComparerPresenter : IPresenter<IntermechTreeElement>
     {
         /// <summary>
         /// Представление
@@ -41,11 +41,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Текущее состояние дерева
         /// </summary>
         private IntermechTreeElement _oldElement;
-
-        /// <summary>
-        /// Набор агентов. Нужен для того, чтобы правильно создавать других представителей
-        /// </summary>
-        private IDictionary<long, Agent> _agents;
 
         /// <summary>
         /// Новое дерево из базы данных
@@ -75,8 +70,32 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.JumpInit += _view_JumpInit;
             _view.EditAmount += _view_EditAmount;
             _view.FindInOldArchive += _view_FindInOldArchive;
+            _view.CompareTwoNodesClick += View_CompareTwoNodesClick;
         }
 
+        /// <summary>
+        /// Обработчик события сравнения двух узлов
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void View_CompareTwoNodesClick(object sender, CompareTwoNodesEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Обработчик события поиска узла в архиве предприятия
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private void _view_FindInOldArchive(object sender, ComparerNode e)
         {
             _model.OpenFolder(e.Designation);
@@ -201,6 +220,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _view_PushChanges(object sender, IntermechTreeElement e)
         {
             _model.Upload(_oldElement, _newElement, e);
+
             _view.FillOldTree(_model.GetModel(_oldElement));
             _view.FillNewTree(_model.GetModel(_newElement));
         }
@@ -286,10 +306,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.FillOldTree(_model.GetModel(_oldElement));
         }
 
-        public void Run(IntermechTreeElement root, IDictionary<long,Agent> agents)
+        public void Run(IntermechTreeElement root)
         {
             _oldElement = root;
-            _agents = agents;
             _view.Show();
         }
     }

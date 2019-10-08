@@ -293,9 +293,9 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _mainView_UpdateClick(object sender, EventArgs e)
         {
-            IPresenter<IntermechTreeElement, IDictionary<long, Agent>> presenter =
-                _presentationFactory.GetPresenter<TreeComparerPresenter, IntermechTreeElement, IDictionary<long, Agent>>();
-            presenter.Run(_rootElement, _agents);
+            IPresenter<IntermechTreeElement> presenter =
+                _presentationFactory.GetPresenter<TreeComparerPresenter, IntermechTreeElement>();
+            presenter.Run(_rootElement);
         }
 
         private void _mainView_EditTechRoutesClick(object sender, EventArgs e)

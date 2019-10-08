@@ -108,6 +108,7 @@
     <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
+    <Compile Include="ViewInterfaces\CompareTwoNodesEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
@@ -128,6 +129,12 @@
     </Compile>
     <Compile Include="Views\AddNoteForm.Designer.cs">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompareTwoNodesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CompareTwoNodesView.Designer.cs">
+      <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\CooperationDialog.cs">
       <SubType>Form</SubType>
@@ -161,9 +168,7 @@
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
     <Compile Include="Services\ClipboardManager.cs" />
-    <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
-    <Compile Include="Services\TreeComparerService.cs" />
     <Compile Include="Views\ManufacturerDialogView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,6 +280,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\AddNoteForm.resx">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CompareTwoNodesView.resx">
+      <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CooperationDialog.resx">
       <DependentUpon>CooperationDialog.cs</DependentUpon>
