@@ -103,7 +103,9 @@
                     if ((Math.Round(elementToFind.Amount, 6) - Math.Round(elementFromQueue.Amount, 6)) != 0
                         || elementToFind.ChangeNumber != elementFromQueue.ChangeNumber
                         || elementToFind.PcbVersion != elementFromQueue.PcbVersion
-                        || elementToFind.Id != elementFromQueue.Id)
+                        || elementToFind.Id != elementFromQueue.Id
+                        || elementToFind.Position != elementFromQueue.Position
+                        || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }

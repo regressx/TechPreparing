@@ -461,6 +461,10 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
 
         }
 
+        public void Clear()
+        {
+            _elements.Clear();
+        }
 
         /// <summary>
         /// Метод умеет получать путь элемента, состоящий из номеров объектов, в дереве 
