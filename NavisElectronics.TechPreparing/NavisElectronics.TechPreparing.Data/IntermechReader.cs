@@ -1024,7 +1024,6 @@ namespace NavisElectronics.TechPreparation.Data
                 Name = Convert.ToString(row[4]),
                 StockRate = 1,
                 ChangeNumber = Convert.ToString(row[9])
-
             };
 
             if (row[5] != DBNull.Value)

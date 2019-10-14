@@ -30,7 +30,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
                 Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();
                 stack.Push(elementFromUpdateInitialized);
 
-                // найти первого родителя, который имеет статус не имеет статус добавлен или удален
+                // найти первого родителя, который не имеет статус добавлен или удален
                 IntermechTreeElement firstParentOfAddedElement = elementFromUpdateInitialized.Parent;
                 stack.Push(firstParentOfAddedElement);
 
