@@ -17,7 +17,6 @@ namespace NavisElectronics.TechPreparation.Data
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml.Serialization;
     using Entities;
     using Exceptions;
     using ICSharpCode.SharpZipLib.Zip.Compression;
@@ -81,9 +80,32 @@ namespace NavisElectronics.TechPreparation.Data
         }
 
 
+        /// <summary>
+        /// Метод получения полного заказа
+        /// </summary>
+        /// <param name="versionId">
+        /// Идентификатор версии заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="IntermechTreeElement"/>.
+        /// </returns>
         public IntermechTreeElement GetFullOrder(long versionId)
         {
             return GetFullOrder(versionId, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Метод чтения данных с IPS по идентификатору весии объекта
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ICollection{IntermechTreeElement}"/>.
+        /// </returns>
+        public ICollection<IntermechTreeElement> Read(long id)
+        {
+            return Read(id, CancellationToken.None);
         }
 
         /// <summary>
@@ -91,6 +113,9 @@ namespace NavisElectronics.TechPreparation.Data
         /// </summary>
         /// <param name="versionId">
         /// Id версии заказа
+        /// </param>
+        /// <param name="token">
+        /// Токен отмены
         /// </param>
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
@@ -130,7 +155,7 @@ namespace NavisElectronics.TechPreparation.Data
                 IntermechTreeElement parent = elementFromQueue.Parent;
                 if (parent != null)
                 {
-                    elementFromQueue.UseAmount = (int)parent.Amount;
+                    elementFromQueue.UseAmount = (int)Math.Round(parent.Amount, MidpointRounding.ToEven) ;
                     elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
                     elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
                 }
@@ -144,10 +169,7 @@ namespace NavisElectronics.TechPreparation.Data
             return orderElement;
         }
 
-        public ICollection<IntermechTreeElement> Read(long id)
-        {
-            return Read(id, CancellationToken.None);
-        }
+
 
         /// <summary>
         /// Метод получения состава изделия по его идентификатору версии объекта
@@ -1007,12 +1029,11 @@ namespace NavisElectronics.TechPreparation.Data
 
             if (row[5] != DBNull.Value)
             {
-                string amount = Convert.ToString(row[5]);
 
-                MeasuredValue currentValue = MeasureHelper.ConvertToMeasuredValue(amount);
-
+                IDBRelation relation = session.GetRelation((long)row[2]);
+                IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
+                MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
                 element.Amount = (float)currentValue.Value;
-
                 MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
                 element.MeasureUnits = measureDescriptor.ShortName;
             }
@@ -1146,9 +1167,7 @@ namespace NavisElectronics.TechPreparation.Data
                             if (amountOnOneUnitOfProduct != null)
                             {
                                 MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
-
                                 MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
-
                                 detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
                                 detailMaterialNode.MeasureUnits = descriptor.ShortName;
                             }
