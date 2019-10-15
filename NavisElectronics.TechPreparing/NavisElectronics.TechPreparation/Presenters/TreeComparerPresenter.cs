@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Intermech.AutoSelection.Client.AutoSelectionNode;
+using NavisElectronics.TechPreparation.Exceptions;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -71,6 +74,38 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.EditAmount += _view_EditAmount;
             _view.FindInOldArchive += _view_FindInOldArchive;
             _view.CompareTwoNodesClick += View_CompareTwoNodesClick;
+            _view.DeleteNodeClick += View_DeleteNodeClick;
+        }
+
+        private void View_DeleteNodeClick(object sender, ComparerNode e)
+        {
+            if (e.NodeState != NodeStates.Deleted)
+            {
+                throw new DeleteAttempFoundException("Обнаружена попытка удаления компонента, который нельзя удалять");
+            }
+
+            ComparerNode parentComparerNode = (ComparerNode)e.Parent;
+
+            IntermechTreeElement selectedNode = (IntermechTreeElement)e.Tag;
+            IntermechTreeElement parent = selectedNode.Parent;
+            
+            int i = 0;
+            
+            // я не могу гарантировать 100%, что в составе не будет повторяющихся элементов, во всяком случае на 15.10.2019г, поэтому
+            // будем искать линейно первый попавшийся, который удовлетворяет условию, что совпадает код и элемент отмечен на удаление
+            foreach (IntermechTreeElement child in parent.Children)
+            {
+                // это тот элемент, что там нужен
+                if (e.ObjectId == child.ObjectId && child.NodeState == NodeStates.Deleted)
+                {
+                    parent.RemoveAt(i);
+                    break;
+                }
+                i++;
+            }
+
+            _view.FillOldTree(_model.GetModel(_oldElement));
+            _view.JumpToNode(_view.GetOldTree(), parentComparerNode);
         }
 
         /// <summary>

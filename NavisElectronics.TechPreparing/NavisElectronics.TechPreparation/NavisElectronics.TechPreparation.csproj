@@ -93,6 +93,7 @@
     <Compile Include="Entities\WithdrawalTypeAdapter.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />
+    <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
@@ -390,6 +391,7 @@
   <ItemGroup>
     <None Include="Resources\pcb_16.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

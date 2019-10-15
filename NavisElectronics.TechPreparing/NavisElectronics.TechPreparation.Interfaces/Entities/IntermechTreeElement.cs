@@ -461,6 +461,12 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
 
         }
 
+        public void RemoveAt(int index)
+        {
+            _elements.RemoveAt(index);
+        }
+
+
         public void Clear()
         {
             _elements.Clear();

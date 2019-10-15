@@ -28,6 +28,8 @@ namespace NavisElectronics.TechPreparation.Interfaces
             if (elementFromUpdateInitialized.NodeState == NodeStates.Added)
             {
                 Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();
+
+                // добавить в стек сам элемент
                 stack.Push(elementFromUpdateInitialized);
 
                 // найти первого родителя, который не имеет статус добавлен или удален
@@ -53,6 +55,14 @@ namespace NavisElectronics.TechPreparation.Interfaces
                     thisParentInOldTree.Add(nodeToAdd);
                     thisParentInOldTree = nodeToAdd;
                 }
+            }
+
+
+            if (elementFromUpdateInitialized.NodeState == NodeStates.Modified)
+            {
+                IntermechTreeElement elementInOldTree = oldElement.FindByObjectIdPath(elementFromUpdateInitialized.GetFullPathByObjectId());
+
+
             }
 
             //// ищем элемент инициализации в старом дереве

@@ -43,7 +43,7 @@
             this.newDesignationColumn = new Aga.Controls.Tree.TreeColumn();
             this.newChangeNumberColumn = new Aga.Controls.Tree.TreeColumn();
             this.newAmountColumn = new Aga.Controls.Tree.TreeColumn();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.rightTreecontextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.findInOldArchiveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCooperationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,13 +64,16 @@
             this.downloadTreeButton = new System.Windows.Forms.ToolStripButton();
             this.compareTreeButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.contextMenuStrip.SuspendLayout();
+            this.leftTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightTreecontextMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.leftTreeContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeViewAdv1
@@ -165,7 +168,7 @@
             this.treeViewAdv2.Columns.Add(this.newDesignationColumn);
             this.treeViewAdv2.Columns.Add(this.newChangeNumberColumn);
             this.treeViewAdv2.Columns.Add(this.newAmountColumn);
-            this.treeViewAdv2.ContextMenuStrip = this.contextMenuStrip;
+            this.treeViewAdv2.ContextMenuStrip = this.rightTreecontextMenuStrip;
             this.treeViewAdv2.DefaultToolTipProvider = null;
             this.treeViewAdv2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv2.DragDropMarkColor = System.Drawing.Color.Black;
@@ -181,6 +184,7 @@
             this.treeViewAdv2.NodeControls.Add(this.newAmountTextBox);
             this.treeViewAdv2.NodeFilter = null;
             this.treeViewAdv2.SelectedNode = null;
+            this.treeViewAdv2.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
             this.treeViewAdv2.Size = new System.Drawing.Size(725, 494);
             this.treeViewAdv2.TabIndex = 1;
             this.treeViewAdv2.Text = "treeViewAdv2";
@@ -214,17 +218,17 @@
             this.newAmountColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.newAmountColumn.TooltipText = null;
             // 
-            // contextMenuStrip
+            // rightTreecontextMenuStrip
             // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rightTreecontextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.findInOldArchiveMenuItem,
             this.editCooperationMenuItem,
             this.editRouteMenuItem,
             this.editAmountMenuItem,
             this.toolStripSeparator1,
             this.pushChangesMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(274, 120);
+            this.rightTreecontextMenuStrip.Name = "contextMenuStrip";
+            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(274, 120);
             // 
             // findInOldArchiveMenuItem
             // 
@@ -395,6 +399,20 @@
             this.splitContainer1.SplitterDistance = 726;
             this.splitContainer1.TabIndex = 5;
             // 
+            // leftTreeContextMenuStrip
+            // 
+            this.leftTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteNodeMenuItem});
+            this.leftTreeContextMenuStrip.Name = "leftTreeContextMenuStrip";
+            this.leftTreeContextMenuStrip.Size = new System.Drawing.Size(145, 26);
+            // 
+            // deleteNodeMenuItem
+            // 
+            this.deleteNodeMenuItem.Name = "deleteNodeMenuItem";
+            this.deleteNodeMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.deleteNodeMenuItem.Text = "Удалить узел";
+            this.deleteNodeMenuItem.Click += new System.EventHandler(this.deleteNodeMenuItem_Click);
+            // 
             // TreeComparerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,7 +424,7 @@
             this.Name = "TreeComparerView";
             this.Text = "TreeComparerView";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeComparerView_KeyDown);
-            this.contextMenuStrip.ResumeLayout(false);
+            this.rightTreecontextMenuStrip.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.toolStrip.ResumeLayout(false);
@@ -415,6 +433,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.leftTreeContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,12 +469,14 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox newDesignationTextBox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox newChangeNumberTextBox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox newAmountTextBox;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip rightTreecontextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem editCooperationMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editRouteMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem pushChangesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editAmountMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findInOldArchiveMenuItem;
+        private System.Windows.Forms.ContextMenuStrip leftTreeContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem deleteNodeMenuItem;
     }
 }

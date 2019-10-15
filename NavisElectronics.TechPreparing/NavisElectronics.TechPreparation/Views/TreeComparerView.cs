@@ -35,6 +35,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler CompareListsClick;
 
         public event EventHandler<IntermechTreeElement> PushChanges;
+        public event EventHandler<ComparerNode> DeleteNodeClick;
 
         public event EventHandler<IntermechTreeElement> EditCooperationClick;
 
@@ -313,6 +314,18 @@ namespace NavisElectronics.TechPreparation.Views
                     }
                 }
             }
+        }
+
+        private void deleteNodeMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DeleteNodeClick != null)
+            {
+                ComparerNode selectedElement =
+                     (ComparerNode)treeViewAdv1.SelectedNode.Tag;
+
+                DeleteNodeClick(sender, selectedElement);
+            }
+            
         }
     }
 }

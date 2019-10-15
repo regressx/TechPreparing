@@ -1028,13 +1028,13 @@ namespace NavisElectronics.TechPreparation.Data
 
             if (row[5] != DBNull.Value)
             {
-
                 IDBRelation relation = session.GetRelation((long)row[2]);
                 IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
                 MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
                 element.Amount = (float)currentValue.Value;
                 MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
                 element.MeasureUnits = measureDescriptor.ShortName;
+
             }
             else
             {

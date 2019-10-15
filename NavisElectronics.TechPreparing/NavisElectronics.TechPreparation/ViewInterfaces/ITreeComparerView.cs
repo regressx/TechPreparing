@@ -18,6 +18,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler Download;
         event EventHandler Compare;
         event EventHandler<IntermechTreeElement> PushChanges;
+        event EventHandler<ComparerNode> DeleteNodeClick;
         event EventHandler<IntermechTreeElement> EditCooperationClick;
         event EventHandler<IntermechTreeElement> EditTechRoutesClick;
         event EventHandler<ComparerNode> EditAmount;
