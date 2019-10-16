@@ -1,15 +1,14 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-using Newtonsoft.Json;
-
-namespace NavisElectronics.TechPreparation.Interfaces.Entities
+﻿namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using Enums;
     using Exceptions;
+    using Newtonsoft.Json;
     using Substitutes;
 
     /// <summary>
@@ -271,6 +270,8 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         public string MountingType { get; set; }
 
 
+        public string MaterialFrom { get; set; }
+
         /// <summary>
         /// Индексатор
         /// </summary>
@@ -460,6 +461,9 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
             }
 
         }
+
+
+
 
         public void RemoveAt(int index)
         {

@@ -1035,6 +1035,12 @@ namespace NavisElectronics.TechPreparation.Data
                 MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
                 element.MeasureUnits = measureDescriptor.ShortName;
 
+                // если мы получили единицу измерения в мм, то надо ее в метры перевести
+                if (currentValue.MeasureID == 2806)
+                {
+                    element.Amount /= 1000;
+                    element.MeasureUnits = "м";
+                }
             }
             else
             {
