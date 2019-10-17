@@ -270,7 +270,7 @@
         public string MountingType { get; set; }
 
 
-        public string MaterialFrom { get; set; }
+        public string MaterialRegisteredIn { get; set; }
 
         /// <summary>
         /// Индексатор

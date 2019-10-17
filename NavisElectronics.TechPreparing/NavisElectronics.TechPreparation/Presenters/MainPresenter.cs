@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Intermech.PropertyEditors;
-
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -501,7 +499,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 }
                 else
                 {
-                    MessageBox.Show("Зря не указали структуру предприятия : теперь надо будет опять перезапустить окно");
+                    MessageBox.Show("Не указана структура предприятия : теперь надо будет перезапустить окно");
                 }
             }
             else
@@ -532,7 +530,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 }
                 else
                 {
-                    MessageBox.Show("Зря не указали тип тех. отхода: теперь надо будет опять перезапустить окно");
+                    MessageBox.Show("Не указан тип тех. отхода: теперь надо будет перезапустить окно");
                 }
             }
             else
@@ -553,27 +551,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                     _rootElement.Id = _rootVersionId;
                 }
                 fromFile = true;
-
-                // расчет применяемостей
-                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-                queue.Enqueue(_rootElement);
-                while (queue.Count > 0)
-                {
-                    IntermechTreeElement elementFromQueue = queue.Dequeue();
-                    IntermechTreeElement parent = elementFromQueue.Parent;
-                    if (parent != null)
-                    {
-                        elementFromQueue.UseAmount = (int)parent.AmountWithUse;
-                        elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
-                        elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
-                    }
-
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-                }
-
             }
             catch (FileAttributeIsEmptyException)
             {

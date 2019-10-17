@@ -146,25 +146,7 @@ namespace NavisElectronics.TechPreparation.Data
             // загрузка всего остального дерева
             FetchNodeRecursive(orderElement, downloadedParts, token);
 
-            // расчет применяемостей
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(orderElement);
-            while (queue.Count > 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
-                IntermechTreeElement parent = elementFromQueue.Parent;
-                if (parent != null)
-                {
-                    elementFromQueue.UseAmount = (int)Math.Round(parent.Amount, MidpointRounding.ToEven) ;
-                    elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
-                    elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
-                }
-
-                foreach (IntermechTreeElement child in elementFromQueue.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
+            RecountAmountInTree(orderElement);
 
             return orderElement;
         }
@@ -409,6 +391,9 @@ namespace NavisElectronics.TechPreparation.Data
                     root = treeBuilderService.Build(ds);
                 }
             }
+
+            // расчет применяемостей
+            RecountAmountInTree(root);
             return root;
         }
 
@@ -1186,5 +1171,28 @@ namespace NavisElectronics.TechPreparation.Data
             return element;
         }
 
+
+        internal void RecountAmountInTree(IntermechTreeElement node)
+        {
+            // расчет применяемостей
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            queue.Enqueue(node);
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                IntermechTreeElement parent = elementFromQueue.Parent;
+                if (parent != null)
+                {
+                    elementFromQueue.UseAmount = (int)Math.Round(parent.AmountWithUse, MidpointRounding.ToEven);
+                    elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
+                    elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
+                }
+
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+        }
     }
 }
