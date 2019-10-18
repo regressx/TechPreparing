@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.Views
 {
     public partial class CompareTwoNodesView : Form
     {
-        public CompareTwoNodesView()
+        public CompareTwoNodesView(IntermechTreeElement leftElement, IntermechTreeElement rightElement)
         {
             InitializeComponent();
+            propertyGrid1.SelectedObject = leftElement;
+            propertyGrid2.SelectedObject = rightElement;
         }
     }
 }

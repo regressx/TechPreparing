@@ -267,19 +267,7 @@
                     JumpInit(sender, selectedNode);
                 }
             }
-        }
 
-        private void findInOldArchiveMenuItem_Click(object sender, EventArgs e)
-        {
-            if (FindInOldArchive != null)
-            {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                FindInOldArchive(sender, selectedNode);
-            }
-        }
-
-        private void TreeComparerView_KeyDown(object sender, KeyEventArgs e)
-        {
             if (e.KeyCode == Keys.F3)
             {
                 if (treeViewAdv1.SelectedNode != null && treeViewAdv2.SelectedNode != null)
@@ -296,6 +284,16 @@
                         CompareTwoNodesClick(sender, new CompareTwoNodesEventArgs(leftElement, rightElement));
                     }
                 }
+            }
+
+        }
+
+        private void findInOldArchiveMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FindInOldArchive != null)
+            {
+                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
+                FindInOldArchive(sender, selectedNode);
             }
         }
 

@@ -403,7 +403,6 @@
             this.Controls.Add(this.statusStrip1);
             this.Name = "TreeComparerView";
             this.Text = "TreeComparerView";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeComparerView_KeyDown);
             this.rightTreecontextMenuStrip.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

@@ -7,7 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Windows.Forms;
 using NavisElectronics.TechPreparation.Exceptions;
+using NavisElectronics.TechPreparation.Views;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -121,7 +123,8 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private void View_CompareTwoNodesClick(object sender, CompareTwoNodesEventArgs e)
         {
-
+            CompareTwoNodesView view = new CompareTwoNodesView(e.LeftElement, e.RightElement);
+            view.Show();
         }
 
         /// <summary>
