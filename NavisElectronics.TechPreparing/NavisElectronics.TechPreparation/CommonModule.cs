@@ -36,6 +36,7 @@ namespace NavisElectronics.TechPreparation
             Bind<IDataRepository>().To<IntermechReader>();
             Bind<IRepository>().To<IntermechPathRepository>();
             Bind<ITechPreparingSelector<IdOrPath>>().To<TechPreparingSelector>();
+            Bind<MergeNodesService>().ToSelf();
             Bind<Search>().ToSelf();
             Bind<ReportService>().ToSelf();
             Bind<OpenFolderService>().ToSelf();

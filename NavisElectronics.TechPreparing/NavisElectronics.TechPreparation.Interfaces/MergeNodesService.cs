@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace NavisElectronics.TechPreparation.Interfaces
+﻿namespace NavisElectronics.TechPreparation.Interfaces
 {
+    using System.Collections.Generic;
     using Entities;
     using Enums;
 
@@ -31,6 +30,9 @@ namespace NavisElectronics.TechPreparation.Interfaces
 
                 // добавить в стек сам элемент
                 stack.Push(elementFromUpdateInitialized);
+                
+                // меняем состояние на состояние по умолчанию
+                elementFromUpdateInitialized.NodeState = NodeStates.Default;
 
                 // найти первого родителя, который не имеет статус добавлен или удален
                 IntermechTreeElement firstParentOfAddedElement = elementFromUpdateInitialized.Parent;
@@ -48,7 +50,8 @@ namespace NavisElectronics.TechPreparation.Interfaces
                 while (stack.Count > 0)
                 {
                     IntermechTreeElement elementFromStack = stack.Pop();
-
+                    elementFromStack.NodeState = NodeStates.Default;
+                    
                     // делаем клон и избавляемся от дочерних узлов
                     IntermechTreeElement nodeToAdd = (IntermechTreeElement)elementFromStack.Clone();
                     nodeToAdd.Clear();
@@ -58,91 +61,17 @@ namespace NavisElectronics.TechPreparation.Interfaces
             }
 
 
+            // если элемент просто был модифицирован
             if (elementFromUpdateInitialized.NodeState == NodeStates.Modified)
             {
                 IntermechTreeElement elementInOldTree = oldElement.FindByObjectIdPath(elementFromUpdateInitialized.GetFullPathByObjectId());
-
-
+                elementFromUpdateInitialized.NodeState = NodeStates.Default;
+                elementInOldTree.Id = elementFromUpdateInitialized.Id;
+                elementInOldTree.PcbVersion = elementFromUpdateInitialized.PcbVersion;
+                elementInOldTree.ChangeNumber = elementFromUpdateInitialized.ChangeNumber;
+                elementInOldTree.Position = elementFromUpdateInitialized.Position;
+                elementInOldTree.PositionDesignation = elementFromUpdateInitialized.PositionDesignation;
             }
-
-            //// ищем элемент инициализации в старом дереве
-            //IntermechTreeElement elementInOldTree = oldElement.FindByObjectIdPath(elementFromUpdateInitialized.GetFullPathByObjectId());
-            //Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>(); // очередь из элементов старого дерева
-            //queue.Enqueue(elementInOldTree);
-            //while (queue.Count > 0)
-            //{
-            //    IntermechTreeElement elementFromQueue = queue.Dequeue();
-
-            //    if (elementFromQueue.NodeState == NodeStates.Deleted)
-            //    {
-            //        elementFromQueue.Parent.Remove(elementFromQueue);
-            //        continue;
-            //    }
-
-            //    IntermechTreeElement elementFromDatabase = newElement.FindByObjectIdPath(elementFromQueue.GetFullPathByObjectId()); // получить узел нового дерева по адресу старого
-
-            //    if (elementFromDatabase.NodeState == NodeStates.Modified)
-            //    {
-            //        // Нельзя просто заменить объект друг на друга. Лучше скопировать поля и то, не все
-            //        elementFromQueue.Id = elementFromDatabase.Id;
-            //        elementFromQueue.PositionDesignation = elementFromDatabase.PositionDesignation;
-            //        elementFromQueue.Position = elementFromDatabase.Position;
-            //        elementFromQueue.MeasureUnits = elementFromDatabase.MeasureUnits;
-            //        elementFromQueue.ChangeNumber = elementFromDatabase.ChangeNumber;
-            //        elementFromQueue.IsPcb = elementFromDatabase.IsPcb;
-            //        elementFromQueue.PcbVersion = elementFromDatabase.PcbVersion;
-            //        elementFromQueue.Type = elementFromDatabase.Type;
-            //        elementFromQueue.Class = elementFromDatabase.Class;
-            //        elementFromQueue.Supplier = elementFromDatabase.Supplier;
-            //        elementFromQueue.PartNumber = elementFromDatabase.PartNumber;
-            //        elementFromQueue.SubstituteGroupNumber = elementFromDatabase.SubstituteGroupNumber;
-            //        elementFromQueue.SubstituteNumberInGroup = elementFromDatabase.SubstituteNumberInGroup;
-            //        elementFromQueue.Case = elementFromDatabase.Case;
-            //        elementFromQueue.MountingType = elementFromDatabase.MountingType;
-            //        elementFromQueue.TechTask = elementFromDatabase.TechTask;
-            //        elementFromQueue.Name = elementFromDatabase.Name;
-
-            //        // здесь эта штука, чтобы случайно не обновить реальное, но очень маленькое число, на 0
-            //        if (elementFromDatabase.Amount >= 0.000001)
-            //        {
-            //            elementFromQueue.Amount = elementFromDatabase.Amount;
-            //        }
-            //    }
-
-            //    if (elementFromQueue.NodeState == NodeStates.Default)
-            //    {
-            //        elementFromQueue.Id = elementFromDatabase.Id;
-            //        elementFromQueue.PositionDesignation = elementFromDatabase.PositionDesignation;
-            //        elementFromQueue.Position = elementFromDatabase.Position;
-            //        elementFromQueue.MeasureUnits = elementFromDatabase.MeasureUnits;
-            //        elementFromQueue.IsPcb = elementFromDatabase.IsPcb;
-            //        elementFromQueue.PcbVersion = elementFromDatabase.PcbVersion;
-            //        elementFromQueue.Type = elementFromDatabase.Type;
-            //        elementFromQueue.Class = elementFromDatabase.Class;
-            //        elementFromQueue.Supplier = elementFromDatabase.Supplier;
-            //        elementFromQueue.PartNumber = elementFromDatabase.PartNumber;
-            //        elementFromQueue.SubstituteGroupNumber = elementFromDatabase.SubstituteGroupNumber;
-            //        elementFromQueue.SubstituteNumberInGroup = elementFromDatabase.SubstituteNumberInGroup;
-            //        elementFromQueue.Case = elementFromDatabase.Case;
-
-            //        if (elementFromQueue.Children.Count > 0)
-            //        {
-            //            foreach (IntermechTreeElement child in elementFromQueue.Children)
-            //            {
-            //                queue.Enqueue(child);
-            //            }
-            //        }
-            //    }
-
-            //    // Добавить новые узлы
-            //    foreach (IntermechTreeElement child in elementFromDatabase.Children)
-            //    {
-            //        if (child.NodeState == NodeStates.Added)
-            //        {
-            //            elementFromQueue.Add((IntermechTreeElement)child.Clone());
-            //        }
-            //    }
-            //}
         }
 
     }

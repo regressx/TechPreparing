@@ -28,7 +28,9 @@
         /// Номер изменения
         /// </summary>
         public string ChangeNumber { get; set; }
-        
+
+        public bool CooperationFlag { get; set; }
+
         /// <summary>
         /// Идентификатор версии объекта
         /// </summary>

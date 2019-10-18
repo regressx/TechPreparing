@@ -1,11 +1,11 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+﻿using System.Collections.Generic;
 
 namespace NavisElectronics.TechPreparation.ViewInterfaces
 {
     using System;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using Entities;
+    using Interfaces.Entities;
     using ViewModels.TreeNodes;
 
     /// <summary>
@@ -14,14 +14,12 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
     public interface ITreeComparerView
     {
         event EventHandler Load;
-        event EventHandler Upload;
         event EventHandler Download;
         event EventHandler Compare;
-        event EventHandler<IntermechTreeElement> PushChanges;
+        event EventHandler PushChanges;
         event EventHandler<ComparerNode> DeleteNodeClick;
         event EventHandler<IntermechTreeElement> EditCooperationClick;
         event EventHandler<IntermechTreeElement> EditTechRoutesClick;
-        event EventHandler<ComparerNode> EditAmount;
         event EventHandler<ComparerNode> JumpInit;
         event EventHandler<ComparerNode> FindInOldArchive;
         event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;
@@ -43,5 +41,6 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void JumpToNode(object sender, ComparerNode nodeToFind);
         TreeViewAdv GetNewTree();
         TreeViewAdv GetOldTree();
+        ICollection<ComparerNode> GetSelectedNodesInRightTree();
     }
 }

@@ -17,9 +17,11 @@
         private readonly TreeViewAdv _treeViewAdv;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FindNodeView"/> class. 
         /// Конструктор
         /// </summary>
-        /// <param name="treeViewAdv"></param>
+        /// <param name="treeViewAdv">
+        /// </param>
         public FindNodeView(TreeViewAdv treeViewAdv)
         {
             _treeViewAdv = treeViewAdv;

@@ -22,6 +22,16 @@
         /// </param>
         public void Compare(IntermechTreeElement oldElement, IntermechTreeElement newElement)
         {
+            if (oldElement == null)
+            {
+                throw new ArgumentNullException("oldElement", "Попытка сравнить пустое левое дерево с правым");
+            }
+
+            if (newElement == null)
+            {
+                throw new ArgumentNullException("newElement", "Попытка сравнить пустое правое дерево с левым");
+            }
+
             Queue<IntermechTreeElement> queue1 = new Queue<IntermechTreeElement>();
             queue1.Enqueue(oldElement);
             while (queue1.Count > 0)

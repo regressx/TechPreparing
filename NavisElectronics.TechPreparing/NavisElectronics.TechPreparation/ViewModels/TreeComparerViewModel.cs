@@ -22,6 +22,8 @@
         /// </summary>
         private readonly OpenFolderService _openFolderService;
 
+        private readonly MergeNodesService _mergeNodesService;
+
         /// <summary>
         /// Репозиторий
         /// </summary>
@@ -36,8 +38,9 @@
         /// <param name="reader">
         /// Репозиторий с данными о дереве состава заказа
         /// </param>
-        public TreeComparerViewModel(OpenFolderService openFolderService, IDataRepository reader)
+        public TreeComparerViewModel(OpenFolderService openFolderService, IDataRepository reader, MergeNodesService mergeNodesService)
         {
+            _mergeNodesService = mergeNodesService;
             _openFolderService = openFolderService;
             _reader = reader;
         }
@@ -67,6 +70,8 @@
             mainNode.Designation = element.Designation;
             mainNode.Name = element.Name;
             mainNode.Amount = element.Amount;
+            mainNode.CooperationFlag = element.CooperationFlag;
+            mainNode.NodeState = element.NodeState;
             mainNode.Tag = element;
             BuildNodeRecursive(mainNode, element);
             TreeModel model = new TreeModel();
@@ -120,8 +125,7 @@
         /// </param>
         public void Upload(IntermechTreeElement oldElement, IntermechTreeElement newElement, IntermechTreeElement elementUpdateInit)
         {
-            MergeNodesService mergeService = new MergeNodesService();
-            mergeService.Merge(oldElement, newElement, elementUpdateInit);
+            _mergeNodesService.Merge(oldElement, newElement, elementUpdateInit);
         }
 
 
@@ -188,6 +192,8 @@
                     childNode.Name = child.Name;
                     childNode.Amount = child.Amount;
                     childNode.ChangeNumber = child.ChangeNumber;
+                    childNode.CooperationFlag = child.CooperationFlag;
+                    childNode.NodeState = child.NodeState;
                     childNode.Tag = child;
                     mainNode.Nodes.Add(childNode);
                     BuildNodeRecursive(childNode, child);

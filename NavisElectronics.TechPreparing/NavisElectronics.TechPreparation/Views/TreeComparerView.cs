@@ -1,18 +1,15 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.TechPreparation.Views
+﻿namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
-
     using Aga.Controls.Tree;
-
-    using NavisElectronics.TechPreparation.Entities;
-    using NavisElectronics.TechPreparation.Enums;
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-    using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
+    using Interfaces.Entities;
+    using Entities;
+    using Enums;
+    using ViewInterfaces;
+    using ViewModels.TreeNodes;
 
     public partial class TreeComparerView : Form, ITreeComparerView
     {
@@ -21,10 +18,6 @@ namespace NavisElectronics.TechPreparation.Views
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Событие слияния нового дерева со старым
-        /// </summary>
-        public event EventHandler Upload;
         public event EventHandler Download;
 
         /// <summary>
@@ -34,14 +27,12 @@ namespace NavisElectronics.TechPreparation.Views
 
         public event EventHandler CompareListsClick;
 
-        public event EventHandler<IntermechTreeElement> PushChanges;
+        public event EventHandler PushChanges;
         public event EventHandler<ComparerNode> DeleteNodeClick;
 
         public event EventHandler<IntermechTreeElement> EditCooperationClick;
 
         public event EventHandler<IntermechTreeElement> EditTechRoutesClick;
-
-        public event EventHandler<ComparerNode> EditAmount;
 
         /// <summary>
         /// Событие для того, чтобы по узлу в одном дереве прыгнуть на этот же узел во втором дереве
@@ -172,10 +163,15 @@ namespace NavisElectronics.TechPreparation.Views
             return treeViewAdv1;
         }
 
-        private void uploadChangesButton_Click(object sender, System.EventArgs e)
+        public ICollection<ComparerNode> GetSelectedNodesInRightTree()
         {
-            DialogResult = DialogResult.OK;
-            Close();
+            ICollection<ComparerNode> selectedNodesCollection = new List<ComparerNode>();
+            foreach (TreeNodeAdv adv in treeViewAdv2.SelectedNodes)
+            {
+                selectedNodesCollection.Add((ComparerNode)adv.Tag);
+            }
+
+            return selectedNodesCollection;
         }
 
         private void downloadTreeButton_Click(object sender, System.EventArgs e)
@@ -201,9 +197,7 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 192, 192)), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
             }
-
-            IntermechTreeElement taggedElement = node.Tag as IntermechTreeElement;
-            if (taggedElement.CooperationFlag)
+            if (node.CooperationFlag)
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
             }
@@ -239,9 +233,7 @@ namespace NavisElectronics.TechPreparation.Views
         {
             if (PushChanges != null)
             {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                IntermechTreeElement selectedIntermechElement = selectedNode.Tag as IntermechTreeElement;
-                PushChanges(sender, selectedIntermechElement);
+                PushChanges(sender, EventArgs.Empty);
             }
         }
 
@@ -274,15 +266,6 @@ namespace NavisElectronics.TechPreparation.Views
                     ComparerNode selectedNode = ((TreeViewAdv)sender).SelectedNode.Tag as ComparerNode;
                     JumpInit(sender, selectedNode);
                 }
-            }
-        }
-
-        private void editAmountMenuItem_Click(object sender, EventArgs e)
-        {
-            if (EditAmount != null)
-            {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                EditAmount(sender, selectedNode);
             }
         }
 

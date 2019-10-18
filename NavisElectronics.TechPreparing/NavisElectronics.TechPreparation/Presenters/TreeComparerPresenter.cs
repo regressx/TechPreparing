@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Intermech.AutoSelection.Client.AutoSelectionNode;
 using NavisElectronics.TechPreparation.Exceptions;
 
 namespace NavisElectronics.TechPreparation.Presenters
@@ -15,15 +14,12 @@ namespace NavisElectronics.TechPreparation.Presenters
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using Entities;
     using Enums;
     using Interfaces.Entities;
     using ViewInterfaces;
     using ViewModels;
     using ViewModels.TreeNodes;
-    using Views;
 
     /// <summary>
     /// The tree comparer presenter.
@@ -66,12 +62,10 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.Load += _view_Load;
             _view.Download += _view_Download;
             _view.Compare += _view_Compare;
-            _view.Upload += _view_Upload;
             _view.PushChanges += _view_PushChanges;
             _view.EditCooperationClick += _view_EditCooperationClick;
             _view.EditTechRoutesClick += _view_EditTechRoutesClick;
             _view.JumpInit += _view_JumpInit;
-            _view.EditAmount += _view_EditAmount;
             _view.FindInOldArchive += _view_FindInOldArchive;
             _view.CompareTwoNodesClick += View_CompareTwoNodesClick;
             _view.DeleteNodeClick += View_DeleteNodeClick;
@@ -84,15 +78,13 @@ namespace NavisElectronics.TechPreparation.Presenters
                 throw new DeleteAttempFoundException("Обнаружена попытка удаления компонента, который нельзя удалять");
             }
 
-            ComparerNode parentComparerNode = (ComparerNode)e.Parent;
-
             IntermechTreeElement selectedNode = (IntermechTreeElement)e.Tag;
             IntermechTreeElement parent = selectedNode.Parent;
             
             int i = 0;
             
             // я не могу гарантировать 100%, что в составе не будет повторяющихся элементов, во всяком случае на 15.10.2019г, поэтому
-            // будем искать линейно первый попавшийся, который удовлетворяет условию, что совпадает код и элемент отмечен на удаление
+            // будем искать линейно первый попавшийся, который удовлетворяет условию, что совпадает его идентификатор,  и элемент отмечен на удаление
             foreach (IntermechTreeElement child in parent.Children)
             {
                 // это тот элемент, что там нужен
@@ -101,11 +93,21 @@ namespace NavisElectronics.TechPreparation.Presenters
                     parent.RemoveAt(i);
                     break;
                 }
+
                 i++;
             }
 
             _view.FillOldTree(_model.GetModel(_oldElement));
-            _view.JumpToNode(_view.GetOldTree(), parentComparerNode);
+
+            TreeViewAdv treeViewAdv = _view.GetOldTree();
+
+            // найти родительский узел
+            ComparerNode parentComparerNode = FindNodeWithTag(_view.GetOldNode(), parent);
+
+            TreeNodeAdv nodeToFind = treeViewAdv.FindNodeByTag(parentComparerNode);
+            treeViewAdv.SelectedNode = nodeToFind;
+            treeViewAdv.EnsureVisible(nodeToFind);
+
         }
 
         /// <summary>
@@ -134,37 +136,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         private void _view_FindInOldArchive(object sender, ComparerNode e)
         {
             _model.OpenFolder(e.Designation);
-        }
-
-        private void _view_EditAmount(object sender, ComparerNode e)
-        {
-            using (MultiplyParametersView view = new MultiplyParametersView())
-            {
-                MultiplyParametersViewPresenter presenter = new MultiplyParametersViewPresenter(view, new MultiplyParametersViewModel());
-
-                // меняем параметры выделенных строк
-                if (presenter.Run() == DialogResult.OK)
-                {
-                    IList<Parameter> parameters = presenter.GetParameters();
-                    double amount = Convert.ToDouble(parameters[0].Value);
-                    double stockRate = Convert.ToDouble(parameters[1].Value);
-                    IntermechTreeElement elementFromTag = e.Tag as IntermechTreeElement;
-                    elementFromTag.Amount = (float)amount;
-                    elementFromTag.StockRate = stockRate;
-                    e.Amount = amount;
-
-                    ComparerNode mainNode = _view.GetNewNode();
-
-                    IList<IntermechTreeElement> elementsToUpdate = _newElement.Find(elementFromTag.Id);
-                    foreach (IntermechTreeElement element in elementsToUpdate)
-                    {
-                        element.Amount = (float)amount;
-                        element.StockRate = stockRate;
-                        ComparerNode node = FindNodeWithTag(mainNode, element);
-                        node.Amount = amount;
-                    }
-                } 
-            }
         }
 
         private ComparerNode FindNodeWithTag(ComparerNode mainNode, IntermechTreeElement tag)
@@ -252,17 +223,31 @@ namespace NavisElectronics.TechPreparation.Presenters
             // presenter.Run();
         }
 
-        private void _view_PushChanges(object sender, IntermechTreeElement e)
+        private void _view_PushChanges(object sender, EventArgs e)
         {
-            _model.Upload(_oldElement, _newElement, e);
+            ICollection<ComparerNode> collection = _view.GetSelectedNodesInRightTree();
+            if (collection.Count > 0)
+            {
+                IntermechTreeElement lastElementToJump = null;
+                foreach (ComparerNode comparerNode in collection)
+                {
+                    lastElementToJump = (IntermechTreeElement)comparerNode.Tag;
+                    _model.Upload(_oldElement, _newElement, lastElementToJump);
+                }
 
-            _view.FillOldTree(_model.GetModel(_oldElement));
-            _view.FillNewTree(_model.GetModel(_newElement));
-        }
+                _view.FillOldTree(_model.GetModel(_oldElement));
+                _view.FillNewTree(_model.GetModel(_newElement));
 
-        private void _view_Upload(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+                TreeViewAdv treeViewAdv = _view.GetNewTree();
+
+                // найти родительский узел
+                ComparerNode parentComparerNode = FindNodeWithTag(_view.GetNewNode(), lastElementToJump);
+
+                TreeNodeAdv nodeToFind = treeViewAdv.FindNodeByTag(parentComparerNode);
+                treeViewAdv.SelectedNode = nodeToFind;
+                treeViewAdv.EnsureVisible(nodeToFind);
+            }
+
         }
 
         private void _view_Compare(object sender, EventArgs e)

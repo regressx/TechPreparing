@@ -83,7 +83,7 @@
         }
 
         [TestMethod]
-        public void AddModified()
+        public void AddModifiedWithNewNodes()
         {
             MergeNodesService myService = new MergeNodesService();
 
@@ -111,6 +111,42 @@
             Assert.AreEqual(oldTree[0].NodeState, NodeStates.Added);
         }
 
+        [TestMethod]
+        public void UpdateModifiedNode()
+        {
+            MergeNodesService myService = new MergeNodesService();
 
+            IntermechTreeElement oldTree = new IntermechTreeElement();
+            oldTree.Name = "oldTree";
+            oldTree.Id = 1001;
+            oldTree.ObjectId = 1;
+            oldTree.NodeState = NodeStates.Default;
+
+            IntermechTreeElement elementInOldTree = new IntermechTreeElement();
+            elementInOldTree.Name = "newElement1";
+            elementInOldTree.Id = 1002;
+            elementInOldTree.ObjectId = 1003;
+            elementInOldTree.NodeState = NodeStates.Default;
+            oldTree.Add(elementInOldTree);
+
+
+            IntermechTreeElement newTree = new IntermechTreeElement();
+            newTree.Name = "newTree";
+            newTree.Id = 1004;
+            newTree.ObjectId = 1;
+            newTree.NodeState = NodeStates.Modified;
+
+            IntermechTreeElement newElement1 = new IntermechTreeElement();
+            newElement1.Name = "newElement1";
+            newElement1.Id = 1006;
+            newElement1.ObjectId = 1003;
+            newElement1.NodeState = NodeStates.Modified;
+            newTree.Add(newElement1);
+
+            myService.Merge(oldTree, newTree, newTree);
+            myService.Merge(oldTree, newTree, newElement1);
+            Assert.AreEqual(newTree.Id, oldTree.Id);
+            Assert.AreEqual(newElement1.Id, elementInOldTree.Id);
+        }
     }
 }
