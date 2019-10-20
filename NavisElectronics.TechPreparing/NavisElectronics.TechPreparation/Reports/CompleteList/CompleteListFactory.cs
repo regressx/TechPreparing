@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Reports.CompleteList
+﻿using System.Text;
+
+namespace NavisElectronics.TechPreparation.Reports.CompleteList
 {
     using System;
     using System.Collections.Generic;
@@ -396,13 +398,30 @@
             nameCell.AssignText(product.Name, false, false, false);
 
             TextData amountCell = headerRow.Nodes[5] as TextData;
-            amountCell.AssignText(product.Amount.ToString(), false, false, false);
+            amountCell.AssignText(product.Amount.ToString("F3"), false, false, false);
 
             TextData amountWithUseCell = headerRow.Nodes[6] as TextData;
             amountWithUseCell.AssignText((product.Amount * _amountWithUseInRoot).ToString("F3"), false, false, false);
 
-            TextData substituteInfoCell = headerRow.Nodes[11] as TextData;
-            substituteInfoCell.AssignText(product.SubstituteInfo, false, false, false);
+            TextData noteCell = headerRow.Nodes[11] as TextData;
+
+            StringBuilder sb = new StringBuilder();
+            if (product.MeasureUnits != "шт")
+            {
+                sb.Append(product.MeasureUnits);
+            }
+
+            if (product.SubstituteInfo != string.Empty && product.SubstituteInfo != " ")
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(", ");
+                }
+
+                sb.Append(product.SubstituteInfo);
+            }
+
+            noteCell.AssignText(sb.ToString(), false, false, false);
 
             partNode.AddChildNode(headerRow, false, false);
             return headerRow;
