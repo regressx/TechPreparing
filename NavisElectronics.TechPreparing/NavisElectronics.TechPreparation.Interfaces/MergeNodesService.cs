@@ -71,6 +71,8 @@
                 elementInOldTree.ChangeNumber = elementFromUpdateInitialized.ChangeNumber;
                 elementInOldTree.Position = elementFromUpdateInitialized.Position;
                 elementInOldTree.PositionDesignation = elementFromUpdateInitialized.PositionDesignation;
+                elementInOldTree.Amount = elementFromUpdateInitialized.Amount;
+                elementInOldTree.MeasureUnits = elementFromUpdateInitialized.MeasureUnits;
             }
         }
 
