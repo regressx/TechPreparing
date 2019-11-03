@@ -83,5 +83,18 @@
         /// </returns>
         [OperationContract]
         HashAlgorithmNode GetOrderFileHash(long orderVersionId);
+
+
+        /// <summary>
+        /// Получить количество с учетом тех. отхода
+        /// </summary>
+        /// <param name="objectVersionId">
+        /// The order version id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="HashAlgorithmNode"/>.
+        /// </returns>
+        [OperationContract]
+        string GetTechDisposal(long objectVersionId, double totalAmount);
     }
 }

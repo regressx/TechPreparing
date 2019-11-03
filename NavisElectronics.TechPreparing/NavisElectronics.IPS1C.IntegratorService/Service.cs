@@ -331,6 +331,87 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return hashResultNode;
         }
 
+        public string GetTechDisposal(long objectVersionId, double totalAmount)
+        {
+            int caseAttributeId = 0;
+            IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
+            IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
+
+            string packageType = string.Empty;
+            try
+            {
+                IDBObject orderObject = session.GetObject(objectVersionId);
+                IDBAttribute caseAttribute = orderObject.GetAttributeByID(caseAttributeId);
+                if (caseAttribute != null)
+                {
+                    packageType = caseAttribute.AsString;
+                }
+            }
+            finally
+            {
+                session.Logout();
+            }
+
+            return GetTechDisposalInternal(packageType, totalAmount);
+        }
+
+        internal string GetTechDisposalInternal(string packageType, double totalAmount)
+        {
+            int koef = 1;
+            int index = 0;
+            int[] array = new int[2];
+            int additionalAmount = 0;
+
+            if (totalAmount < 1000)
+            {
+                index = 1;
+            }
+
+            switch (packageType)
+            {
+                case "01005":
+                    array[0] = 10;
+                    array[1] = 100;
+                    break;
+
+                case "0201":
+                    array[0] = 10;
+                    array[1] = 100;
+                    break;
+
+                case "0402":
+                    array[0] = 10;
+                    array[1] = 100;
+                    break;
+
+                case "0603":
+                    array[0] = 5;
+                    array[1] = 50;
+                    break;
+
+                case "0805":
+                    array[0] = 5;
+                    array[1] = 50;
+                    break;
+
+                case "1206":
+                    array[0] = 5;
+                    array[1] = 50;
+                    break;
+
+                default:
+                    throw new TechDisposalTypeTemporaryNotSupportedException("Для такого типа объектов тип тех. отхода временно отсутствует");
+            }
+
+            if (index == 0)
+            {
+                return ((koef + (double)array[index] / 100) * totalAmount).ToString("F6");
+            }
+
+            return (totalAmount + array[index]).ToString("F6");
+
+        }
+
         /// <summary>
         /// The get last numbers of designation.
         /// </summary>

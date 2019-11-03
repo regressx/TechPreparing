@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="IDBObjectMock.cs" />
     <Compile Include="MappingTests.cs" />
+    <Compile Include="TechDisposalTests.cs" />
     <Compile Include="VersionParsingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

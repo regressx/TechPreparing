@@ -52,6 +52,7 @@
     <Compile Include="Entities\ProductTreeNode.cs" />
     <Compile Include="Exceptions\OrderInfoException.cs" />
     <Compile Include="Exceptions\TechDataNotExistedException.cs" />
+    <Compile Include="Exceptions\TechDisposalTypeTemporaryNotSupported.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Exceptions\WrongTypeCallException.cs" />
     <Compile Include="IService.cs" />
