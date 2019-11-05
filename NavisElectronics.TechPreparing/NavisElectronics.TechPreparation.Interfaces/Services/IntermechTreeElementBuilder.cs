@@ -341,7 +341,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
         {
             if (relationNote == null)
             {
-                throw new ArgumentNullException("note", "Попытка передать построителю объекта узла дерева пустую ссылку на примечание");
+                throw new ArgumentNullException("note", "Попытка передать построителю объекта узла дерева пустую ссылку на примечание по связи");
             }
 
             _element.RelationNote = relationNote == DBNull.Value ? string.Empty : Convert.ToString(relationNote);

@@ -281,6 +281,12 @@
         public string LifeCycleStep { get; set; }
 
         /// <summary>
+        /// Тип связи
+        /// </summary>
+        public string RelationName { get; set; }
+
+
+        /// <summary>
         /// Индексатор
         /// </summary>
         /// <param name="index">

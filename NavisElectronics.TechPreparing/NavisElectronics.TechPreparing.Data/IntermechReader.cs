@@ -291,6 +291,7 @@ namespace NavisElectronics.TechPreparation.Data
                         .SetPositionDesignation(row[6])
                         .SetNote(row[7])
                         .SetRelationNote(row[8]);
+                    pickedElement.RelationName = "Подборной элемент";
                     elements.Add(pickedElement);
                 }
 
@@ -1057,7 +1058,8 @@ namespace NavisElectronics.TechPreparation.Data
                 Designation = Convert.ToString(row[3]),
                 Name = Convert.ToString(row[4]),
                 StockRate = 1,
-                ChangeNumber = Convert.ToString(row[9])
+                ChangeNumber = Convert.ToString(row[9]),
+                RelationName = "Состав изделия"
             };
 
             if (row[5] != DBNull.Value)
@@ -1197,6 +1199,7 @@ namespace NavisElectronics.TechPreparation.Data
                                     // всегда должна быть единица, всегда!
                                     detailMaterialNode.Amount = 1;
                                     detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
+                                    detailMaterialNode.RelationName = "Изделие-заготовка";
                                     break;
                                 }
                             }
