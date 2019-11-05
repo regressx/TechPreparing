@@ -972,6 +972,20 @@ namespace NavisElectronics.TechPreparation.Data
             // проходим по элементам
             foreach (IntermechTreeElement element in elements)
             {
+                // здесь пропускаем все элементы, которые стоят на ЖЦ Аннулировано
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject currentObject = keeper.Session.GetObject(element.Id);
+
+                    IDBLifecycleStep lifeCycleStep = keeper.Session.GetLifecycleStep(currentObject.LCStep, element.Type);
+                    element.LifeCycleStep = lifeCycleStep.LCName;
+
+                    if (element.LifeCycleStep == "Аннулировано")
+                    {
+                        continue;
+                    }
+                }
+
                 elementToFetch.Add(element);
 
                 // если у объекта есть состав, то спускаемся рекурсивно

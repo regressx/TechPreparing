@@ -270,7 +270,15 @@
         public string MountingType { get; set; }
 
 
+        /// <summary>
+        /// Материал из тех. требований или вспомогательный материал, или основной
+        /// </summary>
         public string MaterialRegisteredIn { get; set; }
+
+        /// <summary>
+        /// Наименование шага жизненного цикла
+        /// </summary>
+        public string LifeCycleStep { get; set; }
 
         /// <summary>
         /// Индексатор
