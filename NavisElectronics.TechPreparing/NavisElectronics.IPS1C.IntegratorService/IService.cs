@@ -95,6 +95,6 @@
         /// The <see cref="HashAlgorithmNode"/>.
         /// </returns>
         [OperationContract]
-        string GetTechDisposal(long objectVersionId, double totalAmount);
+        string GetTechDisposal(long objectVersionId, double totalAmount, int year);
     }
 }

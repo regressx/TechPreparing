@@ -331,7 +331,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return hashResultNode;
         }
 
-        public string GetTechDisposal(long objectVersionId, double totalAmount)
+        public string GetTechDisposal(long objectVersionId, double totalAmount, int year)
         {
             int caseAttributeId = 0;
             IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
@@ -352,15 +352,14 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 session.Logout();
             }
 
-            return GetTechDisposalInternal(packageType, totalAmount);
+            return GetTechDisposalInternal(packageType, totalAmount, year);
         }
 
-        internal string GetTechDisposalInternal(string packageType, double totalAmount)
+        internal string GetTechDisposalInternal(string packageType, double totalAmount, int year)
         {
             int koef = 1;
             int index = 0;
             int[] array = new int[2];
-            int additionalAmount = 0;
 
             if (totalAmount < 1000)
             {
@@ -405,7 +404,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
             if (index == 0)
             {
-                return ((koef + (double)array[index] / 100) * totalAmount).ToString("F6");
+                return ((koef + ((double)array[index] / 100)) * totalAmount).ToString("F6");
             }
 
             return (totalAmount + array[index]).ToString("F6");

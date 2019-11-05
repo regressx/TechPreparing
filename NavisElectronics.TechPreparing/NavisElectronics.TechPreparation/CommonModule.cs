@@ -12,6 +12,7 @@ namespace NavisElectronics.TechPreparation
     using Data;
     using Entities;
     using Interfaces;
+    using Interfaces.Services;
     using IO;
     using NavisArchiveWork.Data;
     using NavisArchiveWork.Model;
@@ -41,6 +42,7 @@ namespace NavisElectronics.TechPreparation
             Bind<ReportService>().ToSelf();
             Bind<OpenFolderService>().ToSelf();
             Bind<SaveService>().ToSelf();
+            Bind<TreeComparerService>().ToSelf();
             Bind<MainViewModel>().ToSelf();
             Bind<CooperationViewModel>().ToSelf();
             Bind<TreeNodeDialogViewModel>().ToSelf();

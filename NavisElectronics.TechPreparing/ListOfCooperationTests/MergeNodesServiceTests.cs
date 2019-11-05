@@ -1,4 +1,6 @@
-﻿namespace ListOfCooperationTests
+﻿using NavisElectronics.TechPreparation.Interfaces.Services;
+
+namespace ListOfCooperationTests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

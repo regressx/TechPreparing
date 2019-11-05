@@ -11,7 +11,7 @@ namespace ServiceTests
         public void TestAboveOrEqual1000()
         {
             Service service = new Service();
-            string str = service.GetTechDisposalInternal("0402", 1000d);
+            string str = service.GetTechDisposalInternal("0402", 1000d, 2019);
             Assert.AreEqual("1100,000000", str);
         }
 
@@ -19,7 +19,7 @@ namespace ServiceTests
         public void TestUnder1000()
         {
             Service service = new Service();
-            string str = service.GetTechDisposalInternal("0402", 999d);
+            string str = service.GetTechDisposalInternal("0402", 999d,2019);
             Assert.AreEqual("1099,000000", str);
         }
 
@@ -28,7 +28,7 @@ namespace ServiceTests
         public void Test1206AboveOrEqual1000()
         {
             Service service = new Service();
-            string str = service.GetTechDisposalInternal("1206", 1001d);
+            string str = service.GetTechDisposalInternal("1206", 1001d,2019);
             Assert.AreEqual("1051,050000", str);
         }
 
@@ -36,7 +36,7 @@ namespace ServiceTests
         public void Test1206Under1000()
         {
             Service service = new Service();
-            string str = service.GetTechDisposalInternal("1206", 999d);
+            string str = service.GetTechDisposalInternal("1206", 999d,2019);
             Assert.AreEqual("1049,000000", str);
         }
 

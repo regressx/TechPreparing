@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Intermech.Interfaces">
+      <HintPath>..\packages\Intermech.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -42,19 +45,21 @@
     <Compile Include="Entities\Document.cs" />
     <Compile Include="Exceptions\DataSetIsEmptyException.cs" />
     <Compile Include="Exceptions\MaterialUnitsNotEqualException.cs" />
+    <Compile Include="Exceptions\RelationIdNotFoundException.cs" />
     <Compile Include="IDatabaseWriter.cs" />
     <Compile Include="IDataRepository.cs" />
     <Compile Include="Entities\IntermechTreeElement.cs" />
     <Compile Include="Enums\NodeStates.cs" />
     <Compile Include="IStructElement.cs" />
-    <Compile Include="MergeNodesService.cs" />
+    <Compile Include="Services\IntermechTreeElementBuilder.cs" />
+    <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="ProgressReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\TechProcess.cs" />
     <Compile Include="Entities\TechRouteNode.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Entities\WithdrawalType.cs" />
-    <Compile Include="TreeComparerService.cs" />
+    <Compile Include="Services\TreeComparerService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

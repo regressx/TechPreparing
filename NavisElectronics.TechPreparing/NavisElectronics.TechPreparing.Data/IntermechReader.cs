@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Interfaces.Services;
+
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
@@ -221,6 +223,23 @@ namespace NavisElectronics.TechPreparation.Data
                     }    
                 }
 
+
+                ColumnDescriptor[] columnsForPickedRelation =
+                {
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_TYPE, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
+                    new ColumnDescriptor(-20, AttributeSourceTypes.Relation, ColumnContents.Value, ColumnNameMapping.Index, SortOrders.NONE, 0), // Id связи 
+                    new ColumnDescriptor(9, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // обозначение
+                    new ColumnDescriptor(10, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // наименование
+                    new ColumnDescriptor(1473, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // количество на регулировку
+                    new ColumnDescriptor(18028, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // подбор для позиционного обозначения
+                    new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи
+                    new ColumnDescriptor(17995, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание ПЭ
+                };
+
+                // по связи Подборной компонент
+                DataTable pickedElements = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1056, new List<ColumnDescriptor>(columnsForPickedRelation), string.Empty, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
+
                 foreach (DataRow row in articlesCmposition.Rows)
                 {
                     IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails);
@@ -256,7 +275,23 @@ namespace NavisElectronics.TechPreparation.Data
                             }
                         }
                     }
+
                     elements.Add(element);
+                }
+
+                foreach (DataRow row in pickedElements.Rows)
+                {
+                    IntermechTreeElement pickedElement = new IntermechTreeElementBuilder()
+                        .SetId(row[0])
+                        .SetObjectId(row[1])
+                        .SetRelationId(row[2])
+                        .SetDesignation(row[3])
+                        .SetName(row[4])
+                        .SetAmount(row[5])
+                        .SetPositionDesignation(row[6])
+                        .SetNote(row[7])
+                        .SetRelationNote(row[8]);
+                    elements.Add(pickedElement);
                 }
 
                 ISubsituteGroupGrabber grabber = new SubsituteGroupGrabber(elements);                    
