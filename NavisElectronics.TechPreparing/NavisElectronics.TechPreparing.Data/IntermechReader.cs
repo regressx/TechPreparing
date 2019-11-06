@@ -235,6 +235,8 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(18028, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // подбор для позиционного обозначения
                     new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи
                     new ColumnDescriptor(17995, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание ПЭ
+                    new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
+                    new ColumnDescriptor(1098, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Класс
                 };
 
                 // по связи Подборной компонент
@@ -290,7 +292,9 @@ namespace NavisElectronics.TechPreparation.Data
                         .SetAmount(row[5])
                         .SetPositionDesignation(row[6])
                         .SetNote(row[7])
-                        .SetRelationNote(row[8]);
+                        .SetRelationNote(row[8])
+                        .SetCase(row[9])
+                        .SetClass(row[10]);
                     pickedElement.RelationName = "Подборной элемент";
                     elements.Add(pickedElement);
                 }

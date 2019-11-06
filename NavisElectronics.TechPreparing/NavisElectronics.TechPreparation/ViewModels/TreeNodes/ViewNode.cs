@@ -26,5 +26,10 @@
         /// Количество c применяемостью
         /// </summary>
         public double AmountWithUse { get; set; }
+
+        /// <summary>
+        /// Количество c применяемостью
+        /// </summary>
+        public string RelationName { get; set; }
     }
 }

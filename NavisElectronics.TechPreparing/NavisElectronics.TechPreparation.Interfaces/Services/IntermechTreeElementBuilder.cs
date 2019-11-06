@@ -143,7 +143,18 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
                     IDBRelation relation = keeper.Session.GetRelation(_element.RelationId);
-                    IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
+                    IDBAttribute amountAttribute;
+                    
+                    // Если это не связь "Подборной элемент"
+                    if (relation.RelationType != 1056)
+                    {
+                        amountAttribute = relation.GetAttributeByID(1129);
+                    }
+                    else
+                    {
+                        amountAttribute = relation.GetAttributeByID(1473);
+                    }
+
                     MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
                     _element.Amount = (float)currentValue.Value;
                     MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);

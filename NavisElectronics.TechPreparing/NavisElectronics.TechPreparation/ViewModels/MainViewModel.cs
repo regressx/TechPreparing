@@ -7,19 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections;
 using System.Linq;
-using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Windows.Forms;
     using Aga.Controls.Tree;
     using Entities;
     using Interfaces;
@@ -176,6 +172,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 viewNode.Designation = node.Designation;
                 viewNode.Amount = node.Amount;
                 viewNode.AmountWithUse = node.AmountWithUse;
+                viewNode.RelationName = node.RelationName;
                 viewNode.Tag = node;
                 mainNode.Nodes.Add(viewNode);
                 if (node.Children.Count > 0)
@@ -191,6 +188,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             ViewNode root = new ViewNode();
             root.Name = rootElement.Name;
             root.Designation = rootElement.Designation;
+            root.RelationName = rootElement.RelationName;
             root.Tag = rootElement;
             model.Nodes.Add(root);
             BuildTreeRecursive(root, rootElement);

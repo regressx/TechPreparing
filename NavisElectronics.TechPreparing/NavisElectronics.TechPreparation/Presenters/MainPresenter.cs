@@ -507,39 +507,6 @@ namespace NavisElectronics.TechPreparation.Presenters
                 _organizationStruct = await _model.ReadDataFromBlobAttribute<TechRouteNode>(_rootVersionId, ConstHelper.OrganizationStructAttribute);
             }
 
-            bool withdrawalTypeFileEmpty = await _model.AttributeExist(_rootVersionId, ConstHelper.WithdrawalTypeFileAttribute);
-
-            if (!withdrawalTypeFileEmpty)
-            {
-                // грузим тех. отход из imbase
-                _withdrawalType = await _model.GetWithdrawalTypesAsync();
-
-                WithdrawalTypeAdapter withdrawalTypeWrapper = new WithdrawalTypeAdapter(_withdrawalType).Wrap(_withdrawalType);
-
-                TreeViewSettings settings = new TreeViewSettings();
-                settings.AddColumn(new TreeColumn("Наименование", 250), "Name");
-                settings.ElementToBuild = withdrawalTypeWrapper;
-                
-                StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeAdapter> presenter = new StructDialogViewPresenter<WithdrawalTypeNodeView, WithdrawalTypeAdapter>(new StructDialogView(), new StructDialogViewModel<WithdrawalTypeNodeView, WithdrawalTypeAdapter>());
-                presenter.Run(settings);
-
-                if (settings.Result != null)
-                {
-                    WithdrawalTypeAdapter resultNode = (WithdrawalTypeAdapter)settings.Result;
-                    await _model.WriteBlobAttributeAsync<WithdrawalType>(_rootVersionId, resultNode.WithdrawalType,ConstHelper.WithdrawalTypeFileAttribute, "Тип тех. отхода");
-                }
-                else
-                {
-                    MessageBox.Show("Не указан тип тех. отхода: теперь надо будет перезапустить окно");
-                }
-            }
-            else
-            {
-                _withdrawalType =
-                    await _model.ReadDataFromBlobAttribute<WithdrawalType>(_rootVersionId,
-                        ConstHelper.WithdrawalTypeFileAttribute);
-            }
-
             // пробуем загрузить из файла
             bool fromFile = false;
 

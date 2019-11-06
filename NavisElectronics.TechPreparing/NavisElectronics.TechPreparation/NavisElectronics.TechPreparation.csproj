@@ -90,7 +90,6 @@
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
-    <Compile Include="Entities\WithdrawalTypeAdapter.cs" />
     <Compile Include="Enums\ElementPlaceOfBirth.cs" />
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />

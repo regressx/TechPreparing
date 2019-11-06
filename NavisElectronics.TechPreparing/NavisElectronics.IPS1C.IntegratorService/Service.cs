@@ -1,4 +1,5 @@
 ﻿using System.Security.Authentication;
+using Intermech;
 using NavisElectronics.TechPreparation.Interfaces;
 
 
@@ -12,12 +13,13 @@ namespace NavisElectronics.IPS1C.IntegratorService
     using Exceptions;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
+    using Intermech.Interfaces.Server;
     using Intermech.Kernel.Search;
     using Services;
     using TechPreparation.Data;
     using TechPreparation.Interfaces.Entities;
     using TechPreparing.Data.Helpers;
-    using Intermech.Interfaces.Server;
+
     /// <summary>
     /// Реализация интерфейса IService
     /// </summary>
@@ -331,6 +333,21 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return hashResultNode;
         }
 
+        /// <summary>
+        /// The get tech disposal.
+        /// </summary>
+        /// <param name="objectVersionId">
+        /// The object version id.
+        /// </param>
+        /// <param name="totalAmount">
+        /// The total amount.
+        /// </param>
+        /// <param name="year">
+        /// The year.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
         public string GetTechDisposal(long objectVersionId, double totalAmount, int year)
         {
             int caseAttributeId = 0;
@@ -355,6 +372,23 @@ namespace NavisElectronics.IPS1C.IntegratorService
             return GetTechDisposalInternal(packageType, totalAmount, year);
         }
 
+        /// <summary>
+        /// The get tech disposal internal.
+        /// </summary>
+        /// <param name="packageType">
+        /// The package type.
+        /// </param>
+        /// <param name="totalAmount">
+        /// The total amount.
+        /// </param>
+        /// <param name="year">
+        /// The year.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        /// <exception cref="TechDisposalTypeTemporaryNotSupportedException">
+        /// </exception>
         internal string GetTechDisposalInternal(string packageType, double totalAmount, int year)
         {
             int koef = 1;
