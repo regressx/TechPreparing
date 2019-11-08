@@ -92,7 +92,6 @@
             root.IsPCB = product.IsPcb.ToString();
             root.PcbVersion = product.PcbVersion.ToString();
             root.TechTaskOnPCB = product.TechTask;
-            root.TypeOfWithDrawal = product.TypeOfWithDrawal;
             root.Case = product.Case;
             root.MountingType = product.MountingType;
             root.ProduseSign = product.ProduseSign.ToString();

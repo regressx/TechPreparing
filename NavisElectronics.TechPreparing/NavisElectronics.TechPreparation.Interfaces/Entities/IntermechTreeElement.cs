@@ -203,12 +203,6 @@
         public bool IsToComplect { get; set; }
 
         /// <summary>
-        /// Тип технологического отхода
-        /// </summary>
-        [DisplayName("Тип тех. отхода")]
-        public string TypeOfWithDrawal { get; set; }
-
-        /// <summary>
         /// Ссылка на родителя
         /// </summary>
         [Browsable(false)]

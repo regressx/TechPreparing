@@ -196,22 +196,6 @@ namespace NavisElectronics.TechPreparation.Data
 
                     try
                     {
-                        if (ds.Tables["ProductRelations"].Rows[i]["WithdrawalType"] == DBNull.Value)
-                        {
-                            childElement.TypeOfWithDrawal = string.Empty;
-                        }
-                        else
-                        {
-                            childElement.TypeOfWithDrawal = (string)ds.Tables["ProductRelations"].Rows[i]["WithdrawalType"];
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        childElement.TypeOfWithDrawal = string.Empty;
-                    }
-
-                    try
-                    {
                         if (ds.Tables["ProductRelations"].Rows[i]["SubstituteGroupNumber"] == DBNull.Value)
                         {
                             childElement.SubstituteGroupNumber = 0;

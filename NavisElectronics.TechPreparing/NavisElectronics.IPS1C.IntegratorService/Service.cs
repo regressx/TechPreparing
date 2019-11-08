@@ -348,16 +348,16 @@ namespace NavisElectronics.IPS1C.IntegratorService
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public string GetTechDisposal(long objectVersionId, double totalAmount, int year)
+        public string GetTechDisposal(long objectId, double totalAmount, int year)
         {
-            int caseAttributeId = 0;
+            int caseAttributeId = 17765;
             IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
             IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
 
             string packageType = string.Empty;
             try
             {
-                IDBObject orderObject = session.GetObject(objectVersionId);
+                IDBObject orderObject = session.GetObjectByID(objectId, true);
                 IDBAttribute caseAttribute = orderObject.GetAttributeByID(caseAttributeId);
                 if (caseAttribute != null)
                 {
@@ -391,6 +391,12 @@ namespace NavisElectronics.IPS1C.IntegratorService
         /// </exception>
         internal string GetTechDisposalInternal(string packageType, double totalAmount, int year)
         {
+            if (packageType == string.Empty)
+            {
+                throw new ArgumentNullException("packageType", "Попытка подать на вход пустой корпус или упаковку");
+            }
+
+
             int koef = 1;
             int index = 0;
             int[] array = new int[2];

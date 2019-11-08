@@ -177,12 +177,6 @@
         public string TechTaskOnPCB { get; set; }
 
         /// <summary>
-        /// Тип технологического отхода
-        /// </summary>
-        [DataMember]
-        public string TypeOfWithDrawal { get; set; }
-
-        /// <summary>
         /// Тип корпуса
         /// </summary>
         [DataMember]
