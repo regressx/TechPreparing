@@ -59,6 +59,8 @@
     <Compile Include="Entities\TechRouteNode.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
     <Compile Include="Entities\WithdrawalType.cs" />
+    <Compile Include="Services\SaveService.cs" />
+    <Compile Include="Services\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
   </ItemGroup>
   <ItemGroup />

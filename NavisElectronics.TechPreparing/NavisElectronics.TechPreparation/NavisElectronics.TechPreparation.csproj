@@ -94,6 +94,7 @@
     <Compile Include="EventArguments\ExtractedObjecsCollectiontEventArgs.cs" />
     <Compile Include="EventArguments\ExtractedObjectEventArgs.cs" />
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
+    <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
@@ -105,14 +106,11 @@
     <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
     <Compile Include="Reports\CooperationList\CooperationListView.cs" />
     <Compile Include="Reports\IReportService.cs" />
-    <Compile Include="Services\SaveService.cs" />
-    <Compile Include="EventArguments\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
     <Compile Include="ViewInterfaces\CompareTwoNodesEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
-    <Compile Include="Presenters\SelectManufacturerPresenter.cs" />
     <Compile Include="Presenters\TreeNodeDialogPresenter.cs" />
     <Compile Include="Reports\CompleteList\CompleteListFactory.cs" />
     <Compile Include="Services\ITechPreparingSelector.cs" />
@@ -170,12 +168,6 @@
     <Compile Include="ViewInterfaces\ITableView.cs" />
     <Compile Include="Services\ClipboardManager.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
-    <Compile Include="Views\ManufacturerDialogView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ManufacturerDialogView.designer.cs">
-      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -296,9 +288,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ManufacturerDialogView.resx">
-      <DependentUpon>ManufacturerDialogView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>

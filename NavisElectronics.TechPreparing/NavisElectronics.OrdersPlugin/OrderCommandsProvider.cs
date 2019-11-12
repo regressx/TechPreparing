@@ -1,13 +1,15 @@
-﻿using System;
-using System.Threading;
-using Intermech.Extensions;
-using Intermech.Navigator.ContextMenu;
-using Intermech.Navigator.Interfaces;
-using NavisElectronics.Orders.Presenters;
-using NavisElectronics.Orders.ViewModels;
-
-namespace NavisElectronics.Orders
+﻿namespace NavisElectronics.Orders
 {
+    using System;
+    using System.Threading;
+    using Intermech.Extensions;
+    using Intermech.Navigator.ContextMenu;
+    using Intermech.Navigator.Interfaces;
+    using Presenters;
+    using TechPreparation.Data;
+    using TechPreparation.Interfaces.Services;
+    using ViewModels;
+
     public class OrderCommandsProvider : ICommandsProvider
     {
         public CommandsInfo GetMergedCommands(ISelectedItems items, IServiceProvider viewServices)
@@ -40,7 +42,7 @@ namespace NavisElectronics.Orders
         {
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel());
+            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter())));
             mainPresenter.Run(id, new CancellationTokenSource());
         }
 

@@ -25,6 +25,7 @@
             }
         }
 
+        public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
         public event EventHandler<ProduceEventArgs> DoNotProduceClick;
@@ -34,6 +35,11 @@
         {
             treeViewAdv.Model = null;
             treeViewAdv.Model = treeModel;
+        }
+
+        public void UpdateSaveLabel(string message)
+        {
+            saveInfoLabel.Text = message;
         }
 
         private void toolStripButton1_Click(object sender, System.EventArgs e)
@@ -67,7 +73,7 @@
 
             if (node.ProduseSign)
             {
-                e.Graphics.FillRectangle(new SolidBrush(Color.IndianRed), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+                e.Graphics.FillRectangle(new SolidBrush(Color.DarkKhaki), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
             }
         }
 
@@ -80,6 +86,14 @@
 
                 DoNotProduceClick(sender, new ProduceEventArgs(selectedElement,false));
                 treeViewAdv.Invalidate();
+            }
+        }
+
+        private void saveOrderButton_Click(object sender, EventArgs e)
+        {
+            if (Save != null)
+            {
+                Save(this, EventArgs.Empty);
             }
         }
     }

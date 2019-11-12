@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Forms;
-using Aga.Controls.Tree;
-using NavisElectronics.Orders.EventArguments;
-using NavisElectronics.Orders.ViewModels;
-using NavisElectronics.TechPreparation.Data;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparing.Data.Helpers;
-
-namespace NavisElectronics.Orders.Presenters
+﻿namespace NavisElectronics.Orders.Presenters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Aga.Controls.Tree;
+    using EventArguments;
+    using TechPreparation.Interfaces.Entities;
+    using ViewModels;
+
     public class MainFormPresenter : IPresenter<long, CancellationTokenSource>
     {
         private readonly IMainView _view;
@@ -26,7 +24,23 @@ namespace NavisElectronics.Orders.Presenters
             _view.Load += View_Load;
             _view.StartChecking += View_StartChecking;
             _view.AbortLoading += _view_AbortLoading;
+            _view.Save += _view_Save;
             _view.DoNotProduceClick += _view_DoNotProduceClick;
+        }
+
+        private async void _view_Save(object sender, EventArgs e)
+        {
+            try
+            {
+                _view.UpdateSaveLabel("Начинаю сохранение");
+                await _model.WriteBlobAttributeAsync(_orderVersionId, _root, 17964, _root.Name);
+                _view.UpdateSaveLabel("Последнее сохранение в " + DateTime.Now.ToString());
+            }
+            catch (Exception ex)
+            {
+                _view.UpdateSaveLabel("Ошибка при сохранении");
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         private void _view_DoNotProduceClick(object sender, ProduceEventArgs e)
@@ -50,7 +64,6 @@ namespace NavisElectronics.Orders.Presenters
             }
         }
 
-
         private void _view_AbortLoading(object sender, EventArgs e)
         {
             _tokenSource.Cancel();
@@ -64,12 +77,21 @@ namespace NavisElectronics.Orders.Presenters
 
         private async void View_Load(object sender, System.EventArgs e)
         {
-            IntermechReader reader = new IntermechReader();
             try
             {
-                _root = await reader.GetDataFromFileAsync(_orderVersionId, ConstHelper.FileAttribute);
+                // проверяем наличие атрибута "Двоичные данные заказа"
+                if (await _model.AttributeExist(_orderVersionId, 17964))
+                {
+                    _root = await _model.ReadDataFromBlobAttribute<IntermechTreeElement>(_orderVersionId, 17964);
+                }
+                else
+                {
+                    // грузим, если атрибута не было
+                    _root = await _model.GetFullOrderAsync(_orderVersionId, _tokenSource.Token);
+                }
 
-                // расчет применяемостей
+
+                // на всякий случай пересчитаем применяемости
                 Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
                 queue.Enqueue(_root);
                 while (queue.Count > 0)
@@ -78,7 +100,7 @@ namespace NavisElectronics.Orders.Presenters
                     IntermechTreeElement parent = elementFromQueue.Parent;
                     if (parent != null)
                     {
-                        elementFromQueue.UseAmount = (int)parent.AmountWithUse;
+                        elementFromQueue.UseAmount = (int)Math.Round(parent.AmountWithUse, MidpointRounding.ToEven);
                         elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
                         elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
                     }

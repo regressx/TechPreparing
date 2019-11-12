@@ -68,6 +68,11 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         public long WorkshopId { get; set; }
 
         /// <summary>
+        /// Идентификатор версии объекта организации-производителя
+        /// </summary>
+        public long ManufacturerId { get; set; }
+
+        /// <summary>
         /// Получить имя
         /// </summary>
         /// <returns>

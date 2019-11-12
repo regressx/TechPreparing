@@ -48,7 +48,7 @@
             this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.noteTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.saveORderButton = new System.Windows.Forms.ToolStripButton();
+            this.saveOrderButton = new System.Windows.Forms.ToolStripButton();
             this.saveInfoLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -166,13 +166,13 @@
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "в Excel";
             // 
             // designationTextBox
@@ -213,7 +213,7 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveORderButton,
+            this.saveOrderButton,
             this.saveInfoLabel,
             this.toolStripProgressBar1,
             this.toolStripButton1});
@@ -223,14 +223,15 @@
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip";
             // 
-            // saveORderButton
+            // saveOrderButton
             // 
-            this.saveORderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveORderButton.Image = global::NavisElectronics.Orders.Properties.Resources.Save;
-            this.saveORderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveORderButton.Name = "saveORderButton";
-            this.saveORderButton.Size = new System.Drawing.Size(23, 22);
-            this.saveORderButton.Text = "Сохранить";
+            this.saveOrderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveOrderButton.Image = global::NavisElectronics.Orders.Properties.Resources.Save;
+            this.saveOrderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveOrderButton.Name = "saveOrderButton";
+            this.saveOrderButton.Size = new System.Drawing.Size(23, 22);
+            this.saveOrderButton.Text = "Сохранить";
+            this.saveOrderButton.Click += new System.EventHandler(this.saveOrderButton_Click);
             // 
             // saveInfoLabel
             // 
@@ -284,7 +285,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton saveORderButton;
+        private System.Windows.Forms.ToolStripButton saveOrderButton;
         private System.Windows.Forms.ToolStripLabel saveInfoLabel;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private Aga.Controls.Tree.NodeControls.NodeTextBox designationTextBox;

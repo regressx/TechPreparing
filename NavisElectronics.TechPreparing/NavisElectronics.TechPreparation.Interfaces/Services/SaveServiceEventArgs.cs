@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NavisElectronics.TechPreparation.Services
+namespace NavisElectronics.TechPreparation.Interfaces.Services
 {
     /// <summary>
     /// The save service event args.

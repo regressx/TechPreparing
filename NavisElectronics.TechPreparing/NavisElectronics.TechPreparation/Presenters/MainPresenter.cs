@@ -20,6 +20,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     using EventArguments;
     using Exceptions;
     using Interfaces.Entities;
+    using Interfaces.Services;
     using Services;
     using TechPreparing.Data.Helpers;
     using ViewInterfaces;
@@ -67,11 +68,6 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Структура предприятия
         /// </summary>
         private TechRouteNode _organizationStruct = null;
-
-        /// <summary>
-        /// Тип тех. отхода
-        /// </summary>
-        private WithdrawalType _withdrawalType = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPresenter"/> class. 
@@ -495,11 +491,12 @@ namespace NavisElectronics.TechPreparation.Presenters
                 if (settings.Result != null)
                 {
                     TechRouteNodeAdapter resultNode = (TechRouteNodeAdapter)settings.Result;
-                    await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode,ConstHelper.OrganizationStructAttribute, "Структура предприятия");
+                    await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode, ConstHelper.OrganizationStructAttribute, "Структура предприятия " + resultNode.Name);
                 }
                 else
                 {
-                    MessageBox.Show("Не указана структура предприятия : теперь надо будет перезапустить окно");
+                    MessageBox.Show("Не указана структура предприятия: закройте окно тех. подготовки и откройте заново");
+                    return;
                 }
             }
             else
@@ -524,36 +521,28 @@ namespace NavisElectronics.TechPreparation.Presenters
                 fromFile = false;
             }
 
-            // Если не из файла, то загружаем из базы данных
+            // Если не из файла, то надо загрузить из атрибута "Двоичные данные заказа"
             if (!fromFile)
             {
-                // показываем окно для выбора организации
-                Parameter<Agent> agentParameter = new Parameter<Agent>();
-                foreach (Agent agent in _agents.Values)
-                {
-                    agentParameter.AddParameter(agent);
-                }
-
-                Agent filterAgent = new Agent();
-                agentParameter.AddParameter(filterAgent);
-
-                IPresenter<Parameter<Agent>> agentDialogPresenter =
-                    _presentationFactory.GetPresenter<SelectManufacturerPresenter, Parameter<Agent>>();
-                agentDialogPresenter.Run(agentParameter);
-
                 // если при загрузке производитель не выбран, то ничего не будем грузить
-                if (filterAgent.Id == 0)
+                if (_organizationStruct.ManufacturerId == 0)
                 {
-                    return;
+                    throw new OrganizationStructNotDownloadedException(
+                        "У корневого элемента дерева организации не указан код организации-производителя");
                 }
 
-                _rootElement = await _model.GetFullOrderAsync(_rootVersionId, CancellationToken.None);
+                if (!await _model.AttributeExist(_rootVersionId,17964))
+                {
+                    throw new FileAttributeIsEmptyException("У заказа отсутсвует заполненный атрибут Двоичные данные заказа. Обратитесь к конструктору, составлявшему заказ!");
+                }
+
+                _rootElement = await _model.ReadDataFromBlobAttribute<IntermechTreeElement>(_rootVersionId, 17964);
                 Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
                 queue.Enqueue(_rootElement);
                 while (queue.Count > 0)
                 {
                     IntermechTreeElement elementFromQueue = queue.Dequeue();
-                    elementFromQueue.Agent = filterAgent.Id.ToString();
+                    elementFromQueue.Agent = _organizationStruct.ManufacturerId.ToString();
 
                     foreach (IntermechTreeElement child in elementFromQueue.Children)
                     {
@@ -574,6 +563,9 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <summary>
         /// Запуск главной формы
         /// </summary>
+        /// <param name="rootVersionId">
+        /// идентификатор версии объекта заказа
+        /// </param>
         public override void Run(long rootVersionId)
         {
             _rootVersionId = rootVersionId;

@@ -13,14 +13,41 @@ namespace NavisElectronics.TechPreparation.Views
     using ViewInterfaces;
     using ViewModels.TreeNodes;
 
+    /// <summary>
+    /// Главная форма
+    /// </summary>
     public partial class MainView : Form, IMainView
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainView"/> class.
+        /// </summary>
         public MainView()
         {
             InitializeComponent();
+            treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
             cooperationButton.Click += CooperationButton_Click;
         }
 
+        private void TreeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
+        {
+            TreeNodeAdv currentNodeView = e.Node;
+            ViewNode selectedNode = (ViewNode)currentNodeView.Tag;
+            IntermechTreeElement element = selectedNode.Tag as IntermechTreeElement;
+
+            if (element != null)
+            {
+                if (element.CooperationFlag)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.LightGray), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+                }
+
+                if (element.ProduseSign)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.DarkKhaki), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+                }
+            }
+
+        }
 
         private void CooperationButton_Click(object sender, EventArgs e)
         {

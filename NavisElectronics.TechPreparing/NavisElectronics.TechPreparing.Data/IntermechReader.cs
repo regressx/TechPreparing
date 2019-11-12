@@ -775,14 +775,20 @@ namespace NavisElectronics.TechPreparation.Data
                                 ColumnContents.ID,
                                 ColumnNameMapping.Index,
                                 SortOrders.NONE,
-                                0), // цех
+                                0), // код цеха
 
                             new ColumnDescriptor(1194,
                                 AttributeSourceTypes.Object,
                                 ColumnContents.ID,
                                 ColumnNameMapping.Index,
                                 SortOrders.NONE,
-                                0), // участок
+                                0), // код участка
+                            new ColumnDescriptor(11101,
+                                AttributeSourceTypes.Object,
+                                ColumnContents.Text,
+                                ColumnNameMapping.Index,
+                                SortOrders.NONE,
+                                0), // производитель
 
                         };
 
@@ -821,6 +827,8 @@ namespace NavisElectronics.TechPreparation.Data
 
                             node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
                             node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
+
+                            node.ManufacturerId = row[8] == DBNull.Value ? 0 : long.Parse(Convert.ToString(row[8]));
 
                             nodeFromQueue.Add(node);
                         }
@@ -985,21 +993,22 @@ namespace NavisElectronics.TechPreparation.Data
             // читаем состав
             elements = Read(elementToFetch.Id, token);
                 
-            IDictionary<long, IntermechTreeElement> uniqueElements = new Dictionary<long, IntermechTreeElement>();
+            IDictionary<string, IntermechTreeElement> uniqueElements = new Dictionary<string, IntermechTreeElement>();
 
             // сжимаем повторяющиеся элементы
             foreach (IntermechTreeElement element in elements)
             {
-                if (uniqueElements.ContainsKey(element.Id))
+                string key = element.Id.ToString() + element.RelationName;
+                if (uniqueElements.ContainsKey(key))
                 {
-                    IntermechTreeElement registeredElement = uniqueElements[element.Id];
+                    IntermechTreeElement registeredElement = uniqueElements[key];
                     registeredElement.Amount += element.Amount;
                     registeredElement.Position += ", " + element.Position;
                     registeredElement.PositionDesignation += ", " + element.PositionDesignation;
                 }
                 else
                 {
-                    uniqueElements.Add(element.Id, element);
+                    uniqueElements.Add(key, element);
                 }
             }
 

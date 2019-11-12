@@ -1,13 +1,9 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+﻿using System;
+using System.Threading.Tasks;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
-namespace NavisElectronics.TechPreparation.Services
+namespace NavisElectronics.TechPreparation.Interfaces.Services
 {
-    using System;
-    using System.Threading.Tasks;
-    using Data;
-    using Entities;
-    using Interfaces;
-
     /// <summary>
     /// Сервис сохранения данных
     /// </summary>

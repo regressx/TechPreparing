@@ -9,6 +9,7 @@
 
 using System.Linq;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace NavisElectronics.TechPreparation.ViewModels
 {
@@ -196,7 +197,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Асинхронно получает структуру предприятия
         /// </summary>
         /// <returns></returns>
         public async Task<TechRouteNode> GetWorkShopsAsync()

@@ -5,11 +5,16 @@ using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.Orders
 {
+    /// <summary>
+    /// The MainView interface.
+    /// </summary>
     public interface IMainView : IView
     {
+        event EventHandler Save;
         event EventHandler StartChecking;
         event EventHandler AbortLoading;
         event EventHandler<ProduceEventArgs> DoNotProduceClick; 
         void UpdateTreeModel(TreeModel treeModel);
+        void UpdateSaveLabel(string message);
     }
 }
