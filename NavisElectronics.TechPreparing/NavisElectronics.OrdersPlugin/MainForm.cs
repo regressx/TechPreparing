@@ -25,6 +25,7 @@
             }
         }
 
+        public event EventHandler DownloadAndUpdate;
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
@@ -50,7 +51,7 @@
             }
         }
 
-        private void toolStripMenuItem3_Click(object sender, System.EventArgs e)
+        private void ToolStripMenuItem3_Click(object sender, System.EventArgs e)
         {
             if (DoNotProduceClick != null)
             {
@@ -63,7 +64,7 @@
 
         }
 
-        private void treeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
+        private void TreeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
         {
             IntermechTreeElement node = ((IntermechTreeElement)((OrderNode)e.Node.Tag).Tag);
             if (node.CooperationFlag)
@@ -89,11 +90,19 @@
             }
         }
 
-        private void saveOrderButton_Click(object sender, EventArgs e)
+        private void SaveOrderButton_Click(object sender, EventArgs e)
         {
             if (Save != null)
             {
                 Save(this, EventArgs.Empty);
+            }
+        }
+
+        private void LoadAndUpdateButtonStrip_Click(object sender, EventArgs e)
+        {
+            if (DownloadAndUpdate != null)
+            {
+                DownloadAndUpdate(sender, e);
             }
         }
     }

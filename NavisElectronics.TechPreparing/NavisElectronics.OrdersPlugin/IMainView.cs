@@ -10,11 +10,13 @@ namespace NavisElectronics.Orders
     /// </summary>
     public interface IMainView : IView
     {
+        event EventHandler DownloadAndUpdate;
         event EventHandler Save;
         event EventHandler StartChecking;
         event EventHandler AbortLoading;
         event EventHandler<ProduceEventArgs> DoNotProduceClick; 
         void UpdateTreeModel(TreeModel treeModel);
         void UpdateSaveLabel(string message);
+
     }
 }

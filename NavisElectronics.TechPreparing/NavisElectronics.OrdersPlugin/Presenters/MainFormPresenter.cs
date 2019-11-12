@@ -23,12 +23,18 @@
             _model = model;
             _view.Load += View_Load;
             _view.StartChecking += View_StartChecking;
-            _view.AbortLoading += _view_AbortLoading;
-            _view.Save += _view_Save;
-            _view.DoNotProduceClick += _view_DoNotProduceClick;
+            _view.AbortLoading += View_AbortLoading;
+            _view.Save += View_Save;
+            _view.DoNotProduceClick += View_DoNotProduceClick;
+            _view.DownloadAndUpdate += View_DownloadAndUpdate;
         }
 
-        private async void _view_Save(object sender, EventArgs e)
+        private void View_DownloadAndUpdate(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void View_Save(object sender, EventArgs e)
         {
             try
             {
@@ -43,7 +49,7 @@
             }
         }
 
-        private void _view_DoNotProduceClick(object sender, ProduceEventArgs e)
+        private void View_DoNotProduceClick(object sender, ProduceEventArgs e)
         {
             SetNodeProduceSign(e.Element, e.ProduceSign);
         }
@@ -64,7 +70,7 @@
             }
         }
 
-        private void _view_AbortLoading(object sender, EventArgs e)
+        private void View_AbortLoading(object sender, EventArgs e)
         {
             _tokenSource.Cancel();
         }

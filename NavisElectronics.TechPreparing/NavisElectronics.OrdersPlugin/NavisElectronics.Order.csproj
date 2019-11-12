@@ -82,6 +82,7 @@
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="IListsComparerView.cs" />
     <Compile Include="Presenters\ListsComparerPresenter.cs" />
+    <Compile Include="Presenters\TreeComparerPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -133,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-ok-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-download-16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

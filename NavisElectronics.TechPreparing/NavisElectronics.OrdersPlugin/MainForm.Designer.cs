@@ -52,6 +52,7 @@
             this.saveInfoLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.loadAndUpdateButtonStrip = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +87,7 @@
             this.treeViewAdv.TabIndex = 0;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
-            this.treeViewAdv.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.treeViewAdv_RowDraw);
+            this.treeViewAdv.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.TreeViewAdv_RowDraw);
             // 
             // designationColumn
             // 
@@ -146,7 +147,7 @@
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(245, 22);
             this.toolStripMenuItem3.Text = "Не изготавливать";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
             // toolStripSeparator1
             // 
@@ -216,7 +217,8 @@
             this.saveOrderButton,
             this.saveInfoLabel,
             this.toolStripProgressBar1,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.loadAndUpdateButtonStrip});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(955, 25);
@@ -231,7 +233,7 @@
             this.saveOrderButton.Name = "saveOrderButton";
             this.saveOrderButton.Size = new System.Drawing.Size(23, 22);
             this.saveOrderButton.Text = "Сохранить";
-            this.saveOrderButton.Click += new System.EventHandler(this.saveOrderButton_Click);
+            this.saveOrderButton.Click += new System.EventHandler(this.SaveOrderButton_Click);
             // 
             // saveInfoLabel
             // 
@@ -253,6 +255,16 @@
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "Начать проверку";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // loadAndUpdateButtonStrip
+            // 
+            this.loadAndUpdateButtonStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadAndUpdateButtonStrip.Image = global::NavisElectronics.Orders.Properties.Resources.Download;
+            this.loadAndUpdateButtonStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadAndUpdateButtonStrip.Name = "loadAndUpdateButtonStrip";
+            this.loadAndUpdateButtonStrip.Size = new System.Drawing.Size(23, 22);
+            this.loadAndUpdateButtonStrip.Text = "Загрузка и обновление данных из IPS";
+            this.loadAndUpdateButtonStrip.Click += new System.EventHandler(this.LoadAndUpdateButtonStrip_Click);
             // 
             // MainForm
             // 
@@ -297,5 +309,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem produceMenuStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton loadAndUpdateButtonStrip;
     }
 }
