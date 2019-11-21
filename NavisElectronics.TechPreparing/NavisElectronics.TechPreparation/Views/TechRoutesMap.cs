@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Intermech.Interfaces.Client;
 using NavisElectronics.TechPreparation.EventArguments;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparation.Reports;
 using NavisElectronics.TechPreparation.ViewInterfaces;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;

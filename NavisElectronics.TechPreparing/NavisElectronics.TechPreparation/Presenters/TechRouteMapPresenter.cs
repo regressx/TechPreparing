@@ -109,7 +109,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _techRouteNode);
             dialog.ShowDialog();
             _view.GetTreeView().Refresh();
-
         }
 
         private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)

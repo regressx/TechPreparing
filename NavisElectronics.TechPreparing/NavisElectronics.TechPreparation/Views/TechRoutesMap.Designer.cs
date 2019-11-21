@@ -286,7 +286,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 340);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 362);
             // 
             // ShowButton
             // 
