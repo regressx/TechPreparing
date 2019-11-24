@@ -67,6 +67,8 @@
             iGColPattern2,
             iGColPattern3});
             this.iGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.iGrid1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.iGrid1.Header.Height = 24;
             this.iGrid1.Location = new System.Drawing.Point(0, 0);
             this.iGrid1.Name = "iGrid1";
             this.iGrid1.ReadOnly = true;

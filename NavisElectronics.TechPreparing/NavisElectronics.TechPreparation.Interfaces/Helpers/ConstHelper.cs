@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.TechPreparing.Data.Helpers
+﻿namespace NavisElectronics.TechPreparation.Interfaces.Helpers
 {
     /// <summary>
     /// Класс, предоставляющий константы

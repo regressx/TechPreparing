@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces.Services;
+using NavisElectronics.TechPreparation.Interfaces.Helpers;
 
 namespace NavisElectronics.TechPreparation.Data
 {
@@ -17,6 +17,7 @@ namespace NavisElectronics.TechPreparation.Data
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Entities;
@@ -24,13 +25,13 @@ namespace NavisElectronics.TechPreparation.Data
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using Interfaces;
     using Interfaces.Entities;
+    using Interfaces.Services;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Bson;
     using Substitutes;
-    using TechPreparing.Data.Helpers;
 
     /// <summary>
     /// Реализует чтение составов отдельных элементов, целого заказа
@@ -177,6 +178,62 @@ namespace NavisElectronics.TechPreparation.Data
                 ICompositionLoadService compositionService =
                     (ICompositionLoadService)keeper.Session.GetCustomService(typeof(ICompositionLoadService));
 
+
+                ColumnDescriptor[] columnsForDocuments =
+                {
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_TYPE, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
+                    new ColumnDescriptor(-20, AttributeSourceTypes.Relation, ColumnContents.Value, ColumnNameMapping.Index, SortOrders.NONE, 0), // Id связи 
+                    new ColumnDescriptor(9, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // обозначение
+                    new ColumnDescriptor(10, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // наименование
+                    new ColumnDescriptor(1129, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // количество
+                    new ColumnDescriptor(1177, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // первичная применяемость
+                    new ColumnDescriptor(1145, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // литера
+                    new ColumnDescriptor(1035, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // номер изменения
+                    new ColumnDescriptor(11, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание к самому объекту
+                    new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи
+                    new ColumnDescriptor(17947, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание к составу
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Идентификатор объекта
+                };
+
+                // Поиск состава
+                DataTable documents = compositionService.LoadComposition(keeper.Session, id, 1004, new List<ColumnDescriptor>(columnsForDocuments), string.Empty); // забрать всю документацию
+
+                foreach (DataRow row in documents.Rows)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 9; i <= 10; i++)
+                    {
+                        if (row[i] != DBNull.Value)
+                        {
+                            string convertedString = Convert.ToString(row[i]);
+                            if (convertedString != string.Empty)
+                            {
+                                sb.Append(convertedString + " ");
+                            }
+                        }
+                    }
+
+                    IntermechTreeElement document = new IntermechTreeElementBuilder()
+                        .SetId(row[0])
+                        .SetType(row[1])
+                        .SetRelationId(row[2])
+                        .SetDesignation(row[3])
+                        .SetName(row[4])
+                        .SetAmount(row[5])
+                        .SetFirstUse(row[6])
+                        .SetLetter(row[7])
+                        .SetChangeNumber(row[8])
+                        .SetNote(row[9])
+                        .SetRelationNote(sb.ToString().TrimEnd()).SetObjectId(row[12]);
+                    document.RelationName = "Документ";
+
+
+
+                    elements.Add(document);
+                }
+
+
                 // Получим конструкторский состав на сборку
                 // Необходимые колонки
                 ColumnDescriptor[] columns =
@@ -223,7 +280,6 @@ namespace NavisElectronics.TechPreparation.Data
                     }    
                 }
 
-
                 ColumnDescriptor[] columnsForPickedRelation =
                 {
                     new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
@@ -237,10 +293,31 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(17995, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание ПЭ
                     new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
                     new ColumnDescriptor(1098, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Класс
+                    new ColumnDescriptor((int)ObligatoryObjectAttributes.F_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Идентификатор объекта
                 };
 
                 // по связи Подборной компонент
                 DataTable pickedElements = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1056, new List<ColumnDescriptor>(columnsForPickedRelation), string.Empty, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
+
+                foreach (DataRow row in pickedElements.Rows)
+                {
+                    IntermechTreeElement pickedElement = new IntermechTreeElementBuilder()
+                        .SetId(row[0])
+                        .SetType(row[1])
+                        .SetRelationId(row[2])
+                        .SetDesignation(row[3])
+                        .SetName(row[4])
+                        .SetAmount(row[5])
+                        .SetPositionDesignation(row[6])
+                        .SetNote(row[7])
+                        .SetRelationNote(row[8])
+                        .SetCase(row[9])
+                        .SetClass(row[10])
+                        .SetObjectId(row[11]);
+                    pickedElement.RelationName = "Подборной элемент";
+                    elements.Add(pickedElement);
+                }
+
 
                 foreach (DataRow row in articlesCmposition.Rows)
                 {
@@ -279,24 +356,6 @@ namespace NavisElectronics.TechPreparation.Data
                     }
 
                     elements.Add(element);
-                }
-
-                foreach (DataRow row in pickedElements.Rows)
-                {
-                    IntermechTreeElement pickedElement = new IntermechTreeElementBuilder()
-                        .SetId(row[0])
-                        .SetObjectId(row[1])
-                        .SetRelationId(row[2])
-                        .SetDesignation(row[3])
-                        .SetName(row[4])
-                        .SetAmount(row[5])
-                        .SetPositionDesignation(row[6])
-                        .SetNote(row[7])
-                        .SetRelationNote(row[8])
-                        .SetCase(row[9])
-                        .SetClass(row[10]);
-                    pickedElement.RelationName = "Подборной элемент";
-                    elements.Add(pickedElement);
                 }
 
                 ISubsituteGroupGrabber grabber = new SubsituteGroupGrabber(elements);                    
@@ -828,7 +887,7 @@ namespace NavisElectronics.TechPreparation.Data
                             node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
                             node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
 
-                            node.ManufacturerId = row[8] == DBNull.Value ? 0 : long.Parse(Convert.ToString(row[8]));
+                            node.ManufacturerId = row[8] == DBNull.Value ? 0 : Convert.ToInt64(row[8]);
 
                             nodeFromQueue.Add(node);
                         }

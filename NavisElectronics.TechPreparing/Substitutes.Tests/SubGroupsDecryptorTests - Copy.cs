@@ -121,7 +121,7 @@
 
             groupsDecryptor.DescriptSubGroups(new List<SubstituteSubGroup>() { substituteSubGroup, anotherSubstituteSubGroup });
 
-            Assert.AreEqual(string.Empty, productPos53.SubstituteInfo);
+            Assert.AreEqual( "Применяется с Product 0 взамен ", productPos53.SubstituteInfo);
         }
     }
 }

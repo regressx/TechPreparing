@@ -194,92 +194,92 @@
             this.SetParametersButton,
             this.SyncWithDatabase});
             this.myContextMenuStrip.Name = "MyContextMenuStrip";
-            this.myContextMenuStrip.Size = new System.Drawing.Size(242, 270);
+            this.myContextMenuStrip.Size = new System.Drawing.Size(242, 248);
             // 
             // showIntermechCardButton
             // 
             this.showIntermechCardButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.Search_16x;
             this.showIntermechCardButton.Name = "showIntermechCardButton";
-            this.showIntermechCardButton.Size = new System.Drawing.Size(235, 22);
+            this.showIntermechCardButton.Size = new System.Drawing.Size(241, 22);
             this.showIntermechCardButton.Text = "Просмотр";
             this.showIntermechCardButton.Click += new System.EventHandler(this.SearchInIpsButton_Click);
             // 
             // GoToTheArchiveButton
             // 
             this.GoToTheArchiveButton.Name = "GoToTheArchiveButton";
-            this.GoToTheArchiveButton.Size = new System.Drawing.Size(235, 22);
+            this.GoToTheArchiveButton.Size = new System.Drawing.Size(241, 22);
             this.GoToTheArchiveButton.Text = "Перейти к архиву предприятия";
             this.GoToTheArchiveButton.Click += new System.EventHandler(this.GoToTheArchiveButton_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(232, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(238, 6);
             // 
             // CooperationButton
             // 
             this.CooperationButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_new_meeting_21476;
             this.CooperationButton.Name = "CooperationButton";
-            this.CooperationButton.Size = new System.Drawing.Size(235, 22);
+            this.CooperationButton.Size = new System.Drawing.Size(241, 22);
             this.CooperationButton.Text = "По кооперации";
             this.CooperationButton.Click += new System.EventHandler(this.CooperationButton_Click);
             // 
             // DeleteCoopButton
             // 
             this.DeleteCoopButton.Name = "DeleteCoopButton";
-            this.DeleteCoopButton.Size = new System.Drawing.Size(235, 22);
+            this.DeleteCoopButton.Size = new System.Drawing.Size(241, 22);
             this.DeleteCoopButton.Text = "Убрать кооперацию";
             this.DeleteCoopButton.Click += new System.EventHandler(this.DeleteCoopButton_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(232, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(238, 6);
             // 
             // SetTechProcessButton
             // 
             this.SetTechProcessButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_x_office_document_21104;
             this.SetTechProcessButton.Name = "SetTechProcessButton";
-            this.SetTechProcessButton.Size = new System.Drawing.Size(235, 22);
+            this.SetTechProcessButton.Size = new System.Drawing.Size(241, 22);
             this.SetTechProcessButton.Text = "Указать ТТП";
             this.SetTechProcessButton.Click += new System.EventHandler(this.SetTechProcessButton_Click);
             // 
             // ResetTechProcessButton
             // 
             this.ResetTechProcessButton.Name = "ResetTechProcessButton";
-            this.ResetTechProcessButton.Size = new System.Drawing.Size(235, 22);
+            this.ResetTechProcessButton.Size = new System.Drawing.Size(241, 22);
             this.ResetTechProcessButton.Text = "Убрать ТТП";
             this.ResetTechProcessButton.Click += new System.EventHandler(this.ResetTechProcessButton_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(232, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(238, 6);
             // 
             // SetNoteButton
             // 
             this.SetNoteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_insert_note_21825;
             this.SetNoteButton.Name = "SetNoteButton";
-            this.SetNoteButton.Size = new System.Drawing.Size(235, 22);
+            this.SetNoteButton.Size = new System.Drawing.Size(241, 22);
             this.SetNoteButton.Text = "Добавить примечание";
             this.SetNoteButton.Click += new System.EventHandler(this.SetNoteButton_Click);
             // 
             // DeleteNoteButton
             // 
             this.DeleteNoteButton.Name = "DeleteNoteButton";
-            this.DeleteNoteButton.Size = new System.Drawing.Size(235, 22);
+            this.DeleteNoteButton.Size = new System.Drawing.Size(241, 22);
             this.DeleteNoteButton.Text = "Очистить примечание";
             this.DeleteNoteButton.Click += new System.EventHandler(this.DeleteNoteButton_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(232, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(238, 6);
             // 
             // SetParametersButton
             // 
             this.SetParametersButton.Name = "SetParametersButton";
-            this.SetParametersButton.Size = new System.Drawing.Size(235, 22);
+            this.SetParametersButton.Size = new System.Drawing.Size(241, 22);
             this.SetParametersButton.Text = "Задать параметры";
             this.SetParametersButton.Click += new System.EventHandler(this.SetParametersButton_Click);
             // 
@@ -484,7 +484,6 @@
             // treeViewAdv1
             // 
             this.treeViewAdv1.BackColor = System.Drawing.SystemColors.Window;
-            this.treeViewAdv1.ColumnHeaderHeight = 17;
             this.treeViewAdv1.Columns.Add(this.DesignationColumn);
             this.treeViewAdv1.Columns.Add(this.NameColumn);
             this.treeViewAdv1.Columns.Add(this.CooperationColumn);
@@ -503,7 +502,7 @@
             this.treeViewAdv1.DefaultToolTipProvider = null;
             this.treeViewAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv1.DragDropMarkColor = System.Drawing.Color.Black;
-            this.treeViewAdv1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.treeViewAdv1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewAdv1.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv1.GridLineStyle = ((Aga.Controls.Tree.GridLineStyle)((Aga.Controls.Tree.GridLineStyle.Horizontal | Aga.Controls.Tree.GridLineStyle.Vertical)));

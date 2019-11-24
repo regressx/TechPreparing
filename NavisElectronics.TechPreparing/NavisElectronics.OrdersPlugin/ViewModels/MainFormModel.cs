@@ -1,5 +1,6 @@
 ﻿using System;
 using Intermech.Interfaces;
+using NavisElectronics.TechPreparation.Data;
 
 namespace NavisElectronics.Orders.ViewModels
 {
@@ -110,10 +111,15 @@ namespace NavisElectronics.Orders.ViewModels
             foreach (IntermechTreeElement child in elementToView.Children)
             {
                 OrderNode node = new OrderNode();
+                node.Designation = child.Designation;
+                node.Name = child.Name;
+                node.FirstUse = child.FirstUse;
+                node.Status = child.LifeCycleStep;
                 node.Amount = child.Amount;
                 node.AmountWithUse = child.AmountWithUse;
-                node.Name = child.Name;
-                node.Designation = child.Designation;
+                node.Letter = child.Letter;
+                node.ChangeNumber = child.ChangeNumber;
+                node.Note = child.RelationNote;
                 node.Tag = child;
                 root.Nodes.Add(node);
                 GetOrderNodeRecursive(node, child);

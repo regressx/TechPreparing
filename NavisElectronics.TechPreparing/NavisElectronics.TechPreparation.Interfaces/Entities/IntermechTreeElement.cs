@@ -84,8 +84,6 @@
         [DisplayName("Количество в СП")]
         public float Amount { get; set; }
 
-
-
         /// <summary>
         /// Применяемость
         /// </summary>
@@ -279,6 +277,17 @@
         /// </summary>
         public string RelationName { get; set; }
 
+        /// <summary>
+        /// Первичная применяемость
+        /// </summary>
+        public string FirstUse { get; set; }
+
+
+        /// <summary>
+        /// Литера
+        /// </summary>
+        public string Letter { get; set; }
+
 
         /// <summary>
         /// Индексатор
@@ -412,7 +421,7 @@
 
             if (stackElements.Count != lines.Count)
             {
-                throw new NullReferenceException(string.Format("Элемент {0} не был найден в дереве по такому пути", path));
+                throw new NullReferenceException(string.Format("Элемент {0} не был найден в дереве по такому пути"));
             }
 
             return stackElements.Peek();

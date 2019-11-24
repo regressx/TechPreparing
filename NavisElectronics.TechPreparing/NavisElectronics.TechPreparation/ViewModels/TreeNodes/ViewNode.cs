@@ -28,8 +28,14 @@
         public double AmountWithUse { get; set; }
 
         /// <summary>
-        /// Количество c применяемостью
+        /// Тип связи
         /// </summary>
         public string RelationName { get; set; }
+        
+        /// <summary>
+        /// Примечание по связи
+        /// </summary>
+        public string RelationNote { get; set; }
+
     }
 }

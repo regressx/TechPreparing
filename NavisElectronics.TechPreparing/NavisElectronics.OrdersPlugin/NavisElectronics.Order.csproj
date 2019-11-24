@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.Orders</RootNamespace>
     <AssemblyName>NavisElectronics.Orders</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,10 @@
     </Reference>
     <Reference Include="Intermech.Interfaces.Client">
       <HintPath>..\packages\Intermech.Interfaces.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CheckOrderService.cs" />
     <Compile Include="ViewModels\ComparerNode.cs" />
     <Compile Include="ViewModels\MainFormModel.cs" />
     <Compile Include="ViewModels\TreeComparerViewModel.cs" />
@@ -110,6 +116,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
       <Project>{bf44efa3-b4c0-41d7-87f2-a987359402e1}</Project>
       <Name>NavisElectronics.TechPreparation.Interfaces</Name>
@@ -118,12 +127,6 @@
       <Project>{402c057a-1638-4188-ad50-c75cd1016777}</Project>
       <Name>NavisElectronics.TechPreparation.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AddNode.png" />

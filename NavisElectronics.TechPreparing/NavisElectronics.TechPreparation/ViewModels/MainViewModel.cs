@@ -8,7 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Linq;
+using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Helpers;
 using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace NavisElectronics.TechPreparation.ViewModels
@@ -22,7 +24,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
     using Interfaces;
     using Intermech.Interfaces;
     using Services;
-    using TechPreparing.Data.Helpers;
     using TreeNodes;
 
     /// <summary>
@@ -168,6 +169,11 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
             foreach (IntermechTreeElement node in nodes)
             {
+                if (node.RelationName == "Документ")
+                {
+                    continue;
+                }
+
                 ViewNode viewNode = new ViewNode();
                 viewNode.Name = node.Name;
                 viewNode.Designation = node.Designation;

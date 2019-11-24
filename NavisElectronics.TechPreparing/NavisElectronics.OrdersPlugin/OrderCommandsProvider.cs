@@ -1,4 +1,8 @@
-﻿namespace NavisElectronics.Orders
+﻿using System.Windows.Forms;
+using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
+namespace NavisElectronics.Orders
 {
     using System;
     using System.Threading;
@@ -37,6 +41,7 @@
         {
             return new CommandsInfo();
         }
+
 
         private void OnClickEditOrder(ISelectedItems items, IServiceProvider viewservices, object additionalinfo)
         {

@@ -15,6 +15,7 @@
         public MainForm()
         {
             InitializeComponent();
+            treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -75,6 +76,7 @@
             if (node.ProduseSign)
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.DarkKhaki), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+                ((OrderNode) e.Node.Tag).Note = node.RelationNote;
             }
         }
 

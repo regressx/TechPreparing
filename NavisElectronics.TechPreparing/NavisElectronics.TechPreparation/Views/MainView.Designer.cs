@@ -58,16 +58,18 @@
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.amounTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.relationNameColumn = new Aga.Controls.Tree.TreeColumn();
             this.nodeTextBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nodeTextBoxRelationName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.OrganizationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.relationNameColumn = new Aga.Controls.Tree.TreeColumn();
-            this.nodeTextBoxRelationName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.relationNoteColumn = new Aga.Controls.Tree.TreeColumn();
+            this.nodeTextBoxRelationNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -313,15 +315,16 @@
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
-            this.treeViewAdv.ColumnHeaderHeight = 19;
             this.treeViewAdv.Columns.Add(this.designationTreeColumn);
             this.treeViewAdv.Columns.Add(this.nameTreeColumn);
             this.treeViewAdv.Columns.Add(this.amounTreeColumn);
             this.treeViewAdv.Columns.Add(this.amountWithUseTreeColumn);
             this.treeViewAdv.Columns.Add(this.relationNameColumn);
+            this.treeViewAdv.Columns.Add(this.relationNoteColumn);
             this.treeViewAdv.DefaultToolTipProvider = null;
             this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
+            this.treeViewAdv.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.LineColor = System.Drawing.SystemColors.ControlDark;
@@ -333,6 +336,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmount);
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxAmountWithUse);
             this.treeViewAdv.NodeControls.Add(this.nodeTextBoxRelationName);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBoxRelationNote);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.Size = new System.Drawing.Size(753, 294);
@@ -368,6 +372,13 @@
             this.amountWithUseTreeColumn.TooltipText = null;
             this.amountWithUseTreeColumn.Width = 90;
             // 
+            // relationNameColumn
+            // 
+            this.relationNameColumn.Header = "Связь";
+            this.relationNameColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationNameColumn.TooltipText = null;
+            this.relationNameColumn.Width = 100;
+            // 
             // nodeTextBoxDesignation
             // 
             this.nodeTextBoxDesignation.DataPropertyName = "Designation";
@@ -395,6 +406,13 @@
             this.nodeTextBoxAmountWithUse.IncrementalSearchEnabled = true;
             this.nodeTextBoxAmountWithUse.LeftMargin = 3;
             this.nodeTextBoxAmountWithUse.ParentColumn = this.amountWithUseTreeColumn;
+            // 
+            // nodeTextBoxRelationName
+            // 
+            this.nodeTextBoxRelationName.DataPropertyName = "RelationName";
+            this.nodeTextBoxRelationName.IncrementalSearchEnabled = true;
+            this.nodeTextBoxRelationName.LeftMargin = 3;
+            this.nodeTextBoxRelationName.ParentColumn = this.relationNameColumn;
             // 
             // dataGridView1
             // 
@@ -447,19 +465,19 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
-            // relationNameColumn
+            // relationNoteColumn
             // 
-            this.relationNameColumn.Header = "Связь";
-            this.relationNameColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.relationNameColumn.TooltipText = null;
-            this.relationNameColumn.Width = 100;
+            this.relationNoteColumn.Header = "Примечание";
+            this.relationNoteColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationNoteColumn.TooltipText = null;
+            this.relationNoteColumn.Width = 200;
             // 
-            // nodeTextBoxRelationName
+            // nodeTextBoxRelationNote
             // 
-            this.nodeTextBoxRelationName.DataPropertyName = "RelationName";
-            this.nodeTextBoxRelationName.IncrementalSearchEnabled = true;
-            this.nodeTextBoxRelationName.LeftMargin = 3;
-            this.nodeTextBoxRelationName.ParentColumn = this.relationNameColumn;
+            this.nodeTextBoxRelationNote.DataPropertyName = "RelationNote";
+            this.nodeTextBoxRelationNote.IncrementalSearchEnabled = true;
+            this.nodeTextBoxRelationNote.LeftMargin = 3;
+            this.nodeTextBoxRelationNote.ParentColumn = this.relationNoteColumn;
             // 
             // MainView
             // 
@@ -529,5 +547,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
         private Aga.Controls.Tree.TreeColumn relationNameColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxRelationName;
+        private Aga.Controls.Tree.TreeColumn relationNoteColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxRelationNote;
     }
 }

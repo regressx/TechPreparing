@@ -30,7 +30,7 @@ namespace NavisElectronics.Orders.Presenters
         /// <summary>
         /// Модель
         /// </summary>
-        private readonly ViewModels.TreeComparerViewModel _model;
+        private readonly TreeComparerViewModel _model;
 
         /// <summary>
         /// Текущее состояние дерева

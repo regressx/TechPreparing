@@ -109,8 +109,8 @@ namespace ListOfCooperationTests
             newElement1.Add(newElement2);
 
             myService.Merge(oldTree, newTree, newElement2);
-            Assert.AreEqual(oldTree.Children.Count, 1);
-            Assert.AreEqual(oldTree[0].NodeState, NodeStates.Added);
+            Assert.AreEqual(1, oldTree.Children.Count);
+            Assert.AreEqual( NodeStates.Default,oldTree[0].NodeState);
         }
 
         [TestMethod]

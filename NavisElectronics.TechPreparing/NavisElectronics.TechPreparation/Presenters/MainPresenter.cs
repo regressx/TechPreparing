@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Helpers;
+
 namespace NavisElectronics.TechPreparation.Presenters
 {
     using System;
@@ -22,7 +25,6 @@ namespace NavisElectronics.TechPreparation.Presenters
     using Interfaces.Entities;
     using Interfaces.Services;
     using Services;
-    using TechPreparing.Data.Helpers;
     using ViewInterfaces;
     using ViewModels;
     using ViewModels.TreeNodes;
@@ -491,6 +493,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 if (settings.Result != null)
                 {
                     TechRouteNodeAdapter resultNode = (TechRouteNodeAdapter)settings.Result;
+                    _organizationStruct = resultNode.TechRouteNode;
                     await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode, ConstHelper.OrganizationStructAttribute, "Структура предприятия " + resultNode.Name);
                 }
                 else
@@ -502,6 +505,14 @@ namespace NavisElectronics.TechPreparation.Presenters
             else
             {
                 _organizationStruct = await _model.ReadDataFromBlobAttribute<TechRouteNode>(_rootVersionId, ConstHelper.OrganizationStructAttribute);
+            }
+
+
+            // если при загрузке производитель не выбран, то ничего не будем грузить
+            if (_organizationStruct.ManufacturerId == 0)
+            {
+                throw new OrganizationStructNotDownloadedException(
+                    "У корневого элемента дерева организации не указан код организации-производителя");
             }
 
             // пробуем загрузить из файла
@@ -524,31 +535,27 @@ namespace NavisElectronics.TechPreparation.Presenters
             // Если не из файла, то надо загрузить из атрибута "Двоичные данные заказа"
             if (!fromFile)
             {
-                // если при загрузке производитель не выбран, то ничего не будем грузить
-                if (_organizationStruct.ManufacturerId == 0)
-                {
-                    throw new OrganizationStructNotDownloadedException(
-                        "У корневого элемента дерева организации не указан код организации-производителя");
-                }
-
+                // проверить атрибут
                 if (!await _model.AttributeExist(_rootVersionId,17964))
                 {
-                    throw new FileAttributeIsEmptyException("У заказа отсутсвует заполненный атрибут Двоичные данные заказа. Обратитесь к конструктору, составлявшему заказ!");
+                    throw new FileAttributeIsEmptyException("У заказа отсутствует заполненный атрибут Двоичные данные заказа. Обратитесь к сотруднику, составлявшему заказ!");
                 }
 
                 _rootElement = await _model.ReadDataFromBlobAttribute<IntermechTreeElement>(_rootVersionId, 17964);
+                _rootElement.Agent = _organizationStruct.ManufacturerId.ToString();
+
                 Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
                 queue.Enqueue(_rootElement);
                 while (queue.Count > 0)
                 {
-                    IntermechTreeElement elementFromQueue = queue.Dequeue();
-                    elementFromQueue.Agent = _organizationStruct.ManufacturerId.ToString();
-
-                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    IntermechTreeElement currentElement = queue.Dequeue();
+                    currentElement.Agent = _rootElement.Agent;
+                    foreach (IntermechTreeElement child in currentElement.Children)
                     {
                         queue.Enqueue(child);
                     }
                 }
+
             }
 
             _mainView.FillNote(_rootElement.Note);
@@ -559,6 +566,9 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.UpdateCaptionText(orderName);
             _mainView.UnLockButtons();
         }
+
+
+
 
         /// <summary>
         /// Запуск главной формы

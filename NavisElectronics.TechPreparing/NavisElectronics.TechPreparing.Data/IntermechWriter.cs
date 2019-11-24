@@ -9,7 +9,7 @@ using Intermech.Interfaces.BlobStream;
 using NavisElectronics.TechPreparation.Enums;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparing.Data.Helpers;
+using NavisElectronics.TechPreparation.Interfaces.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 

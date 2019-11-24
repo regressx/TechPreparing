@@ -62,7 +62,8 @@
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
                 elementFromQueue.ProduseSign = value;
-
+                elementFromQueue.RelationNote = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
+                    
                 foreach (IntermechTreeElement child in elementFromQueue.Children)
                 {
                     queue.Enqueue(child);
@@ -83,6 +84,9 @@
 
         private async void View_Load(object sender, System.EventArgs e)
         {
+            TreeModel treeModel = _model.GetTreeModel(new IntermechTreeElement() { Designation = "Пожалуйста, подождите!", Name = "Идет загрузка заказа..." });
+            _view.UpdateTreeModel(treeModel);
+
             try
             {
                 // проверяем наличие атрибута "Двоичные данные заказа"
@@ -117,7 +121,7 @@
                     }
                 }
 
-                TreeModel treeModel = _model.GetTreeModel(_root);
+                treeModel = _model.GetTreeModel(_root);
                 _view.UpdateTreeModel(treeModel);
 
             }

@@ -43,12 +43,12 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
         {
             if (objectId == null)
             {
-                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустой идентификатор объекта");
+                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустой идентификатор объекта ObjectId");
             }
 
             if (objectId == DBNull.Value)
             {
-                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустой идентификатор объекта");
+                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустой идентификатор объекта ObjectId");
             }
             _element.ObjectId = Convert.ToInt64(objectId);
             return this;
@@ -121,6 +121,31 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
             return this;
         }
 
+        public IntermechTreeElementBuilder SetFirstUse(object firstUse)
+        {
+            if (firstUse == null)
+            {
+                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустую ссылку на первичную применяемость");
+            }
+
+            _element.FirstUse = firstUse == DBNull.Value ? string.Empty : Convert.ToString(firstUse);
+
+            return this;
+        }
+
+        public IntermechTreeElementBuilder SetLetter(object letter)
+        {
+            if (letter == null)
+            {
+                throw new ArgumentNullException("Попытка передать построителю объекта узла дерева пустую ссылку на литеру");
+            }
+
+            _element.Letter = letter == DBNull.Value ? string.Empty : Convert.ToString(letter);
+
+            return this;
+        }
+
+
         public IntermechTreeElementBuilder SetAmount(object amount)
         {
             if (amount == null)
@@ -135,37 +160,36 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
 
             if (amount == DBNull.Value)
             {
-                throw new Exception("Не указано количество");
+                _element.Amount = 0;
+                return this;
             }
-            else
+
+            int longMeasureUnitCode = 2806;
+            using (SessionKeeper keeper = new SessionKeeper())
             {
-                int longMeasureUnitCode = 2806;
-                using (SessionKeeper keeper = new SessionKeeper())
-                {
-                    IDBRelation relation = keeper.Session.GetRelation(_element.RelationId);
-                    IDBAttribute amountAttribute;
+                IDBRelation relation = keeper.Session.GetRelation(_element.RelationId);
+                IDBAttribute amountAttribute;
                     
-                    // Если это не связь "Подборной элемент"
-                    if (relation.RelationType != 1056)
-                    {
-                        amountAttribute = relation.GetAttributeByID(1129);
-                    }
-                    else
-                    {
-                        amountAttribute = relation.GetAttributeByID(1473);
-                    }
+                // Если это не связь "Подборной элемент"
+                if (relation.RelationType != 1056)
+                {
+                    amountAttribute = relation.GetAttributeByID(1129);
+                }
+                else
+                {
+                    amountAttribute = relation.GetAttributeByID(1473);
+                }
 
-                    MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
-                    _element.Amount = (float)currentValue.Value;
-                    MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
-                    _element.MeasureUnits = measureDescriptor.ShortName;
+                MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
+                _element.Amount = (float)currentValue.Value;
+                MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
+                _element.MeasureUnits = measureDescriptor.ShortName;
 
-                    // если мы получили единицу измерения в мм, то надо ее перевести в метры
-                    if (currentValue.MeasureID == longMeasureUnitCode)
-                    {
-                        _element.Amount /= 1000;
-                        _element.MeasureUnits = "м";
-                    }
+                // если мы получили единицу измерения в мм, то надо ее перевести в метры
+                if (currentValue.MeasureID == longMeasureUnitCode)
+                {
+                    _element.Amount /= 1000;
+                    _element.MeasureUnits = "м";
                 }
             }
 

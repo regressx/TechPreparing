@@ -1,6 +1,8 @@
 ﻿using System.Security.Authentication;
 using Intermech;
+using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Helpers;
 
 
 namespace NavisElectronics.IPS1C.IntegratorService
@@ -16,9 +18,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
     using Intermech.Interfaces.Server;
     using Intermech.Kernel.Search;
     using Services;
-    using TechPreparation.Data;
     using TechPreparation.Interfaces.Entities;
-    using TechPreparing.Data.Helpers;
 
     /// <summary>
     /// Реализация интерфейса IService
