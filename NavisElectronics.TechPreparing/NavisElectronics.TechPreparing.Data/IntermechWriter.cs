@@ -107,7 +107,7 @@ namespace NavisElectronics.TechPreparation.Data
             progressReport.Message = "Начинаю сериализацию";
             progress.Report(progressReport);
 
-            IntermechTreeElement elementToSave = (IntermechTreeElement) element.Clone();
+            IntermechTreeElement elementToSave = (IntermechTreeElement)element.Clone();
 
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
 

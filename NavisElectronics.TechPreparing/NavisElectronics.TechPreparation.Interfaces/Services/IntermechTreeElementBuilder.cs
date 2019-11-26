@@ -384,6 +384,44 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
             return this;
         }
 
+
+        public IntermechTreeElement SetChangeDocument(object changeDocument)
+        {
+            if (changeDocument == null)
+            {
+                throw new ArgumentNullException("changeDocument", "Попытка передать построителю объекта узла дерева пустую ссылку на обозначение извещения");
+            }
+
+            long id = changeDocument == DBNull.Value ? 0 : Convert.ToInt64(changeDocument);
+            if (id == 0)
+            {
+                if (_element.Id == 0)
+                {
+                    throw new ArgumentNullException("Id", "Вам следует сначала задать идентификатор версии объекта");
+                }
+
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject documentObject = keeper.Session.GetObject(_element.Id);
+                    IDBAttribute documentChangeName = documentObject.GetAttributeByID(17921);
+                    if (documentChangeName != null)
+                    {
+                        _element.ChangeDocument = documentChangeName.AsString;
+                    }
+                }
+            }
+            else
+            {
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject documentObject = keeper.Session.GetObject(id);
+                    _element.ChangeDocument = documentObject.Caption;
+                }
+            }
+
+            return this;
+        }
+
         /// <summary>
         /// Оператор неявного преобразования в IntermechTreeElement 
         /// </summary>
@@ -397,5 +435,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
         {
             return builder._element;
         }
+
+
     }
 }

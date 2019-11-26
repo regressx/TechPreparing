@@ -290,6 +290,11 @@
 
 
         /// <summary>
+        /// Извещение
+        /// </summary>
+        public string ChangeDocument { get; set; }
+
+        /// <summary>
         /// Индексатор
         /// </summary>
         /// <param name="index">

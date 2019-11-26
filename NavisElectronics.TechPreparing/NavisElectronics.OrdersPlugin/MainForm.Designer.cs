@@ -166,7 +166,7 @@
             this.loadAndUpdateButtonStrip});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1319, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1335, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip";
             // 
@@ -213,9 +213,9 @@
             // 
             // statusStrip
             // 
-            this.statusStrip.Location = new System.Drawing.Point(0, 384);
+            this.statusStrip.Location = new System.Drawing.Point(0, 410);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1319, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1335, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -226,14 +226,14 @@
             this.treeViewAdv.Columns.Add(this.designationColumn);
             this.treeViewAdv.Columns.Add(this.nameColumn);
             this.treeViewAdv.Columns.Add(this.firstParentColumn);
-            this.treeViewAdv.Columns.Add(this.statusColumn);
-            this.treeViewAdv.Columns.Add(this.baseVersionSign);
             this.treeViewAdv.Columns.Add(this.amountColumn);
             this.treeViewAdv.Columns.Add(this.amountWithUseColumn);
             this.treeViewAdv.Columns.Add(this.letterColumn);
             this.treeViewAdv.Columns.Add(this.changeNumberColumn);
             this.treeViewAdv.Columns.Add(this.changeDocumentColumn);
             this.treeViewAdv.Columns.Add(this.noteColumn);
+            this.treeViewAdv.Columns.Add(this.statusColumn);
+            this.treeViewAdv.Columns.Add(this.baseVersionSign);
             this.treeViewAdv.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv.DefaultToolTipProvider = null;
             this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -259,7 +259,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBox11);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(1319, 359);
+            this.treeViewAdv.Size = new System.Drawing.Size(1335, 385);
             this.treeViewAdv.TabIndex = 3;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -420,7 +420,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1319, 406);
+            this.ClientSize = new System.Drawing.Size(1335, 432);
             this.Controls.Add(this.treeViewAdv);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);

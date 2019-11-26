@@ -43,6 +43,11 @@
             {
                 foreach (IntermechTreeElement product in databaseProduct.Children)
                 {
+                    if (product.RelationName == "Документ")
+                    {
+                        continue;
+                    }
+
                     ProductTreeNode childTreeNode = CreateProductTreeNode(product);
                     root.Add(childTreeNode);
                     MapRecursive(childTreeNode, product);
@@ -96,7 +101,8 @@
             root.MountingType = product.MountingType;
             root.ProduseSign = product.ProduseSign.ToString();
             root.TechRoute = product.TechRoute;
-
+            root.RelationName = product.RelationName;
+            root.ChangeDocumentName = product.ChangeDocument;
             Type type = typeof(ProductTreeNode);
             PropertyInfo[] properties = type.GetProperties();
 

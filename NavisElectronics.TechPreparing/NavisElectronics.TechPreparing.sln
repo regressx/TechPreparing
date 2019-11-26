@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyConsoleTestServer", "MyCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTests", "ServiceTests\ServiceTests.csproj", "{48F4E77E-A240-4D02-AA47-A90B83818211}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{682BC812-9A68-407A-A8E5-423AD01F0C2B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.TechPreparation", "NavisElectronics.TechPreparation\NavisElectronics.TechPreparation.csproj", "{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavisElectronics.IPS1C.IntegratorService", "NavisElectronics.IPS1C.IntegratorService\NavisElectronics.IPS1C.IntegratorService.csproj", "{1EF257D5-234C-4ED1-B94D-D6D36BF6DEFD}"
@@ -65,10 +63,6 @@ Global
 		{48F4E77E-A240-4D02-AA47-A90B83818211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48F4E77E-A240-4D02-AA47-A90B83818211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48F4E77E-A240-4D02-AA47-A90B83818211}.Release|Any CPU.Build.0 = Release|Any CPU
-		{682BC812-9A68-407A-A8E5-423AD01F0C2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{682BC812-9A68-407A-A8E5-423AD01F0C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{682BC812-9A68-407A-A8E5-423AD01F0C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{682BC812-9A68-407A-A8E5-423AD01F0C2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD2AA800-FA78-40ED-AA16-7C0BCC6F6A86}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -194,6 +194,7 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи
                     new ColumnDescriptor(17947, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание к составу
                     new ColumnDescriptor((int)ObligatoryObjectAttributes.F_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Идентификатор объекта
+                    new ColumnDescriptor(-15, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код извещения
                 };
 
                 // Поиск состава
@@ -225,7 +226,8 @@ namespace NavisElectronics.TechPreparation.Data
                         .SetLetter(row[7])
                         .SetChangeNumber(row[8])
                         .SetNote(row[9])
-                        .SetRelationNote(sb.ToString().TrimEnd()).SetObjectId(row[12]);
+                        .SetRelationNote(sb.ToString().TrimEnd()).SetObjectId(row[12])
+                        .SetChangeDocument(row[13]);
                     document.RelationName = "Документ";
 
 
@@ -259,6 +261,7 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(17887, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип монтажа компонента
                     new ColumnDescriptor(11, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание
                     new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи "Состав изделия"
+                    new ColumnDescriptor(-15, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код извещения
                 };
 
                 // Поиск состава
@@ -274,7 +277,7 @@ namespace NavisElectronics.TechPreparation.Data
                 {
                     foreach (DataRow row in detailBlank.Rows)
                     {
-                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails);
+                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails,id);
                         element.MeasureUnits = "шт";
                         elementsForDetails.Add(element);
                     }    
@@ -321,7 +324,7 @@ namespace NavisElectronics.TechPreparation.Data
 
                 foreach (DataRow row in articlesCmposition.Rows)
                 {
-                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails);
+                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, id);
 
                     // если сборка или комплект, то смотрим их состав документации. По спецификации определяем номер изменения
                     if (element.Type == 1078 || element.Type == 1074 || element.Type == 1052 || element.Type == 1097)
@@ -332,6 +335,7 @@ namespace NavisElectronics.TechPreparation.Data
                             new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор объекта
                             new ColumnDescriptor((int)ObligatoryObjectAttributes.F_OBJECT_TYPE, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
                             new ColumnDescriptor(1035, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Номер последнего изменения
+                            new ColumnDescriptor(-15, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код извещения
                         };
 
                         DataTable docComposition = compositionService.LoadComposition(keeper.Session.SessionGUID, Convert.ToInt64(element.Id), 1004, new List<ColumnDescriptor>(specificationColumns), string.Empty, 1259, 1682);
@@ -347,6 +351,9 @@ namespace NavisElectronics.TechPreparation.Data
                                         if (dataRow[2] != DBNull.Value)
                                         {
                                             element.ChangeNumber = Convert.ToString(dataRow[2]);
+                                            IntermechTreeElement tempElement = new IntermechTreeElement() { Id = Convert.ToInt64(dataRow[0]) };
+                                            SetChangeDocumentName(tempElement, dataRow[3]);
+                                            element.ChangeDocument = tempElement.ChangeDocument;
                                         }
 
                                         break;
@@ -1119,7 +1126,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
         /// </returns>
-        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails)
+        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, long parentId)
         {
             IntermechTreeElement element = new IntermechTreeElement()
             {
@@ -1138,6 +1145,12 @@ namespace NavisElectronics.TechPreparation.Data
             {
                 IDBRelation relation = session.GetRelation((long)row[2]);
                 IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
+                if (amountAttribute == null)
+                {
+                    throw new FormatException(string.Format("Нет количеств у объекта {0} в составе объекта c идентификатором версии объекта",element.Name, parentId));
+                }
+
+
                 MeasuredValue currentValue = (MeasuredValue)amountAttribute.Value;
                 element.Amount = (float)currentValue.Value;
                 MeasureDescriptor measureDescriptor = MeasureHelper.FindDescriptor(currentValue.MeasureID);
@@ -1220,7 +1233,6 @@ namespace NavisElectronics.TechPreparation.Data
                 element.RelationNote = Convert.ToString(row[20]);
             }
 
-
             // если это печатная плата, то надо забрать тех. задание
             if (element.IsPcb)
             {
@@ -1241,6 +1253,8 @@ namespace NavisElectronics.TechPreparation.Data
             if (element.Type == 1052 || element.Type == 1159)
             {
                 IDBObject detailObject = session.GetObject(element.Id);
+
+                SetChangeDocumentName(element, row[21]);
 
                 IDBAttribute materialAttribute = detailObject.GetAttributeByID(1181);
                 if (materialAttribute != null)
@@ -1315,6 +1329,31 @@ namespace NavisElectronics.TechPreparation.Data
                 foreach (IntermechTreeElement child in elementFromQueue.Children)
                 {
                     queue.Enqueue(child);
+                }
+            }
+        }
+
+        private void SetChangeDocumentName(IntermechTreeElement element, object changeDocument)
+        {
+            long changeDocumentId = changeDocument == DBNull.Value ? 0 : Convert.ToInt64(changeDocument);
+            if (changeDocumentId == 0)
+            {
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject documentObject = keeper.Session.GetObject(element.Id);
+                    IDBAttribute documentChangeName = documentObject.GetAttributeByID(17921);
+                    if (documentChangeName != null)
+                    {
+                        element.ChangeDocument = documentChangeName.AsString;
+                    }
+                }
+            }
+            else
+            {
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject documentObject = keeper.Session.GetObject(changeDocumentId);
+                    element.ChangeDocument = documentObject.Caption;
                 }
             }
         }

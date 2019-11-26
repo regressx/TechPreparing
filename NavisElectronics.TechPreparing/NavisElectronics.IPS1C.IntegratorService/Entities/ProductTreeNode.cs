@@ -204,6 +204,19 @@
         [DataMember]
         public string TechRoute { get; set; }
 
+
+        /// <summary>
+        /// Имя связи
+        /// </summary>
+        [DataMember]
+        public string RelationName { get; set; }
+
+        /// <summary>
+        /// Извещение
+        /// </summary>
+        [DataMember]
+        public string ChangeDocumentName { get; set; }
+
         [DataMember]
         public ICollection<ProductTreeNode> Products
         {

@@ -119,6 +119,7 @@ namespace NavisElectronics.Orders.ViewModels
                 node.AmountWithUse = child.AmountWithUse;
                 node.Letter = child.Letter;
                 node.ChangeNumber = child.ChangeNumber;
+                node.ChangeDocument = child.ChangeDocument;
                 node.Note = child.RelationNote;
                 node.Tag = child;
                 root.Nodes.Add(node);
