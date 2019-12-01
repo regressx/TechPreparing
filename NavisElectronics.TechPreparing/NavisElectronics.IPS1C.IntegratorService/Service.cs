@@ -336,7 +336,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
         /// <summary>
         /// The get tech disposal.
         /// </summary>
-        /// <param name="objectVersionId">
+        /// <param name="objectId">
         /// The object version id.
         /// </param>
         /// <param name="totalAmount">
@@ -352,6 +352,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
         {
             int caseAttributeId = 17765;
             IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
+            
             IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
 
             string packageType = string.Empty;
@@ -387,13 +388,11 @@ namespace NavisElectronics.IPS1C.IntegratorService
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        /// <exception cref="TechDisposalTypeTemporaryNotSupportedException">
-        /// </exception>
         internal string GetTechDisposalInternal(string packageType, double totalAmount, int year)
         {
             if (packageType == string.Empty)
             {
-                throw new ArgumentNullException("packageType", "Попытка подать на вход пустой корпус или упаковку");
+                return "Попытка подать на вход пустой корпус или упаковку";
             }
 
 
@@ -439,7 +438,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     break;
 
                 default:
-                    throw new TechDisposalTypeTemporaryNotSupportedException("Для такого типа объектов тип тех. отхода временно отсутствует");
+                    return "Для такого типа объектов тип тех. отхода временно отсутствует";
             }
 
             if (index == 0)
