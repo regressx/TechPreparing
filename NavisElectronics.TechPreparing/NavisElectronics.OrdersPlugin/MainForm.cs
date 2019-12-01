@@ -33,11 +33,49 @@
         public event EventHandler<ProduceEventArgs> DoNotProduceClick;
 
 
-        public void UpdateTreeModel(TreeModel treeModel)
+        public void UpdateTreeModel(IntermechTreeElement root)
         {
+            TreeModel treeModel = GetTreeModel(root);
             treeViewAdv.Model = null;
             treeViewAdv.Model = treeModel;
         }
+
+
+        public TreeModel GetTreeModel(IntermechTreeElement elementToView)
+        {
+            OrderNode root = new OrderNode();
+            root.Amount = elementToView.Amount;
+            root.AmountWithUse = elementToView.AmountWithUse;
+            root.Name = elementToView.Name;
+            root.Designation = elementToView.Designation;
+            root.Tag = elementToView;
+            GetOrderNodeRecursive(root, elementToView);
+            TreeModel model = new TreeModel();
+            model.Nodes.Add(root);
+            return model;
+        }
+
+        private void GetOrderNodeRecursive(OrderNode root, IntermechTreeElement elementToView)
+        {
+            foreach (IntermechTreeElement child in elementToView.Children)
+            {
+                OrderNode node = new OrderNode();
+                node.Designation = child.Designation;
+                node.Name = child.Name;
+                node.FirstUse = child.FirstUse;
+                node.Status = child.LifeCycleStep;
+                node.Amount = child.Amount;
+                node.AmountWithUse = child.AmountWithUse;
+                node.Letter = child.Letter;
+                node.ChangeNumber = child.ChangeNumber;
+                node.ChangeDocument = child.ChangeDocument;
+                node.Note = child.RelationNote;
+                node.Tag = child;
+                root.Nodes.Add(node);
+                GetOrderNodeRecursive(node, child);
+            }
+        }
+
 
         public void UpdateSaveLabel(string message)
         {

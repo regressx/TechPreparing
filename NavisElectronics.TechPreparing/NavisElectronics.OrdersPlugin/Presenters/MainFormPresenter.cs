@@ -84,8 +84,7 @@
 
         private async void View_Load(object sender, System.EventArgs e)
         {
-            TreeModel treeModel = _model.GetTreeModel(new IntermechTreeElement() { Designation = "Пожалуйста, подождите!", Name = "Идет загрузка заказа..." });
-            _view.UpdateTreeModel(treeModel);
+            _view.UpdateTreeModel(new IntermechTreeElement() { Designation = "Пожалуйста, подождите!", Name = "Идет загрузка заказа..." });
 
             try
             {
@@ -120,9 +119,7 @@
                         queue.Enqueue(child);
                     }
                 }
-
-                treeModel = _model.GetTreeModel(_root);
-                _view.UpdateTreeModel(treeModel);
+                _view.UpdateTreeModel(_root);
 
             }
             catch (OperationCanceledException)

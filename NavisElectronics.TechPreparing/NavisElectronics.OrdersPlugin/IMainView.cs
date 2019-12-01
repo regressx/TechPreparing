@@ -15,7 +15,7 @@ namespace NavisElectronics.Orders
         event EventHandler StartChecking;
         event EventHandler AbortLoading;
         event EventHandler<ProduceEventArgs> DoNotProduceClick; 
-        void UpdateTreeModel(TreeModel treeModel);
+        void UpdateTreeModel(IntermechTreeElement treeModel);
         void UpdateSaveLabel(string message);
 
     }
