@@ -346,9 +346,6 @@
     <None Include="Resources\if_report1_16x16_9945.ico" />
     <None Include="Resources\if_report3_16x16_9951.ico" />
     <None Include="Resources\Search_16xSM.png" />
-    <None Include="Manual\ListOfCooperation %28Руководство программиста%29.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\if_stock_standard-filter_21344.png" />
     <None Include="Resources\if_stock_advanced-filter_21283.png" />
     <None Include="Resources\if_edit-delete_20443.png" />

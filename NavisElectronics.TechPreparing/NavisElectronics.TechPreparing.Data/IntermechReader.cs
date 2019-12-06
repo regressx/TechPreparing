@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Interfaces.Helpers;
-
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
@@ -25,6 +23,7 @@ namespace NavisElectronics.TechPreparation.Data
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using Interfaces;
     using Interfaces.Entities;
+    using Interfaces.Helpers;
     using Interfaces.Services;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;

@@ -43,7 +43,7 @@
         {
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainFormWithGrid(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter())));
+            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter())));
             mainPresenter.Run(id, new CancellationTokenSource());
         }
 

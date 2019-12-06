@@ -153,12 +153,6 @@
         public string SampleSize { get; set; }
 
         /// <summary>
-        /// Признак того, что узел должен участвовать в комплектовании
-        /// </summary>
-        [DataMember]
-        public string IsComplectNodeComponent { get; set; }
-
-        /// <summary>
         /// Признак того, что узел является печатной платой
         /// </summary>
         [DataMember]
