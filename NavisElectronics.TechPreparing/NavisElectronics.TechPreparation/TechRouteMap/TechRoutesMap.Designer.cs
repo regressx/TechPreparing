@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.DefaultCoopRouteButton = new System.Windows.Forms.ToolStripButton();
+            this.SetTechRoutesButtonButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
@@ -86,7 +86,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DefaultCoopRouteButton,
+            this.SetTechRoutesButtonButton,
             this.ExpandAllButton,
             this.CollapseAllButton,
             this.refreshTreeButton});
@@ -96,15 +96,15 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // DefaultCoopRouteButton
+            // SetTechRoutesButtonButton
             // 
-            this.DefaultCoopRouteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DefaultCoopRouteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
-            this.DefaultCoopRouteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DefaultCoopRouteButton.Name = "DefaultCoopRouteButton";
-            this.DefaultCoopRouteButton.Size = new System.Drawing.Size(23, 22);
-            this.DefaultCoopRouteButton.Text = "Проставить кооперации путь по умолчанию";
-            this.DefaultCoopRouteButton.Click += new System.EventHandler(this.DefaultCoopRouteButton_Click);
+            this.SetTechRoutesButtonButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SetTechRoutesButtonButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
+            this.SetTechRoutesButtonButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SetTechRoutesButtonButton.Name = "SetTechRoutesButtonButton";
+            this.SetTechRoutesButtonButton.Size = new System.Drawing.Size(23, 22);
+            this.SetTechRoutesButtonButton.Text = "Проставить маршруты из базы";
+            this.SetTechRoutesButtonButton.Click += new System.EventHandler(this.SetTechRoutesButtonButton_Click);
             // 
             // ExpandAllButton
             // 
@@ -139,6 +139,7 @@
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
+            this.treeViewAdv.ColumnHeaderHeight = 19;
             this.treeViewAdv.Columns.Add(this.designationTreeColumn);
             this.treeViewAdv.Columns.Add(this.nameTreeColumn);
             this.treeViewAdv.Columns.Add(this.iconColumn);
@@ -570,7 +571,7 @@
         private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
         private Aga.Controls.Tree.TreeColumn totalTreeColumn;
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
-        private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
+        private System.Windows.Forms.ToolStripButton SetTechRoutesButtonButton;
         private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;

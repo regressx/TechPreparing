@@ -275,7 +275,7 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void DefaultCoopRouteButton_Click(object sender, EventArgs e)
+        private void SetTechRoutesButtonButton_Click(object sender, EventArgs e)
         {
             EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref SetCooperationNodesDefaultRoute);
             if (temp != null)
