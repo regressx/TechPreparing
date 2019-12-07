@@ -57,7 +57,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        ICollection<IntermechTreeElement> Read(long versionId);
+        ICollection<IntermechTreeElement> Read(long versionId, string caption);
 
 
         /// <summary>
