@@ -105,9 +105,9 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        public ICollection<IntermechTreeElement> Read(long id)
+        public ICollection<IntermechTreeElement> Read(long id, string caption)
         {
-            return Read(id, CancellationToken.None);
+            return Read(id, CancellationToken.None, caption);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        private ICollection<IntermechTreeElement> Read(long id, CancellationToken token)
+        private ICollection<IntermechTreeElement> Read(long id, CancellationToken token, string caption)
         {
             token.ThrowIfCancellationRequested();
             ICollection<IntermechTreeElement> elements = new List<IntermechTreeElement>();
@@ -276,7 +276,7 @@ namespace NavisElectronics.TechPreparation.Data
                 {
                     foreach (DataRow row in detailBlank.Rows)
                     {
-                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails,id);
+                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, caption);
                         element.MeasureUnits = "шт";
                         elementsForDetails.Add(element);
                     }    
@@ -323,7 +323,7 @@ namespace NavisElectronics.TechPreparation.Data
 
                 foreach (DataRow row in articlesCmposition.Rows)
                 {
-                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, id);
+                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, caption);
 
                     // если сборка или комплект, то смотрим их состав документации. По спецификации определяем номер изменения
                     if (element.Type == 1078 || element.Type == 1074 || element.Type == 1052 || element.Type == 1097)
@@ -1056,7 +1056,7 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // читаем состав
-            elements = Read(elementToFetch.Id, token);
+            elements = Read(elementToFetch.Id, token, elementToFetch.Designation);
                 
             IDictionary<string, IntermechTreeElement> uniqueElements = new Dictionary<string, IntermechTreeElement>();
 
@@ -1125,7 +1125,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
         /// </returns>
-        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, long parentId)
+        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, string parentDesignation)
         {
             IntermechTreeElement element = new IntermechTreeElement()
             {
@@ -1146,7 +1146,7 @@ namespace NavisElectronics.TechPreparation.Data
                 IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
                 if (amountAttribute == null)
                 {
-                    throw new FormatException(string.Format("Нет количеств у объекта {0} в составе объекта c идентификатором версии объекта",element.Name, parentId));
+                    throw new FormatException(string.Format("Нет количеств у объекта {0} в составе объекта {1}", element.Name, parentDesignation));
                 }
 
 
@@ -1256,51 +1256,56 @@ namespace NavisElectronics.TechPreparation.Data
                 SetChangeDocumentName(element, row[21]);
 
                 IDBAttribute materialAttribute = detailObject.GetAttributeByID(1181);
-                if (materialAttribute != null)
+
+                if (materialAttribute == null)
                 {
-                    long materialId = materialAttribute.AsInteger;
+                    string message = string.Format($"У детали {element.Designation} отсутствует материал");
+                    throw new TreeNodeNotFoundException(message);
+                }
+
+
+                long materialId = materialAttribute.AsInteger;
                      
-                    // если это не пустой материал или не неопределенный, то заходим
-                    if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
+                // если это не пустой материал или не неопределенный, то заходим
+                if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
+                {
+                    IDBObject materialObject = session.GetObject(materialId);
+
+                    if (materialObject != null)
                     {
-                        IDBObject materialObject = session.GetObject(materialId);
-
-                        if (materialObject != null)
+                        IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
                         {
-                            IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
-                            {
-                                Id = materialObject.ObjectID,
-                                ObjectId = materialObject.ID,
-                                Name = materialObject.Caption,
-                                Type = materialObject.TypeID,
-                                StockRate = 1
-                            };
+                            Id = materialObject.ObjectID,
+                            ObjectId = materialObject.ID,
+                            Name = materialObject.Caption,
+                            Type = materialObject.TypeID,
+                            StockRate = 1
+                        };
                             
-                            // есть совпадение с изделием-заготовкой
-                            foreach (IntermechTreeElement elementForDetail in elementsForDetails)
+                        // есть совпадение с изделием-заготовкой
+                        foreach (IntermechTreeElement elementForDetail in elementsForDetails)
+                        {
+                            if (detailMaterialNode.Id == elementForDetail.Id)
                             {
-                                if (detailMaterialNode.Id == elementForDetail.Id)
-                                {
-                                    // всегда должна быть единица, всегда!
-                                    detailMaterialNode.Amount = 1;
-                                    detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
-                                    detailMaterialNode.RelationName = "Изделие-заготовка";
-                                    break;
-                                }
+                                // всегда должна быть единица, всегда!
+                                detailMaterialNode.Amount = 1;
+                                detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
+                                detailMaterialNode.RelationName = "Изделие-заготовка";
+                                break;
                             }
-
-                            // Количество материала на единицу изделия
-                            IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
-                            if (amountOnOneUnitOfProduct != null)
-                            {
-                                MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
-                                MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
-                                detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
-                                detailMaterialNode.MeasureUnits = descriptor.ShortName;
-                            }
-
-                            element.Add(detailMaterialNode);
                         }
+
+                        // Количество материала на единицу изделия
+                        IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
+                        if (amountOnOneUnitOfProduct != null)
+                        {
+                            MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
+                            MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
+                            detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
+                            detailMaterialNode.MeasureUnits = descriptor.ShortName;
+                        }
+
+                        element.Add(detailMaterialNode);
                     }
                 }
             }
@@ -1309,6 +1314,12 @@ namespace NavisElectronics.TechPreparation.Data
         }
 
 
+        /// <summary>
+        /// пересчитать применяемости в дереве
+        /// </summary>
+        /// <param name="node">
+        /// The node.
+        /// </param>
         internal void RecountAmountInTree(IntermechTreeElement node)
         {
             // расчет применяемостей
@@ -1332,6 +1343,15 @@ namespace NavisElectronics.TechPreparation.Data
             }
         }
 
+        /// <summary>
+        /// Присвоить документу децимальный номер извещения
+        /// </summary>
+        /// <param name="element">
+        /// узел дерева
+        /// </param>
+        /// <param name="changeDocument">
+        /// извещение
+        /// </param>
         private void SetChangeDocumentName(IntermechTreeElement element, object changeDocument)
         {
             long changeDocumentId = changeDocument == DBNull.Value ? 0 : Convert.ToInt64(changeDocument);
