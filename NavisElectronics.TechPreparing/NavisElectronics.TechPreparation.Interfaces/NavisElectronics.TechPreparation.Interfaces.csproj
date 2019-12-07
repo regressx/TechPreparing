@@ -46,8 +46,7 @@
     <Compile Include="CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
-    <Compile Include="Exceptions\DataSetIsEmptyException.cs" />
-    <Compile Include="Exceptions\MaterialUnitsNotEqualException.cs" />
+    <Compile Include="Exceptions\FileAttributeIsEmptyException.cs" />
     <Compile Include="Exceptions\RelationIdNotFoundException.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="IDatabaseWriter.cs" />
