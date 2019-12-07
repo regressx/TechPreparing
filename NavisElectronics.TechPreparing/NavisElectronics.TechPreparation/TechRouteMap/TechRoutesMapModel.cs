@@ -159,6 +159,11 @@ namespace NavisElectronics.TechPreparation.ViewModels
             {
                 foreach (IntermechTreeElement child in element.Children)
                 {
+                    if (child.RelationName == "Документ")
+                    {
+                        continue;
+                    }
+
                     // пропускаем всё неинтересное
                     if (child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
                     {
