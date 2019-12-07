@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.TechRouteMap;
+
 namespace NavisElectronics.TechPreparation
 {
     using Data;
