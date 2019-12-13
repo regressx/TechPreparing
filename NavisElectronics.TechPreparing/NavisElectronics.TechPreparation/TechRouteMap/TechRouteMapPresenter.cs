@@ -29,7 +29,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
     /// </summary>
-    public class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
+    internal class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
     {
         /// <summary>
         /// Интерфейс представления
@@ -73,7 +73,10 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// Окно ведомости маршрутов
         /// </param>
         /// <param name="model">
-        ///  модель для окна
+        /// модель для окна
+        /// </param>
+        /// <param name="presentationFactory">
+        /// The presentation Factory.
         /// </param>
         public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model, IPresentationFactory presentationFactory)
         {
@@ -91,11 +94,22 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.SetInnerCooperation += View_SetInnerCooperation;
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.CreateCooperationList += _view_CreateCooperationList;
-            _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
+            _view.DownloadInfoFromIPS += OnDownloadFromIPS;
             _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
             _view.RefreshTree += View_RefreshTree;
+            _view.UpdateNodeFromIps += View_UpdateNodeFromIps;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void View_UpdateNodeFromIps(object sender, EventArgs e)
+        {
+            ICollection<MyNode> selectedRows = _view.GetSelectedRows();
+            foreach (MyNode node in selectedRows)
+            {
+                _model.UpdateNodeFromIPS(node);
+            }
+
         }
 
         private void View_RefreshTree(object sender, EventArgs e)
@@ -112,47 +126,9 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.GetTreeView().Refresh();
         }
 
-        private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)
+        private async void OnDownloadFromIPS(object sender, EventArgs e)
         {
-
-            ICollection<MyNode> elements = new List<MyNode>();
-
-            Queue<MyNode> queue = new Queue<MyNode>();
-            queue.Enqueue(_view.GetMainNode());
-
-            while (queue.Count > 0)
-            {
-                MyNode nodeFromQueue = queue.Dequeue();
-                if (nodeFromQueue.CooperationFlag && !nodeFromQueue.IsPcb)
-                {
-                    elements.Add(nodeFromQueue);
-                }
-
-                foreach (var currentNode in nodeFromQueue.Nodes)
-                {
-
-                    queue.Enqueue((MyNode)currentNode);
-                }
-            }
-
-            if (elements.Count == 0)
-            {
-                return;
-            }
-
-
-            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
-            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
-
-            presenter.Run(_techRouteNode, resultNodesList);
-
-            if (resultNodesList.Count == 0)
-            {
-                return;
-            }
-            TechRouteSetService setTechRouteService = new TechRouteSetService();
-            setTechRouteService.SetTechRoute(elements, resultNodesList, false);
-
+            _model.DownloadTechInfoFromIPS(_view.GetMainNode());
         }
 
         private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)
