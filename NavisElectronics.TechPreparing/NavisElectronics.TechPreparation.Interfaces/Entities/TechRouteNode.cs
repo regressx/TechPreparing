@@ -17,7 +17,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     /// Узел тех. процесса
     /// </summary>
     [Serializable]
-    public class TechRouteNode
+    public class TechRouteNode : IComparable<TechRouteNode>, IComparable
     {
         /// <summary>
         /// Дочерние узлы
@@ -160,5 +160,24 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
             return nodeToFind;
         }
 
+        public int CompareTo(TechRouteNode other)
+        {
+            // If other is not a valid object reference, this instance is greater.
+            if (other == null) return 1;
+        
+            // The temperature comparison depends on the comparison of 
+            // the underlying Double values. 
+            return Id.CompareTo(other.Id);
+        }
+
+        public int CompareTo(object obj)
+        {
+            TechRouteNode nodeToCompare = obj as TechRouteNode;
+
+            if (nodeToCompare != null)
+                return Id.CompareTo(nodeToCompare.Id);
+
+            throw new Exception("Невозможно сравнить два объекта");
+        }
     }
 }

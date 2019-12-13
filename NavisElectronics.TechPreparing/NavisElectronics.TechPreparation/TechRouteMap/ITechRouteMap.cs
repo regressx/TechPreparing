@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
     using System.Collections.Generic;
     using Aga.Controls.Tree;
     using EventArguments;
+    using ViewInterfaces;
     using ViewModels.TreeNodes;
 
     /// <summary>
@@ -13,8 +14,8 @@
     {
         event EventHandler<EditTechRouteEventArgs> EditMassTechRouteClick;
 
-        event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
-
+        event EventHandler DownloadInfoFromIPS;
+        event EventHandler UpdateNodeFromIps;
         /// <summary>
         /// Переход к старому архиву
         /// </summary>

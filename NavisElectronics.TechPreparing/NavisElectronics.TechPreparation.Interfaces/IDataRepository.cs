@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Entities;
+﻿using Intermech.Interfaces;
+using NavisElectronics.TechPreparation.Entities;
 
 namespace NavisElectronics.TechPreparation.Interfaces
 {
@@ -57,7 +58,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        ICollection<IntermechTreeElement> Read(long versionId);
+        ICollection<IntermechTreeElement> Read(long versionId, string caption);
 
 
         /// <summary>
@@ -146,5 +147,19 @@ namespace NavisElectronics.TechPreparation.Interfaces
         ICollection<Document> GetDocuments(long id);
 
         Task<IntermechTreeElement> GetElementDataAsync(long versionId);
+
+
+        /// <summary>
+        /// Получает тех. маршрут
+        /// </summary>
+        /// <param name="id">
+        /// идентификатор версии сборочной единицы
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<ICollection<ICollection<TechRouteNode>>> GetTechRouteAsync(IntermechTreeElement element, TechRouteNode organizationStruct);
+
+
     }
 }

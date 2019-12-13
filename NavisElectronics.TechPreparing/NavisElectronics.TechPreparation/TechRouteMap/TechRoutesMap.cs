@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Aga.Controls.Tree;
 using Intermech.Interfaces.Client;
 using NavisElectronics.TechPreparation.EventArguments;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using NavisElectronics.TechPreparation.Reports;
+using NavisElectronics.TechPreparation.TechRouteMap;
 using NavisElectronics.TechPreparation.ViewInterfaces;
 using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
@@ -17,8 +19,6 @@ namespace NavisElectronics.TechPreparation.Views
     public partial class TechRoutesMap : Form, ITechRouteMap
     {
         private readonly string _manufacturerViewSelectedAgentName;
-
-
 
         /// <summary>
         /// Событие при редактировании тех. маршрута
@@ -30,7 +30,9 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<ClipboardEventArgs> CopyClick;
         public event EventHandler<ClipboardEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
-        public event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
+        public event EventHandler DownloadInfoFromIPS;
+        public event EventHandler UpdateNodeFromIps;
+
         public event EventHandler<SaveClickEventArgs> GoToOldArchive;
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
@@ -275,12 +277,12 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void DefaultCoopRouteButton_Click(object sender, EventArgs e)
+        private void SetTechRoutesButtonButton_Click(object sender, EventArgs e)
         {
-            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref SetCooperationNodesDefaultRoute);
+            EventHandler temp = Volatile.Read(ref DownloadInfoFromIPS);
             if (temp != null)
             {
-                temp(sender, new EditTechRouteEventArgs(false));
+                temp(sender, EventArgs.Empty);
             }
         }
 
@@ -298,6 +300,15 @@ namespace NavisElectronics.TechPreparation.Views
             if (RefreshTree != null)
             {
                 RefreshTree(sender, e);
+            }
+
+        }
+
+        private void updateFromIPSButton_Click(object sender, EventArgs e)
+        {
+            if (UpdateNodeFromIps != null)
+            {
+                UpdateNodeFromIps(sender, e);
             }
 
         }

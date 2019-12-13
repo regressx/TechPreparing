@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.DefaultCoopRouteButton = new System.Windows.Forms.ToolStripButton();
+            this.downloadInfoFromIPSButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
@@ -79,6 +79,7 @@
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +87,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DefaultCoopRouteButton,
+            this.downloadInfoFromIPSButton,
             this.ExpandAllButton,
             this.CollapseAllButton,
             this.refreshTreeButton});
@@ -96,15 +97,15 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // DefaultCoopRouteButton
+            // downloadInfoFromIPSButton
             // 
-            this.DefaultCoopRouteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DefaultCoopRouteButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
-            this.DefaultCoopRouteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DefaultCoopRouteButton.Name = "DefaultCoopRouteButton";
-            this.DefaultCoopRouteButton.Size = new System.Drawing.Size(23, 22);
-            this.DefaultCoopRouteButton.Text = "Проставить кооперации путь по умолчанию";
-            this.DefaultCoopRouteButton.Click += new System.EventHandler(this.DefaultCoopRouteButton_Click);
+            this.downloadInfoFromIPSButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.downloadInfoFromIPSButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
+            this.downloadInfoFromIPSButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.downloadInfoFromIPSButton.Name = "downloadInfoFromIPSButton";
+            this.downloadInfoFromIPSButton.Size = new System.Drawing.Size(23, 22);
+            this.downloadInfoFromIPSButton.Text = "Заполнить из IPS";
+            this.downloadInfoFromIPSButton.Click += new System.EventHandler(this.SetTechRoutesButtonButton_Click);
             // 
             // ExpandAllButton
             // 
@@ -139,6 +140,7 @@
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
+            this.treeViewAdv.ColumnHeaderHeight = 19;
             this.treeViewAdv.Columns.Add(this.designationTreeColumn);
             this.treeViewAdv.Columns.Add(this.nameTreeColumn);
             this.treeViewAdv.Columns.Add(this.iconColumn);
@@ -268,6 +270,7 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateFromIPSButton,
             this.ShowButton,
             this.goToArchiveButton,
             this.toolStripSeparator1,
@@ -285,7 +288,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 340);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 384);
             // 
             // ShowButton
             // 
@@ -508,6 +511,13 @@
             this.amountWithUseTextBox.LeftMargin = 3;
             this.amountWithUseTextBox.ParentColumn = this.amountWithUseTreeColumn;
             // 
+            // updateFromIPSButton
+            // 
+            this.updateFromIPSButton.Name = "updateFromIPSButton";
+            this.updateFromIPSButton.Size = new System.Drawing.Size(292, 22);
+            this.updateFromIPSButton.Text = "Обновить узел из IPS";
+            this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
+            // 
             // TechRoutesMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,12 +580,13 @@
         private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
         private Aga.Controls.Tree.TreeColumn totalTreeColumn;
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
-        private System.Windows.Forms.ToolStripButton DefaultCoopRouteButton;
+        private System.Windows.Forms.ToolStripButton downloadInfoFromIPSButton;
         private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
         private Aga.Controls.Tree.TreeColumn iconColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox amountWithUseTextBox;
+        private System.Windows.Forms.ToolStripMenuItem updateFromIPSButton;
     }
 }

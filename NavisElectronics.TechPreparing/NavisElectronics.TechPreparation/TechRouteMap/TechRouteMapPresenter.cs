@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.TechPreparation.Presenters
+namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     using Entities;
     using EventArguments;
     using Interfaces.Entities;
+    using Presenters;
     using Reports;
     using Services;
     using ViewInterfaces;
@@ -28,7 +29,7 @@ namespace NavisElectronics.TechPreparation.Presenters
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
     /// </summary>
-    public class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
+    internal class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
     {
         /// <summary>
         /// Интерфейс представления
@@ -55,7 +56,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <summary>
         /// Представляет собой узел из Imbase, в котором представлена структура предприятия
         /// </summary>
-        private TechRouteNode _techRouteNode;
+        private TechRouteNode _organizationStruct;
 
         /// <summary>
         /// Поле служит на передачи параметров
@@ -72,7 +73,10 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Окно ведомости маршрутов
         /// </param>
         /// <param name="model">
-        ///  модель для окна
+        /// модель для окна
+        /// </param>
+        /// <param name="presentationFactory">
+        /// The presentation Factory.
         /// </param>
         public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model, IPresentationFactory presentationFactory)
         {
@@ -90,68 +94,40 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.SetInnerCooperation += View_SetInnerCooperation;
             _view.RemoveInnerCooperation += View_RemoveInnerCooperation;
             _view.CreateCooperationList += _view_CreateCooperationList;
-            _view.SetCooperationNodesDefaultRoute += View_SetCooperationNodesDefaultRoute;
+            _view.DownloadInfoFromIPS += OnDownloadFromIPS;
             _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
             _view.RefreshTree += View_RefreshTree;
+            _view.UpdateNodeFromIps += View_UpdateNodeFromIps;
             _model = model;
             _presentationFactory = presentationFactory;
         }
 
+        private async void View_UpdateNodeFromIps(object sender, EventArgs e)
+        {
+            ICollection<MyNode> selectedRows = _view.GetSelectedRows();
+            foreach (MyNode node in selectedRows)
+            {
+               await _model.UpdateNodeFromIPS(node, _organizationStruct);
+            }
+        }
+
         private void View_RefreshTree(object sender, EventArgs e)
         {
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
             _view.SetTreeModel(model);
         }
 
         private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
         {
             IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
-            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _techRouteNode);
+            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _organizationStruct);
             dialog.ShowDialog();
             _view.GetTreeView().Refresh();
         }
 
-        private void View_SetCooperationNodesDefaultRoute(object sender, EditTechRouteEventArgs e)
+        private async void OnDownloadFromIPS(object sender, EventArgs e)
         {
-
-            ICollection<MyNode> elements = new List<MyNode>();
-
-            Queue<MyNode> queue = new Queue<MyNode>();
-            queue.Enqueue(_view.GetMainNode());
-
-            while (queue.Count > 0)
-            {
-                MyNode nodeFromQueue = queue.Dequeue();
-                if (nodeFromQueue.CooperationFlag && !nodeFromQueue.IsPcb)
-                {
-                    elements.Add(nodeFromQueue);
-                }
-
-                foreach (var currentNode in nodeFromQueue.Nodes)
-                {
-
-                    queue.Enqueue((MyNode)currentNode);
-                }
-            }
-
-            if (elements.Count == 0)
-            {
-                return;
-            }
-
-
-            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
-            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
-
-            presenter.Run(_techRouteNode, resultNodesList);
-
-            if (resultNodesList.Count == 0)
-            {
-                return;
-            }
-            TechRouteSetService setTechRouteService = new TechRouteSetService();
-            setTechRouteService.SetTechRoute(elements, resultNodesList, false);
-
+            _model.DownloadTechInfoFromIPS(_view.GetMainNode());
         }
 
         private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)
@@ -356,7 +332,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
         private void _view_Load(object sender, EventArgs e)
         {
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
             _view.SetTreeModel(model);
         }
 
@@ -365,7 +341,7 @@ namespace NavisElectronics.TechPreparation.Presenters
             IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
             IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
 
-            presenter.Run(_techRouteNode, resultNodesList);
+            presenter.Run(_organizationStruct, resultNodesList);
 
             if (resultNodesList.Count == 0)
             {
@@ -432,7 +408,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         {
             _agents = agents;
             _parameter = parameter;
-            _techRouteNode = techRouteNode;
+            _organizationStruct = techRouteNode;
             _root = parameter.GetParameter(0);
             _view.Show();
         }

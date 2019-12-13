@@ -50,6 +50,164 @@ namespace NavisElectronics.TechPreparation.Data
             _substituteDecriptorService = new SubsituteDecryptorService(new ActualSubsitutesDecryptor(), new SubGroupsDecryptor(new SubGroupDecryptor()));
         }
 
+
+        /// <summary>
+        /// Количество в изделии заготовке
+        /// </summary>
+        /// <param name="id">
+        /// идентификатор версии сборочной единицы
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<ICollection<ICollection<TechRouteNode>>> GetTechRouteAsync(IntermechTreeElement element, TechRouteNode organizationStruct)
+        {
+            Func<ICollection<ICollection<TechRouteNode>>> func = () => GetTechRouteInternal(element, organizationStruct);
+
+            return Task.Run(func);
+        }
+
+        private ICollection<ICollection<TechRouteNode>> GetTechRouteInternal(IntermechTreeElement element, TechRouteNode organizationStruct)
+        {
+
+            // пихаем в бинарное дерево поиска для быстрого поиска
+            IDictionary<long, TechRouteNode> dictionary = new Dictionary<long, TechRouteNode>();
+            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
+            queue.Enqueue(organizationStruct);
+            while (queue.Count > 0)
+            {
+                TechRouteNode nodeFromQueue = queue.Dequeue();
+                if (!dictionary.ContainsKey(nodeFromQueue.Id))
+                {
+                    dictionary.Add(nodeFromQueue.Id, nodeFromQueue);
+                }
+                foreach (TechRouteNode child in nodeFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+            ICollection<ICollection<TechRouteNode>> result = new List<ICollection<TechRouteNode>>();
+            DataTable techRoutes = null;
+
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                // Сервис для получения составов
+                ICompositionLoadService compositionService =
+                    (ICompositionLoadService)keeper.Session.GetCustomService(typeof(ICompositionLoadService));
+
+                ColumnDescriptor[] columnsForTechRoutes =
+                {
+                    new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                    new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_TYPE, AttributeSourceTypes.Object,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
+                    new ColumnDescriptor(1032, AttributeSourceTypes.Relation,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // сортировка
+                };
+
+                // Поиск состава
+                techRoutes = compositionService.LoadComposition(keeper.Session, element.Id, 1002, new List<ColumnDescriptor>(columnsForTechRoutes), string.Empty, 1037); // забрать всё по связи тех. состав
+
+                if (techRoutes != null)
+                {
+                    // есть маршрут обработки
+                    if (techRoutes.Rows.Count != 0)
+                    {
+                        long routeVersionId = (long)techRoutes.Rows[0][0];
+
+                        DataTable techRouteItems = compositionService.LoadComposition(
+                            keeper.Session,
+                            routeVersionId,
+                            1002,
+                            new List<ColumnDescriptor>(columnsForTechRoutes),
+                            string.Empty,
+                            1090, // только изделия-заготовки и единичные тех. процессы
+                            1237); 
+
+                        if (techRouteItems != null)
+                        {
+                            if (techRouteItems.Rows.Count != 0)
+                            {
+                                foreach (DataRow row in techRouteItems.Rows)
+                                {
+                                    int type = (int)row[1];
+
+                                    switch (type)
+                                    {
+                                        case 1090:
+                                            long blankVersionId = (long)row[0];
+
+                                            IDBObject blankObject = keeper.Session.GetObject(blankVersionId);
+
+                                            // если детали и б/ч детали, то их материалу надо присвоить значение
+                                            if (element.Type == 1052 || element.Type == 1159)
+                                            {
+                                                IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
+
+                                                if (amountAttribute.Value != DBNull.Value)
+                                                {
+                                                    MeasuredValue value = (MeasuredValue)amountAttribute.Value;
+
+                                                    if (element.RelationName != "Изделие-заготовка")
+                                                    {
+                                                        // присвоить материалу внутри детали полученное значение
+                                                        element.Children[0].Amount = (float)value.Value;
+
+                                                        MeasureDescriptor descriptor =
+                                                            MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
+                                                                measureDescriptor.MeasureID == value.MeasureID);
+                                                        element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                    }
+                                                }
+                                            }
+                                            break;
+
+                                        case 1237:
+                                            long techProcessId = (long)row[0];
+
+                                            ICollection<TechRouteNode> techProcessNodes = new List<TechRouteNode>();
+                                            result.Add(techProcessNodes);
+
+                                            DataTable techProcessItems = compositionService.LoadComposition(
+                                                keeper.Session,
+                                                techProcessId,
+                                                1002,
+                                                new List<ColumnDescriptor>(columnsForTechRoutes),
+                                                string.Empty,
+                                                1110); // цехозаходы 
+
+                                            foreach (DataRow item in techProcessItems.Rows)
+                                            {
+                                                IDBObject workshop = keeper.Session.GetObject((long)item[0]);
+                                                
+                                                // ссылка на объект Imbase
+                                                IDBAttribute imbaseReferenceAttribute = workshop.GetAttributeByID(1092);
+
+                                                if (imbaseReferenceAttribute == null)
+                                                {
+                                                    throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутсвует привязка к справочнику!");
+                                                }
+
+                                                TechRouteNode workshopNode =
+                                                    dictionary[imbaseReferenceAttribute.AsInteger];
+
+                                                techProcessNodes.Add(workshopNode);
+                                            }
+
+                                            break;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// Асинхронный метод получения полного заказа
         /// </summary>
@@ -105,9 +263,9 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        public ICollection<IntermechTreeElement> Read(long id)
+        public ICollection<IntermechTreeElement> Read(long id, string caption)
         {
-            return Read(id, CancellationToken.None);
+            return Read(id, CancellationToken.None, caption);
         }
 
         /// <summary>
@@ -167,7 +325,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="ICollection{IntermechTreeElement}"/>.
         /// </returns>
-        private ICollection<IntermechTreeElement> Read(long id, CancellationToken token)
+        private ICollection<IntermechTreeElement> Read(long id, CancellationToken token, string caption)
         {
             token.ThrowIfCancellationRequested();
             ICollection<IntermechTreeElement> elements = new List<IntermechTreeElement>();
@@ -276,7 +434,7 @@ namespace NavisElectronics.TechPreparation.Data
                 {
                     foreach (DataRow row in detailBlank.Rows)
                     {
-                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails,id);
+                        IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, caption);
                         element.MeasureUnits = "шт";
                         elementsForDetails.Add(element);
                     }    
@@ -290,7 +448,7 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(9, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // обозначение
                     new ColumnDescriptor(10, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // наименование
                     new ColumnDescriptor(1473, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // количество на регулировку
-                    new ColumnDescriptor(18028, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // подбор для позиционного обозначения
+                    new ColumnDescriptor(18028, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // подбор для позиционного обозначения
                     new ColumnDescriptor(11, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание по связи
                     new ColumnDescriptor(17995, AttributeSourceTypes.Relation, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // примечание ПЭ
                     new ColumnDescriptor(17765, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // Тип корпуса
@@ -323,7 +481,7 @@ namespace NavisElectronics.TechPreparation.Data
 
                 foreach (DataRow row in articlesCmposition.Rows)
                 {
-                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, id);
+                    IntermechTreeElement element = CreateNewElement(row, keeper.Session, elementsForDetails, caption);
 
                     // если сборка или комплект, то смотрим их состав документации. По спецификации определяем номер изменения
                     if (element.Type == 1078 || element.Type == 1074 || element.Type == 1052 || element.Type == 1097)
@@ -769,148 +927,147 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<TechRouteNode> GetWorkshopsAsync()
+        public Task<TechRouteNode> GetWorkshopsAsync()
         {
-            Func<TechRouteNode> funcDelegate = () =>
-            {
-                TechRouteNode mainNode = new TechRouteNode();
-                mainNode.Id = 2512;
-                mainNode.Name = "Цеха";
-                Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
-                queue.Enqueue(mainNode);
-
-                while (queue.Count > 0)
-                {
-                    TechRouteNode nodeFromQueue = queue.Dequeue();
-
-                    using (SessionKeeper keeper = new SessionKeeper())
-                    {
-                        IDBObject myObject = keeper.Session.GetObject(nodeFromQueue.Id);
-
-                        // Сервис для получения составов
-                        ICompositionLoadService compositionService =
-                            (ICompositionLoadService)keeper.Session.GetCustomService(
-                                typeof(ICompositionLoadService));
-
-                        // Получим состав по связи Простая связь с сортировкой
-                        // Необходимые колонки
-                        ColumnDescriptor[] columns =
-                        {
-                            new ColumnDescriptor(
-                                (int)ObligatoryObjectAttributes.F_OBJECT_ID,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // идентификатор версии объекта
-                            new ColumnDescriptor(
-                                (int)ObligatoryObjectAttributes.F_OBJECT_TYPE,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // тип объекта
-                            new ColumnDescriptor(9,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // обозначение
-                            new ColumnDescriptor(10,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // наименование
-                            new ColumnDescriptor(1190,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // цех
-                            new ColumnDescriptor(1194,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // участок
-
-                            new ColumnDescriptor(1190,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.ID,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // код цеха
-
-                            new ColumnDescriptor(1194,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.ID,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // код участка
-                            new ColumnDescriptor(11101,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // производитель
-
-                        };
-
-
-                        DataTable articlesComposition = compositionService.LoadComposition(
-                            keeper.Session.SessionGUID,
-                            myObject.ObjectID,
-                            1003,
-                            new List<ColumnDescriptor>(columns),
-                            string.Empty,
-                            1095);
-
-                        foreach (DataRow row in articlesComposition.Rows)
-                        {
-                            TechRouteNode node = new TechRouteNode();
-                            node.Id = (long)row[0];
-                            node.Type = (int)row[1];
-                            node.Name = (string)row[3];
-                            if (row[4] == DBNull.Value)
-                            {
-                                node.WorkshopName = string.Empty;
-                            }
-                            else
-                            {
-                                node.WorkshopName = (string)row[4];
-                            }
-
-                            if (row[5] == DBNull.Value)
-                            {
-                                node.PartitionName = string.Empty;
-                            }
-                            else
-                            {
-                                node.PartitionName = (string)row[5];
-                            }
-
-                            node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
-                            node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
-
-                            node.ManufacturerId = row[8] == DBNull.Value ? 0 : Convert.ToInt64(row[8]);
-
-                            nodeFromQueue.Add(node);
-                        }
-
-                        foreach (TechRouteNode child in nodeFromQueue.Children)
-                        {
-                            queue.Enqueue(child);
-                        }
-                    }
-                }
-                return mainNode;
-            };
-
-            return await Task.Run(funcDelegate).ConfigureAwait(false);
+            Func<TechRouteNode> funcDelegate = GetWorkshopInternal;
+            return Task.Run(funcDelegate);
         }
 
+        private TechRouteNode GetWorkshopInternal()
+        {
+            TechRouteNode mainNode = new TechRouteNode();
+            mainNode.Id = 2512;
+            mainNode.Name = "Цеха";
+            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
+            queue.Enqueue(mainNode);
 
+            while (queue.Count > 0)
+            {
+                TechRouteNode nodeFromQueue = queue.Dequeue();
+
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject myObject = keeper.Session.GetObject(nodeFromQueue.Id);
+
+                    // Сервис для получения составов
+                    ICompositionLoadService compositionService =
+                        (ICompositionLoadService)keeper.Session.GetCustomService(
+                            typeof(ICompositionLoadService));
+
+                    // Получим состав по связи Простая связь с сортировкой
+                    // Необходимые колонки
+                    ColumnDescriptor[] columns =
+                    {
+                        new ColumnDescriptor(
+                            (int)ObligatoryObjectAttributes.F_OBJECT_ID,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // идентификатор версии объекта
+                        new ColumnDescriptor(
+                            (int)ObligatoryObjectAttributes.F_OBJECT_TYPE,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // тип объекта
+                        new ColumnDescriptor(9,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // обозначение
+                        new ColumnDescriptor(10,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // наименование
+                        new ColumnDescriptor(1190,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // цех
+                        new ColumnDescriptor(1194,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // участок
+
+                        new ColumnDescriptor(1190,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.ID,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // код цеха
+
+                        new ColumnDescriptor(1194,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.ID,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // код участка
+                        new ColumnDescriptor(11101,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // производитель
+
+                    };
+
+
+                    DataTable articlesComposition = compositionService.LoadComposition(
+                        keeper.Session.SessionGUID,
+                        myObject.ObjectID,
+                        1003,
+                        new List<ColumnDescriptor>(columns),
+                        string.Empty,
+                        1095);
+
+                    foreach (DataRow row in articlesComposition.Rows)
+                    {
+                        TechRouteNode node = new TechRouteNode();
+                        node.Id = (long)row[0];
+                        node.Type = (int)row[1];
+                        node.Name = (string)row[3];
+                        if (row[4] == DBNull.Value)
+                        {
+                            node.WorkshopName = string.Empty;
+                        }
+                        else
+                        {
+                            node.WorkshopName = (string)row[4];
+                        }
+
+                        if (row[5] == DBNull.Value)
+                        {
+                            node.PartitionName = string.Empty;
+                        }
+                        else
+                        {
+                            node.PartitionName = (string)row[5];
+                        }
+
+                        node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
+                        node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
+
+                        node.ManufacturerId = row[8] == DBNull.Value ? 0 : Convert.ToInt64(row[8]);
+
+                        nodeFromQueue.Add(node);
+                    }
+
+                    foreach (TechRouteNode child in nodeFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+            return mainNode;
+        }
 
  
         /// <summary>
@@ -941,10 +1098,6 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(10, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index,
                         SortOrders.NONE, 0), //
                 };
-
-
-                //DataTable docs = compositionService.LoadComposition(keeper.Session.SessionGUID,
-                //    id, 1004, new List<ColumnDescriptor>(columns), string.Empty, 1160, 1247);
 
 
                 // Поиск состава
@@ -1056,7 +1209,7 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // читаем состав
-            elements = Read(elementToFetch.Id, token);
+            elements = Read(elementToFetch.Id, token, elementToFetch.Designation);
                 
             IDictionary<string, IntermechTreeElement> uniqueElements = new Dictionary<string, IntermechTreeElement>();
 
@@ -1125,7 +1278,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="IntermechTreeElement"/>.
         /// </returns>
-        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, long parentId)
+        private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, string parentDesignation)
         {
             IntermechTreeElement element = new IntermechTreeElement()
             {
@@ -1146,7 +1299,7 @@ namespace NavisElectronics.TechPreparation.Data
                 IDBAttribute amountAttribute = relation.GetAttributeByID(1129);
                 if (amountAttribute == null)
                 {
-                    throw new FormatException(string.Format("Нет количеств у объекта {0} в составе объекта c идентификатором версии объекта",element.Name, parentId));
+                    throw new FormatException(string.Format("Нет количеств у объекта {0} в составе объекта {1}", element.Name, parentDesignation));
                 }
 
 
@@ -1256,51 +1409,56 @@ namespace NavisElectronics.TechPreparation.Data
                 SetChangeDocumentName(element, row[21]);
 
                 IDBAttribute materialAttribute = detailObject.GetAttributeByID(1181);
-                if (materialAttribute != null)
+
+                if (materialAttribute == null)
                 {
-                    long materialId = materialAttribute.AsInteger;
+                    string message = string.Format($"У детали {element.Designation} отсутствует материал");
+                    throw new TreeNodeNotFoundException(message);
+                }
+
+
+                long materialId = materialAttribute.AsInteger;
                      
-                    // если это не пустой материал или не неопределенный, то заходим
-                    if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
+                // если это не пустой материал или не неопределенный, то заходим
+                if (materialId != ConstHelper.MaterialZero && materialId != (int)ConstHelper.MaterialNotDefined) 
+                {
+                    IDBObject materialObject = session.GetObject(materialId);
+
+                    if (materialObject != null)
                     {
-                        IDBObject materialObject = session.GetObject(materialId);
-
-                        if (materialObject != null)
+                        IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
                         {
-                            IntermechTreeElement detailMaterialNode = new IntermechTreeElement()
-                            {
-                                Id = materialObject.ObjectID,
-                                ObjectId = materialObject.ID,
-                                Name = materialObject.Caption,
-                                Type = materialObject.TypeID,
-                                StockRate = 1
-                            };
+                            Id = materialObject.ObjectID,
+                            ObjectId = materialObject.ID,
+                            Name = materialObject.Caption,
+                            Type = materialObject.TypeID,
+                            StockRate = 1
+                        };
                             
-                            // есть совпадение с изделием-заготовкой
-                            foreach (IntermechTreeElement elementForDetail in elementsForDetails)
+                        // есть совпадение с изделием-заготовкой
+                        foreach (IntermechTreeElement elementForDetail in elementsForDetails)
+                        {
+                            if (detailMaterialNode.Id == elementForDetail.Id)
                             {
-                                if (detailMaterialNode.Id == elementForDetail.Id)
-                                {
-                                    // всегда должна быть единица, всегда!
-                                    detailMaterialNode.Amount = 1;
-                                    detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
-                                    detailMaterialNode.RelationName = "Изделие-заготовка";
-                                    break;
-                                }
+                                // всегда должна быть единица, всегда!
+                                detailMaterialNode.Amount = 1;
+                                detailMaterialNode.MeasureUnits = elementForDetail.MeasureUnits;
+                                detailMaterialNode.RelationName = "Изделие-заготовка";
+                                break;
                             }
-
-                            // Количество материала на единицу изделия
-                            IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
-                            if (amountOnOneUnitOfProduct != null)
-                            {
-                                MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
-                                MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
-                                detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
-                                detailMaterialNode.MeasureUnits = descriptor.ShortName;
-                            }
-
-                            element.Add(detailMaterialNode);
                         }
+
+                        // Количество материала на единицу изделия
+                        IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
+                        if (amountOnOneUnitOfProduct != null)
+                        {
+                            MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
+                            MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
+                            detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
+                            detailMaterialNode.MeasureUnits = descriptor.ShortName;
+                        }
+
+                        element.Add(detailMaterialNode);
                     }
                 }
             }
@@ -1309,6 +1467,12 @@ namespace NavisElectronics.TechPreparation.Data
         }
 
 
+        /// <summary>
+        /// пересчитать применяемости в дереве
+        /// </summary>
+        /// <param name="node">
+        /// The node.
+        /// </param>
         internal void RecountAmountInTree(IntermechTreeElement node)
         {
             // расчет применяемостей
@@ -1332,6 +1496,15 @@ namespace NavisElectronics.TechPreparation.Data
             }
         }
 
+        /// <summary>
+        /// Присвоить документу децимальный номер извещения
+        /// </summary>
+        /// <param name="element">
+        /// узел дерева
+        /// </param>
+        /// <param name="changeDocument">
+        /// извещение
+        /// </param>
         private void SetChangeDocumentName(IntermechTreeElement element, object changeDocument)
         {
             long changeDocumentId = changeDocument == DBNull.Value ? 0 : Convert.ToInt64(changeDocument);

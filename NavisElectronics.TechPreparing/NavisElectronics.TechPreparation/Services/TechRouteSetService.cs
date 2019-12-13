@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
-
-namespace NavisElectronics.TechPreparation.Services
+﻿namespace NavisElectronics.TechPreparation.Services
 {
-    public class TechRouteSetService
+    using System.Collections.Generic;
+    using System.Text;
+    using Interfaces.Entities;
+    using ViewModels.TreeNodes;
+
+    internal class TechRouteSetService
     {
-        public void SetTechRoute(ICollection<MyNode> elements, IList<TechRouteNode> resultNodesList, bool append)
+        internal void SetTechRoute(ICollection<MyNode> elements, IList<TechRouteNode> resultNodesList, bool append)
         {
             foreach (MyNode element in elements)
             {

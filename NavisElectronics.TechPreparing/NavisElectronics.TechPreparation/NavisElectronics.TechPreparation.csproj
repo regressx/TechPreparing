@@ -136,16 +136,16 @@
     <Compile Include="Views\CompareTwoNodesView.Designer.cs">
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\CooperationDialog.cs">
+    <Compile Include="Cooperation\CooperationDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\CooperationDialog.Designer.cs">
+    <Compile Include="Cooperation\CooperationDialog.Designer.cs">
       <DependentUpon>CooperationDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\CooperationView.cs">
+    <Compile Include="Cooperation\CooperationView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\CooperationView.Designer.cs">
+    <Compile Include="Cooperation\CooperationView.Designer.cs">
       <DependentUpon>CooperationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\AgentsId.cs" />
@@ -194,10 +194,10 @@
     <Compile Include="Views\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TechRouteDialog.cs">
+    <Compile Include="TechRouteMap\TechRouteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TechRouteDialog.Designer.cs">
+    <Compile Include="TechRouteMap\TechRouteDialog.Designer.cs">
       <DependentUpon>TechRouteDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeComparerView.cs">
@@ -209,12 +209,12 @@
     <Compile Include="ViewInterfaces\IMultiplyParametersView.cs" />
     <Compile Include="Presenters\MultiplyParametersViewPresenter.cs" />
     <Compile Include="ViewInterfaces\IMaterialsView.cs" />
-    <Compile Include="ViewInterfaces\ITechRouteMap.cs" />
-    <Compile Include="Presenters\TechRouteMapPresenter.cs" />
+    <Compile Include="TechRouteMap\ITechRouteMap.cs" />
+    <Compile Include="TechRouteMap\TechRouteMapPresenter.cs" />
     <Compile Include="EventArguments\RemoveNodeEventArgs.cs" />
     <Compile Include="Reports\IReport.cs" />
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
-    <Compile Include="ViewInterfaces\ICooperationView.cs" />
+    <Compile Include="Cooperation\ICooperationView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
     <Compile Include="ViewInterfaces\IMainView.cs" />
@@ -227,10 +227,10 @@
     <Compile Include="Presenters\AddNotePresenter.cs" />
     <Compile Include="Presenters\CooperationPresenter.cs" />
     <Compile Include="ViewInterfaces\IParametersView.cs" />
-    <Compile Include="ViewInterfaces\ITechRouteView.cs" />
+    <Compile Include="TechRoute\ITechRouteView.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\ParametersViewPresenter.cs" />
-    <Compile Include="Presenters\TechRoutePresenter.cs" />
+    <Compile Include="TechRoute\TechRoutePresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -243,32 +243,32 @@
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="EventArguments\RouteNodeClickEventAgrs.cs" />
     <Compile Include="EventArguments\SaveClickEventArgs.cs" />
-    <Compile Include="Views\TechRoutesMap.cs">
+    <Compile Include="TechRouteMap\TechRoutesMap.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TechRoutesMap.Designer.cs">
+    <Compile Include="TechRouteMap\TechRoutesMap.Designer.cs">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TechRouteEditView.cs">
+    <Compile Include="TechRoute\TechRouteEditView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TechRouteEditView.Designer.cs">
+    <Compile Include="TechRoute\TechRouteEditView.Designer.cs">
       <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\ITreeComparerView.cs" />
     <Compile Include="ViewModels\TreeNodes\ComparerNode.cs" />
-    <Compile Include="ViewModels\TreeNodes\CooperationNode.cs" />
-    <Compile Include="ViewModels\CooperationViewModel.cs" />
+    <Compile Include="Cooperation\CooperationNode.cs" />
+    <Compile Include="Cooperation\CooperationViewModel.cs" />
     <Compile Include="ViewModels\ErrorElement.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
-    <Compile Include="ViewModels\TreeNodes\MyNode.cs" />
+    <Compile Include="TechRouteMap\MyNode.cs" />
     <Compile Include="Services\TechRouteClipBoard.cs" />
     <Compile Include="Entities\Parameter.cs" />
-    <Compile Include="ViewModels\TechRouteModel.cs" />
+    <Compile Include="TechRoute\TechRouteModel.cs" />
     <Compile Include="ViewModels\TreeNodes\TechRouteNodeView.cs" />
-    <Compile Include="ViewModels\TechRoutesMapModel.cs" />
+    <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
     <Compile Include="ViewModels\TreeComparerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,10 +278,10 @@
     <EmbeddedResource Include="Views\CompareTwoNodesView.resx">
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\CooperationDialog.resx">
+    <EmbeddedResource Include="Cooperation\CooperationDialog.resx">
       <DependentUpon>CooperationDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\CooperationView.resx">
+    <EmbeddedResource Include="Cooperation\CooperationView.resx">
       <DependentUpon>CooperationView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FindNodeView.resx">
@@ -306,13 +306,13 @@
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TechRouteDialog.resx">
+    <EmbeddedResource Include="TechRouteMap\TechRouteDialog.resx">
       <DependentUpon>TechRouteDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TechRoutesMap.resx">
+    <EmbeddedResource Include="TechRouteMap\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TechRouteEditView.resx">
+    <EmbeddedResource Include="TechRoute\TechRouteEditView.resx">
       <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TreeComparerView.resx">
