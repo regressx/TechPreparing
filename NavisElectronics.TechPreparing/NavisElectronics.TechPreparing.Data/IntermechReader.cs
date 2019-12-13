@@ -50,6 +50,164 @@ namespace NavisElectronics.TechPreparation.Data
             _substituteDecriptorService = new SubsituteDecryptorService(new ActualSubsitutesDecryptor(), new SubGroupsDecryptor(new SubGroupDecryptor()));
         }
 
+
+        /// <summary>
+        /// Количество в изделии заготовке
+        /// </summary>
+        /// <param name="id">
+        /// идентификатор версии сборочной единицы
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<ICollection<ICollection<TechRouteNode>>> GetTechRouteAsync(IntermechTreeElement element, TechRouteNode organizationStruct)
+        {
+            Func<ICollection<ICollection<TechRouteNode>>> func = () => GetTechRouteInternal(element, organizationStruct);
+
+            return Task.Run(func);
+        }
+
+        private ICollection<ICollection<TechRouteNode>> GetTechRouteInternal(IntermechTreeElement element, TechRouteNode organizationStruct)
+        {
+
+            // пихаем в бинарное дерево поиска для быстрого поиска
+            IDictionary<long, TechRouteNode> dictionary = new Dictionary<long, TechRouteNode>();
+            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
+            queue.Enqueue(organizationStruct);
+            while (queue.Count > 0)
+            {
+                TechRouteNode nodeFromQueue = queue.Dequeue();
+                if (!dictionary.ContainsKey(nodeFromQueue.Id))
+                {
+                    dictionary.Add(nodeFromQueue.Id, nodeFromQueue);
+                }
+                foreach (TechRouteNode child in nodeFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+            ICollection<ICollection<TechRouteNode>> result = new List<ICollection<TechRouteNode>>();
+            DataTable techRoutes = null;
+
+            using (SessionKeeper keeper = new SessionKeeper())
+            {
+                // Сервис для получения составов
+                ICompositionLoadService compositionService =
+                    (ICompositionLoadService)keeper.Session.GetCustomService(typeof(ICompositionLoadService));
+
+                ColumnDescriptor[] columnsForTechRoutes =
+                {
+                    new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                    new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_TYPE, AttributeSourceTypes.Object,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
+                    new ColumnDescriptor(1032, AttributeSourceTypes.Relation,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // сортировка
+                };
+
+                // Поиск состава
+                techRoutes = compositionService.LoadComposition(keeper.Session, element.Id, 1002, new List<ColumnDescriptor>(columnsForTechRoutes), string.Empty, 1037); // забрать всё по связи тех. состав
+
+                if (techRoutes != null)
+                {
+                    // есть маршрут обработки
+                    if (techRoutes.Rows.Count != 0)
+                    {
+                        long routeVersionId = (long)techRoutes.Rows[0][0];
+
+                        DataTable techRouteItems = compositionService.LoadComposition(
+                            keeper.Session,
+                            routeVersionId,
+                            1002,
+                            new List<ColumnDescriptor>(columnsForTechRoutes),
+                            string.Empty,
+                            1090, // только изделия-заготовки и единичные тех. процессы
+                            1237); 
+
+                        if (techRouteItems != null)
+                        {
+                            if (techRouteItems.Rows.Count != 0)
+                            {
+                                foreach (DataRow row in techRouteItems.Rows)
+                                {
+                                    int type = (int)row[1];
+
+                                    switch (type)
+                                    {
+                                        case 1090:
+                                            long blankVersionId = (long)row[0];
+
+                                            IDBObject blankObject = keeper.Session.GetObject(blankVersionId);
+
+                                            // если детали и б/ч детали, то их материалу надо присвоить значение
+                                            if (element.Type == 1052 || element.Type == 1159)
+                                            {
+                                                IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
+
+                                                if (amountAttribute.Value != DBNull.Value)
+                                                {
+                                                    MeasuredValue value = (MeasuredValue)amountAttribute.Value;
+
+                                                    if (element.RelationName != "Изделие-заготовка")
+                                                    {
+                                                        // присвоить материалу внутри детали полученное значение
+                                                        element.Children[0].Amount = (float)value.Value;
+
+                                                        MeasureDescriptor descriptor =
+                                                            MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
+                                                                measureDescriptor.MeasureID == value.MeasureID);
+                                                        element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                    }
+                                                }
+                                            }
+                                            break;
+
+                                        case 1237:
+                                            long techProcessId = (long)row[0];
+
+                                            ICollection<TechRouteNode> techProcessNodes = new List<TechRouteNode>();
+                                            result.Add(techProcessNodes);
+
+                                            DataTable techProcessItems = compositionService.LoadComposition(
+                                                keeper.Session,
+                                                techProcessId,
+                                                1002,
+                                                new List<ColumnDescriptor>(columnsForTechRoutes),
+                                                string.Empty,
+                                                1110); // цехозаходы 
+
+                                            foreach (DataRow item in techProcessItems.Rows)
+                                            {
+                                                IDBObject workshop = keeper.Session.GetObject((long)item[0]);
+                                                
+                                                // ссылка на объект Imbase
+                                                IDBAttribute imbaseReferenceAttribute = workshop.GetAttributeByID(1092);
+
+                                                if (imbaseReferenceAttribute == null)
+                                                {
+                                                    throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутсвует привязка к справочнику!");
+                                                }
+
+                                                TechRouteNode workshopNode =
+                                                    dictionary[imbaseReferenceAttribute.AsInteger];
+
+                                                techProcessNodes.Add(workshopNode);
+                                            }
+
+                                            break;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// Асинхронный метод получения полного заказа
         /// </summary>
@@ -769,148 +927,147 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<TechRouteNode> GetWorkshopsAsync()
+        public Task<TechRouteNode> GetWorkshopsAsync()
         {
-            Func<TechRouteNode> funcDelegate = () =>
-            {
-                TechRouteNode mainNode = new TechRouteNode();
-                mainNode.Id = 2512;
-                mainNode.Name = "Цеха";
-                Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
-                queue.Enqueue(mainNode);
-
-                while (queue.Count > 0)
-                {
-                    TechRouteNode nodeFromQueue = queue.Dequeue();
-
-                    using (SessionKeeper keeper = new SessionKeeper())
-                    {
-                        IDBObject myObject = keeper.Session.GetObject(nodeFromQueue.Id);
-
-                        // Сервис для получения составов
-                        ICompositionLoadService compositionService =
-                            (ICompositionLoadService)keeper.Session.GetCustomService(
-                                typeof(ICompositionLoadService));
-
-                        // Получим состав по связи Простая связь с сортировкой
-                        // Необходимые колонки
-                        ColumnDescriptor[] columns =
-                        {
-                            new ColumnDescriptor(
-                                (int)ObligatoryObjectAttributes.F_OBJECT_ID,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // идентификатор версии объекта
-                            new ColumnDescriptor(
-                                (int)ObligatoryObjectAttributes.F_OBJECT_TYPE,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // тип объекта
-                            new ColumnDescriptor(9,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // обозначение
-                            new ColumnDescriptor(10,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // наименование
-                            new ColumnDescriptor(1190,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // цех
-                            new ColumnDescriptor(1194,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // участок
-
-                            new ColumnDescriptor(1190,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.ID,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // код цеха
-
-                            new ColumnDescriptor(1194,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.ID,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // код участка
-                            new ColumnDescriptor(11101,
-                                AttributeSourceTypes.Object,
-                                ColumnContents.Text,
-                                ColumnNameMapping.Index,
-                                SortOrders.NONE,
-                                0), // производитель
-
-                        };
-
-
-                        DataTable articlesComposition = compositionService.LoadComposition(
-                            keeper.Session.SessionGUID,
-                            myObject.ObjectID,
-                            1003,
-                            new List<ColumnDescriptor>(columns),
-                            string.Empty,
-                            1095);
-
-                        foreach (DataRow row in articlesComposition.Rows)
-                        {
-                            TechRouteNode node = new TechRouteNode();
-                            node.Id = (long)row[0];
-                            node.Type = (int)row[1];
-                            node.Name = (string)row[3];
-                            if (row[4] == DBNull.Value)
-                            {
-                                node.WorkshopName = string.Empty;
-                            }
-                            else
-                            {
-                                node.WorkshopName = (string)row[4];
-                            }
-
-                            if (row[5] == DBNull.Value)
-                            {
-                                node.PartitionName = string.Empty;
-                            }
-                            else
-                            {
-                                node.PartitionName = (string)row[5];
-                            }
-
-                            node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
-                            node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
-
-                            node.ManufacturerId = row[8] == DBNull.Value ? 0 : Convert.ToInt64(row[8]);
-
-                            nodeFromQueue.Add(node);
-                        }
-
-                        foreach (TechRouteNode child in nodeFromQueue.Children)
-                        {
-                            queue.Enqueue(child);
-                        }
-                    }
-                }
-                return mainNode;
-            };
-
-            return await Task.Run(funcDelegate).ConfigureAwait(false);
+            Func<TechRouteNode> funcDelegate = GetWorkshopInternal;
+            return Task.Run(funcDelegate);
         }
 
+        private TechRouteNode GetWorkshopInternal()
+        {
+            TechRouteNode mainNode = new TechRouteNode();
+            mainNode.Id = 2512;
+            mainNode.Name = "Цеха";
+            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
+            queue.Enqueue(mainNode);
 
+            while (queue.Count > 0)
+            {
+                TechRouteNode nodeFromQueue = queue.Dequeue();
+
+                using (SessionKeeper keeper = new SessionKeeper())
+                {
+                    IDBObject myObject = keeper.Session.GetObject(nodeFromQueue.Id);
+
+                    // Сервис для получения составов
+                    ICompositionLoadService compositionService =
+                        (ICompositionLoadService)keeper.Session.GetCustomService(
+                            typeof(ICompositionLoadService));
+
+                    // Получим состав по связи Простая связь с сортировкой
+                    // Необходимые колонки
+                    ColumnDescriptor[] columns =
+                    {
+                        new ColumnDescriptor(
+                            (int)ObligatoryObjectAttributes.F_OBJECT_ID,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // идентификатор версии объекта
+                        new ColumnDescriptor(
+                            (int)ObligatoryObjectAttributes.F_OBJECT_TYPE,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // тип объекта
+                        new ColumnDescriptor(9,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // обозначение
+                        new ColumnDescriptor(10,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // наименование
+                        new ColumnDescriptor(1190,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // цех
+                        new ColumnDescriptor(1194,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // участок
+
+                        new ColumnDescriptor(1190,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.ID,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // код цеха
+
+                        new ColumnDescriptor(1194,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.ID,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // код участка
+                        new ColumnDescriptor(11101,
+                            AttributeSourceTypes.Object,
+                            ColumnContents.Text,
+                            ColumnNameMapping.Index,
+                            SortOrders.NONE,
+                            0), // производитель
+
+                    };
+
+
+                    DataTable articlesComposition = compositionService.LoadComposition(
+                        keeper.Session.SessionGUID,
+                        myObject.ObjectID,
+                        1003,
+                        new List<ColumnDescriptor>(columns),
+                        string.Empty,
+                        1095);
+
+                    foreach (DataRow row in articlesComposition.Rows)
+                    {
+                        TechRouteNode node = new TechRouteNode();
+                        node.Id = (long)row[0];
+                        node.Type = (int)row[1];
+                        node.Name = (string)row[3];
+                        if (row[4] == DBNull.Value)
+                        {
+                            node.WorkshopName = string.Empty;
+                        }
+                        else
+                        {
+                            node.WorkshopName = (string)row[4];
+                        }
+
+                        if (row[5] == DBNull.Value)
+                        {
+                            node.PartitionName = string.Empty;
+                        }
+                        else
+                        {
+                            node.PartitionName = (string)row[5];
+                        }
+
+                        node.WorkshopId = row[6] == DBNull.Value ? 0 : (long)row[6];
+                        node.PartitionId = row[7] == DBNull.Value ? 0 : (long)row[7];
+
+                        node.ManufacturerId = row[8] == DBNull.Value ? 0 : Convert.ToInt64(row[8]);
+
+                        nodeFromQueue.Add(node);
+                    }
+
+                    foreach (TechRouteNode child in nodeFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+            return mainNode;
+        }
 
  
         /// <summary>
@@ -941,10 +1098,6 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(10, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index,
                         SortOrders.NONE, 0), //
                 };
-
-
-                //DataTable docs = compositionService.LoadComposition(keeper.Session.SessionGUID,
-                //    id, 1004, new List<ColumnDescriptor>(columns), string.Empty, 1160, 1247);
 
 
                 // Поиск состава
