@@ -14,8 +14,8 @@
     {
         event EventHandler<EditTechRouteEventArgs> EditMassTechRouteClick;
 
-        event EventHandler<EditTechRouteEventArgs> SetCooperationNodesDefaultRoute;
-
+        event EventHandler DownloadInfoFromIPS;
+        event EventHandler UpdateNodeFromIps;
         /// <summary>
         /// Переход к старому архиву
         /// </summary>
