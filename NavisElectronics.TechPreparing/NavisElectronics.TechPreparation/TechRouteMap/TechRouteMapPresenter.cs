@@ -56,7 +56,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <summary>
         /// Представляет собой узел из Imbase, в котором представлена структура предприятия
         /// </summary>
-        private TechRouteNode _techRouteNode;
+        private TechRouteNode _organizationStruct;
 
         /// <summary>
         /// Поле служит на передачи параметров
@@ -102,26 +102,25 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _presentationFactory = presentationFactory;
         }
 
-        private void View_UpdateNodeFromIps(object sender, EventArgs e)
+        private async void View_UpdateNodeFromIps(object sender, EventArgs e)
         {
             ICollection<MyNode> selectedRows = _view.GetSelectedRows();
             foreach (MyNode node in selectedRows)
             {
-                _model.UpdateNodeFromIPS(node);
+               await _model.UpdateNodeFromIPS(node, _organizationStruct);
             }
-
         }
 
         private void View_RefreshTree(object sender, EventArgs e)
         {
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
             _view.SetTreeModel(model);
         }
 
         private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
         {
             IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
-            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _techRouteNode);
+            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _organizationStruct);
             dialog.ShowDialog();
             _view.GetTreeView().Refresh();
         }
@@ -333,7 +332,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
 
         private void _view_Load(object sender, EventArgs e)
         {
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _techRouteNode, _agents);
+            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
             _view.SetTreeModel(model);
         }
 
@@ -342,7 +341,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
             IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
 
-            presenter.Run(_techRouteNode, resultNodesList);
+            presenter.Run(_organizationStruct, resultNodesList);
 
             if (resultNodesList.Count == 0)
             {
@@ -409,7 +408,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         {
             _agents = agents;
             _parameter = parameter;
-            _techRouteNode = techRouteNode;
+            _organizationStruct = techRouteNode;
             _root = parameter.GetParameter(0);
             _view.Show();
         }

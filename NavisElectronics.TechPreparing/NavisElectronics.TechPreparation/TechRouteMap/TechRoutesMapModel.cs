@@ -7,6 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Linq;
+using System.Threading.Tasks;
+using NavisElectronics.TechPreparation.Interfaces;
+
 namespace NavisElectronics.TechPreparation.ViewModels
 {
     using System.Collections.Generic;
@@ -19,10 +25,12 @@ namespace NavisElectronics.TechPreparation.ViewModels
     /// <summary>
     /// The tech routes map model.
     /// </summary>
-    public class TechRoutesMapModel
+    internal class TechRoutesMapModel
     {
         private readonly OpenFolderService _openFolderService;
         private readonly ShowFileManager _showFileManager;
+        private readonly IDataRepository _repository;
+        private readonly TechRouteSetService _techRouteSetService;
 
         /// <summary>
         /// менеджер буфера обмена
@@ -38,10 +46,14 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="showFileManager">
         /// просмоторщик
         /// </param>
-        public TechRoutesMapModel(OpenFolderService openFolderService, ShowFileManager showFileManager)
+        /// <param name="repository"></param>
+        /// <param name="techRouteSetService"></param>
+        public TechRoutesMapModel(OpenFolderService openFolderService, ShowFileManager showFileManager, IDataRepository repository, TechRouteSetService techRouteSetService)
         {
             _openFolderService = openFolderService;
             _showFileManager = showFileManager;
+            _repository = repository;
+            _techRouteSetService = techRouteSetService;
             _clipboardManager = new ClipboardManager();
         }
 
@@ -302,6 +314,67 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 parent = parent.Parent;
             }
 
+        }
+
+        public Task DownloadTechInfoFromIPS(MyNode mainNode)
+        {
+            Action action = () =>
+            {
+                DownloadTechInfoFromIPSInternal(mainNode);
+            };
+
+            return Task.Run(action);
+        }
+
+
+        private void DownloadTechInfoFromIPSInternal(MyNode mainNode)
+        {
+
+            IntermechTreeElement root = mainNode.Tag as IntermechTreeElement;
+            if (root == null)
+            {
+                return;
+            }
+
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+
+            foreach (IntermechTreeElement child in root.Children)
+            {
+                queue.Enqueue(child);
+            }
+
+            while (queue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+
+                // найти маршрут обработки
+                // найти заготовку
+                // если это деталь, то надо забрать нормы расхода материала с неё и подтянуть к материалу детали
+
+            }
+        }
+
+        public async Task<ICollection<ICollection<TechRouteNode>>> UpdateNodeFromIPS(MyNode node, TechRouteNode organizationStruct)
+        {
+            // здесь мы получили один или несколько тех. процессов с цехозаходами внутри. Тех. процессы отсортированы в порядке следования атрибута связи "Сортировка"
+            ICollection<ICollection<TechRouteNode>> techRouteNodes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStruct);
+            IList<ICollection<TechRouteNode>> techRouteNodesList = techRouteNodes.ToList();
+            if (techRouteNodes.Count > 1)
+            {
+                _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].ToList(), false);
+
+                for (int i = 1; i < techRouteNodes.Count; i++)
+                {
+                    _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[i].ToList(), true);
+                }
+            }
+
+            if (techRouteNodes.Count == 1)
+            {
+                _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].ToList(), false);
+            }
+
+            return new List<ICollection<TechRouteNode>>();
         }
     }
 }
