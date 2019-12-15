@@ -104,6 +104,8 @@ namespace NavisElectronics.TechPreparation.Data
                         ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип объекта
                     new ColumnDescriptor(1032, AttributeSourceTypes.Relation,
                         ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // сортировка
+                    new ColumnDescriptor(14819, AttributeSourceTypes.Object,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // код организации разработчика
                 };
 
                 // Поиск состава
@@ -166,6 +168,15 @@ namespace NavisElectronics.TechPreparation.Data
                                         case 1237:
                                             long techProcessId = (long)row[0];
 
+                                            string developer = row[3] != DBNull.Value
+                                                ? Convert.ToString(row[3])
+                                                : string.Empty;
+
+                                            if (developer.ToUpper() != organizationStruct.Name)
+                                            {
+                                                continue;
+                                            }
+
                                             ICollection<TechRouteNode> techProcessNodes = new List<TechRouteNode>();
                                             result.Add(techProcessNodes);
 
@@ -189,8 +200,17 @@ namespace NavisElectronics.TechPreparation.Data
                                                     throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутствует привязка к справочнику!");
                                                 }
 
-                                                TechRouteNode workshopNode =
-                                                    dictionary[imbaseReferenceAttribute.AsInteger];
+                                                TechRouteNode workshopNode = null;
+                                                    
+                                                try
+                                                {
+                                                    workshopNode = dictionary[imbaseReferenceAttribute.AsInteger];
+                                                }
+                                                catch (KeyNotFoundException ex)
+                                                {
+                                                    throw new KeyNotFoundException("Нет маршрута обработки для запрошенного узла " + element.Designation + " " + element.Name, ex);
+                                                }
+
 
                                                 if (techProcessNodes.Count == 0)
                                                 {
