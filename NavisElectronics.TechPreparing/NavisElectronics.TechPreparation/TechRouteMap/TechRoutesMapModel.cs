@@ -354,7 +354,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public async Task<ICollection<ICollection<TechRouteNode>>> UpdateNodeFromIPS(MyNode node, TechRouteNode organizationStruct)
+        public async Task UpdateNodeFromIPS(MyNode node, TechRouteNode organizationStruct)
         {
             // здесь мы получили один или несколько тех. процессов с цехозаходами внутри. Тех. процессы отсортированы в порядке следования атрибута связи "Сортировка"
             ICollection<ICollection<TechRouteNode>> techRouteNodes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStruct);
@@ -374,7 +374,20 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].ToList(), false);
             }
 
-            return new List<ICollection<TechRouteNode>>();
+            Queue<MyNode> queue = new Queue<MyNode>();
+            queue.Enqueue(node);
+            while (queue.Count > 0)
+            {
+                MyNode nodeFromQueue = queue.Dequeue();
+                nodeFromQueue.CooperationFlag = ((IntermechTreeElement)nodeFromQueue.Tag).CooperationFlag;
+
+                foreach (MyNode child in nodeFromQueue.Nodes)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+
         }
     }
 }

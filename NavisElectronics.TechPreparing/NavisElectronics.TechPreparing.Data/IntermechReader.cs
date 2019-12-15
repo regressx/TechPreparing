@@ -186,11 +186,32 @@ namespace NavisElectronics.TechPreparation.Data
 
                                                 if (imbaseReferenceAttribute == null)
                                                 {
-                                                    throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутсвует привязка к справочнику!");
+                                                    throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутствует привязка к справочнику!");
                                                 }
 
                                                 TechRouteNode workshopNode =
                                                     dictionary[imbaseReferenceAttribute.AsInteger];
+
+                                                if (techProcessNodes.Count == 0)
+                                                {
+                                                    if (workshopNode.PartitionName == "102" ||
+                                                        workshopNode.PartitionName == "101")
+                                                    {
+                                                        Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
+                                                        elementQueue.Enqueue(element);
+                                                        while (elementQueue.Count > 0)
+                                                        {
+                                                            IntermechTreeElement elementFromQueue = elementQueue.Dequeue();
+                                                            elementFromQueue.CooperationFlag = true;
+                                                            foreach (IntermechTreeElement child in elementFromQueue.Children)
+                                                            {
+                                                                elementQueue.Enqueue(child);
+                                                            }
+                                                        }
+
+
+                                                    }
+                                                }
 
                                                 techProcessNodes.Add(workshopNode);
                                             }

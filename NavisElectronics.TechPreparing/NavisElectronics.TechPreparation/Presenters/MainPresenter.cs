@@ -141,7 +141,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
                 
                 // если по кооперации, то пропускаем
-                if (elementFromQueue.CooperationFlag)
+                if (elementFromQueue.CooperationFlag || elementFromQueue.RelationName == "Документ")
                 {
                     continue;
                 }
