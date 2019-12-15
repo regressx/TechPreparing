@@ -357,7 +357,17 @@ namespace NavisElectronics.TechPreparation.ViewModels
         public async Task UpdateNodeFromIPS(MyNode node, TechRouteNode organizationStruct)
         {
             // здесь мы получили один или несколько тех. процессов с цехозаходами внутри. Тех. процессы отсортированы в порядке следования атрибута связи "Сортировка"
-            ICollection<ICollection<TechRouteNode>> techRouteNodes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStruct);
+            ICollection<ICollection<TechRouteNode>> techRouteNodes = null;
+            try
+            {
+                techRouteNodes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStruct);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw new KeyNotFoundException(ex.Message, ex);
+            }
+
+
             IList<ICollection<TechRouteNode>> techRouteNodesList = techRouteNodes.ToList();
             if (techRouteNodes.Count > 1)
             {

@@ -48,6 +48,7 @@
             this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
             this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,7 +80,6 @@
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -100,6 +100,7 @@
             // downloadInfoFromIPSButton
             // 
             this.downloadInfoFromIPSButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.downloadInfoFromIPSButton.Enabled = false;
             this.downloadInfoFromIPSButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.road;
             this.downloadInfoFromIPSButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.downloadInfoFromIPSButton.Name = "downloadInfoFromIPSButton";
@@ -290,6 +291,13 @@
             this.contextMenuStrip.Name = "contextMenuStrip1";
             this.contextMenuStrip.Size = new System.Drawing.Size(293, 384);
             // 
+            // updateFromIPSButton
+            // 
+            this.updateFromIPSButton.Name = "updateFromIPSButton";
+            this.updateFromIPSButton.Size = new System.Drawing.Size(292, 22);
+            this.updateFromIPSButton.Text = "Обновить узел из IPS";
+            this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
+            // 
             // ShowButton
             // 
             this.ShowButton.Name = "ShowButton";
@@ -311,6 +319,7 @@
             // 
             // editTechRoutesButton
             // 
+            this.editTechRoutesButton.Enabled = false;
             this.editTechRoutesButton.Name = "editTechRoutesButton";
             this.editTechRoutesButton.Size = new System.Drawing.Size(292, 22);
             this.editTechRoutesButton.Text = "Редактировать маршруты";
@@ -321,6 +330,7 @@
             this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createNewRouteButton,
             this.addIntoExistingRouteButton});
+            this.SetTechRouteMenuItem.Enabled = false;
             this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
             this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
             this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
@@ -342,6 +352,7 @@
             // 
             // deleteRouteMenuItem
             // 
+            this.deleteRouteMenuItem.Enabled = false;
             this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
             this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
             this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
@@ -371,6 +382,7 @@
             // 
             // CopyRouteButton
             // 
+            this.CopyRouteButton.Enabled = false;
             this.CopyRouteButton.Name = "CopyRouteButton";
             this.CopyRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.CopyRouteButton.Size = new System.Drawing.Size(292, 22);
@@ -379,6 +391,7 @@
             // 
             // PasteRouteButton
             // 
+            this.PasteRouteButton.Enabled = false;
             this.PasteRouteButton.Name = "PasteRouteButton";
             this.PasteRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.PasteRouteButton.Size = new System.Drawing.Size(292, 22);
@@ -510,13 +523,6 @@
             this.amountWithUseTextBox.IncrementalSearchEnabled = true;
             this.amountWithUseTextBox.LeftMargin = 3;
             this.amountWithUseTextBox.ParentColumn = this.amountWithUseTreeColumn;
-            // 
-            // updateFromIPSButton
-            // 
-            this.updateFromIPSButton.Name = "updateFromIPSButton";
-            this.updateFromIPSButton.Size = new System.Drawing.Size(292, 22);
-            this.updateFromIPSButton.Text = "Обновить узел из IPS";
-            this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
             // 
             // TechRoutesMap
             // 

@@ -163,7 +163,7 @@
     </Compile>
     <Compile Include="Reports\IDocumentTypeFactory.cs" />
     <Compile Include="Reports\DividingListFactory.cs" />
-    <Compile Include="Reports\TechRouteListDocumentFactory.cs" />
+    <Compile Include="Reports\TechRouteMapReport\TechRouteListDocumentFactory.cs" />
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
