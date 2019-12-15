@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Reports
+﻿using System.Drawing;
+
+namespace NavisElectronics.TechPreparation.Reports
 {
     using System.Collections.Generic;
     using Aga.Controls.Tree;
@@ -110,19 +112,28 @@
                 routeCell.AssignText(product.Route, false, false, false);
 
                 TextData noteCell = rowInstanse.Nodes[5] as TextData;
-                noteCell.AssignText(product.Note, false, false, false);
+
+                string note = product.Note;
+
+                if (product.InnerCooperation)
+                {
+                    note = (note + " ВПК").Trim();
+                }
+
+                noteCell.AssignText(note, false, false, false);
 
 
-                // Красим сборки, комплекты, делаем жирными
-                // if (product.Type == 1078 || product.Type == 1074 || product.Type == 1097)
-                // {
-                // foreach (var rowInstanseNode in rowInstanse.Nodes)
-                // {
-                // TextData cell = rowInstanseNode as TextData;
-                // cell.CharFormat = new CharFormat(new System.Drawing.Font("Times New Roman", 10, FontStyle.Bold));
-                // cell.overrideFlags |= (OverrideFlags)0x4000; // щелкаем флагом, чтобы закрепить цвет и всё остальное
-                // }
-                // }
+
+                //Красим сборки, комплекты, делаем жирными
+                if (product.Type == 1078 || product.Type == 1074 || product.Type == 1097)
+                {
+                    foreach (var rowInstanseNode in rowInstanse.Nodes)
+                    {
+                        TextData cell = rowInstanseNode as TextData;
+                        cell.CharFormat = new CharFormat(new System.Drawing.Font("Times New Roman", 12, FontStyle.Bold));
+                        cell.overrideFlags |= (OverrideFlags)0x4000; // щелкаем флагом, чтобы закрепить цвет и всё остальное
+                    }
+                }
                 mainNode.AddChildNode(rowInstanse, false, false);
             }
 
