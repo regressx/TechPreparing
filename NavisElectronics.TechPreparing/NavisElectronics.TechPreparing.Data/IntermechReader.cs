@@ -1453,7 +1453,9 @@ namespace NavisElectronics.TechPreparation.Data
                             ObjectId = materialObject.ID,
                             Name = materialObject.Caption,
                             Type = materialObject.TypeID,
-                            StockRate = 1
+                            StockRate = 1,
+                            RelationName = "Состав изделия"
+
                         };
                             
                         // есть совпадение с изделием-заготовкой
