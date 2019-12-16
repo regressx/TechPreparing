@@ -172,7 +172,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                 ? Convert.ToString(row[3])
                                                 : string.Empty;
 
-                                            if (developer.ToUpper() != organizationStruct.Name)
+                                            if (developer.ToUpper() != organizationStruct.Name.ToUpper())
                                             {
                                                 continue;
                                             }
