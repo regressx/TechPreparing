@@ -115,7 +115,8 @@
                         || elementToFind.PcbVersion != elementFromQueue.PcbVersion
                         || elementToFind.Id != elementFromQueue.Id
                         || elementToFind.Position != elementFromQueue.Position
-                        || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation)
+                        || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation
+                        || elementToFind.Name != elementFromQueue.Name)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }
