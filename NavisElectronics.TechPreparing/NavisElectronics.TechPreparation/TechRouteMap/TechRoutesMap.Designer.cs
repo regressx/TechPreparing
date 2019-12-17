@@ -80,6 +80,8 @@
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.relationNoteTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.nodeTextBox2 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -153,6 +155,7 @@
             this.treeViewAdv.Columns.Add(this.ContainsInnerCooperationTreeColumn);
             this.treeViewAdv.Columns.Add(this.substituteTreeColumn);
             this.treeViewAdv.Columns.Add(this.noteTreeColumn);
+            this.treeViewAdv.Columns.Add(this.relationNoteTreeColumn);
             this.treeViewAdv.Columns.Add(this.agentTreeColumn);
             this.treeViewAdv.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv.DefaultToolTipProvider = null;
@@ -178,6 +181,7 @@
             this.treeViewAdv.NodeControls.Add(this.agentTextbox);
             this.treeViewAdv.NodeControls.Add(this.nodeTextBox1);
             this.treeViewAdv.NodeControls.Add(this.amountWithUseTextBox);
+            this.treeViewAdv.NodeControls.Add(this.nodeTextBox2);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
@@ -256,7 +260,7 @@
             // 
             // noteTreeColumn
             // 
-            this.noteTreeColumn.Header = "Примечание";
+            this.noteTreeColumn.Header = "Примечание техн.";
             this.noteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.noteTreeColumn.TooltipText = null;
             this.noteTreeColumn.Width = 200;
@@ -289,7 +293,7 @@
             this.toolStripMenuItem2,
             this.createCooperationListMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 384);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 362);
             // 
             // updateFromIPSButton
             // 
@@ -524,6 +528,19 @@
             this.amountWithUseTextBox.LeftMargin = 3;
             this.amountWithUseTextBox.ParentColumn = this.amountWithUseTreeColumn;
             // 
+            // relationNoteTreeColumn
+            // 
+            this.relationNoteTreeColumn.Header = "Примечание";
+            this.relationNoteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationNoteTreeColumn.TooltipText = null;
+            // 
+            // nodeTextBox2
+            // 
+            this.nodeTextBox2.DataPropertyName = "RelationNote";
+            this.nodeTextBox2.IncrementalSearchEnabled = true;
+            this.nodeTextBox2.LeftMargin = 3;
+            this.nodeTextBox2.ParentColumn = this.relationNoteTreeColumn;
+            // 
             // TechRoutesMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -594,5 +611,7 @@
         private Aga.Controls.Tree.TreeColumn iconColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox amountWithUseTextBox;
         private System.Windows.Forms.ToolStripMenuItem updateFromIPSButton;
+        private Aga.Controls.Tree.TreeColumn relationNoteTreeColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox2;
     }
 }

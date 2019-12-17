@@ -103,5 +103,11 @@ namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
         public double StockRate { get; set; }
 
         public string SampleSize { get; set; }
+
+        /// <summary>
+        /// Примечание по связи 
+        /// </summary>
+        public string RelationNote { get; set; }
+
     }
 }

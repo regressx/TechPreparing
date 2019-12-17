@@ -230,6 +230,12 @@ namespace NavisElectronics.TechPreparation.ViewModels
                         childNode.Note = string.Empty;
                     }
 
+                    if (child.RelationNote != null)
+                    {
+                        string note = child.RelationNote;
+                        childNode.RelationNote = note;
+                    }
+
                     childNode.SubInfo = child.SubstituteInfo;
                     childNode.CooperationFlag = child.CooperationFlag;
                     childNode.InnerCooperation = child.InnerCooperation;
