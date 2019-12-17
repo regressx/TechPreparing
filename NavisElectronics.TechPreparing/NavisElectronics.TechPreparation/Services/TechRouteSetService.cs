@@ -20,7 +20,7 @@
                     if (nodes.Count > 0)
                     {
                         stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
-                        caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
+                        caption.AppendFormat(" / {0}", nodes[0].GetCaption());
                     }
 
                     for (int i = 1; i < nodes.Count; i++)

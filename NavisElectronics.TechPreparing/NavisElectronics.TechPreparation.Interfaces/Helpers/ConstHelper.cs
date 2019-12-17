@@ -34,5 +34,6 @@
         /// The withdrawal type file attribute.
         /// </summary>
         public const int WithdrawalTypeFileAttribute = 18070;
+
     }
 }

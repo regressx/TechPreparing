@@ -41,10 +41,10 @@
                     sb.AppendFormat("-{0}", value);
                 }
 
-                sb.Append('\\');
+                sb.Append('/');
             }
 
-            return sb.ToString().TrimEnd('\\');
+            return sb.ToString().TrimEnd('/');
         }
     }
 }
