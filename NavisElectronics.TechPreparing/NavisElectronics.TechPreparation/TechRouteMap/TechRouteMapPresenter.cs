@@ -96,7 +96,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.CreateCooperationList += _view_CreateCooperationList;
             _view.DownloadInfoFromIPS += OnDownloadFromIPS;
             _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
-            _view.RefreshTree += View_RefreshTree;
             _view.UpdateNodeFromIps += View_UpdateNodeFromIps;
             _model = model;
             _presentationFactory = presentationFactory;
@@ -111,12 +110,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             }
         }
 
-        private void View_RefreshTree(object sender, EventArgs e)
-        {
-            TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
-            _view.SetTreeModel(model);
-        }
-
         private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
         {
             IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
@@ -127,7 +120,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
 
         private async void OnDownloadFromIPS(object sender, EventArgs e)
         {
-            _model.DownloadTechInfoFromIPS(_view.GetMainNode());
+           await _model.DownloadTechInfoFromIPS(_view.GetMainNode());
         }
 
         private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)

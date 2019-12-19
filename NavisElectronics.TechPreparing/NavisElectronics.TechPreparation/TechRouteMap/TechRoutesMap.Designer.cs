@@ -40,12 +40,10 @@
             this.iconColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.routeTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.totalTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.innerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.ContainsInnerCooperationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.substituteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.relationNoteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,15 +71,17 @@
             this.textBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxRoute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.innerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
-            this.ContainsInnerCoopCheckBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.checkBoxInnerCoop = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.textBoxNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.amountWithUseTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.relationNoteTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.nodeTextBox2 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.textBoxRelationNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.stockRateColumn = new Aga.Controls.Tree.TreeColumn();
+            this.sampleSizeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.tpRefColumn = new Aga.Controls.Tree.TreeColumn();
+            this.textBoxSampleSize = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.textBoxStockRate = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.textBoxTpRef = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -138,7 +138,6 @@
             this.refreshTreeButton.Name = "refreshTreeButton";
             this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
             this.refreshTreeButton.Text = "Обновить дерево";
-            this.refreshTreeButton.Click += new System.EventHandler(this.refreshTreeButton_Click);
             // 
             // treeViewAdv
             // 
@@ -149,13 +148,13 @@
             this.treeViewAdv.Columns.Add(this.iconColumn);
             this.treeViewAdv.Columns.Add(this.amountTreeColumn);
             this.treeViewAdv.Columns.Add(this.routeTreeColumn);
-            this.treeViewAdv.Columns.Add(this.amountWithUseTreeColumn);
-            this.treeViewAdv.Columns.Add(this.totalTreeColumn);
             this.treeViewAdv.Columns.Add(this.innerCooperationTreeColumn);
-            this.treeViewAdv.Columns.Add(this.ContainsInnerCooperationTreeColumn);
             this.treeViewAdv.Columns.Add(this.substituteTreeColumn);
             this.treeViewAdv.Columns.Add(this.noteTreeColumn);
             this.treeViewAdv.Columns.Add(this.relationNoteTreeColumn);
+            this.treeViewAdv.Columns.Add(this.stockRateColumn);
+            this.treeViewAdv.Columns.Add(this.sampleSizeColumn);
+            this.treeViewAdv.Columns.Add(this.tpRefColumn);
             this.treeViewAdv.Columns.Add(this.agentTreeColumn);
             this.treeViewAdv.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv.DefaultToolTipProvider = null;
@@ -174,14 +173,14 @@
             this.treeViewAdv.NodeControls.Add(this.textBoxName);
             this.treeViewAdv.NodeControls.Add(this.textBoxAmount);
             this.treeViewAdv.NodeControls.Add(this.textBoxRoute);
-            this.treeViewAdv.NodeControls.Add(this.innerCoopCheckBox);
-            this.treeViewAdv.NodeControls.Add(this.ContainsInnerCoopCheckBox);
+            this.treeViewAdv.NodeControls.Add(this.checkBoxInnerCoop);
             this.treeViewAdv.NodeControls.Add(this.textBoxNote);
             this.treeViewAdv.NodeControls.Add(this.textBoxSubstitute);
+            this.treeViewAdv.NodeControls.Add(this.textBoxRelationNote);
+            this.treeViewAdv.NodeControls.Add(this.textBoxSampleSize);
+            this.treeViewAdv.NodeControls.Add(this.textBoxStockRate);
+            this.treeViewAdv.NodeControls.Add(this.textBoxTpRef);
             this.treeViewAdv.NodeControls.Add(this.agentTextbox);
-            this.treeViewAdv.NodeControls.Add(this.nodeTextBox1);
-            this.treeViewAdv.NodeControls.Add(this.amountWithUseTextBox);
-            this.treeViewAdv.NodeControls.Add(this.nodeTextBox2);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
@@ -225,31 +224,12 @@
             this.routeTreeColumn.TooltipText = null;
             this.routeTreeColumn.Width = 200;
             // 
-            // amountWithUseTreeColumn
-            // 
-            this.amountWithUseTreeColumn.Header = "Кол. с прим.";
-            this.amountWithUseTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.amountWithUseTreeColumn.TooltipText = null;
-            // 
-            // totalTreeColumn
-            // 
-            this.totalTreeColumn.Header = "Всего";
-            this.totalTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.totalTreeColumn.TooltipText = null;
-            // 
             // innerCooperationTreeColumn
             // 
             this.innerCooperationTreeColumn.Header = "Внутр. произв. кооп.";
             this.innerCooperationTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.innerCooperationTreeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.innerCooperationTreeColumn.TooltipText = null;
-            // 
-            // ContainsInnerCooperationTreeColumn
-            // 
-            this.ContainsInnerCooperationTreeColumn.Header = "Содержит вн. кооп";
-            this.ContainsInnerCooperationTreeColumn.IsVisible = false;
-            this.ContainsInnerCooperationTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.ContainsInnerCooperationTreeColumn.TooltipText = null;
             // 
             // substituteTreeColumn
             // 
@@ -264,6 +244,12 @@
             this.noteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.noteTreeColumn.TooltipText = null;
             this.noteTreeColumn.Width = 200;
+            // 
+            // relationNoteTreeColumn
+            // 
+            this.relationNoteTreeColumn.Header = "Примечание";
+            this.relationNoteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationNoteTreeColumn.TooltipText = null;
             // 
             // agentTreeColumn
             // 
@@ -481,18 +467,11 @@
             this.textBoxRoute.LeftMargin = 3;
             this.textBoxRoute.ParentColumn = this.routeTreeColumn;
             // 
-            // innerCoopCheckBox
+            // checkBoxInnerCoop
             // 
-            this.innerCoopCheckBox.DataPropertyName = "InnerCooperation";
-            this.innerCoopCheckBox.LeftMargin = 0;
-            this.innerCoopCheckBox.ParentColumn = this.innerCooperationTreeColumn;
-            // 
-            // ContainsInnerCoopCheckBox
-            // 
-            this.ContainsInnerCoopCheckBox.DataPropertyName = "ContainsInnerCooperation";
-            this.ContainsInnerCoopCheckBox.IncrementalSearchEnabled = true;
-            this.ContainsInnerCoopCheckBox.LeftMargin = 3;
-            this.ContainsInnerCoopCheckBox.ParentColumn = this.ContainsInnerCooperationTreeColumn;
+            this.checkBoxInnerCoop.DataPropertyName = "InnerCooperation";
+            this.checkBoxInnerCoop.LeftMargin = 0;
+            this.checkBoxInnerCoop.ParentColumn = this.innerCooperationTreeColumn;
             // 
             // textBoxNote
             // 
@@ -515,31 +494,51 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
-            // nodeTextBox1
+            // textBoxRelationNote
             // 
-            this.nodeTextBox1.IncrementalSearchEnabled = true;
-            this.nodeTextBox1.LeftMargin = 3;
-            this.nodeTextBox1.ParentColumn = null;
+            this.textBoxRelationNote.DataPropertyName = "RelationNote";
+            this.textBoxRelationNote.IncrementalSearchEnabled = true;
+            this.textBoxRelationNote.LeftMargin = 3;
+            this.textBoxRelationNote.ParentColumn = this.relationNoteTreeColumn;
             // 
-            // amountWithUseTextBox
+            // stockRateColumn
             // 
-            this.amountWithUseTextBox.DataPropertyName = "AmountWithUse";
-            this.amountWithUseTextBox.IncrementalSearchEnabled = true;
-            this.amountWithUseTextBox.LeftMargin = 3;
-            this.amountWithUseTextBox.ParentColumn = this.amountWithUseTreeColumn;
+            this.stockRateColumn.Header = "Коэф. зап.";
+            this.stockRateColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.stockRateColumn.TooltipText = null;
             // 
-            // relationNoteTreeColumn
+            // sampleSizeColumn
             // 
-            this.relationNoteTreeColumn.Header = "Примечание";
-            this.relationNoteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.relationNoteTreeColumn.TooltipText = null;
+            this.sampleSizeColumn.Header = "Выборка";
+            this.sampleSizeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.sampleSizeColumn.TooltipText = null;
             // 
-            // nodeTextBox2
+            // tpRefColumn
             // 
-            this.nodeTextBox2.DataPropertyName = "RelationNote";
-            this.nodeTextBox2.IncrementalSearchEnabled = true;
-            this.nodeTextBox2.LeftMargin = 3;
-            this.nodeTextBox2.ParentColumn = this.relationNoteTreeColumn;
+            this.tpRefColumn.Header = "ТП вх. контр.";
+            this.tpRefColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.tpRefColumn.TooltipText = null;
+            // 
+            // textBoxSampleSize
+            // 
+            this.textBoxSampleSize.DataPropertyName = "SampleSize";
+            this.textBoxSampleSize.IncrementalSearchEnabled = true;
+            this.textBoxSampleSize.LeftMargin = 3;
+            this.textBoxSampleSize.ParentColumn = this.sampleSizeColumn;
+            // 
+            // textBoxStockRate
+            // 
+            this.textBoxStockRate.DataPropertyName = "StockRate";
+            this.textBoxStockRate.IncrementalSearchEnabled = true;
+            this.textBoxStockRate.LeftMargin = 3;
+            this.textBoxStockRate.ParentColumn = this.stockRateColumn;
+            // 
+            // textBoxTpRef
+            // 
+            this.textBoxTpRef.DataPropertyName = "TechProcessReference";
+            this.textBoxTpRef.IncrementalSearchEnabled = true;
+            this.textBoxTpRef.LeftMargin = 3;
+            this.textBoxTpRef.ParentColumn = this.tpRefColumn;
             // 
             // TechRoutesMap
             // 
@@ -590,28 +589,28 @@
         private System.Windows.Forms.ToolStripButton ExpandAllButton;
         private System.Windows.Forms.ToolStripButton CollapseAllButton;
         private Aga.Controls.Tree.TreeColumn innerCooperationTreeColumn;
-        private Aga.Controls.Tree.NodeControls.NodeCheckBox innerCoopCheckBox;
+        private Aga.Controls.Tree.NodeControls.NodeCheckBox checkBoxInnerCoop;
         private System.Windows.Forms.ToolStripMenuItem SetInnerCooperationButton;
         private System.Windows.Forms.ToolStripMenuItem RemoveInnerCooperationButton;
-        private Aga.Controls.Tree.TreeColumn ContainsInnerCooperationTreeColumn;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox ContainsInnerCoopCheckBox;
         private System.Windows.Forms.ToolStripMenuItem createNewRouteButton;
         private System.Windows.Forms.ToolStripMenuItem addIntoExistingRouteButton;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem createSingleCompleteListMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createCooperationListMenuItem;
-        private Aga.Controls.Tree.TreeColumn amountWithUseTreeColumn;
-        private Aga.Controls.Tree.TreeColumn totalTreeColumn;
         private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
         private System.Windows.Forms.ToolStripButton downloadInfoFromIPSButton;
         private System.Windows.Forms.ToolStripMenuItem editTechRoutesButton;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox1;
         private Aga.Controls.Tree.TreeColumn iconColumn;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox amountWithUseTextBox;
         private System.Windows.Forms.ToolStripMenuItem updateFromIPSButton;
         private Aga.Controls.Tree.TreeColumn relationNoteTreeColumn;
-        private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox2;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxRelationNote;
+        private Aga.Controls.Tree.TreeColumn stockRateColumn;
+        private Aga.Controls.Tree.TreeColumn sampleSizeColumn;
+        private Aga.Controls.Tree.TreeColumn tpRefColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxSampleSize;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxStockRate;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxTpRef;
     }
 }

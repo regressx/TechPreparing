@@ -295,15 +295,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void refreshTreeButton_Click(object sender, EventArgs e)
-        {
-            if (RefreshTree != null)
-            {
-                RefreshTree(sender, e);
-            }
-
-        }
-
         private void updateFromIPSButton_Click(object sender, EventArgs e)
         {
             if (UpdateNodeFromIps != null)
