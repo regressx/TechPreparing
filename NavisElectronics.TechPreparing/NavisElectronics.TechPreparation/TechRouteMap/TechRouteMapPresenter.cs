@@ -58,6 +58,9 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </summary>
         private TechRouteNode _organizationStruct;
 
+        // пихаем в словарь для быстрого поиска
+        private IDictionary<long, TechRouteNode> _organizationDictionary;
+
         /// <summary>
         /// Поле служит на передачи параметров
         /// </summary>
@@ -106,7 +109,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             ICollection<MyNode> selectedRows = _view.GetSelectedRows();
             foreach (MyNode node in selectedRows)
             {
-               await _model.UpdateNodeFromIPS(node, _organizationStruct);
+               await _model.UpdateNodeFromIPS(node, _organizationDictionary, _organizationStruct.Name);
             }
         }
 
@@ -402,6 +405,24 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _agents = agents;
             _parameter = parameter;
             _organizationStruct = techRouteNode;
+
+            // пихаем в словарь для быстрого поиска
+            _organizationDictionary = new Dictionary<long, TechRouteNode>();
+            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
+            queue.Enqueue(_organizationStruct);
+            while (queue.Count > 0)
+            {
+                TechRouteNode nodeFromQueue = queue.Dequeue();
+                if (!_organizationDictionary.ContainsKey(nodeFromQueue.Id))
+                {
+                    _organizationDictionary.Add(nodeFromQueue.Id, nodeFromQueue);
+                }
+                foreach (TechRouteNode child in nodeFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
             _root = parameter.GetParameter(0);
             _view.Show();
         }

@@ -360,50 +360,55 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public async Task UpdateNodeFromIPS(MyNode node, TechRouteNode organizationStruct)
+        public async Task UpdateNodeFromIPS(MyNode node, IDictionary<long, TechRouteNode> organizationStructDictionary, string organizationName)
         {
             // здесь мы получили один или несколько тех. процессов с цехозаходами внутри. Тех. процессы отсортированы в порядке следования атрибута связи "Сортировка"
-            ICollection<ICollection<TechRouteNode>> techRouteNodes = null;
+            ICollection<TechRouteNode> routes = null;
             try
             {
-                techRouteNodes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStruct);
+                routes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStructDictionary, organizationName);
             }
             catch (KeyNotFoundException ex)
             {
                 throw new KeyNotFoundException(ex.Message, ex);
             }
 
-
-            IList<ICollection<TechRouteNode>> techRouteNodesList = techRouteNodes.ToList();
-            if (techRouteNodes.Count > 1)
+            if (routes.Count == 1)
             {
-                _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].ToList(), false);
-
-                for (int i = 1; i < techRouteNodes.Count; i++)
+                IList<TechRouteNode> techRouteNodesList = routes.ToList()[0].Children;
+                if (techRouteNodesList.Count > 1)
                 {
-                    _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[i].ToList(), true);
+                    _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].Children, false);
+
+                    for (int i = 1; i < techRouteNodesList.Count; i++)
+                    {
+                        _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[i].Children, true);
+                    }
+                }
+
+                if (techRouteNodesList.Count == 1)
+                {
+                    _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].Children, false);
+                }
+
+                Queue<MyNode> queue = new Queue<MyNode>();
+                queue.Enqueue(node);
+                while (queue.Count > 0)
+                {
+                    MyNode nodeFromQueue = queue.Dequeue();
+                    nodeFromQueue.CooperationFlag = ((IntermechTreeElement)nodeFromQueue.Tag).CooperationFlag;
+
+                    foreach (MyNode child in nodeFromQueue.Nodes)
+                    {
+                        queue.Enqueue(child);
+                    }
                 }
             }
 
-            if (techRouteNodes.Count == 1)
+            if (routes.Count > 1)
             {
-                _techRouteSetService.SetTechRoute(new List<MyNode>() { node }, techRouteNodesList[0].ToList(), false);
+                node.Route = "ЕСТЬ НЕСКОЛЬКО МАРШРУТОВ!";
             }
-
-            Queue<MyNode> queue = new Queue<MyNode>();
-            queue.Enqueue(node);
-            while (queue.Count > 0)
-            {
-                MyNode nodeFromQueue = queue.Dequeue();
-                nodeFromQueue.CooperationFlag = ((IntermechTreeElement)nodeFromQueue.Tag).CooperationFlag;
-
-                foreach (MyNode child in nodeFromQueue.Nodes)
-                {
-                    queue.Enqueue(child);
-                }
-            }
-
-
         }
     }
 }

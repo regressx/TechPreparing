@@ -60,34 +60,16 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<ICollection<ICollection<TechRouteNode>>> GetTechRouteAsync(IntermechTreeElement element, TechRouteNode organizationStruct)
+        public Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary, string organizationStructName)
         {
-            Func<ICollection<ICollection<TechRouteNode>>> func = () => GetTechRouteInternal(element, organizationStruct);
+            Func<ICollection<TechRouteNode>> func = () => GetTechRouteInternal(element, dictionary, organizationStructName);
 
             return Task.Run(func);
         }
 
-        private ICollection<ICollection<TechRouteNode>> GetTechRouteInternal(IntermechTreeElement element, TechRouteNode organizationStruct)
+        private ICollection<TechRouteNode> GetTechRouteInternal(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary,string organizationStructName)
         {
-
-            // пихаем в бинарное дерево поиска для быстрого поиска
-            IDictionary<long, TechRouteNode> dictionary = new Dictionary<long, TechRouteNode>();
-            Queue<TechRouteNode> queue = new Queue<TechRouteNode>();
-            queue.Enqueue(organizationStruct);
-            while (queue.Count > 0)
-            {
-                TechRouteNode nodeFromQueue = queue.Dequeue();
-                if (!dictionary.ContainsKey(nodeFromQueue.Id))
-                {
-                    dictionary.Add(nodeFromQueue.Id, nodeFromQueue);
-                }
-                foreach (TechRouteNode child in nodeFromQueue.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
-
-            ICollection<ICollection<TechRouteNode>> result = new List<ICollection<TechRouteNode>>();
+            ICollection<TechRouteNode> existedRoutes = new List<TechRouteNode>();
             DataTable techRoutes = null;
 
             using (SessionKeeper keeper = new SessionKeeper())
@@ -105,7 +87,9 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(1032, AttributeSourceTypes.Relation,
                         ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // сортировка
                     new ColumnDescriptor(14819, AttributeSourceTypes.Object,
-                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // код организации разработчика
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код организации разработчика
+                    new ColumnDescriptor(10, AttributeSourceTypes.Object,
+                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // наименование
                 };
 
                 // Поиск состава
@@ -113,139 +97,156 @@ namespace NavisElectronics.TechPreparation.Data
 
                 if (techRoutes != null)
                 {
-                    // есть маршрут обработки
+                    // есть маршруты обработки
                     if (techRoutes.Rows.Count != 0)
                     {
-                        long routeVersionId = (long)techRoutes.Rows[0][0];
-
-                        DataTable techRouteItems = compositionService.LoadComposition(
-                            keeper.Session,
-                            routeVersionId,
-                            1002,
-                            new List<ColumnDescriptor>(columnsForTechRoutes),
-                            string.Empty,
-                            1090, // только изделия-заготовки и единичные тех. процессы
-                            1237); 
-
-                        if (techRouteItems != null)
+                        foreach (DataRow techRoutesRow in techRoutes.Rows)
                         {
-                            if (techRouteItems.Rows.Count != 0)
+                            long routeVersionId = (long)techRoutesRow[0];
+                            
+                            // создать маршрут обработки
+                            TechRouteNode techRoute = new TechRouteNode();
+
+                            // добавляем в коллекцию
+                            existedRoutes.Add(techRoute);
+
+                            techRoute.Id = routeVersionId;
+                            techRoute.Name = techRoutesRow[4] != DBNull.Value
+                                ? (string)techRoutesRow[4]
+                                : string.Empty;
+
+                            // смотрим тех. процессы в нёем
+                            DataTable techRouteItems = compositionService.LoadComposition(
+                                keeper.Session,
+                                routeVersionId,
+                                1002,
+                                new List<ColumnDescriptor>(columnsForTechRoutes),
+                                string.Empty,
+                                1090, // только изделия-заготовки и единичные тех. процессы
+                                1237); 
+
+                            if (techRouteItems != null)
                             {
-                                foreach (DataRow row in techRouteItems.Rows)
+                                if (techRouteItems.Rows.Count != 0)
                                 {
-                                    int type = (int)row[1];
-
-                                    switch (type)
+                                    foreach (DataRow row in techRouteItems.Rows)
                                     {
-                                        case 1090:
-                                            long blankVersionId = (long)row[0];
+                                        int type = (int)row[1];
 
-                                            IDBObject blankObject = keeper.Session.GetObject(blankVersionId);
+                                        switch (type)
+                                        {
+                                            // заготовки
+                                            case 1090:
+                                                long blankVersionId = (long)row[0];
 
-                                            // если детали и б/ч детали, то их материалу надо присвоить значение
-                                            if (element.Type == 1052 || element.Type == 1159)
-                                            {
-                                                IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
+                                                IDBObject blankObject = keeper.Session.GetObject(blankVersionId);
 
-                                                if (amountAttribute.Value != DBNull.Value)
+                                                // если детали и б/ч детали, то их материалу надо присвоить значение
+                                                if (element.Type == 1052 || element.Type == 1159)
                                                 {
-                                                    MeasuredValue value = (MeasuredValue)amountAttribute.Value;
+                                                    IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
 
-                                                    if (element.RelationName != "Изделие-заготовка")
+                                                    if (amountAttribute.Value != DBNull.Value)
                                                     {
-                                                        // присвоить материалу внутри детали полученное значение
-                                                        element.Children[0].Amount = (float)value.Value;
+                                                        MeasuredValue value = (MeasuredValue)amountAttribute.Value;
 
-                                                        MeasureDescriptor descriptor =
-                                                            MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
-                                                                measureDescriptor.MeasureID == value.MeasureID);
-                                                        element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                        if (element.RelationName != "Изделие-заготовка")
+                                                        {
+                                                            // присвоить материалу внутри детали полученное значение
+                                                            element.Children[0].Amount = (float)value.Value;
+
+                                                            MeasureDescriptor descriptor =
+                                                                MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
+                                                                    measureDescriptor.MeasureID == value.MeasureID);
+                                                            element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            break;
+                                                break; 
+                                        
+                                            // тех процессы
+                                            case 1237:
+                                                long techProcessId = (long)row[0];
 
-                                        case 1237:
-                                            long techProcessId = (long)row[0];
+                                                string developer = row[3] != DBNull.Value
+                                                    ? Convert.ToString(row[3])
+                                                    : string.Empty;
 
-                                            string developer = row[3] != DBNull.Value
-                                                ? Convert.ToString(row[3])
-                                                : string.Empty;
+                                                if (developer.ToUpper() != organizationStructName.ToUpper())
+                                                {
+                                                    continue;
+                                                }
 
-                                            if (developer.ToUpper() != organizationStruct.Name.ToUpper())
-                                            {
-                                                continue;
-                                            }
 
-                                            ICollection<TechRouteNode> techProcessNodes = new List<TechRouteNode>();
-                                            result.Add(techProcessNodes);
+                                                TechRouteNode techProcessNode = new TechRouteNode();
+                                                techRoute.Add(techProcessNode);
 
-                                            DataTable techProcessItems = compositionService.LoadComposition(
-                                                keeper.Session,
-                                                techProcessId,
-                                                1002,
-                                                new List<ColumnDescriptor>(columnsForTechRoutes),
-                                                string.Empty,
-                                                1110); // цехозаходы 
+                                                DataTable techProcessItems = compositionService.LoadComposition(
+                                                    keeper.Session,
+                                                    techProcessId,
+                                                    1002,
+                                                    new List<ColumnDescriptor>(columnsForTechRoutes),
+                                                    string.Empty,
+                                                    1110); // цехозаходы 
 
-                                            foreach (DataRow item in techProcessItems.Rows)
-                                            {
-                                                IDBObject workshop = keeper.Session.GetObject((long)item[0]);
+                                                foreach (DataRow item in techProcessItems.Rows)
+                                                {
+                                                    IDBObject workshop = keeper.Session.GetObject((long)item[0]);
                                                 
-                                                // ссылка на объект Imbase
-                                                IDBAttribute imbaseReferenceAttribute = workshop.GetAttributeByID(1092);
+                                                    // ссылка на объект Imbase
+                                                    IDBAttribute imbaseReferenceAttribute = workshop.GetAttributeByID(1092);
 
-                                                if (imbaseReferenceAttribute == null)
-                                                {
-                                                    throw new NullReferenceException("В тех процессе есть цехозаход, у которого отсутствует привязка к справочнику!");
-                                                }
-
-                                                TechRouteNode workshopNode = null;
-                                                    
-                                                try
-                                                {
-                                                    workshopNode = dictionary[imbaseReferenceAttribute.AsInteger];
-                                                }
-                                                catch (KeyNotFoundException ex)
-                                                {
-                                                    throw new KeyNotFoundException("Нет маршрута обработки для запрошенного узла " + element.Designation + " " + element.Name, ex);
-                                                }
-
-
-                                                if (techProcessNodes.Count == 0)
-                                                {
-                                                    if (workshopNode.PartitionName == "102" ||
-                                                        workshopNode.PartitionName == "101")
+                                                    if (imbaseReferenceAttribute == null)
                                                     {
-                                                        Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
-                                                        elementQueue.Enqueue(element);
-                                                        while (elementQueue.Count > 0)
+                                                        throw new NullReferenceException("В тех. процессе есть цехозаход, у которого отсутствует привязка к справочнику!");
+                                                    }
+
+                                                    TechRouteNode workshopNode = null;
+                                                    
+                                                    try
+                                                    {
+                                                        workshopNode = dictionary[imbaseReferenceAttribute.AsInteger];
+                                                    }
+                                                    catch (KeyNotFoundException ex)
+                                                    {
+                                                        throw new KeyNotFoundException("Нет маршрута обработки для запрошенного узла " + element.Designation + " " + element.Name, ex);
+                                                    }
+
+
+                                                    // если первый элемент в списке 102 или 101, то это автоматически кооперация и для всех дочерних узлов ественно
+                                                    if (techProcessNode.Children.Count == 0)
+                                                    {
+                                                        if (workshopNode.PartitionName == "102" ||
+                                                            workshopNode.PartitionName == "101")
                                                         {
-                                                            IntermechTreeElement elementFromQueue = elementQueue.Dequeue();
-                                                            elementFromQueue.CooperationFlag = true;
-                                                            foreach (IntermechTreeElement child in elementFromQueue.Children)
+                                                            Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
+                                                            elementQueue.Enqueue(element);
+                                                            while (elementQueue.Count > 0)
                                                             {
-                                                                elementQueue.Enqueue(child);
+                                                                IntermechTreeElement elementFromQueue = elementQueue.Dequeue();
+                                                                elementFromQueue.CooperationFlag = true;
+                                                                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                                                                {
+                                                                    elementQueue.Enqueue(child);
+                                                                }
                                                             }
                                                         }
-
-
                                                     }
+
+                                                    techProcessNode.Add(workshopNode);
                                                 }
 
-                                                techProcessNodes.Add(workshopNode);
-                                            }
-
-                                            break;
+                                                break;
+                                        }
                                     }
                                 }
-                            }
 
+                            }
                         }
                     }
                 }
             }
-            return result;
+            return existedRoutes;
         }
 
 

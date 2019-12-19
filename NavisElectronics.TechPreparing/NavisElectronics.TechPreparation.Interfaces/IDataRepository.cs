@@ -158,7 +158,8 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<ICollection<ICollection<TechRouteNode>>> GetTechRouteAsync(IntermechTreeElement element, TechRouteNode organizationStruct);
+        Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element,
+            IDictionary<long, TechRouteNode> dictionary, string organizationStructName);
 
 
     }
