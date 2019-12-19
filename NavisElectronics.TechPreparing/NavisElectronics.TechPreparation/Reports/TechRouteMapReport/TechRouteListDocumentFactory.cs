@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text;
 
 namespace NavisElectronics.TechPreparation.Reports
 {
@@ -113,15 +114,29 @@ namespace NavisElectronics.TechPreparation.Reports
 
                 TextData noteCell = rowInstanse.Nodes[5] as TextData;
 
-                string note = product.Note;
+                StringBuilder sb = new StringBuilder();
+
+                // 3 элемента примечания: технологические примечания, примечания состава и ВПК
+                string [] notes = new string[3];
+                notes[0] = product.Note;
+                notes[1] = product.RelationNote;
 
                 if (product.InnerCooperation)
                 {
-                    note = (note + " ВПК").Trim();
+                    notes[2] = "ВПК";
                 }
 
-                noteCell.AssignText(note, false, false, false);
+                foreach (string note in notes)
+                {
+                    if (string.IsNullOrEmpty(note))
+                    {
+                        continue;
+                    }
 
+                    sb.Append(note + " ");
+                }
+
+                noteCell.AssignText(sb.ToString().Trim(), false, false, false);
 
 
                 //Красим сборки, комплекты, делаем жирными
