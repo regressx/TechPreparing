@@ -116,7 +116,8 @@
                         || elementToFind.Id != elementFromQueue.Id
                         || elementToFind.Position != elementFromQueue.Position
                         || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation
-                        || elementToFind.Name != elementFromQueue.Name)
+                        || elementToFind.Name != elementFromQueue.Name
+                        || elementToFind.RelationNote != elementFromQueue.RelationNote)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }
