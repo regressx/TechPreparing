@@ -83,11 +83,6 @@
         event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
 
         /// <summary>
-        /// Refresh tree.
-        /// </summary>
-        event EventHandler RefreshTree;
-
-        /// <summary>
         /// Установить модель в дерево
         /// </summary>
         /// <param name="treeModel">
