@@ -74,6 +74,7 @@
                 elementInOldTree.Amount = elementFromUpdateInitialized.Amount;
                 elementInOldTree.MeasureUnits = elementFromUpdateInitialized.MeasureUnits;
                 elementInOldTree.Name = elementFromUpdateInitialized.Name;
+                elementInOldTree.RelationNote = elementFromUpdateInitialized.RelationNote;
             }
         }
 
