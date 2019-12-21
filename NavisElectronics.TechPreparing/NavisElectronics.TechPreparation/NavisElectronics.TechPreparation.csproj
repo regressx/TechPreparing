@@ -109,6 +109,12 @@
     <Compile Include="Reports\IReportService.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
+    <Compile Include="TechRouteMap\ProductionTypeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechRouteMap\ProductionTypeDialog.Designer.cs">
+      <DependentUpon>ProductionTypeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewInterfaces\CompareTwoNodesEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
@@ -193,12 +199,6 @@
     <Compile Include="Views\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TechRouteMap\TechRouteDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TechRouteMap\TechRouteDialog.Designer.cs">
-      <DependentUpon>TechRouteDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\TreeComparerView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,6 +271,9 @@
     <Compile Include="ViewModels\TreeComparerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="TechRouteMap\ProductionTypeDialog.resx">
+      <DependentUpon>ProductionTypeDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AddNoteForm.resx">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -304,9 +307,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TechRouteMap\TechRouteDialog.resx">
-      <DependentUpon>TechRouteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TechRouteMap\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
