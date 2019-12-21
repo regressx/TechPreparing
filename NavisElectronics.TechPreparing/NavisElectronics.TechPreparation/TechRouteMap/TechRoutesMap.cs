@@ -82,6 +82,16 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.LightGray), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
             }
+
+            if (node.InnerCooperation)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.Aquamarine), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+            }
+
+            if (node.DoNotProduce)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.LightYellow), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
+            }
         }
 
         private void EditNote_Click(object sender, EventArgs e)
