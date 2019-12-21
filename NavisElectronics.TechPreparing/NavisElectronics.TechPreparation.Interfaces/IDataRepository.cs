@@ -146,7 +146,27 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>Возвращает коллекцию прикрепленных документов</returns>
         ICollection<Document> GetDocuments(long id);
 
-        Task<IntermechTreeElement> GetElementDataAsync(long versionId);
+
+        /// <summary>
+        /// Получает тех. маршрут у элемента
+        /// </summary>
+        /// <param name="element">
+        /// собственно элемент, для которого идет поиск маршрута
+        /// </param>
+        /// <param name="dictionary">
+        /// словарь со структурой предприятия
+        /// </param>
+        /// <param name="organizationStructName">
+        /// наименование организации
+        /// </param>
+        /// <param name="productionType">
+        /// тип производства
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element,
+            IDictionary<long, TechRouteNode> dictionary, string organizationStructName, string productionType);
 
 
         /// <summary>
@@ -158,9 +178,8 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element,
-            IDictionary<long, TechRouteNode> dictionary, string organizationStructName);
-
+        //Task<ICollection<Production>> GetTechRouteAsync(IntermechTreeElement element,
+        //    IDictionary<long, TechRouteNode> dictionary, string organizationStructName);
 
     }
 }
