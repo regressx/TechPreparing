@@ -44,6 +44,9 @@
             this.substituteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.noteTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.relationNoteTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.stockRateColumn = new Aga.Controls.Tree.TreeColumn();
+            this.sampleSizeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.tpRefColumn = new Aga.Controls.Tree.TreeColumn();
             this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,14 +77,13 @@
             this.checkBoxInnerCoop = new Aga.Controls.Tree.NodeControls.NodeCheckBox();
             this.textBoxNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxSubstitute = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxRelationNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.stockRateColumn = new Aga.Controls.Tree.TreeColumn();
-            this.sampleSizeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.tpRefColumn = new Aga.Controls.Tree.TreeColumn();
             this.textBoxSampleSize = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxStockRate = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxTpRef = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.techTaskTreeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.textBoxTechTask = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -155,6 +157,7 @@
             this.treeViewAdv.Columns.Add(this.stockRateColumn);
             this.treeViewAdv.Columns.Add(this.sampleSizeColumn);
             this.treeViewAdv.Columns.Add(this.tpRefColumn);
+            this.treeViewAdv.Columns.Add(this.techTaskTreeColumn);
             this.treeViewAdv.Columns.Add(this.agentTreeColumn);
             this.treeViewAdv.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv.DefaultToolTipProvider = null;
@@ -180,6 +183,7 @@
             this.treeViewAdv.NodeControls.Add(this.textBoxSampleSize);
             this.treeViewAdv.NodeControls.Add(this.textBoxStockRate);
             this.treeViewAdv.NodeControls.Add(this.textBoxTpRef);
+            this.treeViewAdv.NodeControls.Add(this.textBoxTechTask);
             this.treeViewAdv.NodeControls.Add(this.agentTextbox);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
@@ -250,6 +254,24 @@
             this.relationNoteTreeColumn.Header = "Примечание";
             this.relationNoteTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.relationNoteTreeColumn.TooltipText = null;
+            // 
+            // stockRateColumn
+            // 
+            this.stockRateColumn.Header = "Коэф. зап.";
+            this.stockRateColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.stockRateColumn.TooltipText = null;
+            // 
+            // sampleSizeColumn
+            // 
+            this.sampleSizeColumn.Header = "Выборка";
+            this.sampleSizeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.sampleSizeColumn.TooltipText = null;
+            // 
+            // tpRefColumn
+            // 
+            this.tpRefColumn.Header = "ТП вх. контр.";
+            this.tpRefColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.tpRefColumn.TooltipText = null;
             // 
             // agentTreeColumn
             // 
@@ -487,37 +509,12 @@
             this.textBoxSubstitute.LeftMargin = 3;
             this.textBoxSubstitute.ParentColumn = this.substituteTreeColumn;
             // 
-            // agentTextbox
-            // 
-            this.agentTextbox.DataPropertyName = "Agent";
-            this.agentTextbox.IncrementalSearchEnabled = true;
-            this.agentTextbox.LeftMargin = 3;
-            this.agentTextbox.ParentColumn = this.agentTreeColumn;
-            // 
             // textBoxRelationNote
             // 
             this.textBoxRelationNote.DataPropertyName = "RelationNote";
             this.textBoxRelationNote.IncrementalSearchEnabled = true;
             this.textBoxRelationNote.LeftMargin = 3;
             this.textBoxRelationNote.ParentColumn = this.relationNoteTreeColumn;
-            // 
-            // stockRateColumn
-            // 
-            this.stockRateColumn.Header = "Коэф. зап.";
-            this.stockRateColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.stockRateColumn.TooltipText = null;
-            // 
-            // sampleSizeColumn
-            // 
-            this.sampleSizeColumn.Header = "Выборка";
-            this.sampleSizeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.sampleSizeColumn.TooltipText = null;
-            // 
-            // tpRefColumn
-            // 
-            this.tpRefColumn.Header = "ТП вх. контр.";
-            this.tpRefColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.tpRefColumn.TooltipText = null;
             // 
             // textBoxSampleSize
             // 
@@ -539,6 +536,26 @@
             this.textBoxTpRef.IncrementalSearchEnabled = true;
             this.textBoxTpRef.LeftMargin = 3;
             this.textBoxTpRef.ParentColumn = this.tpRefColumn;
+            // 
+            // agentTextbox
+            // 
+            this.agentTextbox.DataPropertyName = "Agent";
+            this.agentTextbox.IncrementalSearchEnabled = true;
+            this.agentTextbox.LeftMargin = 3;
+            this.agentTextbox.ParentColumn = this.agentTreeColumn;
+            // 
+            // techTaskTreeColumn
+            // 
+            this.techTaskTreeColumn.Header = "Тех. задание";
+            this.techTaskTreeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.techTaskTreeColumn.TooltipText = null;
+            // 
+            // textBoxTechTask
+            // 
+            this.textBoxTechTask.DataPropertyName = "TechTask";
+            this.textBoxTechTask.IncrementalSearchEnabled = true;
+            this.textBoxTechTask.LeftMargin = 3;
+            this.textBoxTechTask.ParentColumn = this.techTaskTreeColumn;
             // 
             // TechRoutesMap
             // 
@@ -612,5 +629,7 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxSampleSize;
         private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxStockRate;
         private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxTpRef;
+        private Aga.Controls.Tree.TreeColumn techTaskTreeColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxTechTask;
     }
 }

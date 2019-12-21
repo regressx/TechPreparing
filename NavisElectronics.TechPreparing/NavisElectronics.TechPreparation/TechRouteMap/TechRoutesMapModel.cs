@@ -136,8 +136,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
             myNode.ContainsInnerCooperation = myElement.ContainsInnerCooperation;
             myNode.Agent = myElement.Agent == null ? string.Empty : myElement.Agent;
             myNode.Tag = myElement;
-            myNode.IsToComplect = myElement.IsToComplect;
-            myNode.TechPreparing = myElement.TechTask;
+            myNode.DoNotProduce = myElement.ProduseSign;
+            myNode.TechTask = myElement.TechTask;
+
             if (myElement.TechProcessReference != null)
             {
                 myNode.TechProcessReference = myElement.TechProcessReference.Name;
@@ -171,13 +172,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
             {
                 foreach (IntermechTreeElement child in element.Children)
                 {
-                    if (child.RelationName == "Документ")
-                    {
-                        continue;
-                    }
 
                     // пропускаем всё неинтересное
-                    if (child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
+                    if (child.RelationName == "Документ" || child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
                     {
                         continue;
                     }
@@ -192,16 +189,20 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.Name = child.Name;
                     childNode.Amount = child.Amount.ToString("F0");
                     childNode.AmountWithUse = child.AmountWithUse;
-                    childNode.TechPreparing = child.TechTask;
+                    childNode.TechTask = child.TechTask;
                     childNode.StockRate = child.StockRate;
-                    childNode.SampleSize = childNode.SampleSize;
-
+                    childNode.SampleSize = child.SampleSize;
+                    childNode.TechTask = child.TechTask;
+                    
                     if (childNode.IsPcb)
                     {
                         childNode.Image = Properties.Resources.pcb_16;
                         string pcbName = string.Format("{0} (V{1})", childNode.Name, child.PcbVersion);
                         childNode.Name = pcbName;
                     }
+
+
+
 
                     if (child.TechProcessReference != null)
                     {
@@ -241,7 +242,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.InnerCooperation = child.InnerCooperation;
                     childNode.ContainsInnerCooperation = child.ContainsInnerCooperation;
                     childNode.Tag = child;
-                    childNode.IsToComplect = child.IsToComplect;
+                    childNode.DoNotProduce = child.ProduseSign;
                     mainNode.Nodes.Add(childNode);
 
                     if (child.Agent != null)
@@ -360,13 +361,13 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public async Task UpdateNodeFromIPS(MyNode node, IDictionary<long, TechRouteNode> organizationStructDictionary, string organizationName)
+        public async Task UpdateNodeFromIPS(MyNode node, IDictionary<long, TechRouteNode> organizationStructDictionary, string organizationName, string productionType)
         {
             // здесь мы получили один или несколько тех. процессов с цехозаходами внутри. Тех. процессы отсортированы в порядке следования атрибута связи "Сортировка"
             ICollection<TechRouteNode> routes = null;
             try
             {
-                routes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStructDictionary, organizationName);
+                routes = await _repository.GetTechRouteAsync((IntermechTreeElement)node.Tag, organizationStructDictionary, organizationName,productionType);
             }
             catch (KeyNotFoundException ex)
             {
