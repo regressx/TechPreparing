@@ -12,6 +12,11 @@
             foreach (MyNode element in elements)
             {
                 IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
+                element.TechProcessReference = treeElement.TechProcessReference.Name;
+                element.StockRate = treeElement.StockRate;
+                element.SampleSize = treeElement.SampleSize;
+                element.TechTask = treeElement.TechTask;
+
                 IList<TechRouteNode> nodes = resultNodesList;
                 StringBuilder stringId = new StringBuilder();
                 StringBuilder caption = new StringBuilder();
