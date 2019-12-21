@@ -106,19 +106,31 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
 
         private async void View_UpdateNodeFromIps(object sender, EventArgs e)
         {
+            string productionTypeDialogResult = string.Empty;
+            using (ProductionTypeDialog productionTypeDialog = new ProductionTypeDialog())
+            {
+                if (productionTypeDialog.ShowDialog() == DialogResult.OK)
+                {
+                    productionTypeDialogResult = productionTypeDialog.ProductionTypeValue;
+                }
+            }
+
+            if (productionTypeDialogResult == string.Empty)
+            {
+                return;
+            }
+
             ICollection<MyNode> selectedRows = _view.GetSelectedRows();
+
             foreach (MyNode node in selectedRows)
             {
-               await _model.UpdateNodeFromIPS(node, _organizationDictionary, _organizationStruct.Name);
+               await _model.UpdateNodeFromIPS(node, _organizationDictionary, _organizationStruct.Name, productionTypeDialogResult);
             }
         }
 
         private void View_EditMassTechRouteClick(object sender, EditTechRouteEventArgs e)
         {
-            IList<MyNode> selectedRows = _view.GetSelectedRows().ToList();
-            TechRouteDialog dialog = new TechRouteDialog(_view.GetMainNode(), selectedRows[0], _presentationFactory, _organizationStruct);
-            dialog.ShowDialog();
-            _view.GetTreeView().Refresh();
+            throw new NotImplementedException("Обработчик события отсутствует!");
         }
 
         private async void OnDownloadFromIPS(object sender, EventArgs e)
