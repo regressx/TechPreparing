@@ -94,9 +94,9 @@ namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
         /// <summary>
         /// Является ли узлом для комплектования
         /// </summary>
-        public bool IsToComplect { get; set; }
+        public bool DoNotProduce { get; set; }
 
-        public string TechPreparing { get; set; }
+        public string TechTask { get; set; }
 
         public string TechProcessReference { get; set; }
 
