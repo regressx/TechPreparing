@@ -356,15 +356,5 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public async Task UpdateElementDataFromDatabase(long versionId, IntermechTreeElement elementToUpdate)
-        {
-            IntermechTreeElement element = await _repository.GetElementDataAsync(versionId);
-            elementToUpdate.Name = element.Name;
-            elementToUpdate.TechTask = element.TechTask;
-            elementToUpdate.PcbVersion = element.PcbVersion;
-            elementToUpdate.IsPcb = element.IsPcb;
-        }
-
-
     }
 }

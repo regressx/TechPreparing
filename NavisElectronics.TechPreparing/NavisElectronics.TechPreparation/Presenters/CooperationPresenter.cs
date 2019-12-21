@@ -131,7 +131,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             foreach (CooperationNode myNode in e.SelectedNodes)
             {
                 IntermechTreeElement synchronizedElement = (IntermechTreeElement)myNode.Tag;
-                await _model.UpdateElementDataFromDatabase(synchronizedElement.Id, synchronizedElement);
                 myNode.TechTask = synchronizedElement.TechTask;
                 myNode.PcbVersion = synchronizedElement.PcbVersion;
                 myNode.IsPcb = synchronizedElement.IsPcb;
