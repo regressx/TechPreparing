@@ -60,14 +60,14 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary, string organizationStructName)
+        public Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary, string organizationStructName, string productionType)
         {
-            Func<ICollection<TechRouteNode>> func = () => GetTechRouteInternal(element, dictionary, organizationStructName);
+            Func<ICollection<TechRouteNode>> func = () => GetTechRouteInternal(element, dictionary, organizationStructName, productionType);
 
             return Task.Run(func);
         }
 
-        private ICollection<TechRouteNode> GetTechRouteInternal(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary,string organizationStructName)
+        private ICollection<TechRouteNode> GetTechRouteInternal(IntermechTreeElement element, IDictionary<long, TechRouteNode> dictionary, string organizationStructName, string productionType)
         {
             ICollection<TechRouteNode> existedRoutes = new List<TechRouteNode>();
             DataTable techRoutes = null;
@@ -89,7 +89,10 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(14819, AttributeSourceTypes.Object,
                         ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код организации разработчика
                     new ColumnDescriptor(10, AttributeSourceTypes.Object,
-                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // наименование
+                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // наименование
+                    new ColumnDescriptor(1065, AttributeSourceTypes.Object,
+                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // тип производства (микроэлектроника, цех нап и тд и тп)
+
                 };
 
                 // Поиск состава
@@ -141,27 +144,61 @@ namespace NavisElectronics.TechPreparation.Data
 
                                                 IDBObject blankObject = keeper.Session.GetObject(blankVersionId);
 
-                                                // если детали и б/ч детали, то их материалу надо присвоить значение
-                                                if (element.Type == 1052 || element.Type == 1159)
+                                                if (element.IsPcb)
                                                 {
-                                                    IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
-
-                                                    if (amountAttribute.Value != DBNull.Value)
+                                                    IDBAttribute techTaskOnPcbAttribute = blankObject.GetAttributeByID(18086);
+                                                    if (techTaskOnPcbAttribute != null)
                                                     {
-                                                        MeasuredValue value = (MeasuredValue)amountAttribute.Value;
+                                                        char[] textBytes = null;
+                                                        IMemoReader memoReader = techTaskOnPcbAttribute as IMemoReader;
+                                                        memoReader.OpenMemo(0);
+                                                        textBytes = memoReader.ReadDataBlock();
+                                                        memoReader.CloseMemo();
+                                                        element.TechTask = new string(textBytes);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // если детали и б/ч детали, то их материалу надо присвоить значение
+                                                    if (element.Type == 1052 || element.Type == 1159)
+                                                    {
+                                                        IDBAttribute amountAttribute = blankObject.GetAttributeByID(1223);
 
-                                                        if (element.RelationName != "Изделие-заготовка")
+                                                        if (amountAttribute.Value != DBNull.Value)
                                                         {
-                                                            // присвоить материалу внутри детали полученное значение
-                                                            element.Children[0].Amount = (float)value.Value;
+                                                            MeasuredValue value = (MeasuredValue)amountAttribute.Value;
 
-                                                            MeasureDescriptor descriptor =
-                                                                MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
-                                                                    measureDescriptor.MeasureID == value.MeasureID);
-                                                            element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                            if (element.RelationName != "Изделие-заготовка")
+                                                            {
+                                                                // присвоить материалу внутри детали полученное значение
+                                                                element.Children[0].Amount = (float)value.Value;
+
+                                                                MeasureDescriptor descriptor =
+                                                                    MeasureHelper.Measures.FirstOrDefault(measureDescriptor =>
+                                                                        measureDescriptor.MeasureID == value.MeasureID);
+                                                                element.Children[0].MeasureUnits = descriptor.ShortName;
+                                                            }
                                                         }
                                                     }
                                                 }
+
+                                                IDBAttribute stockKoefAttribute = blankObject.GetAttributeByID(14410);
+                                                if (stockKoefAttribute != null)
+                                                {
+                                                    element.StockRate = stockKoefAttribute.AsDouble;
+                                                }
+
+                                                IDBAttribute sampleSizeAttribute = blankObject.GetAttributeByID(17912);
+                                                if (sampleSizeAttribute != null)
+                                                {
+                                                    element.SampleSize = sampleSizeAttribute.AsString;
+                                                }
+                                                else
+                                                {
+                                                    element.SampleSize = "100%";
+                                                }
+
+
                                                 break; 
                                         
                                             // тех процессы
@@ -172,11 +209,15 @@ namespace NavisElectronics.TechPreparation.Data
                                                     ? Convert.ToString(row[3])
                                                     : string.Empty;
 
-                                                if (developer.ToUpper() != organizationStructName.ToUpper())
+                                                string productTypeOfSingleTechProcess =
+                                                    row[5] == DBNull.Value
+                                                        ? string.Empty
+                                                        : (string)row[5];
+
+                                                if (developer.ToUpper() != organizationStructName.ToUpper() || productionType != productTypeOfSingleTechProcess)
                                                 {
                                                     continue;
                                                 }
-
 
                                                 TechRouteNode techProcessNode = new TechRouteNode();
                                                 techRoute.Add(techProcessNode);
@@ -219,6 +260,52 @@ namespace NavisElectronics.TechPreparation.Data
                                                         if (workshopNode.PartitionName == "102" ||
                                                             workshopNode.PartitionName == "101")
                                                         {
+                                                            // поиск по связи групповой тп
+                                                            IDBRelationCollection collectionOfRelations =
+                                                                keeper.Session.GetRelationCollection(1006);
+
+                                                            // получить все групповые тех. процессы
+                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2},null, null);
+
+                                                            DataTable groupTechProcesses = collectionOfRelations.EntersInVersion(pars, techProcessId);;
+
+                                                            // выбрать один, который совпадает по коду организации и виду производства
+                                                            foreach (DataRow groupTechProcess in groupTechProcesses.Rows)
+                                                            {
+                                                                IDBObject groupTechProcessDBobject =
+                                                                    keeper.Session.GetObject((long)groupTechProcess[0]);
+
+                                                                IDBAttribute groupDesAttribute =
+                                                                    groupTechProcessDBobject.GetAttributeByID(9);
+                                                                IDBAttribute groupTechProcessDeveloperAttribute =
+                                                                    groupTechProcessDBobject.GetAttributeByID(14819);
+
+                                                                IDBAttribute productionTypeOfGroupTechProcess =
+                                                                    groupTechProcessDBobject.GetAttributeByID(1065);
+
+
+                                                                string groupTechProcessDeveloper = groupTechProcessDeveloperAttribute != null
+                                                                    ? groupTechProcessDeveloperAttribute.AsString
+                                                                    : string.Empty;
+
+                                                                string productionTypeOfGroupTechPRocess =
+                                                                    productionTypeOfGroupTechProcess == null
+                                                                        ? string.Empty
+                                                                        : productionTypeOfGroupTechProcess.AsString;
+
+                                                                // если не сходится разработчик или тип производства, пропускаем
+                                                                if (developer.ToUpper() != groupTechProcessDeveloper.ToUpper() || productionTypeOfGroupTechPRocess != productionType)
+                                                                {
+                                                                    continue;
+                                                                }
+                                                                
+                                                                element.TechProcessReference = new TechProcess()
+                                                                {
+                                                                    Id = groupTechProcessDBobject.ObjectID,
+                                                                    Name = groupDesAttribute.AsString
+                                                                };
+                                                            }
+
                                                             Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
                                                             elementQueue.Enqueue(element);
                                                             while (elementQueue.Count > 0)
@@ -1171,55 +1258,6 @@ namespace NavisElectronics.TechPreparation.Data
             return elements;
         }
 
-        public Task<IntermechTreeElement> GetElementDataAsync(long versionId)
-        {
-            Func<IntermechTreeElement> func = () =>
-            {
-                IntermechTreeElement elementToReturn = null;
-                using (SessionKeeper keeper = new SessionKeeper())
-                {
-                    IDBObject objectToGet = keeper.Session.GetObject(versionId,true);
-
-                    elementToReturn = new IntermechTreeElement();
-
-                    IDBAttribute nameAttribute = objectToGet.GetAttributeByID(10);
-                    elementToReturn.Name = nameAttribute.AsString;
-
-                    IDBAttribute noteAttribute = objectToGet.GetAttributeByID(11);
-                    elementToReturn.Note = noteAttribute.AsString;
-
-                    IDBAttribute pcbAttribute = objectToGet.GetAttributeByID(18079);
-                    if (pcbAttribute != null)
-                    {
-                        elementToReturn.IsPcb = pcbAttribute.AsInteger == 1;
-                    }
-
-                    if (elementToReturn.IsPcb)
-                    {
-                        IDBAttribute pcbVersionAttribute = objectToGet.GetAttributeByID(17965);
-                        if (pcbVersionAttribute != null)
-                        {
-                            elementToReturn.PcbVersion = (byte)pcbVersionAttribute.AsInteger;
-                        }
-
-                        IDBAttribute pcbTechTaskAttribute = objectToGet.GetAttributeByID(18086);
-                        if (pcbTechTaskAttribute != null)
-                        {
-                            char[] textBytes = null;
-                            IMemoReader memoReader = pcbTechTaskAttribute as IMemoReader;
-                            memoReader.OpenMemo(0);
-                            textBytes = memoReader.ReadDataBlock();
-                            memoReader.CloseMemo();
-                            elementToReturn.TechTask = new string(textBytes);
-                        }
-                    }
-                }
-
-                return elementToReturn;
-            };
-
-            return Task.Run(func);
-        }
 
         /// <summary>
         /// Рекурсивная загрузка заказа
@@ -1427,22 +1465,6 @@ namespace NavisElectronics.TechPreparation.Data
                 element.RelationNote = Convert.ToString(row[20]);
             }
 
-            // если это печатная плата, то надо забрать тех. задание
-            if (element.IsPcb)
-            {
-                IDBObject currentObject = session.GetObject(element.Id);
-                IDBAttribute techTaskOnPcbAttribute = currentObject.GetAttributeByID(18086);
-                if (techTaskOnPcbAttribute != null)
-                {
-                    char[] textBytes = null;
-                    IMemoReader memoReader = techTaskOnPcbAttribute as IMemoReader;
-                    memoReader.OpenMemo(0);
-                    textBytes = memoReader.ReadDataBlock();
-                    memoReader.CloseMemo();
-                    element.TechTask = new string(textBytes);
-                }
-            }
-
             // если деталь или Б/Ч деталь
             if (element.Type == 1052 || element.Type == 1159)
             {
@@ -1491,17 +1513,6 @@ namespace NavisElectronics.TechPreparation.Data
                                 break;
                             }
                         }
-
-                        // Количество материала на единицу изделия
-                        IDBAttribute amountOnOneUnitOfProduct = detailObject.GetAttributeByID(18087);
-                        if (amountOnOneUnitOfProduct != null)
-                        {
-                            MeasuredValue value = (MeasuredValue)amountOnOneUnitOfProduct.Value;
-                            MeasureDescriptor descriptor = MeasureHelper.FindDescriptor(value.MeasureID);
-                            detailMaterialNode.Amount = (float)amountOnOneUnitOfProduct.AsDouble;
-                            detailMaterialNode.MeasureUnits = descriptor.ShortName;
-                        }
-
                         element.Add(detailMaterialNode);
                     }
                 }
