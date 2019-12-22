@@ -46,14 +46,12 @@ namespace NavisElectronics.TechPreparation
             Bind<SaveService>().ToSelf();
             Bind<TreeComparerService>().ToSelf();
             Bind<MainViewModel>().ToSelf();
-            Bind<CooperationViewModel>().ToSelf();
             Bind<TreeNodeDialogViewModel>().ToSelf();
             Bind<TechRouteModel>().ToSelf();
             Bind<TreeComparerViewModel>().ToSelf();
             Bind<ITechRouteView>().To<TechRouteEditView>();
             Bind<IMainView>().To<MainView>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
-            Bind<ICooperationView>().To<CooperationView>();
             Bind<ITechRouteMap>().To<TechRoutesMap>();
         }
     }

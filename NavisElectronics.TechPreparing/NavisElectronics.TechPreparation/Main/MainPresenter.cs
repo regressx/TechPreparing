@@ -95,7 +95,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView.NodeMouseClick += _mainView_NodeMouseClick;
             _mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
             _mainView.CellValueChanged += _mainView_CellValueChanged;
-            _mainView.CooperationClick += _mainView_CooperationClick;
             _mainView.ClearManufacturerClick += _mainView_ClearManufacturerClick;
             _mainView.EditTechRoutesClick += _mainView_EditTechRoutesClick;
             _mainView.UpdateClick += _mainView_UpdateClick;
@@ -324,15 +323,6 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             // TODO по идее надо еще и вверх подняться, чтобы убрать 
         }
-
-        private void _mainView_CooperationClick(object sender, EventArgs e)
-        {
-            IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
-            Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
-            parameter.AddParameter(_rootElement);
-            presenter.Run(parameter);
-        }
-
 
         private void _mainView_CellValueChanged(object sender, TreeNodeAgentValueEventArgs e)
         {

@@ -33,11 +33,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
         private readonly TechRouteSetService _techRouteSetService;
 
         /// <summary>
-        /// менеджер буфера обмена
-        /// </summary>
-        private ClipboardManager _clipboardManager;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TechRoutesMapModel"/> class.
         /// </summary>
         /// <param name="openFolderService">
@@ -54,29 +49,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
             _showFileManager = showFileManager;
             _repository = repository;
             _techRouteSetService = techRouteSetService;
-            _clipboardManager = new ClipboardManager();
-        }
-
-        /// <summary>
-        /// The paste.
-        /// </summary>
-        /// <param name="nodes">
-        /// The nodes.
-        /// </param>
-        public void Paste(ICollection<MyNode> nodes)
-        {
-            _clipboardManager.Paste(nodes);
-        }
-
-        /// <summary>
-        /// The copy.
-        /// </summary>
-        /// <param name="nodes">
-        /// The nodes.
-        /// </param>
-        public void Copy(ICollection<MyNode> nodes)
-        {
-            _clipboardManager.Copy(nodes);
         }
 
         /// <summary>

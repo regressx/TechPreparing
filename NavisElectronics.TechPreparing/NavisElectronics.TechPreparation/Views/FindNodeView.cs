@@ -45,14 +45,14 @@
 
             foreach (TreeNodeAdv node in _treeViewAdv.AllNodes)
             {
-                CooperationNode tagNode = node.Tag as CooperationNode;
-                if (tagNode.Designation != null)
-                {
-                    if (tagNode.Designation.Contains(textToSearch))
-                    {
-                        listBox1.Items.Add((CooperationNode)node.Tag);
-                    }
-                }
+                //CooperationNode tagNode = node.Tag as CooperationNode;
+                //if (tagNode.Designation != null)
+                //{
+                //    if (tagNode.Designation.Contains(textToSearch))
+                //    {
+                //        listBox1.Items.Add((CooperationNode)node.Tag);
+                //    }
+                //}
             }
         }
 
@@ -69,9 +69,9 @@
         {
             if (listBox1.SelectedItem != null)
             {
-                TreeNodeAdv nodeToFind = _treeViewAdv.FindNodeByTag((CooperationNode)listBox1.SelectedItem);
-                _treeViewAdv.SelectedNode = nodeToFind;
-                _treeViewAdv.EnsureVisible(nodeToFind);
+                //TreeNodeAdv nodeToFind = _treeViewAdv.FindNodeByTag((CooperationNode)listBox1.SelectedItem);
+                //_treeViewAdv.SelectedNode = nodeToFind;
+                //_treeViewAdv.EnsureVisible(nodeToFind);
 
             }
         }

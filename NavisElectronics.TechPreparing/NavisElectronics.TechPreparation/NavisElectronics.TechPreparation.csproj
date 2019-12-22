@@ -97,6 +97,12 @@
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
+    <Compile Include="Main\MdiMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\MdiMainForm.Designer.cs">
+      <DependentUpon>MdiMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
@@ -127,8 +133,7 @@
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
-    <Compile Include="ViewModels\TreeNodes\ViewNode.cs" />
-    <Compile Include="ViewModels\TreeNodes\WithdrawalTypeNodeView.cs" />
+    <Compile Include="Main\ViewNode.cs" />
     <Compile Include="Views\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,22 +146,9 @@
     <Compile Include="Views\CompareTwoNodesView.Designer.cs">
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cooperation\CooperationDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cooperation\CooperationDialog.Designer.cs">
-      <DependentUpon>CooperationDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Cooperation\CooperationView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Cooperation\CooperationView.Designer.cs">
-      <DependentUpon>CooperationView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Enums\AgentsId.cs" />
     <Compile Include="Enums\IntermechObjectTypes.cs" />
     <Compile Include="Enums\MaterialTypes.cs" />
-    <Compile Include="EventArguments\MultipleNodesSelectedEventArgs.cs" />
     <Compile Include="EventArguments\ClipboardEventArgs.cs" />
     <Compile Include="EventArguments\TreeNodeAgentValueEventArgs.cs" />
     <Compile Include="EventArguments\BoundTreeElementEventArgs.cs" />
@@ -172,7 +164,6 @@
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
-    <Compile Include="Services\ClipboardManager.cs" />
     <Compile Include="Services\ShowFileManager.cs" />
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
@@ -186,12 +177,6 @@
     <Compile Include="Views\StructDialogView.designer.cs">
       <DependentUpon>StructDialogView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ParametersView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ParametersView.Designer.cs">
-      <DependentUpon>ParametersView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presenters\TreeComparerPresenter.cs" />
     <Compile Include="Views\ReportForm.cs">
       <SubType>Form</SubType>
@@ -199,10 +184,10 @@
     <Compile Include="Views\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TreeComparerView.cs">
+    <Compile Include="TreeComparer\TreeComparerView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TreeComparerView.Designer.cs">
+    <Compile Include="TreeComparer\TreeComparerView.Designer.cs">
       <DependentUpon>TreeComparerView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\IMultiplyParametersView.cs" />
@@ -213,21 +198,19 @@
     <Compile Include="EventArguments\RemoveNodeEventArgs.cs" />
     <Compile Include="Reports\IReport.cs" />
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
-    <Compile Include="Cooperation\ICooperationView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
     <Compile Include="ViewInterfaces\IMainView.cs" />
-    <Compile Include="Views\MainView.cs">
+    <Compile Include="Main\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainView.Designer.cs">
+    <Compile Include="Main\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\AddNotePresenter.cs" />
-    <Compile Include="Presenters\CooperationPresenter.cs" />
     <Compile Include="ViewInterfaces\IParametersView.cs" />
     <Compile Include="TechRoute\ITechRouteView.cs" />
-    <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Main\MainPresenter.cs" />
     <Compile Include="Presenters\ParametersViewPresenter.cs" />
     <Compile Include="TechRoute\TechRoutePresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,22 +238,22 @@
       <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\ITreeComparerView.cs" />
-    <Compile Include="ViewModels\TreeNodes\ComparerNode.cs" />
-    <Compile Include="Cooperation\CooperationNode.cs" />
-    <Compile Include="Cooperation\CooperationViewModel.cs" />
-    <Compile Include="ViewModels\ErrorElement.cs" />
+    <Compile Include="TreeComparer\ComparerNode.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Main\MainViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
     <Compile Include="TechRouteMap\MyNode.cs" />
     <Compile Include="Services\TechRouteClipBoard.cs" />
     <Compile Include="Entities\Parameter.cs" />
     <Compile Include="TechRoute\TechRouteModel.cs" />
-    <Compile Include="ViewModels\TreeNodes\TechRouteNodeView.cs" />
+    <Compile Include="TechRouteMap\TechRouteNodeView.cs" />
     <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
-    <Compile Include="ViewModels\TreeComparerViewModel.cs" />
+    <Compile Include="TreeComparer\TreeComparerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Main\MdiMainForm.resx">
+      <DependentUpon>MdiMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TechRouteMap\ProductionTypeDialog.resx">
       <DependentUpon>ProductionTypeDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -280,16 +263,10 @@
     <EmbeddedResource Include="Views\CompareTwoNodesView.resx">
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cooperation\CooperationDialog.resx">
-      <DependentUpon>CooperationDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Cooperation\CooperationView.resx">
-      <DependentUpon>CooperationView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\FindNodeView.resx">
       <DependentUpon>FindNodeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainView.resx">
+    <EmbeddedResource Include="Main\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
@@ -297,9 +274,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\StructDialogView.resx">
       <DependentUpon>StructDialogView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ParametersView.resx">
-      <DependentUpon>ParametersView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -314,7 +288,7 @@
     <EmbeddedResource Include="TechRoute\TechRouteEditView.resx">
       <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TreeComparerView.resx">
+    <EmbeddedResource Include="TreeComparer\TreeComparerView.resx">
       <DependentUpon>TreeComparerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

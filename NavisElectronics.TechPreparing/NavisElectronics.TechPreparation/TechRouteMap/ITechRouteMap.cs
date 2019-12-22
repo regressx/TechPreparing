@@ -42,16 +42,6 @@
         event EventHandler<SaveClickEventArgs> EditNoteClick;
 
         /// <summary>
-        /// Копирование маршрута и примечания
-        /// </summary>
-        event EventHandler<ClipboardEventArgs> CopyClick;
-
-        /// <summary>
-        /// Вставка маршрута и примечания
-        /// </summary>
-        event EventHandler<ClipboardEventArgs> PasteClick;
-
-        /// <summary>
         /// Показать чертеж
         /// </summary>
         event EventHandler<SaveClickEventArgs> ShowClick;

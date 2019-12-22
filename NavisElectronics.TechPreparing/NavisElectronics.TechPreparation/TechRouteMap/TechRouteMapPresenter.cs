@@ -88,8 +88,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.DeleteRouteClick += View_DeleteRouteClick;
             _view.Load += _view_Load;
             _view.EditNoteClick += View_EditNoteClick;
-            _view.CopyClick += View_CopyClick;
-            _view.PasteClick += View_PasteClick;
             _view.ShowClick += _view_ShowClick;
             _view.GoToOldArchive += _view_GoToOldArchive;
             _view.CreateReportClick += View_CreateReportClick;
@@ -299,16 +297,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         {
             IntermechTreeElement element = e.Node.Tag as IntermechTreeElement;
             _model.ShowProductCard(element);
-        }
-
-        private void View_PasteClick(object sender, ClipboardEventArgs e)
-        {
-            _model.Paste(e.Nodes);
-        }
-
-        private void View_CopyClick(object sender, ClipboardEventArgs e)
-        {
-            _model.Copy(e.Nodes);
         }
 
         private void View_EditNoteClick(object sender, SaveClickEventArgs e)

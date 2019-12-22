@@ -37,9 +37,6 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.LoadTechPreparationButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.cooperationButton = new System.Windows.Forms.ToolStripButton();
             this.TechRoutesEditButton = new System.Windows.Forms.ToolStripButton();
             this.MainMaterialsButton = new System.Windows.Forms.ToolStripButton();
             this.standartsButton = new System.Windows.Forms.ToolStripButton();
@@ -59,17 +56,17 @@
             this.amounTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountWithUseTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.relationNameColumn = new Aga.Controls.Tree.TreeColumn();
+            this.relationNoteColumn = new Aga.Controls.Tree.TreeColumn();
             this.nodeTextBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmount = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxAmountWithUse = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBoxRelationName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.nodeTextBoxRelationNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.OrganizationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.relationNoteColumn = new Aga.Controls.Tree.TreeColumn();
-            this.nodeTextBoxRelationNote = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -123,9 +120,6 @@
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshTreeButton,
             this.toolStripSeparator3,
-            this.LoadTechPreparationButton,
-            this.toolStripSeparator2,
-            this.cooperationButton,
             this.TechRoutesEditButton,
             this.MainMaterialsButton,
             this.standartsButton,
@@ -157,30 +151,6 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // LoadTechPreparationButton
-            // 
-            this.LoadTechPreparationButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.LoadTechPreparationButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_robot_16;
-            this.LoadTechPreparationButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.LoadTechPreparationButton.Name = "LoadTechPreparationButton";
-            this.LoadTechPreparationButton.Size = new System.Drawing.Size(23, 22);
-            this.LoadTechPreparationButton.Text = "Загрузить тех. подготовку";
-            this.LoadTechPreparationButton.Click += new System.EventHandler(this.LoadTechPreparationButton_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // cooperationButton
-            // 
-            this.cooperationButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cooperationButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_new_meeting_21476;
-            this.cooperationButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cooperationButton.Name = "cooperationButton";
-            this.cooperationButton.Size = new System.Drawing.Size(23, 22);
-            this.cooperationButton.Text = "Ведомость кооперации";
             // 
             // TechRoutesEditButton
             // 
@@ -315,6 +285,7 @@
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
+            this.treeViewAdv.ColumnHeaderHeight = 17;
             this.treeViewAdv.Columns.Add(this.designationTreeColumn);
             this.treeViewAdv.Columns.Add(this.nameTreeColumn);
             this.treeViewAdv.Columns.Add(this.amounTreeColumn);
@@ -379,6 +350,13 @@
             this.relationNameColumn.TooltipText = null;
             this.relationNameColumn.Width = 100;
             // 
+            // relationNoteColumn
+            // 
+            this.relationNoteColumn.Header = "Примечание";
+            this.relationNoteColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationNoteColumn.TooltipText = null;
+            this.relationNoteColumn.Width = 200;
+            // 
             // nodeTextBoxDesignation
             // 
             this.nodeTextBoxDesignation.DataPropertyName = "Designation";
@@ -413,6 +391,13 @@
             this.nodeTextBoxRelationName.IncrementalSearchEnabled = true;
             this.nodeTextBoxRelationName.LeftMargin = 3;
             this.nodeTextBoxRelationName.ParentColumn = this.relationNameColumn;
+            // 
+            // nodeTextBoxRelationNote
+            // 
+            this.nodeTextBoxRelationNote.DataPropertyName = "RelationNote";
+            this.nodeTextBoxRelationNote.IncrementalSearchEnabled = true;
+            this.nodeTextBoxRelationNote.LeftMargin = 3;
+            this.nodeTextBoxRelationNote.ParentColumn = this.relationNoteColumn;
             // 
             // dataGridView1
             // 
@@ -465,20 +450,6 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(1062, 178);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
-            // relationNoteColumn
-            // 
-            this.relationNoteColumn.Header = "Примечание";
-            this.relationNoteColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.relationNoteColumn.TooltipText = null;
-            this.relationNoteColumn.Width = 200;
-            // 
-            // nodeTextBoxRelationNote
-            // 
-            this.nodeTextBoxRelationNote.DataPropertyName = "RelationNote";
-            this.nodeTextBoxRelationNote.IncrementalSearchEnabled = true;
-            this.nodeTextBoxRelationNote.LeftMargin = 3;
-            this.nodeTextBoxRelationNote.ParentColumn = this.relationNoteColumn;
-            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -522,13 +493,10 @@
         private System.Windows.Forms.ToolStripButton standartsButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton UpdateButton;
-        private System.Windows.Forms.ToolStripButton LoadTechPreparationButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton SetTechWithdrawalButton;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton CheckReadyButton;
-        private System.Windows.Forms.ToolStripButton cooperationButton;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv;
