@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Main;
 using NavisElectronics.TechPreparation.TechRouteMap;
 
 namespace NavisElectronics.TechPreparation
@@ -30,6 +31,7 @@ namespace NavisElectronics.TechPreparation
     /// </summary>
     public class CommonModule : NinjectModule
     {
+
         /// <summary>
         /// Метод регистрации основных модулей системы
         /// </summary>
@@ -49,8 +51,7 @@ namespace NavisElectronics.TechPreparation
             Bind<TreeNodeDialogViewModel>().ToSelf();
             Bind<TechRouteModel>().ToSelf();
             Bind<TreeComparerViewModel>().ToSelf();
-            Bind<ITechRouteView>().To<TechRouteEditView>();
-            Bind<IMainView>().To<MainView>();
+            Bind<IMainView>().To<MdiMainForm>();
             Bind<ITreeComparerView>().To<TreeComparerView>();
             Bind<ITechRouteMap>().To<TechRoutesMap>();
         }

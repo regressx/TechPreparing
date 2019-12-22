@@ -24,22 +24,26 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
     /// <summary>
     /// Интерфейс главной формы
     /// </summary>
-    public interface IMainView
+    public interface IDividingListView
     {
-        event EventHandler CooperationClick;
         event EventHandler Load;
+        void Close();
+
         event EventHandler<TreeNodeClickEventArgs> NodeMouseClick;
         event EventHandler<TreeNodeAgentValueEventArgs> CellValueChanged;
+
         event EventHandler ApplyButtonClick;
         event EventHandler<BoundTreeElementEventArgs> ClearManufacturerClick;
-        event EventHandler EditTechRoutesClick;
+
         event EventHandler UpdateClick;
+
         event EventHandler EditMainMaterialsClick;
+
         event EventHandler EditStandartDetailsClick;
-        event EventHandler LoadPreparationClick;
-        event EventHandler EditWithdrawalTypeClick;
+
         event EventHandler RefreshClick;
-        event EventHandler CheckAllReadyClick;
+
+
         void UpdateLabelText(string message);
         void UpdateProgressBar(int progressReportPercent);
         void Show();
@@ -48,9 +52,8 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         void UpdateAgent(string agentsInfo);
         string GetNote();
         void FillNote(string orderElementNote);
-        void UnLockButtons();
-        void LockButtons();
+
         void UpdateCaptionText(string orderName);
-        void Close();
+
     }
 }

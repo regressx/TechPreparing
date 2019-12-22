@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.TechRouteMap
+﻿using System.Windows.Forms;
+
+namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
     using System.Collections.Generic;
@@ -95,6 +97,8 @@
         /// The <see cref="MyNode"/>.
         /// </returns>
         MyNode GetMainNode();
+
+        Form MdiParent { get; set; }
 
         TreeViewAdv GetTreeView();
     }

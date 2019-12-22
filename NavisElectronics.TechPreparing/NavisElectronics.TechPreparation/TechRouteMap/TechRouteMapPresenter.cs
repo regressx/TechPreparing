@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Main;
+
 namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
@@ -29,7 +31,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
     /// <summary>
     /// Класс-посредник, представитель для формы регистрации маршрутов 
     /// </summary>
-    internal class TechRouteMapPresenter : IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>
+    internal class TechRouteMapPresenter : IPresenter<Parameter<object>, TechRouteNode, IDictionary<long, Agent>>
     {
         /// <summary>
         /// Интерфейс представления
@@ -64,7 +66,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <summary>
         /// Поле служит на передачи параметров
         /// </summary>
-        private Parameter<IntermechTreeElement> _parameter;
+        private Parameter<object> _parameter;
 
         private IDictionary<long, Agent> _agents;
 
@@ -400,7 +402,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <param name="parameter">
         /// The parameter.
         /// </param>
-        public void Run(Parameter<IntermechTreeElement> parameter, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
+        public void Run(Parameter<object> parameter, TechRouteNode techRouteNode, IDictionary<long, Agent> agents)
         {
             _agents = agents;
             _parameter = parameter;
@@ -423,7 +425,8 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
                 }
             }
 
-            _root = parameter.GetParameter(0);
+            _root = (IntermechTreeElement)parameter.GetParameter(0);
+            _view.MdiParent = (Form)(IMainView)parameter.GetParameter(1);
             _view.Show();
         }
     }

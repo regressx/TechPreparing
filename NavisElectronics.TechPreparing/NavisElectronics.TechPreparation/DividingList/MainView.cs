@@ -16,7 +16,7 @@ namespace NavisElectronics.TechPreparation.Views
     /// <summary>
     /// Главная форма
     /// </summary>
-    public partial class MainView : Form, IMainView
+    public partial class MainView : Form
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MainView"/> class.

@@ -97,6 +97,7 @@
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
+    <Compile Include="Main\IMainView.cs" />
     <Compile Include="Main\MdiMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,7 +134,7 @@
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
-    <Compile Include="Main\ViewNode.cs" />
+    <Compile Include="DividingList\ViewNode.cs" />
     <Compile Include="Views\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,19 +201,17 @@
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
-    <Compile Include="ViewInterfaces\IMainView.cs" />
-    <Compile Include="Main\MainView.cs">
+    <Compile Include="DividingList\IDividingListView.cs" />
+    <Compile Include="DividingList\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\MainView.Designer.cs">
+    <Compile Include="DividingList\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\AddNotePresenter.cs" />
     <Compile Include="ViewInterfaces\IParametersView.cs" />
-    <Compile Include="TechRoute\ITechRouteView.cs" />
     <Compile Include="Main\MainPresenter.cs" />
     <Compile Include="Presenters\ParametersViewPresenter.cs" />
-    <Compile Include="TechRoute\TechRoutePresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -231,21 +230,13 @@
     <Compile Include="TechRouteMap\TechRoutesMap.Designer.cs">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
     </Compile>
-    <Compile Include="TechRoute\TechRouteEditView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TechRoute\TechRouteEditView.Designer.cs">
-      <DependentUpon>TechRouteEditView.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewInterfaces\ITreeComparerView.cs" />
     <Compile Include="TreeComparer\ComparerNode.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
     <Compile Include="Main\MainViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
     <Compile Include="TechRouteMap\MyNode.cs" />
-    <Compile Include="Services\TechRouteClipBoard.cs" />
     <Compile Include="Entities\Parameter.cs" />
-    <Compile Include="TechRoute\TechRouteModel.cs" />
     <Compile Include="TechRouteMap\TechRouteNodeView.cs" />
     <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
     <Compile Include="TreeComparer\TreeComparerViewModel.cs" />
@@ -266,7 +257,7 @@
     <EmbeddedResource Include="Views\FindNodeView.resx">
       <DependentUpon>FindNodeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\MainView.resx">
+    <EmbeddedResource Include="DividingList\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
@@ -284,9 +275,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TechRouteMap\TechRoutesMap.resx">
       <DependentUpon>TechRoutesMap.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TechRoute\TechRouteEditView.resx">
-      <DependentUpon>TechRouteEditView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TreeComparer\TreeComparerView.resx">
       <DependentUpon>TreeComparerView.cs</DependentUpon>
