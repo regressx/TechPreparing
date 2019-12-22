@@ -29,11 +29,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         event EventHandler<ClipboardEventArgs> DeleteRouteClick;
 
         /// <summary>
-        /// Редактирование маршрутов
-        /// </summary>
-        event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
-
-        /// <summary>
         /// Загрузка формы
         /// </summary>
         event EventHandler Load;

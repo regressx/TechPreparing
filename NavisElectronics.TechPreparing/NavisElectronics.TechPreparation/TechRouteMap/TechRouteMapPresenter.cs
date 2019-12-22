@@ -86,7 +86,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         public TechRouteMapPresenter(ITechRouteMap view, TechRoutesMapModel model, IPresentationFactory presentationFactory)
         {
             _view = view;
-            _view.EditTechRouteClick += _view_EditTechRouteClick;
             _view.DeleteRouteClick += View_DeleteRouteClick;
             _view.Load += _view_Load;
             _view.EditNoteClick += View_EditNoteClick;
@@ -332,68 +331,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         {
             TreeModel model = _model.GetTreeModel(_root, _root.Agent, _organizationStruct, _agents);
             _view.SetTreeModel(model);
-        }
-
-        private void _view_EditTechRouteClick(object sender, EditTechRouteEventArgs e)
-        {
-            IPresenter<TechRouteNode, IList<TechRouteNode>> presenter = _presentationFactory.GetPresenter<TechRoutePresenter, TechRouteNode, IList<TechRouteNode>>();
-            IList<TechRouteNode> resultNodesList = new List<TechRouteNode>();
-
-            presenter.Run(_organizationStruct, resultNodesList);
-
-            if (resultNodesList.Count == 0)
-            {
-                return;
-            }
-
-            ICollection<MyNode> elements = _view.GetSelectedRows();
-
-            foreach (MyNode element in elements)
-            {
-                IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
-                IList<TechRouteNode> nodes = resultNodesList;
-                StringBuilder stringId = new StringBuilder();
-                StringBuilder caption = new StringBuilder();
-                if (e.Append)
-                {
-                    if (nodes.Count > 0)
-                    {
-                        stringId.AppendFormat("|| {0}", nodes[0].Id.ToString());
-                        caption.AppendFormat(" \\ {0}", nodes[0].GetCaption());
-                    }
-
-                    for (int i = 1; i < nodes.Count; i++)
-                    {
-                        stringId.AppendFormat(";{0}", nodes[i].Id.ToString());
-                        caption.AppendFormat("-{0}", nodes[i].GetCaption());
-                    }
-
-                    string oldTechRouteCodes = treeElement.TechRoute;
-                    string newTechRouteCodes = string.Format("{0}{1}", oldTechRouteCodes, stringId.ToString());
-                    treeElement.TechRoute = newTechRouteCodes;
-
-                    string oldCaption = element.Route;
-                    element.Route = oldCaption + caption;
-                }
-                else
-                {
-                    if (nodes.Count > 0)
-                    {
-                        stringId.Append(nodes[0].Id.ToString());
-                        caption.Append(nodes[0].GetCaption());
-                    }
-
-                    for (int i = 1; i < nodes.Count; i++)
-                    {
-                        stringId.Append(";" + nodes[i].Id.ToString());
-                        caption.Append("-" + nodes[i].GetCaption());
-                    }
-
-                    element.Route = caption.ToString();
-                    treeElement.TechRoute = stringId.ToString();
-                }
-            }
-
         }
 
         /// <summary>
