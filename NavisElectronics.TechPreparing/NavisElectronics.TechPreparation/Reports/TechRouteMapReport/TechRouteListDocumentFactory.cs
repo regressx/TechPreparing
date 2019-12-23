@@ -92,6 +92,7 @@ namespace NavisElectronics.TechPreparation.Reports
 
             IList<MyNode> products = _mapTreeOnListService.MapTreeOnList(myNode);
 
+            int count = 0;
             foreach (MyNode product in products)
             {
 
@@ -108,6 +109,13 @@ namespace NavisElectronics.TechPreparation.Reports
 
                 TextData amountCell = rowInstanse.Nodes[3] as TextData;
                 amountCell.AssignText(product.Amount, false, false, false);
+
+                if (count == 0)
+                {
+                    // Костыль
+                    amountCell.AssignText("1", false, false, false);
+                    count++;
+                }
 
                 TextData routeCell = rowInstanse.Nodes[4] as TextData;
                 routeCell.AssignText(product.Route, false, false, false);
@@ -150,6 +158,7 @@ namespace NavisElectronics.TechPreparation.Reports
                     }
                 }
                 mainNode.AddChildNode(rowInstanse, false, false);
+
             }
 
             mainDocument.UpdateLayout(true);
