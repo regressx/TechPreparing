@@ -12,7 +12,12 @@
             foreach (MyNode element in elements)
             {
                 IntermechTreeElement treeElement = (IntermechTreeElement)element.Tag;
-                element.TechProcessReference = treeElement.TechProcessReference.Name;
+
+                if (treeElement.TechProcessReference != null)
+                {
+                    element.TechProcessReference = treeElement.TechProcessReference.Name;
+                }
+
                 element.StockRate = treeElement.StockRate;
                 element.SampleSize = treeElement.SampleSize;
                 element.TechTask = treeElement.TechTask;
