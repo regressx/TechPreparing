@@ -34,6 +34,31 @@
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.editTechRoutesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetTechRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.addIntoExistingRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.produceButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.doNotProduceButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PasteRouteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.createDevideList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createSingleCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createCooperationListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.nameTreeColumn = new Aga.Controls.Tree.TreeColumn();
@@ -49,27 +74,6 @@
             this.tpRefColumn = new Aga.Controls.Tree.TreeColumn();
             this.techTaskTreeColumn = new Aga.Controls.Tree.TreeColumn();
             this.agentTreeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.ShowButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.editTechRoutesButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.SetTechRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createNewRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.addIntoExistingRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SetInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.RemoveInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.EditNote = new System.Windows.Forms.ToolStripMenuItem();
-            this.CopyRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.PasteRouteButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.createReport = new System.Windows.Forms.ToolStripMenuItem();
-            this.createDevideList = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.createSingleCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createCooperationListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeIcon = new Aga.Controls.Tree.NodeControls.NodeIcon();
             this.textBoxDesignation = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxName = new Aga.Controls.Tree.NodeControls.NodeTextBox();
@@ -84,9 +88,12 @@
             this.textBoxTpRef = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxTechTask = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -98,7 +105,7 @@
             this.refreshTreeButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1473, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1089, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -142,6 +149,221 @@
             this.refreshTreeButton.Size = new System.Drawing.Size(23, 22);
             this.refreshTreeButton.Text = "Обновить дерево";
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateFromIPSButton,
+            this.ShowButton,
+            this.goToArchiveButton,
+            this.toolStripSeparator1,
+            this.editTechRoutesButton,
+            this.SetTechRouteMenuItem,
+            this.deleteRouteMenuItem,
+            this.produceButton,
+            this.doNotProduceButton,
+            this.SetInnerCooperationButton,
+            this.RemoveInnerCooperationButton,
+            this.EditNote,
+            this.CopyRouteButton,
+            this.PasteRouteButton,
+            this.toolStripMenuItem1,
+            this.createReport,
+            this.createDevideList,
+            this.toolStripMenuItem2,
+            this.createCooperationListMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip1";
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 406);
+            // 
+            // updateFromIPSButton
+            // 
+            this.updateFromIPSButton.Name = "updateFromIPSButton";
+            this.updateFromIPSButton.Size = new System.Drawing.Size(292, 22);
+            this.updateFromIPSButton.Text = "Обновить узел из IPS";
+            this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
+            // 
+            // ShowButton
+            // 
+            this.ShowButton.Name = "ShowButton";
+            this.ShowButton.Size = new System.Drawing.Size(292, 22);
+            this.ShowButton.Text = "Посмотреть";
+            this.ShowButton.Click += new System.EventHandler(this.ShowButton_Click);
+            // 
+            // goToArchiveButton
+            // 
+            this.goToArchiveButton.Name = "goToArchiveButton";
+            this.goToArchiveButton.Size = new System.Drawing.Size(292, 22);
+            this.goToArchiveButton.Text = "Перейти к архиву предприятия";
+            this.goToArchiveButton.Click += new System.EventHandler(this.goToArchiveButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
+            // 
+            // editTechRoutesButton
+            // 
+            this.editTechRoutesButton.Enabled = false;
+            this.editTechRoutesButton.Name = "editTechRoutesButton";
+            this.editTechRoutesButton.Size = new System.Drawing.Size(292, 22);
+            this.editTechRoutesButton.Text = "Редактировать маршруты";
+            this.editTechRoutesButton.Click += new System.EventHandler(this.editTechRoutesButton_Click);
+            // 
+            // SetTechRouteMenuItem
+            // 
+            this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createNewRouteButton,
+            this.addIntoExistingRouteButton});
+            this.SetTechRouteMenuItem.Enabled = false;
+            this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
+            this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
+            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.SetTechRouteMenuItem.Text = "Маршрут изготовления";
+            // 
+            // createNewRouteButton
+            // 
+            this.createNewRouteButton.Name = "createNewRouteButton";
+            this.createNewRouteButton.Size = new System.Drawing.Size(221, 22);
+            this.createNewRouteButton.Text = "Создать новый";
+            this.createNewRouteButton.Click += new System.EventHandler(this.createNewRouteButton_Click);
+            // 
+            // addIntoExistingRouteButton
+            // 
+            this.addIntoExistingRouteButton.Name = "addIntoExistingRouteButton";
+            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(221, 22);
+            this.addIntoExistingRouteButton.Text = "Добавить к существующему";
+            this.addIntoExistingRouteButton.Click += new System.EventHandler(this.addIntoExistingRouteButton_Click);
+            // 
+            // deleteRouteMenuItem
+            // 
+            this.deleteRouteMenuItem.Enabled = false;
+            this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
+            this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
+            this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.deleteRouteMenuItem.Text = "Удалить маршрут";
+            this.deleteRouteMenuItem.Click += new System.EventHandler(this.deleteRouteMenuItem_Click);
+            // 
+            // produceButton
+            // 
+            this.produceButton.Name = "produceButton";
+            this.produceButton.Size = new System.Drawing.Size(292, 22);
+            this.produceButton.Text = "Изготавливать";
+            this.produceButton.Click += new System.EventHandler(this.produceButton_Click);
+            // 
+            // doNotProduceButton
+            // 
+            this.doNotProduceButton.Name = "doNotProduceButton";
+            this.doNotProduceButton.Size = new System.Drawing.Size(292, 22);
+            this.doNotProduceButton.Text = "Не изготавливать";
+            this.doNotProduceButton.Click += new System.EventHandler(this.doNotProduceButton_Click);
+            // 
+            // SetInnerCooperationButton
+            // 
+            this.SetInnerCooperationButton.Name = "SetInnerCooperationButton";
+            this.SetInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
+            this.SetInnerCooperationButton.Text = "Отметить внутрипроизв. кооп.";
+            this.SetInnerCooperationButton.Click += new System.EventHandler(this.SetInnerCooperationButton_Click);
+            // 
+            // RemoveInnerCooperationButton
+            // 
+            this.RemoveInnerCooperationButton.Name = "RemoveInnerCooperationButton";
+            this.RemoveInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
+            this.RemoveInnerCooperationButton.Text = "Убрать внутрипроизв. кооп.";
+            this.RemoveInnerCooperationButton.Click += new System.EventHandler(this.RemoveInnerCooperationButton_Click);
+            // 
+            // EditNote
+            // 
+            this.EditNote.Name = "EditNote";
+            this.EditNote.Size = new System.Drawing.Size(292, 22);
+            this.EditNote.Text = "Добавить примечание";
+            this.EditNote.Click += new System.EventHandler(this.EditNote_Click);
+            // 
+            // CopyRouteButton
+            // 
+            this.CopyRouteButton.Enabled = false;
+            this.CopyRouteButton.Name = "CopyRouteButton";
+            this.CopyRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.CopyRouteButton.Size = new System.Drawing.Size(292, 22);
+            this.CopyRouteButton.Text = "Копировать маршрут";
+            this.CopyRouteButton.Click += new System.EventHandler(this.CopyRouteButton_Click);
+            // 
+            // PasteRouteButton
+            // 
+            this.PasteRouteButton.Enabled = false;
+            this.PasteRouteButton.Name = "PasteRouteButton";
+            this.PasteRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.PasteRouteButton.Size = new System.Drawing.Size(292, 22);
+            this.PasteRouteButton.Text = "Вставить маршрут";
+            this.PasteRouteButton.Click += new System.EventHandler(this.PasteRouteButton_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Enabled = false;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(292, 22);
+            this.toolStripMenuItem1.Text = "Создать ТП по указанному маршруту";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // createReport
+            // 
+            this.createReport.Name = "createReport";
+            this.createReport.Size = new System.Drawing.Size(292, 22);
+            this.createReport.Text = "Сформировать ВТМ в IPS";
+            this.createReport.Click += new System.EventHandler(this.createReport_Click);
+            // 
+            // createDevideList
+            // 
+            this.createDevideList.Name = "createDevideList";
+            this.createDevideList.Size = new System.Drawing.Size(292, 22);
+            this.createDevideList.Text = "Создать разделительную ведомость в IPS";
+            this.createDevideList.Click += new System.EventHandler(this.createDevideList_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createSingleCompleteListMenuItem});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(292, 22);
+            this.toolStripMenuItem2.Text = "Создание компл. карты";
+            // 
+            // createSingleCompleteListMenuItem
+            // 
+            this.createSingleCompleteListMenuItem.Name = "createSingleCompleteListMenuItem";
+            this.createSingleCompleteListMenuItem.Size = new System.Drawing.Size(307, 22);
+            this.createSingleCompleteListMenuItem.Text = "Создать одиночную комплектовочную карту";
+            this.createSingleCompleteListMenuItem.Click += new System.EventHandler(this.createSingleCompleteListMenuItem_Click);
+            // 
+            // createCooperationListMenuItem
+            // 
+            this.createCooperationListMenuItem.Name = "createCooperationListMenuItem";
+            this.createCooperationListMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.createCooperationListMenuItem.Text = "Создать ведомость кооперации";
+            this.createCooperationListMenuItem.Click += new System.EventHandler(this.createCooperationListMenuItem_Click);
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(205, 454);
+            this.propertyGrid1.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.treeViewAdv);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Size = new System.Drawing.Size(1089, 454);
+            this.splitContainer1.SplitterDistance = 880;
+            this.splitContainer1.TabIndex = 4;
+            // 
             // treeViewAdv
             // 
             this.treeViewAdv.BackColor = System.Drawing.SystemColors.Window;
@@ -162,13 +384,14 @@
             this.treeViewAdv.Columns.Add(this.agentTreeColumn);
             this.treeViewAdv.ContextMenuStrip = this.contextMenuStrip;
             this.treeViewAdv.DefaultToolTipProvider = null;
+            this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
             this.treeViewAdv.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.GridLineStyle = ((Aga.Controls.Tree.GridLineStyle)((Aga.Controls.Tree.GridLineStyle.Horizontal | Aga.Controls.Tree.GridLineStyle.Vertical)));
             this.treeViewAdv.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.treeViewAdv.Location = new System.Drawing.Point(0, 25);
+            this.treeViewAdv.Location = new System.Drawing.Point(0, 0);
             this.treeViewAdv.Model = null;
             this.treeViewAdv.Name = "treeViewAdv";
             this.treeViewAdv.NodeControls.Add(this.nodeIcon);
@@ -188,7 +411,7 @@
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
-            this.treeViewAdv.Size = new System.Drawing.Size(989, 454);
+            this.treeViewAdv.Size = new System.Drawing.Size(880, 454);
             this.treeViewAdv.TabIndex = 2;
             this.treeViewAdv.Text = "treeViewAdv1";
             this.treeViewAdv.UseColumns = true;
@@ -287,180 +510,6 @@
             this.agentTreeColumn.TooltipText = null;
             this.agentTreeColumn.Width = 200;
             // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateFromIPSButton,
-            this.ShowButton,
-            this.goToArchiveButton,
-            this.toolStripSeparator1,
-            this.editTechRoutesButton,
-            this.SetTechRouteMenuItem,
-            this.deleteRouteMenuItem,
-            this.SetInnerCooperationButton,
-            this.RemoveInnerCooperationButton,
-            this.EditNote,
-            this.CopyRouteButton,
-            this.PasteRouteButton,
-            this.toolStripMenuItem1,
-            this.createReport,
-            this.createDevideList,
-            this.toolStripMenuItem2,
-            this.createCooperationListMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 362);
-            // 
-            // updateFromIPSButton
-            // 
-            this.updateFromIPSButton.Name = "updateFromIPSButton";
-            this.updateFromIPSButton.Size = new System.Drawing.Size(292, 22);
-            this.updateFromIPSButton.Text = "Обновить узел из IPS";
-            this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
-            // 
-            // ShowButton
-            // 
-            this.ShowButton.Name = "ShowButton";
-            this.ShowButton.Size = new System.Drawing.Size(292, 22);
-            this.ShowButton.Text = "Посмотреть";
-            this.ShowButton.Click += new System.EventHandler(this.ShowButton_Click);
-            // 
-            // goToArchiveButton
-            // 
-            this.goToArchiveButton.Name = "goToArchiveButton";
-            this.goToArchiveButton.Size = new System.Drawing.Size(292, 22);
-            this.goToArchiveButton.Text = "Перейти к архиву предприятия";
-            this.goToArchiveButton.Click += new System.EventHandler(this.goToArchiveButton_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
-            // 
-            // editTechRoutesButton
-            // 
-            this.editTechRoutesButton.Enabled = false;
-            this.editTechRoutesButton.Name = "editTechRoutesButton";
-            this.editTechRoutesButton.Size = new System.Drawing.Size(292, 22);
-            this.editTechRoutesButton.Text = "Редактировать маршруты";
-            this.editTechRoutesButton.Click += new System.EventHandler(this.editTechRoutesButton_Click);
-            // 
-            // SetTechRouteMenuItem
-            // 
-            this.SetTechRouteMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createNewRouteButton,
-            this.addIntoExistingRouteButton});
-            this.SetTechRouteMenuItem.Enabled = false;
-            this.SetTechRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.RouteObject;
-            this.SetTechRouteMenuItem.Name = "SetTechRouteMenuItem";
-            this.SetTechRouteMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.SetTechRouteMenuItem.Text = "Маршрут изготовления";
-            // 
-            // createNewRouteButton
-            // 
-            this.createNewRouteButton.Name = "createNewRouteButton";
-            this.createNewRouteButton.Size = new System.Drawing.Size(221, 22);
-            this.createNewRouteButton.Text = "Создать новый";
-            this.createNewRouteButton.Click += new System.EventHandler(this.createNewRouteButton_Click);
-            // 
-            // addIntoExistingRouteButton
-            // 
-            this.addIntoExistingRouteButton.Name = "addIntoExistingRouteButton";
-            this.addIntoExistingRouteButton.Size = new System.Drawing.Size(221, 22);
-            this.addIntoExistingRouteButton.Text = "Добавить к существующему";
-            this.addIntoExistingRouteButton.Click += new System.EventHandler(this.addIntoExistingRouteButton_Click);
-            // 
-            // deleteRouteMenuItem
-            // 
-            this.deleteRouteMenuItem.Enabled = false;
-            this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
-            this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
-            this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.deleteRouteMenuItem.Text = "Удалить маршрут";
-            this.deleteRouteMenuItem.Click += new System.EventHandler(this.deleteRouteMenuItem_Click);
-            // 
-            // SetInnerCooperationButton
-            // 
-            this.SetInnerCooperationButton.Name = "SetInnerCooperationButton";
-            this.SetInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
-            this.SetInnerCooperationButton.Text = "Отметить внутрипроизв. кооп.";
-            this.SetInnerCooperationButton.Click += new System.EventHandler(this.SetInnerCooperationButton_Click);
-            // 
-            // RemoveInnerCooperationButton
-            // 
-            this.RemoveInnerCooperationButton.Name = "RemoveInnerCooperationButton";
-            this.RemoveInnerCooperationButton.Size = new System.Drawing.Size(292, 22);
-            this.RemoveInnerCooperationButton.Text = "Убрать внутрипроизв. кооп.";
-            this.RemoveInnerCooperationButton.Click += new System.EventHandler(this.RemoveInnerCooperationButton_Click);
-            // 
-            // EditNote
-            // 
-            this.EditNote.Name = "EditNote";
-            this.EditNote.Size = new System.Drawing.Size(292, 22);
-            this.EditNote.Text = "Добавить примечание";
-            this.EditNote.Click += new System.EventHandler(this.EditNote_Click);
-            // 
-            // CopyRouteButton
-            // 
-            this.CopyRouteButton.Enabled = false;
-            this.CopyRouteButton.Name = "CopyRouteButton";
-            this.CopyRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyRouteButton.Size = new System.Drawing.Size(292, 22);
-            this.CopyRouteButton.Text = "Копировать маршрут";
-            this.CopyRouteButton.Click += new System.EventHandler(this.CopyRouteButton_Click);
-            // 
-            // PasteRouteButton
-            // 
-            this.PasteRouteButton.Enabled = false;
-            this.PasteRouteButton.Name = "PasteRouteButton";
-            this.PasteRouteButton.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteRouteButton.Size = new System.Drawing.Size(292, 22);
-            this.PasteRouteButton.Text = "Вставить маршрут";
-            this.PasteRouteButton.Click += new System.EventHandler(this.PasteRouteButton_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Enabled = false;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(292, 22);
-            this.toolStripMenuItem1.Text = "Создать ТП по указанному маршруту";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // createReport
-            // 
-            this.createReport.Name = "createReport";
-            this.createReport.Size = new System.Drawing.Size(292, 22);
-            this.createReport.Text = "Сформировать ВТМ в IPS";
-            this.createReport.Click += new System.EventHandler(this.createReport_Click);
-            // 
-            // createDevideList
-            // 
-            this.createDevideList.Name = "createDevideList";
-            this.createDevideList.Size = new System.Drawing.Size(292, 22);
-            this.createDevideList.Text = "Создать разделительную ведомость в IPS";
-            this.createDevideList.Click += new System.EventHandler(this.createDevideList_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createSingleCompleteListMenuItem});
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(292, 22);
-            this.toolStripMenuItem2.Text = "Создание компл. карты";
-            // 
-            // createSingleCompleteListMenuItem
-            // 
-            this.createSingleCompleteListMenuItem.Name = "createSingleCompleteListMenuItem";
-            this.createSingleCompleteListMenuItem.Size = new System.Drawing.Size(307, 22);
-            this.createSingleCompleteListMenuItem.Text = "Создать одиночную комплектовочную карту";
-            this.createSingleCompleteListMenuItem.Click += new System.EventHandler(this.createSingleCompleteListMenuItem_Click);
-            // 
-            // createCooperationListMenuItem
-            // 
-            this.createCooperationListMenuItem.Name = "createCooperationListMenuItem";
-            this.createCooperationListMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.createCooperationListMenuItem.Text = "Создать ведомость кооперации";
-            this.createCooperationListMenuItem.Click += new System.EventHandler(this.createCooperationListMenuItem_Click);
-            // 
             // nodeIcon
             // 
             this.nodeIcon.DataPropertyName = "Image";
@@ -558,20 +607,12 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Location = new System.Drawing.Point(1010, 25);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(338, 454);
-            this.propertyGrid1.TabIndex = 3;
-            // 
             // TechRoutesMapWithDataGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1473, 479);
-            this.Controls.Add(this.propertyGrid1);
-            this.Controls.Add(this.treeViewAdv);
+            this.ClientSize = new System.Drawing.Size(1089, 479);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "TechRoutesMapWithDataGrid";
             this.Text = "Ведомость технологических маршрутов";
@@ -579,6 +620,10 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -641,5 +686,8 @@
         private Aga.Controls.Tree.TreeColumn techTaskTreeColumn;
         private Aga.Controls.Tree.NodeControls.NodeTextBox textBoxTechTask;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripMenuItem produceButton;
+        private System.Windows.Forms.ToolStripMenuItem doNotProduceButton;
     }
 }

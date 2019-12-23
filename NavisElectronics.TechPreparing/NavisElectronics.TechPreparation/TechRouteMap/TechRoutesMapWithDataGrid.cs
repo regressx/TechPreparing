@@ -327,5 +327,43 @@ namespace NavisElectronics.TechPreparation.Views
 
             }
         }
+
+        private void produceButton_Click(object sender, EventArgs e)
+        {
+            SetProduct(false);
+        }
+
+        private void doNotProduceButton_Click(object sender, EventArgs e)
+        {
+            SetProduct(true);
+        }
+
+        private void SetProduct(bool value)
+        {
+            Queue<MyNode> queue = new Queue<MyNode>();
+            foreach (TreeNodeAdv node in treeViewAdv.SelectedNodes)
+            {
+                queue.Enqueue(node.Tag as MyNode);
+            }
+
+            while (queue.Count > 0)
+            {
+                MyNode nodeFromQueue = queue.Dequeue();
+                IntermechTreeElement taggedElement = (IntermechTreeElement)nodeFromQueue.Tag;
+                nodeFromQueue.DoNotProduce = value;
+                taggedElement.ProduseSign = value;
+
+                string note;
+                note = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
+
+                nodeFromQueue.RelationNote = note;
+                taggedElement.RelationName = note;
+                foreach (Node node in nodeFromQueue.Nodes)
+                {
+                    queue.Enqueue((MyNode)node);
+                }
+            }
+        }
+
     }
 }
