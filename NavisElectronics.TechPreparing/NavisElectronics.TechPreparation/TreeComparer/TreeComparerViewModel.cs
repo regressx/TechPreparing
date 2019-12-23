@@ -197,6 +197,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.CooperationFlag = child.CooperationFlag;
                     childNode.NodeState = child.NodeState;
                     childNode.Tag = child;
+                    childNode.RelationType = child.RelationName;
                     mainNode.Nodes.Add(childNode);
                     BuildNodeRecursive(childNode, child);
                 }
