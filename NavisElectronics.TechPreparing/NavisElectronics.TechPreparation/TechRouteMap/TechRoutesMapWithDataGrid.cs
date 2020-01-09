@@ -312,19 +312,20 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 UpdateNodeFromIps(sender, e);
             }
-
         }
 
         private void treeViewAdv_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                MyNode selectedNode = treeViewAdv.SelectedNode.Tag as MyNode;
-                if (selectedNode!=null)
+                if (treeViewAdv.SelectedNode != null)
                 {
-                    propertyGrid1.SelectedObject = selectedNode;
+                    MyNode selectedNode = treeViewAdv.SelectedNode.Tag as MyNode;
+                    if (selectedNode != null)
+                    {
+                        propertyGrid1.SelectedObject = selectedNode;
+                    }
                 }
-
             }
         }
 
