@@ -125,7 +125,7 @@
                 IntermechTreeElement selectedElement =
                     (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
 
-                DoNotProduceClick(sender, new ProduceEventArgs(selectedElement,false));
+                DoNotProduceClick(sender, new ProduceEventArgs(selectedElement, false));
                 treeViewAdv.Invalidate();
             }
         }

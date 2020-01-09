@@ -54,7 +54,7 @@
             SetNodeProduceSign(e.Element, e.ProduceSign);
         }
 
-        private void SetNodeProduceSign(IntermechTreeElement element, bool value)
+        private void SetNodeProduceSign(IntermechTreeElement element, bool value, )
         {
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
             queue.Enqueue(element);
