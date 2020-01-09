@@ -51,14 +51,14 @@
             this.designationColumn = new Aga.Controls.Tree.TreeColumn();
             this.nameColumn = new Aga.Controls.Tree.TreeColumn();
             this.firstParentColumn = new Aga.Controls.Tree.TreeColumn();
-            this.statusColumn = new Aga.Controls.Tree.TreeColumn();
-            this.baseVersionSign = new Aga.Controls.Tree.TreeColumn();
             this.amountColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountWithUseColumn = new Aga.Controls.Tree.TreeColumn();
             this.letterColumn = new Aga.Controls.Tree.TreeColumn();
             this.changeNumberColumn = new Aga.Controls.Tree.TreeColumn();
             this.changeDocumentColumn = new Aga.Controls.Tree.TreeColumn();
             this.noteColumn = new Aga.Controls.Tree.TreeColumn();
+            this.statusColumn = new Aga.Controls.Tree.TreeColumn();
+            this.baseVersionSign = new Aga.Controls.Tree.TreeColumn();
             this.nodeTextBox1 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox2 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox3 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
@@ -97,14 +97,14 @@
             // produceInCurrentNodeButton
             // 
             this.produceInCurrentNodeButton.Name = "produceInCurrentNodeButton";
-            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(168, 22);
-            this.produceInCurrentNodeButton.Text = "toolStripMenuItem1";
+            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
+            this.produceInCurrentNodeButton.Text = "только в этом узле";
             // 
             // produceInAllTreeButton
             // 
             this.produceInAllTreeButton.Name = "produceInAllTreeButton";
-            this.produceInAllTreeButton.Size = new System.Drawing.Size(168, 22);
-            this.produceInAllTreeButton.Text = "toolStripMenuItem2";
+            this.produceInAllTreeButton.Size = new System.Drawing.Size(171, 22);
+            this.produceInAllTreeButton.Text = "во всём дереве";
             // 
             // doNotProduceButton
             // 
@@ -120,13 +120,13 @@
             // notProdInCurrentNodeButton
             // 
             this.notProdInCurrentNodeButton.Name = "notProdInCurrentNodeButton";
-            this.notProdInCurrentNodeButton.Size = new System.Drawing.Size(162, 22);
-            this.notProdInCurrentNodeButton.Text = "в указанном узле";
+            this.notProdInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
+            this.notProdInCurrentNodeButton.Text = "только в этом узле";
             // 
             // notProdInTreeButton
             // 
             this.notProdInTreeButton.Name = "notProdInTreeButton";
-            this.notProdInTreeButton.Size = new System.Drawing.Size(162, 22);
+            this.notProdInTreeButton.Size = new System.Drawing.Size(171, 22);
             this.notProdInTreeButton.Text = "во всём дереве";
             // 
             // toolStripSeparator1
@@ -285,20 +285,6 @@
             this.firstParentColumn.TooltipText = null;
             this.firstParentColumn.Width = 150;
             // 
-            // statusColumn
-            // 
-            this.statusColumn.Header = "Статус";
-            this.statusColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.statusColumn.TooltipText = null;
-            this.statusColumn.Width = 100;
-            // 
-            // baseVersionSign
-            // 
-            this.baseVersionSign.Header = "Базовая версия";
-            this.baseVersionSign.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.baseVersionSign.TooltipText = null;
-            this.baseVersionSign.Width = 75;
-            // 
             // amountColumn
             // 
             this.amountColumn.Header = "Кол-во";
@@ -338,6 +324,20 @@
             this.noteColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.noteColumn.TooltipText = null;
             this.noteColumn.Width = 250;
+            // 
+            // statusColumn
+            // 
+            this.statusColumn.Header = "Статус";
+            this.statusColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.statusColumn.TooltipText = null;
+            this.statusColumn.Width = 100;
+            // 
+            // baseVersionSign
+            // 
+            this.baseVersionSign.Header = "Базовая версия";
+            this.baseVersionSign.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.baseVersionSign.TooltipText = null;
+            this.baseVersionSign.Width = 75;
             // 
             // nodeTextBox1
             // 
