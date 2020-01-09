@@ -268,11 +268,15 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                         parent.TechTask = string.Empty;
                     }
 
-
+                    TextData techTaskCell = parentRowInstance.FindNode("TechTask") as TextData;
                     if (parent.TechTask != string.Empty)
                     {
-                        TextData techTaskCell = parentRowInstance.FindNode("TechTask") as TextData;
-                        techTaskCell.AssignText(string.Format("{0}", "X").Trim(), false, false, false);
+
+                        techTaskCell.AssignText(string.Format("{0}", "ТЗ").Trim(), false, false, false);
+                    }
+                    else
+                    {
+                        techTaskCell.AssignText(string.Format("{0}", "-").Trim(), false, false, false);
                     }
 
                     TextData amountWithUseCell = parentRowInstance.FindNode("AmountInOrderPCB") as TextData;
