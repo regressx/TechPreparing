@@ -265,7 +265,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                                 keeper.Session.GetRelationCollection(1006);
 
                                                             // получить все групповые тех. процессы
-                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2},null, null);
+                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2 },null, null);
 
                                                             DataTable groupTechProcesses = collectionOfRelations.EntersInVersion(pars, techProcessId);;
 
