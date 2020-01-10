@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.Orders
+﻿using NavisElectronics.Orders.Enums;
+
+namespace NavisElectronics.Orders
 {
     using System;
     using System.Drawing;
@@ -30,7 +32,7 @@
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
-        public event EventHandler<ProduceEventArgs> DoNotProduceClick;
+        public event EventHandler<ProduceEventArgs> SetProduceClick;
 
 
         public void UpdateTreeModel(IntermechTreeElement root)
@@ -90,19 +92,6 @@
             }
         }
 
-        private void ToolStripMenuItem3_Click(object sender, System.EventArgs e)
-        {
-            if (DoNotProduceClick != null)
-            {
-                IntermechTreeElement selectedElement =
-                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
-
-                DoNotProduceClick(sender, new ProduceEventArgs(selectedElement,true));
-                treeViewAdv.Invalidate();
-            }
-
-        }
-
         private void TreeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
         {
             IntermechTreeElement node = ((IntermechTreeElement)((OrderNode)e.Node.Tag).Tag);
@@ -114,19 +103,7 @@
             if (node.ProduseSign)
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.DarkKhaki), 0, e.RowRect.Top, ((Control)sender).Width, e.RowRect.Height);
-                ((OrderNode) e.Node.Tag).Note = node.RelationNote;
-            }
-        }
-
-        private void produceMenuStrip_Click(object sender, System.EventArgs e)
-        {
-            if (DoNotProduceClick != null)
-            {
-                IntermechTreeElement selectedElement =
-                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
-
-                DoNotProduceClick(sender, new ProduceEventArgs(selectedElement, false));
-                treeViewAdv.Invalidate();
+                ((OrderNode)e.Node.Tag).Note = node.RelationNote;
             }
         }
 
@@ -143,6 +120,54 @@
             if (DownloadAndUpdate != null)
             {
                 DownloadAndUpdate(sender, e);
+            }
+        }
+
+        private void produceInCurrentNodeButton_Click(object sender, EventArgs e)
+        {
+            if (SetProduceClick != null)
+            {
+                IntermechTreeElement selectedElement =
+                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, false, ProduceIn.OnlyThisNode));
+                treeViewAdv.Invalidate();
+            }
+        }
+
+        private void produceInAllTreeButton_Click(object sender, EventArgs e)
+        {
+            if (SetProduceClick != null)
+            {
+                IntermechTreeElement selectedElement =
+                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, false, ProduceIn.AllTree));
+                treeViewAdv.Invalidate();
+            }
+        }
+
+        private void notProdInCurrentNodeButton_Click(object sender, EventArgs e)
+        {
+            if (SetProduceClick != null)
+            {
+                IntermechTreeElement selectedElement =
+                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
+                treeViewAdv.Invalidate();
+            }
+        }
+
+        private void notProdInTreeButton_Click(object sender, EventArgs e)
+        {
+            if (SetProduceClick != null)
+            {
+                IntermechTreeElement selectedElement =
+                    (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
+                treeViewAdv.Invalidate();
             }
         }
     }

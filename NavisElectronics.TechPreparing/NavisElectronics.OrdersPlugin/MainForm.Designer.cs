@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.produceButton = new System.Windows.Forms.ToolStripMenuItem();
             this.produceInCurrentNodeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +47,7 @@
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.loadAndUpdateButtonStrip = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationColumn = new Aga.Controls.Tree.TreeColumn();
@@ -82,7 +84,7 @@
             this.toolStripSeparator1,
             this.createReportButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 76);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 98);
             // 
             // produceButton
             // 
@@ -92,19 +94,20 @@
             this.produceButton.Name = "produceButton";
             this.produceButton.Size = new System.Drawing.Size(245, 22);
             this.produceButton.Text = "Изготавливать";
-            this.produceButton.Click += new System.EventHandler(this.produceMenuStrip_Click);
             // 
             // produceInCurrentNodeButton
             // 
             this.produceInCurrentNodeButton.Name = "produceInCurrentNodeButton";
             this.produceInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInCurrentNodeButton.Text = "только в этом узле";
+            this.produceInCurrentNodeButton.Click += new System.EventHandler(this.produceInCurrentNodeButton_Click);
             // 
             // produceInAllTreeButton
             // 
             this.produceInAllTreeButton.Name = "produceInAllTreeButton";
             this.produceInAllTreeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInAllTreeButton.Text = "во всём дереве";
+            this.produceInAllTreeButton.Click += new System.EventHandler(this.produceInAllTreeButton_Click);
             // 
             // doNotProduceButton
             // 
@@ -115,19 +118,20 @@
             this.doNotProduceButton.Name = "doNotProduceButton";
             this.doNotProduceButton.Size = new System.Drawing.Size(245, 22);
             this.doNotProduceButton.Text = "Не изготавливать";
-            this.doNotProduceButton.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
             // notProdInCurrentNodeButton
             // 
             this.notProdInCurrentNodeButton.Name = "notProdInCurrentNodeButton";
             this.notProdInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
             this.notProdInCurrentNodeButton.Text = "только в этом узле";
+            this.notProdInCurrentNodeButton.Click += new System.EventHandler(this.notProdInCurrentNodeButton_Click);
             // 
             // notProdInTreeButton
             // 
             this.notProdInTreeButton.Name = "notProdInTreeButton";
             this.notProdInTreeButton.Size = new System.Drawing.Size(171, 22);
             this.notProdInTreeButton.Text = "во всём дереве";
+            this.notProdInTreeButton.Click += new System.EventHandler(this.notProdInTreeButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -147,13 +151,13 @@
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem6.Text = "в Excel";
             // 
             // toolStrip
@@ -163,7 +167,8 @@
             this.saveInfoLabel,
             this.toolStripProgressBar1,
             this.toolStripButton1,
-            this.loadAndUpdateButtonStrip});
+            this.loadAndUpdateButtonStrip,
+            this.toolStripButton2});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1335, 25);
@@ -210,6 +215,15 @@
             this.loadAndUpdateButtonStrip.Size = new System.Drawing.Size(23, 22);
             this.loadAndUpdateButtonStrip.Text = "Загрузка и обновление данных";
             this.loadAndUpdateButtonStrip.Click += new System.EventHandler(this.LoadAndUpdateButtonStrip_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "Расшифровать названия документов";
             // 
             // statusStrip
             // 
@@ -477,5 +491,6 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox9;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox10;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox11;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

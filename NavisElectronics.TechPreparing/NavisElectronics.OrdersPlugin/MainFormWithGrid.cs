@@ -17,7 +17,7 @@ namespace NavisElectronics.Orders
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
-        public event EventHandler<ProduceEventArgs> DoNotProduceClick;
+        public event EventHandler<ProduceEventArgs> SetProduceClick;
 
         public void UpdateTreeModel(IntermechTreeElement treeModel)
         {
