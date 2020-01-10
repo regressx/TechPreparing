@@ -17,7 +17,7 @@ using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 
 namespace NavisElectronics.TechPreparation.Views
 {
-    public partial class TechRoutesMap : Form, ITechRouteMap
+    public partial class TechRoutesMapWithDataGrid : Form, ITechRouteMap
     {
         private readonly string _manufacturerViewSelectedAgentName;
 
@@ -42,7 +42,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
         public event EventHandler RefreshTree;
 
-        public TechRoutesMap()
+        public TechRoutesMapWithDataGrid()
         {
             InitializeComponent();
         }
@@ -312,7 +312,59 @@ namespace NavisElectronics.TechPreparation.Views
             {
                 UpdateNodeFromIps(sender, e);
             }
-
         }
+
+        private void treeViewAdv_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (treeViewAdv.SelectedNode != null)
+                {
+                    MyNode selectedNode = treeViewAdv.SelectedNode.Tag as MyNode;
+                    if (selectedNode != null)
+                    {
+                        propertyGrid1.SelectedObject = selectedNode;
+                    }
+                }
+            }
+        }
+
+        private void produceButton_Click(object sender, EventArgs e)
+        {
+            SetProduct(false);
+        }
+
+        private void doNotProduceButton_Click(object sender, EventArgs e)
+        {
+            SetProduct(true);
+        }
+
+        private void SetProduct(bool value)
+        {
+            Queue<MyNode> queue = new Queue<MyNode>();
+            foreach (TreeNodeAdv node in treeViewAdv.SelectedNodes)
+            {
+                queue.Enqueue(node.Tag as MyNode);
+            }
+
+            while (queue.Count > 0)
+            {
+                MyNode nodeFromQueue = queue.Dequeue();
+                IntermechTreeElement taggedElement = (IntermechTreeElement)nodeFromQueue.Tag;
+                nodeFromQueue.DoNotProduce = value;
+                taggedElement.ProduseSign = value;
+
+                string note;
+                note = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
+
+                nodeFromQueue.RelationNote = note;
+                taggedElement.RelationName = note;
+                foreach (Node node in nodeFromQueue.Nodes)
+                {
+                    queue.Enqueue((MyNode)node);
+                }
+            }
+        }
+
     }
 }

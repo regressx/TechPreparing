@@ -16,7 +16,7 @@ namespace NavisElectronics.TechPreparation.Views
     /// <summary>
     /// Главная форма
     /// </summary>
-    public partial class MainView : Form, IMainView
+    public partial class MainView : Form
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MainView"/> class.
@@ -25,7 +25,6 @@ namespace NavisElectronics.TechPreparation.Views
         {
             InitializeComponent();
             treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
-            cooperationButton.Click += CooperationButton_Click;
         }
 
         private void TreeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
@@ -47,14 +46,6 @@ namespace NavisElectronics.TechPreparation.Views
                 }
             }
 
-        }
-
-        private void CooperationButton_Click(object sender, EventArgs e)
-        {
-            if (CooperationClick != null)
-            {
-                CooperationClick(sender, e);
-            }
         }
 
 

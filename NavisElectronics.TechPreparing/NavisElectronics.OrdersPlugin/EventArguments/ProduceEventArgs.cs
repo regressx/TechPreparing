@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Entities;
+﻿using NavisElectronics.Orders.Enums;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace NavisElectronics.Orders.EventArguments
 {
@@ -6,11 +7,13 @@ namespace NavisElectronics.Orders.EventArguments
     {
         private readonly IntermechTreeElement _element;
         private readonly bool _produceSign;
+        private readonly ProduceIn _whereToSet;
 
-        public ProduceEventArgs(IntermechTreeElement element, bool produceSign)
+        public ProduceEventArgs(IntermechTreeElement element, bool produceSign, ProduceIn whereToSet)
         {
             _element = element;
             _produceSign = produceSign;
+            _whereToSet = whereToSet;
         }
 
         public IntermechTreeElement Element
@@ -22,5 +25,7 @@ namespace NavisElectronics.Orders.EventArguments
         {
             get { return _produceSign; }
         }
+
+        public ProduceIn WhereToSet => _whereToSet;
     }
 }

@@ -86,6 +86,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// Третий параметр для передачи в представителя
         /// </param>
         void Run(TParameter parameter, T1Parameter parameterT1, T2Parameter parameterT2);
+
     }
 
 }

@@ -34,6 +34,8 @@
             this.designationColumn = new Aga.Controls.Tree.TreeColumn();
             this.changeNumberColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountColumn = new Aga.Controls.Tree.TreeColumn();
+            this.leftTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.designationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.changeNumberTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
@@ -62,8 +64,11 @@
             this.downloadTreeButton = new System.Windows.Forms.ToolStripButton();
             this.compareTreeButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.leftTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.deleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.relationTypeTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.relationTypeColumn = new Aga.Controls.Tree.TreeColumn();
+            this.newRelationColumn = new Aga.Controls.Tree.TreeColumn();
+            this.newRelationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.leftTreeContextMenuStrip.SuspendLayout();
             this.rightTreecontextMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -71,7 +76,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.leftTreeContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeViewAdv1
@@ -82,6 +86,7 @@
             this.treeViewAdv1.Columns.Add(this.designationColumn);
             this.treeViewAdv1.Columns.Add(this.changeNumberColumn);
             this.treeViewAdv1.Columns.Add(this.amountColumn);
+            this.treeViewAdv1.Columns.Add(this.relationTypeColumn);
             this.treeViewAdv1.ContextMenuStrip = this.leftTreeContextMenuStrip;
             this.treeViewAdv1.DefaultToolTipProvider = null;
             this.treeViewAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -96,6 +101,7 @@
             this.treeViewAdv1.NodeControls.Add(this.designationTextBox);
             this.treeViewAdv1.NodeControls.Add(this.changeNumberTextBox);
             this.treeViewAdv1.NodeControls.Add(this.amounTextBox);
+            this.treeViewAdv1.NodeControls.Add(this.relationTypeTextBox);
             this.treeViewAdv1.NodeFilter = null;
             this.treeViewAdv1.SelectedNode = null;
             this.treeViewAdv1.Size = new System.Drawing.Size(726, 494);
@@ -130,6 +136,20 @@
             this.amountColumn.Header = "Кол-во";
             this.amountColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.amountColumn.TooltipText = null;
+            // 
+            // leftTreeContextMenuStrip
+            // 
+            this.leftTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteNodeMenuItem});
+            this.leftTreeContextMenuStrip.Name = "leftTreeContextMenuStrip";
+            this.leftTreeContextMenuStrip.Size = new System.Drawing.Size(145, 26);
+            // 
+            // deleteNodeMenuItem
+            // 
+            this.deleteNodeMenuItem.Name = "deleteNodeMenuItem";
+            this.deleteNodeMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.deleteNodeMenuItem.Text = "Удалить узел";
+            this.deleteNodeMenuItem.Click += new System.EventHandler(this.deleteNodeMenuItem_Click);
             // 
             // nameTextBox
             // 
@@ -167,6 +187,7 @@
             this.treeViewAdv2.Columns.Add(this.newDesignationColumn);
             this.treeViewAdv2.Columns.Add(this.newChangeNumberColumn);
             this.treeViewAdv2.Columns.Add(this.newAmountColumn);
+            this.treeViewAdv2.Columns.Add(this.newRelationColumn);
             this.treeViewAdv2.ContextMenuStrip = this.rightTreecontextMenuStrip;
             this.treeViewAdv2.DefaultToolTipProvider = null;
             this.treeViewAdv2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -181,6 +202,7 @@
             this.treeViewAdv2.NodeControls.Add(this.newDesignationTextBox);
             this.treeViewAdv2.NodeControls.Add(this.newChangeNumberTextBox);
             this.treeViewAdv2.NodeControls.Add(this.newAmountTextBox);
+            this.treeViewAdv2.NodeControls.Add(this.newRelationTextBox);
             this.treeViewAdv2.NodeFilter = null;
             this.treeViewAdv2.SelectedNode = null;
             this.treeViewAdv2.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
@@ -379,19 +401,31 @@
             this.splitContainer1.SplitterDistance = 726;
             this.splitContainer1.TabIndex = 5;
             // 
-            // leftTreeContextMenuStrip
+            // relationTypeTextBox
             // 
-            this.leftTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteNodeMenuItem});
-            this.leftTreeContextMenuStrip.Name = "leftTreeContextMenuStrip";
-            this.leftTreeContextMenuStrip.Size = new System.Drawing.Size(145, 26);
+            this.relationTypeTextBox.DataPropertyName = "RelationType";
+            this.relationTypeTextBox.IncrementalSearchEnabled = true;
+            this.relationTypeTextBox.LeftMargin = 3;
+            this.relationTypeTextBox.ParentColumn = this.relationTypeColumn;
             // 
-            // deleteNodeMenuItem
+            // relationTypeColumn
             // 
-            this.deleteNodeMenuItem.Name = "deleteNodeMenuItem";
-            this.deleteNodeMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.deleteNodeMenuItem.Text = "Удалить узел";
-            this.deleteNodeMenuItem.Click += new System.EventHandler(this.deleteNodeMenuItem_Click);
+            this.relationTypeColumn.Header = "Связь";
+            this.relationTypeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationTypeColumn.TooltipText = null;
+            // 
+            // newRelationColumn
+            // 
+            this.newRelationColumn.Header = "Связь";
+            this.newRelationColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.newRelationColumn.TooltipText = null;
+            // 
+            // newRelationTextBox
+            // 
+            this.newRelationTextBox.DataPropertyName = "RelationType";
+            this.newRelationTextBox.IncrementalSearchEnabled = true;
+            this.newRelationTextBox.LeftMargin = 3;
+            this.newRelationTextBox.ParentColumn = this.newRelationColumn;
             // 
             // TreeComparerView
             // 
@@ -403,6 +437,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Name = "TreeComparerView";
             this.Text = "TreeComparerView";
+            this.leftTreeContextMenuStrip.ResumeLayout(false);
             this.rightTreecontextMenuStrip.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -412,7 +447,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.leftTreeContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,5 +489,9 @@
         private System.Windows.Forms.ToolStripMenuItem findInOldArchiveMenuItem;
         private System.Windows.Forms.ContextMenuStrip leftTreeContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem deleteNodeMenuItem;
+        private Aga.Controls.Tree.TreeColumn relationTypeColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox relationTypeTextBox;
+        private Aga.Controls.Tree.TreeColumn newRelationColumn;
+        private Aga.Controls.Tree.NodeControls.NodeTextBox newRelationTextBox;
     }
 }

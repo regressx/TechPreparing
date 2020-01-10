@@ -30,8 +30,11 @@
                     node.Level = ((MyNode)node.Parent).Level + 1;
                     node.NumberOnLevel = node.Index + 1;
                     node.NumberInOrder = GetNumberInOrder(node);
-
                     elements.Add(node);
+                    if (node.DoNotProduce)
+                    {
+                        continue;
+                    }
                     MapTreeOnListRecursive(elements, node);
                 }
             }

@@ -46,5 +46,7 @@
         /// </summary>
         public NodeStates NodeState { get; set; }
 
+
+        public string RelationType { get; set; }
     }
 }

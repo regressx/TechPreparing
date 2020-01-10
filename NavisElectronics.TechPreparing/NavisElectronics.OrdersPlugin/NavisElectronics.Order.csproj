@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aga.Controls">
+    <Reference Include="Aga.Controls, Version=1.7.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Aga.Controls.dll</HintPath>
     </Reference>
     <Reference Include="iGrid">
@@ -59,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ReportElement.cs" />
+    <Compile Include="Enums\Place.cs" />
     <Compile Include="EventArguments\ProduceEventArgs.cs" />
     <Compile Include="IMainView.cs" />
     <Compile Include="MainFormWithGrid.cs">
@@ -152,6 +154,7 @@
   <ItemGroup>
     <None Include="Resources\icons8-download-16.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

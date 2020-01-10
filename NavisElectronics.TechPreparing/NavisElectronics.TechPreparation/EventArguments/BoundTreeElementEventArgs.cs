@@ -4,8 +4,6 @@ namespace NavisElectronics.TechPreparation.EventArguments
 {
     using System;
 
-    using NavisElectronics.TechPreparation.Entities;
-
     /// <summary>
     /// Аргумент для события по очистке данных о кооперации
     /// </summary>

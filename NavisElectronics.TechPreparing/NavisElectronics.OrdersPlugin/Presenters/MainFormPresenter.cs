@@ -1,10 +1,14 @@
-﻿namespace NavisElectronics.Orders.Presenters
+﻿using System.Data;
+using Intermech.Interfaces;
+using Intermech.Kernel.Search;
+
+namespace NavisElectronics.Orders.Presenters
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows.Forms;
-    using Aga.Controls.Tree;
+    using Enums;
     using EventArguments;
     using TechPreparation.Interfaces.Entities;
     using ViewModels;
@@ -25,7 +29,7 @@
             _view.StartChecking += View_StartChecking;
             _view.AbortLoading += View_AbortLoading;
             _view.Save += View_Save;
-            _view.DoNotProduceClick += View_DoNotProduceClick;
+            _view.SetProduceClick += View_ProduceClick;
             _view.DownloadAndUpdate += View_DownloadAndUpdate;
         }
 
@@ -49,27 +53,56 @@
             }
         }
 
-        private void View_DoNotProduceClick(object sender, ProduceEventArgs e)
+        private void View_ProduceClick(object sender, ProduceEventArgs e)
         {
-            SetNodeProduceSign(e.Element, e.ProduceSign);
+            SetNodeProduceSign(e.Element, e.ProduceSign, e.WhereToSet);
         }
 
-        private void SetNodeProduceSign(IntermechTreeElement element, bool value)
+        private void SetNodeProduceSign(IntermechTreeElement element, bool value, ProduceIn whereSetUp)
         {
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(element);
-            while (queue.Count > 0)
+            ICollection<IntermechTreeElement> nodesToSet = new List<IntermechTreeElement>();
+            nodesToSet.Add(element);
+            if (whereSetUp == ProduceIn.AllTree)
             {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
-                elementFromQueue.ProduseSign = value;
-                elementFromQueue.RelationNote = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
-                    
-                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                nodesToSet.Clear();
+                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+                queue.Enqueue(_root);
+                while (queue.Count > 0)
                 {
-                    queue.Enqueue(child);
+                    IntermechTreeElement elementFromQueue = queue.Dequeue();
+
+                    if (elementFromQueue.ObjectId == element.ObjectId)
+                    {
+                        nodesToSet.Add(elementFromQueue);
+                    }
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+
+            }
+
+            foreach (IntermechTreeElement treeElement in nodesToSet)
+            {
+                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+                queue.Enqueue(treeElement);
+                while (queue.Count > 0)
+                {
+                    IntermechTreeElement elementFromQueue = queue.Dequeue();
+                    elementFromQueue.ProduseSign = value;
+                    elementFromQueue.RelationNote = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
                 }
             }
+
         }
+
 
         private void View_AbortLoading(object sender, EventArgs e)
         {

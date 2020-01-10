@@ -413,10 +413,10 @@
             }
 
             IList<string> lines = path.Split('\\');
-            Queue<long> queue = new Queue<long>();
+            Queue<string> queue = new Queue<string>();
             foreach (string s in lines)
             {
-                queue.Enqueue(long.Parse(s));
+                queue.Enqueue(s);
             }
 
             // уберем первый элемент
@@ -426,7 +426,7 @@
 
             if (stackElements.Count != lines.Count)
             {
-                throw new NullReferenceException(string.Format("Элемент {0} не был найден в дереве по такому пути"));
+                throw new NullReferenceException(string.Format("Элемент {0} не был найден в дереве по такому пути", path));
             }
 
             return stackElements.Peek();
@@ -506,14 +506,14 @@
         /// </returns>
         public string GetFullPathByObjectId()
         {
-            Stack<long> stack = new Stack<long>();
-            stack.Push(this.ObjectId);
+            Stack<string> stack = new Stack<string>();
+            stack.Push(this.ObjectId.ToString() + this.RelationName);
 
             GetFullPathByObjectIdRecursive(stack, this);
 
             StringBuilder sb = new StringBuilder();
 
-            foreach (long value in stack)
+            foreach (string value in stack)
             {
                 sb.AppendFormat("{0}\\", value);
             }
@@ -588,26 +588,26 @@
             }
         }
 
-        private void GetFullPathByObjectIdRecursive(Stack<long> stack, IntermechTreeElement element)
+        private void GetFullPathByObjectIdRecursive(Stack<string> stack, IntermechTreeElement element)
         {
             if (element.Parent != null)
             {
                 IntermechTreeElement parent = element.Parent;
-                stack.Push(parent.ObjectId);
+                stack.Push(parent.ObjectId.ToString() + parent.RelationName);
                 GetFullPathByObjectIdRecursive(stack, parent);
             }
         }
 
-        private void FindNodeByObjectIdRecursive(Queue<long> queue, IntermechTreeElement elementWhereFind, Stack<IntermechTreeElement> stackElements)
+        private void FindNodeByObjectIdRecursive(Queue<string> queue, IntermechTreeElement elementWhereFind, Stack<IntermechTreeElement> stackElements)
         {
             stackElements.Push(elementWhereFind);
             while (queue.Count > 0)
             {
-                long childId = queue.Dequeue();
+                string childId = queue.Dequeue();
                 bool foundFlag = false;
                 foreach (IntermechTreeElement childElement in elementWhereFind.Children)
                 {
-                    if (childId == childElement.ObjectId)
+                    if (childId == childElement.ObjectId.ToString() + childElement.RelationName)
                     {
                         foundFlag = true;
                         FindNodeByObjectIdRecursive(queue, childElement, stackElements);

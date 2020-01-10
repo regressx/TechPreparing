@@ -40,6 +40,7 @@
             // делаем полную его копию
             IntermechTreeElement clonedElement = (IntermechTreeElement)taggedElement.Clone();
             clonedElement.Amount = 1;
+            clonedElement.AmountWithUse = 1;
             
             // пересчитаем количества
             Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();

@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.TechRouteMap
+﻿using System.Windows.Forms;
+
+namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
     using System.Collections.Generic;
@@ -27,11 +29,6 @@
         event EventHandler<ClipboardEventArgs> DeleteRouteClick;
 
         /// <summary>
-        /// Редактирование маршрутов
-        /// </summary>
-        event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
-
-        /// <summary>
         /// Загрузка формы
         /// </summary>
         event EventHandler Load;
@@ -40,16 +37,6 @@
         /// Редактирование примечания
         /// </summary>
         event EventHandler<SaveClickEventArgs> EditNoteClick;
-
-        /// <summary>
-        /// Копирование маршрута и примечания
-        /// </summary>
-        event EventHandler<ClipboardEventArgs> CopyClick;
-
-        /// <summary>
-        /// Вставка маршрута и примечания
-        /// </summary>
-        event EventHandler<ClipboardEventArgs> PasteClick;
 
         /// <summary>
         /// Показать чертеж
@@ -105,6 +92,8 @@
         /// The <see cref="MyNode"/>.
         /// </returns>
         MyNode GetMainNode();
+
+        Form MdiParent { get; set; }
 
         TreeViewAdv GetTreeView();
     }

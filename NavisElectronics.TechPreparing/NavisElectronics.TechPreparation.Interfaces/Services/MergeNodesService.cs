@@ -60,7 +60,6 @@
                 }
             }
 
-
             // если элемент просто был модифицирован
             if (elementFromUpdateInitialized.NodeState == NodeStates.Modified)
             {
@@ -69,6 +68,7 @@
                 elementInOldTree.Id = elementFromUpdateInitialized.Id;
                 elementInOldTree.PcbVersion = elementFromUpdateInitialized.PcbVersion;
                 elementInOldTree.ChangeNumber = elementFromUpdateInitialized.ChangeNumber;
+                elementInOldTree.ChangeDocument = elementFromUpdateInitialized.ChangeDocument;
                 elementInOldTree.Position = elementFromUpdateInitialized.Position;
                 elementInOldTree.PositionDesignation = elementFromUpdateInitialized.PositionDesignation;
                 elementInOldTree.Amount = elementFromUpdateInitialized.Amount;

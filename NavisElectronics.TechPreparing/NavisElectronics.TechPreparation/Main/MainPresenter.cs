@@ -9,6 +9,7 @@
 
 using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces.Helpers;
+using NavisElectronics.TechPreparation.Main;
 using NavisElectronics.TechPreparation.TechRouteMap;
 
 namespace NavisElectronics.TechPreparation.Presenters
@@ -92,19 +93,16 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView = mainView;
             _presentationFactory = presentationFactory;
             _mainView.Load += _view_Load;
-            _mainView.NodeMouseClick += _mainView_NodeMouseClick;
-            _mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
-            _mainView.CellValueChanged += _mainView_CellValueChanged;
-            _mainView.CooperationClick += _mainView_CooperationClick;
-            _mainView.ClearManufacturerClick += _mainView_ClearManufacturerClick;
-            _mainView.EditTechRoutesClick += _mainView_EditTechRoutesClick;
-            _mainView.UpdateClick += _mainView_UpdateClick;
-            _mainView.EditMainMaterialsClick += _mainView_EditMainMaterialsClick;
-            _mainView.EditStandartDetailsClick += _mainView_EditStandartDetailsClick;
-            _mainView.LoadPreparationClick += MainViewLoadPreparationClick;
-            _mainView.EditWithdrawalTypeClick += _mainView_EditWithdrawalTypeClick;
-            _mainView.RefreshClick += _mainView_RefreshClick;
-            _mainView.CheckAllReadyClick += MainViewCheckAllReadyClick;
+
+            //_mainView.NodeMouseClick += _mainView_NodeMouseClick;
+            //_mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
+            //_mainView.CellValueChanged += _mainView_CellValueChanged;
+            //_mainView.ClearManufacturerClick += _mainView_ClearManufacturerClick;
+
+            _mainView.CheckOk += MainViewCheckOk;
+            _mainView.EditTechRoutes += EditTechRoutes;
+            _mainView.CompareTwoTrees += CompareTwoTrees;
+            _mainView.Save += Save;
         }
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private void _model_Saving(object sender, SaveServiceEventArgs e)
         {
-            _mainView.UpdateLabelText(e.Message);
+            _mainView.UpdateStatusLabel(e.Message);
         }
 
         /// <summary>
@@ -130,7 +128,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// <param name="e">
         /// The e.
         /// </param>
-        private void MainViewCheckAllReadyClick(object sender, EventArgs e)
+        private void MainViewCheckOk(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
             IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
@@ -203,104 +201,21 @@ namespace NavisElectronics.TechPreparation.Presenters
             rf.Show();
         }
 
-        private void _mainView_RefreshClick(object sender, EventArgs e)
-        {
-            //IntermechTreeElement mainElement = _mainView.GetMainTreeElement().Tag as IntermechTreeElement;
-            //_model.RecountAmount(mainElement);
-            //TreeNode mainNode = _model.BuildTree(mainElement);
-            //_mainView.FillTree(mainNode);
-            //TODO перестроить дерево и пересчитать количества
-            throw new NotImplementedException();
-        }
-
-        private void _mainView_EditWithdrawalTypeClick(object sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Обработчик события загрузки формы выбора заказа с созданной тех. подготовкой
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private async void MainViewLoadPreparationClick(object sender, EventArgs e)
-        {
-            // загрузить список существующих заказов
-            IList<IdOrPath> result = _model.Select();
-            if (result.Count == 0)
-            {
-                return;
-            }
-
-            IntermechTreeElement oldPreparation;
-            try
-            {
-                oldPreparation = await _model.GetTreeFromFileAsync(result[0].Id);
-            }
-            catch (FileAttributeIsEmptyException)
-            {
-                MessageBox.Show("На выбранный Вами заказ нет никакой тех. подготовки");
-                return;
-            }
-
-
-            IntermechTreeElementAdapter intermechTreeElementWrapper = new IntermechTreeElementAdapter(oldPreparation).Wrap(oldPreparation);
-
-            TreeViewSettings settings = new TreeViewSettings();
-            settings.AddColumn(new TreeColumn("Обозначение + наименование", 250), "Name");
-            settings.ElementToBuild = intermechTreeElementWrapper;
-                
-            StructDialogViewPresenter<ViewNode, IntermechTreeElementAdapter> presenter = new StructDialogViewPresenter<ViewNode, IntermechTreeElementAdapter>(new StructDialogView(), new StructDialogViewModel<ViewNode, IntermechTreeElementAdapter>());
-            presenter.Run(settings);
-
-            if (settings.Result == null)
-            {
-                return;
-
-            }
-
-            IntermechTreeElementAdapter resultNode = (IntermechTreeElementAdapter)settings.Result;
-
-            _model.CopyTechPreparation(resultNode.Root, _rootElement);
-        }
-
-
-
-
-
-        private void _mainView_EditStandartDetailsClick(object sender, EventArgs e)
-        {
-            //IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
-            //MaterialsView view = new MaterialsView();
-            //MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.StandartDetails);
-            //presenter.Run();
-        }
-
-
-        private void _mainView_EditMainMaterialsClick(object sender, EventArgs e)
-        {
-            //IntermechTreeElement mainElement = _rootElement;
-            //MaterialsView view = new MaterialsView();
-            //MaterialsViewPresenter presenter = new MaterialsViewPresenter(view, mainElement, IntermechObjectTypes.Material);
-            //presenter.Run();
-        }
-
-        private void _mainView_UpdateClick(object sender, EventArgs e)
+        private void CompareTwoTrees(object sender, EventArgs e)
         {
             IPresenter<IntermechTreeElement> presenter =
                 _presentationFactory.GetPresenter<TreeComparerPresenter, IntermechTreeElement>();
             presenter.Run(_rootElement);
         }
 
-        private void _mainView_EditTechRoutesClick(object sender, EventArgs e)
+        private void EditTechRoutes(object sender, EventArgs e)
         {
-            IPresenter<Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<IntermechTreeElement>, TechRouteNode, IDictionary<long, Agent>>();
-            Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
+            IPresenter<Parameter<object>, TechRouteNode, IDictionary<long, Agent>> presenter = _presentationFactory.GetPresenter<TechRouteMapPresenter, Parameter<object>, TechRouteNode, IDictionary<long, Agent>>();
+            Parameter<object> parameter = new Parameter<object>();
             parameter.AddParameter(_rootElement);
+            parameter.AddParameter(_mainView);
             presenter.Run(parameter, _organizationStruct, _agents);
+            _mainView.LayoutMdi(MdiLayout.TileVertical);
         }
 
         private void _mainView_ClearManufacturerClick(object sender, BoundTreeElementEventArgs e)
@@ -320,19 +235,10 @@ namespace NavisElectronics.TechPreparation.Presenters
                     queue.Enqueue(child);
                 }
             }
-            _mainView.UpdateAgent(string.Empty);
+            //_mainView.UpdateAgent(string.Empty);
 
             // TODO по идее надо еще и вверх подняться, чтобы убрать 
         }
-
-        private void _mainView_CooperationClick(object sender, EventArgs e)
-        {
-            IPresenter<Parameter<IntermechTreeElement>> presenter = _presentationFactory.GetPresenter<CooperationPresenter, Parameter<IntermechTreeElement>>();
-            Parameter<IntermechTreeElement> parameter = new Parameter<IntermechTreeElement>();
-            parameter.AddParameter(_rootElement);
-            presenter.Run(parameter);
-        }
-
 
         private void _mainView_CellValueChanged(object sender, TreeNodeAgentValueEventArgs e)
         {
@@ -362,7 +268,7 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             //раздаем изготовителя родителям
             SetParentCooperationRecursive(e.TreeElement, e.Key);
-            _mainView.UpdateAgent(e.TreeElement.Agent);
+            //_mainView.UpdateAgent(e.TreeElement.Agent);
 
         }
 
@@ -430,10 +336,9 @@ namespace NavisElectronics.TechPreparation.Presenters
         }
 
 
-        private async void _mainView_ApplyButtonClick(object sender, EventArgs e)
+        private async void Save(object sender, EventArgs e)
         {
             IntermechTreeElement mainTreeElement = _rootElement;
-            mainTreeElement.Note = _mainView.GetNote();
             await _model.WriteIntoFileAttributeAsync(_rootVersionId, mainTreeElement);
         }
 
@@ -442,10 +347,10 @@ namespace NavisElectronics.TechPreparation.Presenters
             // TODO Здесь должна появиться проверка на изменение предыдущего узла, если было какое-либо изменение
 
 
-            if (e.Element.Agent != null)
-            {
-                _mainView.UpdateAgent(e.Element.Agent);
-            }
+            //if (e.Element.Agent != null)
+            //{
+            //    _mainView.UpdateAgent(e.Element.Agent);
+            //}
 
         }
 
@@ -460,11 +365,13 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private async void _view_Load(object sender, EventArgs e)
         {
-            TreeModel treeModel = new TreeModel();
-            ViewNode waitingNode = new ViewNode();
-            waitingNode.Name = "Пожалуйста, подождите. Идет загрузка данных";
-            treeModel.Nodes.Add(waitingNode);
-            _mainView.FillTree(treeModel);
+            //TreeModel treeModel = new TreeModel();
+            //ViewNode waitingNode = new ViewNode();
+            _mainView.UpdateStatusLabel("Пожалуйста, подождите. Идет загрузка данных");
+            //treeModel.Nodes.Add(waitingNode);
+            //_mainView.FillTree(treeModel);
+
+
             _mainView.LockButtons();
 
             // загрузить производителей
@@ -559,13 +466,14 @@ namespace NavisElectronics.TechPreparation.Presenters
 
             }
 
-            _mainView.FillNote(_rootElement.Note);
-            _mainView.FillGrid(agents);
-            treeModel = _model.GetTreeModel(_rootElement);
-            _mainView.FillTree(treeModel);
+            //_mainView.FillNote(_rootElement.Note);
+            //_mainView.FillGrid(agents);
+            //treeModel = _model.GetTreeModel(_rootElement);
+            //_mainView.FillTree(treeModel);
             string orderName = string.Format($"{_rootElement.Name} {_agents[long.Parse(_rootElement.Agent)]}. Тех. подготовка");
-            _mainView.UpdateCaptionText(orderName);
+            _mainView.UpdateCaption(orderName);
             _mainView.UnLockButtons();
+            _mainView.UpdateStatusLabel("Загружено. Не сохранено");
         }
 
 

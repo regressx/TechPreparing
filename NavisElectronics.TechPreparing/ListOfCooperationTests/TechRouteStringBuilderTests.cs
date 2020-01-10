@@ -34,7 +34,7 @@ namespace ListOfCooperationTests
             root.Add(node3);
             string str = sb.Build("1;2;3||1", root);
 
-            Assert.AreEqual("Лучший-участок-в мире\\Лучший",str);
+            Assert.AreEqual("Лучший-участок-в мире/Лучший",str);
 
         }
 

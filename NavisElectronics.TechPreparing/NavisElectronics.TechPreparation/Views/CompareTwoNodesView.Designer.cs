@@ -28,15 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.iGrid1Col0CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGrid1Col0ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
-            this.iGrid1Col1CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGrid1Col1ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
-            this.iGrid1Col2CellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGrid1Col2ColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
-            this.iGrid1DefaultCellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
-            this.iGrid1DefaultColHdrStyle = new TenTec.Windows.iGridLib.iGColHdrStyle(true);
-            this.iGrid1RowTextColCellStyle = new TenTec.Windows.iGridLib.iGCellStyle(true);
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -88,15 +79,6 @@
         }
 
         #endregion
-        private TenTec.Windows.iGridLib.iGCellStyle iGrid1DefaultCellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1DefaultColHdrStyle;
-        private TenTec.Windows.iGridLib.iGCellStyle iGrid1RowTextColCellStyle;
-        private TenTec.Windows.iGridLib.iGCellStyle iGrid1Col0CellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1Col0ColHdrStyle;
-        private TenTec.Windows.iGridLib.iGCellStyle iGrid1Col1CellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1Col1ColHdrStyle;
-        private TenTec.Windows.iGridLib.iGCellStyle iGrid1Col2CellStyle;
-        private TenTec.Windows.iGridLib.iGColHdrStyle iGrid1Col2ColHdrStyle;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.PropertyGrid propertyGrid2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

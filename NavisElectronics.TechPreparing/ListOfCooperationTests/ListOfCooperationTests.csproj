@@ -59,7 +59,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ClipboardTests.cs" />
     <Compile Include="FindNodeTest.cs" />
     <Compile Include="InfoInTableModelTests.cs" />
     <Compile Include="MergeNodesServiceTests.cs" />
