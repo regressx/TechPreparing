@@ -28,12 +28,12 @@ namespace NavisElectronics.Orders
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
-        public event EventHandler CreateReport;
+        public event EventHandler<ReportStyle> CreateReport;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
 
         #endregion
 
-
+        #region IMainViewRealization
 
         public void UpdateTreeModel(IntermechTreeElement root)
         {
@@ -42,7 +42,15 @@ namespace NavisElectronics.Orders
             treeViewAdv.Model = treeModel;
         }
 
+        public void UpdateSaveLabel(string message)
+        {
+            saveInfoLabel.Text = message;
+        }
 
+        #endregion
+
+
+        // TODO Эти два метода надо бы перенести в MainViewModel
         public TreeModel GetTreeModel(IntermechTreeElement elementToView)
         {
             OrderNode root = new OrderNode();
@@ -79,10 +87,7 @@ namespace NavisElectronics.Orders
         }
 
 
-        public void UpdateSaveLabel(string message)
-        {
-            saveInfoLabel.Text = message;
-        }
+
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -180,9 +185,12 @@ namespace NavisElectronics.Orders
             }
         }
 
-        private void CreateReportClick_Click(object sender, EventArgs e)
+        private void CreateReportClickExcel_Click(object sender, EventArgs e)
         {
-
+            if (CreateReport != null)
+            {
+                CreateReport(this, ReportStyle.Excel);
+            }
         }
     }
 }

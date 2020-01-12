@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
+using NavisElectronics.Orders.Enums;
 using NavisElectronics.Orders.EventArguments;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 using TenTec.Windows.iGridLib;
 
 namespace NavisElectronics.Orders
 {
+    /// <summary>
+    /// The main form with grid.
+    /// </summary>
     public partial class MainFormWithGrid : Form, IMainView
     {
         public MainFormWithGrid()
@@ -17,6 +21,7 @@ namespace NavisElectronics.Orders
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
+        public event EventHandler<ReportStyle> CreateReport;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
 
         public void UpdateTreeModel(IntermechTreeElement treeModel)

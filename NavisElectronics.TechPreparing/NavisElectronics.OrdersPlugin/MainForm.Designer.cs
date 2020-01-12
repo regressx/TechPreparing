@@ -47,7 +47,7 @@
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.loadAndUpdateButtonStrip = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.DecryptDocumentsButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
             this.designationColumn = new Aga.Controls.Tree.TreeColumn();
@@ -84,7 +84,7 @@
             this.toolStripSeparator1,
             this.createReportButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 76);
             // 
             // produceButton
             // 
@@ -151,15 +151,15 @@
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem5.Text = "в IPS";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem6.Text = "в Excel";
-            this.toolStripMenuItem6.Click += new System.EventHandler(this.CreateReportClick_Click);
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.CreateReportClickExcel_Click);
             // 
             // toolStrip
             // 
@@ -169,7 +169,7 @@
             this.toolStripProgressBar1,
             this.toolStripButton1,
             this.loadAndUpdateButtonStrip,
-            this.toolStripButton2});
+            this.DecryptDocumentsButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1335, 25);
@@ -217,14 +217,14 @@
             this.loadAndUpdateButtonStrip.Text = "Загрузка и обновление данных";
             this.loadAndUpdateButtonStrip.Click += new System.EventHandler(this.LoadAndUpdateButtonStrip_Click);
             // 
-            // toolStripButton2
+            // DecryptDocumentsButton
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Расшифровать названия документов";
+            this.DecryptDocumentsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DecryptDocumentsButton.Image = ((System.Drawing.Image)(resources.GetObject("DecryptDocumentsButton.Image")));
+            this.DecryptDocumentsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DecryptDocumentsButton.Name = "DecryptDocumentsButton";
+            this.DecryptDocumentsButton.Size = new System.Drawing.Size(23, 22);
+            this.DecryptDocumentsButton.Text = "Расшифровать названия документов";
             // 
             // statusStrip
             // 
@@ -492,6 +492,6 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox9;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox10;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox11;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton DecryptDocumentsButton;
     }
 }

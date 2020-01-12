@@ -1,5 +1,6 @@
 ﻿using System;
 using Aga.Controls.Tree;
+using NavisElectronics.Orders.Enums;
 using NavisElectronics.Orders.EventArguments;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 
@@ -14,7 +15,7 @@ namespace NavisElectronics.Orders
         event EventHandler Save;
         event EventHandler StartChecking;
         event EventHandler AbortLoading;
-        event EventHandler CreateReport;
+        event EventHandler<ReportStyle> CreateReport;
 
 
         event EventHandler<ProduceEventArgs> SetProduceClick; 
