@@ -159,6 +159,7 @@
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem6.Text = "в Excel";
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.CreateReportClick_Click);
             // 
             // toolStrip
             // 

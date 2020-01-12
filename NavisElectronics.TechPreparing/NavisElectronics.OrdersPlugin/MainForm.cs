@@ -20,19 +20,19 @@ namespace NavisElectronics.Orders
             treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (AbortLoading != null)
-            {
-                AbortLoading(sender, e);
-            }
-        }
+
+
+        #region Events
 
         public event EventHandler DownloadAndUpdate;
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
+        public event EventHandler CreateReport;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
+
+        #endregion
+
 
 
         public void UpdateTreeModel(IntermechTreeElement root)
@@ -83,6 +83,15 @@ namespace NavisElectronics.Orders
         {
             saveInfoLabel.Text = message;
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (AbortLoading != null)
+            {
+                AbortLoading(sender, e);
+            }
+        }
+
 
         private void toolStripButton1_Click(object sender, System.EventArgs e)
         {
@@ -169,6 +178,11 @@ namespace NavisElectronics.Orders
                 SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
                 treeViewAdv.Invalidate();
             }
+        }
+
+        private void CreateReportClick_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
