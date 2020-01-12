@@ -15,10 +15,29 @@ namespace NavisElectronics.Orders.Presenters
 
     public class MainFormPresenter : IPresenter<long, CancellationTokenSource>
     {
+        /// <summary>
+        /// представление
+        /// </summary>
         private readonly IMainView _view;
+
+        /// <summary>
+        /// модель представления
+        /// </summary>
         private readonly MainFormModel _model;
+
+        /// <summary>
+        /// токен отмены
+        /// </summary>
         private CancellationTokenSource _tokenSource;
+
+        /// <summary>
+        /// The _order version id.
+        /// </summary>
         private long _orderVersionId;
+
+        /// <summary>
+        /// The _root.
+        /// </summary>
         private IntermechTreeElement _root;
 
         public MainFormPresenter(IMainView view, MainFormModel model)
@@ -31,11 +50,18 @@ namespace NavisElectronics.Orders.Presenters
             _view.Save += View_Save;
             _view.SetProduceClick += View_ProduceClick;
             _view.DownloadAndUpdate += View_DownloadAndUpdate;
+            _view.CreateReport += View_CreateReport;
+        }
+
+        private void View_CreateReport(object sender, ReportStyle e)
+        {
+            IntermechTreeElement selectedTreeElement = _view.GetSelectedTreeElement();
+            _model.CreateReport(selectedTreeElement, e);
         }
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
         {
-
+            throw new NotImplementedException("Операция обновления и загрузки еще не реализована");
         }
 
         private async void View_Save(object sender, EventArgs e)

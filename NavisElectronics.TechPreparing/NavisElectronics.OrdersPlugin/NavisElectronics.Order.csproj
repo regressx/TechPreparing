@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessLayer\SupportingRepository.cs" />
     <Compile Include="Entities\ReportElement.cs" />
     <Compile Include="Enums\Place.cs" />
     <Compile Include="Enums\ReportStyle.cs" />
@@ -102,6 +103,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ExcelReport.cs" />
+    <Compile Include="Reports\ExcelReportFactory.cs" />
+    <Compile Include="Reports\IReport.cs" />
+    <Compile Include="Reports\IReportFactory.cs" />
     <Compile Include="Services\CheckOrderService.cs" />
     <Compile Include="ViewModels\ComparerNode.cs" />
     <Compile Include="ViewModels\MainFormModel.cs" />

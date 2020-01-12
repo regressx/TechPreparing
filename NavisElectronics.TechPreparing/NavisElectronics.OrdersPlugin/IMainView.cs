@@ -22,5 +22,6 @@ namespace NavisElectronics.Orders
         void UpdateTreeModel(IntermechTreeElement treeModel);
         void UpdateSaveLabel(string message);
 
+        IntermechTreeElement GetSelectedTreeElement();
     }
 }

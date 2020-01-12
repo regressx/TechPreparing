@@ -47,6 +47,15 @@ namespace NavisElectronics.Orders
             saveInfoLabel.Text = message;
         }
 
+        public IntermechTreeElement GetSelectedTreeElement()
+        {
+            if (treeViewAdv.SelectedNode != null)
+            {
+                return (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+            }
+            throw new NullReferenceException("Не был выбран никакой узел дерева");
+        }
+
         #endregion
 
 
@@ -190,6 +199,14 @@ namespace NavisElectronics.Orders
             if (CreateReport != null)
             {
                 CreateReport(this, ReportStyle.Excel);
+            }
+        }
+
+        private void CreateReportClickIPS_Click(object sender, EventArgs e)
+        {
+            if (CreateReport != null)
+            {
+                CreateReport(this, ReportStyle.IPS);
             }
         }
     }

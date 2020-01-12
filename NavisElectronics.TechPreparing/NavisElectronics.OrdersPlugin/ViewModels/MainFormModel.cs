@@ -1,5 +1,7 @@
 ﻿using System;
 using Intermech.Interfaces;
+using NavisElectronics.Orders.Enums;
+using NavisElectronics.Orders.Reports;
 using NavisElectronics.TechPreparation.Data;
 
 namespace NavisElectronics.Orders.ViewModels
@@ -127,5 +129,19 @@ namespace NavisElectronics.Orders.ViewModels
             }
         }
 
+        public void CreateReport(IntermechTreeElement element, ReportStyle reportStyle)
+        {
+            IReportFactory factory = null;
+            switch (reportStyle)
+            {
+                case ReportStyle.Excel:
+                    factory = new ExcelReportFactory();
+                    factory.Create(element);
+                    break;
+                case ReportStyle.IPS:
+
+                    break;
+            }
+        }
     }
 }

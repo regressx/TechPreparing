@@ -75,5 +75,10 @@ namespace NavisElectronics.Orders
         {
             throw new NotImplementedException();
         }
+
+        public IntermechTreeElement GetSelectedTreeElement()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
