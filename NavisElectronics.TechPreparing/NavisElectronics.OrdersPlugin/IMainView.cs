@@ -16,12 +16,12 @@ namespace NavisElectronics.Orders
         event EventHandler StartChecking;
         event EventHandler AbortLoading;
         event EventHandler<ReportStyle> CreateReport;
-
+        event EventHandler DecryptDocumentNames;
 
         event EventHandler<ProduceEventArgs> SetProduceClick; 
         void UpdateTreeModel(IntermechTreeElement treeModel);
         void UpdateSaveLabel(string message);
 
-        IntermechTreeElement GetSelectedTreeElement();
+        OrderNode GetSelectedTreeElement();
     }
 }
