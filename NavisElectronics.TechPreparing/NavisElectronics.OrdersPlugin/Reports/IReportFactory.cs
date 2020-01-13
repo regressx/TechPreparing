@@ -4,6 +4,6 @@ namespace NavisElectronics.Orders.Reports
 {
     public interface IReportFactory
     {
-        IReport Create(IntermechTreeElement element);
+        void Create(ReportNode element);
     }
 }
