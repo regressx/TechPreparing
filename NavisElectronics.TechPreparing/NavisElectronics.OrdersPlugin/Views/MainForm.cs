@@ -1,4 +1,5 @@
-﻿using NavisElectronics.Orders.Enums;
+﻿using System.Collections.Generic;
+using NavisElectronics.Orders.Enums;
 
 namespace NavisElectronics.Orders
 {
@@ -20,20 +21,19 @@ namespace NavisElectronics.Orders
             treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (AbortLoading != null)
-            {
-                AbortLoading(sender, e);
-            }
-        }
+        #region Events
 
         public event EventHandler DownloadAndUpdate;
         public event EventHandler Save;
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
+        public event EventHandler<ReportStyle> CreateReport;
+        public event EventHandler DecryptDocumentNames;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
 
+        #endregion
+
+        #region IMainViewRealization
 
         public void UpdateTreeModel(IntermechTreeElement root)
         {
@@ -42,10 +42,28 @@ namespace NavisElectronics.Orders
             treeViewAdv.Model = treeModel;
         }
 
+        public void UpdateSaveLabel(string message)
+        {
+            saveInfoLabel.Text = message;
+        }
 
+        public OrderNode GetSelectedTreeElement()
+        {
+            if (treeViewAdv.SelectedNode != null)
+            {
+                return ((OrderNode)treeViewAdv.SelectedNode.Tag);
+            }
+            throw new NullReferenceException("Не был выбран никакой узел дерева");
+        }
+
+        #endregion
+
+
+        // TODO Эти два метода надо бы перенести в MainViewModel
         public TreeModel GetTreeModel(IntermechTreeElement elementToView)
         {
             OrderNode root = new OrderNode();
+            root.Type = elementToView.Type;
             root.Amount = elementToView.Amount;
             root.AmountWithUse = elementToView.AmountWithUse;
             root.Name = elementToView.Name;
@@ -62,6 +80,8 @@ namespace NavisElectronics.Orders
             foreach (IntermechTreeElement child in elementToView.Children)
             {
                 OrderNode node = new OrderNode();
+                node.DoNotProduce = child.ProduseSign;
+                node.Type = child.Type;
                 node.Designation = child.Designation;
                 node.Name = child.Name;
                 node.FirstUse = child.FirstUse;
@@ -72,6 +92,7 @@ namespace NavisElectronics.Orders
                 node.ChangeNumber = child.ChangeNumber;
                 node.ChangeDocument = child.ChangeDocument;
                 node.Note = child.RelationNote;
+                node.RelationType = child.RelationName;
                 node.Tag = child;
                 root.Nodes.Add(node);
                 GetOrderNodeRecursive(node, child);
@@ -79,10 +100,16 @@ namespace NavisElectronics.Orders
         }
 
 
-        public void UpdateSaveLabel(string message)
+
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            saveInfoLabel.Text = message;
+            if (AbortLoading != null)
+            {
+                AbortLoading(sender, e);
+            }
         }
+
 
         private void toolStripButton1_Click(object sender, System.EventArgs e)
         {
@@ -168,6 +195,30 @@ namespace NavisElectronics.Orders
 
                 SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
                 treeViewAdv.Invalidate();
+            }
+        }
+
+        private void CreateReportClickExcel_Click(object sender, EventArgs e)
+        {
+            if (CreateReport != null)
+            {
+                CreateReport(this, ReportStyle.Excel);
+            }
+        }
+
+        private void CreateReportClickIPS_Click(object sender, EventArgs e)
+        {
+            if (CreateReport != null)
+            {
+                CreateReport(this, ReportStyle.IPS);
+            }
+        }
+
+        private void DecryptDocumentsButton_Click(object sender, EventArgs e)
+        {
+            if (DecryptDocumentNames != null)
+            {
+                DecryptDocumentNames(sender,EventArgs.Empty);
             }
         }
     }

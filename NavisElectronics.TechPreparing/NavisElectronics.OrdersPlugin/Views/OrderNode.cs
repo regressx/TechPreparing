@@ -4,6 +4,7 @@ namespace NavisElectronics.Orders
 {
     public class OrderNode : Node
     {
+        public int Type { get; set; }
         public string Designation { get; set; }
         public string Name { get; set; }
         public string FirstUse { get; set; }
@@ -15,5 +16,7 @@ namespace NavisElectronics.Orders
         public string ChangeNumber { get; set; }
         public string ChangeDocument { get; set; }
         public string Note { get; set; }
+        public bool DoNotProduce { get; set; }
+        public string RelationType { get; set; }
     }
 }

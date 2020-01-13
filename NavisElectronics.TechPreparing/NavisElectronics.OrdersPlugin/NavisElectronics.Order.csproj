@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Aga.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="iGrid">
       <HintPath>..\packages\iGrid.dll</HintPath>
     </Reference>
@@ -57,25 +61,16 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ReportElement.cs" />
+    <Compile Include="DataAccessLayer\DocumentType.cs" />
+    <Compile Include="DataAccessLayer\SupportingRepository.cs" />
     <Compile Include="Enums\Place.cs" />
+    <Compile Include="Enums\ReportStyle.cs" />
     <Compile Include="EventArguments\ProduceEventArgs.cs" />
     <Compile Include="IMainView.cs" />
-    <Compile Include="MainFormWithGrid.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainFormWithGrid.Designer.cs">
-      <DependentUpon>MainFormWithGrid.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presenters\IPresenter.cs" />
-    <Compile Include="ListsComparerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListsComparerForm.Designer.cs">
-      <DependentUpon>ListsComparerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="OrderCommandsProvider.cs" />
     <Compile Include="OrdersPlugin.cs" />
     <Compile Include="InformDialogForm.cs">
@@ -86,21 +81,25 @@
     </Compile>
     <Compile Include="InformDialogFormPresenter.cs" />
     <Compile Include="IView.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="LevelColor.cs" />
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\MainFormPresenter.cs" />
-    <Compile Include="IListsComparerView.cs" />
-    <Compile Include="Presenters\ListsComparerPresenter.cs" />
     <Compile Include="Presenters\TreeComparerPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ExcelReport.cs" />
+    <Compile Include="Reports\ExcelReportFactory.cs" />
+    <Compile Include="Reports\IReport.cs" />
+    <Compile Include="Reports\IReportFactory.cs" />
+    <Compile Include="Reports\ReportNode.cs" />
     <Compile Include="Services\CheckOrderService.cs" />
     <Compile Include="ViewModels\ComparerNode.cs" />
     <Compile Include="ViewModels\MainFormModel.cs" />
@@ -112,14 +111,8 @@
     <EmbeddedResource Include="InformDialogForm.resx">
       <DependentUpon>InformDialogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListsComparerForm.resx">
-      <DependentUpon>ListsComparerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainFormWithGrid.resx">
-      <DependentUpon>MainFormWithGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
