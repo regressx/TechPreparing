@@ -1,4 +1,5 @@
-﻿using NavisElectronics.Orders.Enums;
+﻿using System.Collections.Generic;
+using NavisElectronics.Orders.Enums;
 
 namespace NavisElectronics.Orders
 {
@@ -20,8 +21,6 @@ namespace NavisElectronics.Orders
             treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
         }
 
-
-
         #region Events
 
         public event EventHandler DownloadAndUpdate;
@@ -29,6 +28,7 @@ namespace NavisElectronics.Orders
         public event EventHandler StartChecking;
         public event EventHandler AbortLoading;
         public event EventHandler<ReportStyle> CreateReport;
+        public event EventHandler DecryptDocumentNames;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
 
         #endregion
@@ -47,11 +47,11 @@ namespace NavisElectronics.Orders
             saveInfoLabel.Text = message;
         }
 
-        public IntermechTreeElement GetSelectedTreeElement()
+        public OrderNode GetSelectedTreeElement()
         {
             if (treeViewAdv.SelectedNode != null)
             {
-                return (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
+                return ((OrderNode)treeViewAdv.SelectedNode.Tag);
             }
             throw new NullReferenceException("Не был выбран никакой узел дерева");
         }
@@ -63,6 +63,7 @@ namespace NavisElectronics.Orders
         public TreeModel GetTreeModel(IntermechTreeElement elementToView)
         {
             OrderNode root = new OrderNode();
+            root.Type = elementToView.Type;
             root.Amount = elementToView.Amount;
             root.AmountWithUse = elementToView.AmountWithUse;
             root.Name = elementToView.Name;
@@ -79,6 +80,8 @@ namespace NavisElectronics.Orders
             foreach (IntermechTreeElement child in elementToView.Children)
             {
                 OrderNode node = new OrderNode();
+                node.DoNotProduce = child.ProduseSign;
+                node.Type = child.Type;
                 node.Designation = child.Designation;
                 node.Name = child.Name;
                 node.FirstUse = child.FirstUse;
@@ -89,6 +92,7 @@ namespace NavisElectronics.Orders
                 node.ChangeNumber = child.ChangeNumber;
                 node.ChangeDocument = child.ChangeDocument;
                 node.Note = child.RelationNote;
+                node.RelationType = child.RelationName;
                 node.Tag = child;
                 root.Nodes.Add(node);
                 GetOrderNodeRecursive(node, child);
@@ -207,6 +211,14 @@ namespace NavisElectronics.Orders
             if (CreateReport != null)
             {
                 CreateReport(this, ReportStyle.IPS);
+            }
+        }
+
+        private void DecryptDocumentsButton_Click(object sender, EventArgs e)
+        {
+            if (DecryptDocumentNames != null)
+            {
+                DecryptDocumentNames(sender,EventArgs.Empty);
             }
         }
     }

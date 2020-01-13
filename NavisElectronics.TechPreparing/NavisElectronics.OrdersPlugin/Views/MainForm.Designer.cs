@@ -84,7 +84,7 @@
             this.toolStripSeparator1,
             this.createReportButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 76);
             // 
             // produceButton
             // 
@@ -151,14 +151,14 @@
             // 
             this.CreateReportIPSButton.Enabled = false;
             this.CreateReportIPSButton.Name = "CreateReportIPSButton";
-            this.CreateReportIPSButton.Size = new System.Drawing.Size(152, 22);
+            this.CreateReportIPSButton.Size = new System.Drawing.Size(108, 22);
             this.CreateReportIPSButton.Text = "в IPS";
             this.CreateReportIPSButton.Click += new System.EventHandler(this.CreateReportClickIPS_Click);
             // 
             // CreateReportExcelButton
             // 
             this.CreateReportExcelButton.Name = "CreateReportExcelButton";
-            this.CreateReportExcelButton.Size = new System.Drawing.Size(152, 22);
+            this.CreateReportExcelButton.Size = new System.Drawing.Size(108, 22);
             this.CreateReportExcelButton.Text = "в Excel";
             this.CreateReportExcelButton.Click += new System.EventHandler(this.CreateReportClickExcel_Click);
             // 
@@ -226,6 +226,7 @@
             this.DecryptDocumentsButton.Name = "DecryptDocumentsButton";
             this.DecryptDocumentsButton.Size = new System.Drawing.Size(23, 22);
             this.DecryptDocumentsButton.Text = "Расшифровать названия документов";
+            this.DecryptDocumentsButton.Click += new System.EventHandler(this.DecryptDocumentsButton_Click);
             // 
             // statusStrip
             // 
