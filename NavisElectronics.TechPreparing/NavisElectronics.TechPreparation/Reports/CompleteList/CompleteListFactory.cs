@@ -223,6 +223,9 @@ namespace NavisElectronics.TechPreparation.Reports.CompleteList
             {
                 switch ((IntermechObjectTypes)intermechProduct.Type)
                 {
+                    case IntermechObjectTypes.DetailWithoutDrawing:
+                        goto case IntermechObjectTypes.Detail;
+
                     case IntermechObjectTypes.Detail:
                         TableData partNode = mainNode.FindFirstNodeByName("Детали") as TableData;
                         if (partNode == null)

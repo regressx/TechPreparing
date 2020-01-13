@@ -414,8 +414,16 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
             {
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
-                    IDBObject documentObject = keeper.Session.GetObject(id);
-                    _element.ChangeDocument = documentObject.Caption;
+                    try
+                    {
+                        IDBObject documentObject = keeper.Session.GetObject(id);
+                        _element.ChangeDocument = documentObject.Caption;
+                    }
+                    catch (Exception)
+                    {
+                        _element.ChangeDocument = string.Empty;
+                    }
+
                 }
             }
 

@@ -304,6 +304,9 @@ namespace NavisElectronics.TechPreparation.Data
                                                                     Id = groupTechProcessDBobject.ObjectID,
                                                                     Name = groupDesAttribute.AsString
                                                                 };
+
+                                                                // всегда 100
+                                                                element.SampleSize = "100%";
                                                             }
 
                                                             Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
@@ -1579,9 +1582,18 @@ namespace NavisElectronics.TechPreparation.Data
             {
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
-                    IDBObject documentObject = keeper.Session.GetObject(changeDocumentId);
-                    element.ChangeDocument = documentObject.Caption;
-                }
+                    try
+                    {
+                        IDBObject documentObject = keeper.Session.GetObject(changeDocumentId);
+                        element.ChangeDocument = documentObject.Caption;
+                    }
+                    catch (Exception)
+                    {
+                        element.ChangeDocument = string.Empty;
+                    }
+
+
+                } 
             }
         }
     }

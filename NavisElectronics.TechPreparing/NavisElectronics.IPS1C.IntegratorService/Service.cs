@@ -395,7 +395,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 return "Попытка подать на вход пустой корпус или упаковку";
             }
 
-
             int koef = 1;
             int index = 0;
             int[] array = new int[2];
@@ -441,6 +440,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     return "Для такого типа объектов тип тех. отхода временно отсутствует";
             }
 
+            // в процентах
             if (index == 0)
             {
                 return ((koef + ((double)array[index] / 100)) * totalAmount).ToString("F6");
