@@ -118,7 +118,7 @@ namespace NavisElectronics.TechPreparation.Data
                                 ? (string)techRoutesRow[4]
                                 : string.Empty;
 
-                            // смотрим тех. процессы в нёем
+                            // смотрим тех. процессы в нём
                             DataTable techRouteItems = compositionService.LoadComposition(
                                 keeper.Session,
                                 routeVersionId,
