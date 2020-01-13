@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.Orders
+﻿using NavisElectronics.Orders.DataAccessLayer;
+
+namespace NavisElectronics.Orders
 {
     using System;
     using System.Threading;
@@ -43,7 +45,7 @@
         {
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter())));
+            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter()), new SupportingRepository()));
             mainPresenter.Run(id, new CancellationTokenSource());
         }
 
