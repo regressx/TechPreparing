@@ -51,12 +51,34 @@ namespace NavisElectronics.Orders.Presenters
             _view.SetProduceClick += View_ProduceClick;
             _view.DownloadAndUpdate += View_DownloadAndUpdate;
             _view.CreateReport += View_CreateReport;
+            _view.DecryptDocumentNames += _view_DecryptDocumentNames;
+        }
+
+        private void _view_DecryptDocumentNames(object sender, EventArgs e)
+        {
+            _model.DecryptDocuments(_root);
+            _view.UpdateTreeModel(_root);
         }
 
         private void View_CreateReport(object sender, ReportStyle e)
         {
-            IntermechTreeElement selectedTreeElement = _view.GetSelectedTreeElement();
-            _model.CreateReport(selectedTreeElement, e);
+            OrderNode selectedTreeElement = _view.GetSelectedTreeElement();
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Excel files (*.xlsx)|*.xlsx";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    if (sfd.FileName != string.Empty)
+                    {
+                        _model.CreateReport(sfd.FileName, selectedTreeElement, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Укажите имя файла!");
+                    }
+                }
+            }
+
         }
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
@@ -137,8 +159,6 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_StartChecking(object sender, EventArgs e)
         {
-            ListsComparerPresenter presenter = new ListsComparerPresenter(new ListsComparerForm());
-            presenter.Run(_root);
         }
 
         private async void View_Load(object sender, System.EventArgs e)

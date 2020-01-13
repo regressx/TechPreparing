@@ -52,6 +52,7 @@
             }
             stack.Push(_mainElement);
 
+            // выпишем первый элемент
             StringBuilder sb = new StringBuilder();
 
             if (stack.Count > 0)
@@ -59,8 +60,7 @@
                 sb.Append((stack.Pop().NumberOnLevel).ToString());
             }
             
-            // а здесь заполним
-
+            // а здесь заполним остальные через . , если есть
             while (stack.Count > 0)
             {
                 sb.AppendFormat(".{0}", (stack.Pop().NumberOnLevel).ToString());
@@ -69,7 +69,5 @@
             return sb.ToString();
 
         }
-
-
     }
 }
