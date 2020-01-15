@@ -57,7 +57,11 @@ namespace NavisElectronics.TechPreparation
                 PresentationFactory presentationFactory = kernel.Get<PresentationFactory>();
                 ICommandsProvider prov = new CooperationListCommandProvider(presentationFactory);
 
+                menu.Nodes.Add(new MenuTemplateNode("CalculateOperation", "Рассчитать потребность материалов на операцию", -1, 2, int.MaxValue));
+                ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider();
+
                 factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1019, prov);
+                factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
             }
         }
 

@@ -43,6 +43,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />

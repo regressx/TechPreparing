@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Drawing;
 
 namespace NavisElectronics.TechPreparation.Reports.CooperationList
 {
     using System.Collections.Generic;
     using Aga.Controls.Tree;
-    using Entities;
     using Interfaces.Entities;
     using Intermech.Document.Client;
     using Intermech.Document.Model;
@@ -132,21 +131,27 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
                 foreach (IntermechTreeElement parent in uniqueParents.Values)
                 {
-                    total += parent.AmountWithUse;
+                    total += parent.TotalAmount;
                 }
 
 
                 TextData totalCell = rowInstanse.FindNode("Total") as TextData;
-                totalCell.AssignText(string.Format("{0:F0}", total).Trim(), false, false, false);
-
-                TextData stockRateCell = rowInstanse.FindNode("StockRate") as TextData;
-                stockRateCell.AssignText(string.Format("{0:F2}", commonObject.StockRate).Trim(), false, false, false);
+                totalCell.AssignText(string.Format("{0:F2}", total).Trim(), false, false, false);
 
                 TextData sampleSizeCell = rowInstanse.FindNode("SampleSize") as TextData;
                 sampleSizeCell.AssignText(string.Format("{0}", commonObject.SampleSize).Trim(), false, false, false);
 
                 TextData techProcess = rowInstanse.FindNode("TechProcess") as TextData;
                 techProcess.AssignText(string.Format("{0}", commonObject.TechProcessReference).Trim(), false, false, false);
+
+
+                foreach (var node in rowInstanse.Nodes)
+                {
+                    TextData cell = node as TextData;
+                    cell.AssignBackColor(Color.LightGray, false);
+                    cell.CharFormat = new CharFormat(new System.Drawing.Font("Arial", 10, FontStyle.Bold));
+                    cell.overrideFlags |= (OverrideFlags)0x4000; //щелкаем флагом
+                }
 
                 mainNode.AddChildNode(rowInstanse, false, false);
 
@@ -186,6 +191,17 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                                 false);
                         }
                     }
+
+                    if (parentRowInstance != null)
+                    {
+                        TextData stockRateCell = parentRowInstance.FindNode("StockRate") as TextData;
+                        if (stockRateCell != null)
+                        {
+                            stockRateCell.AssignText(string.Format("{0:F2}", parent.StockRate).Trim(), false, false,
+                                false);
+                        }
+                    }
+
                     mainNode.AddChildNode(parentRowInstance, false, false);
                 }
                 i++;
@@ -220,9 +236,6 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
                 TextData measureUnitsCell = rowInstanse.FindNode("MeasureUnitsPCB") as TextData;
                 measureUnitsCell.AssignText(string.Format("{0}", pcbObject.MeasureUnits).Trim(), false, false, false);
 
-                TextData stockRateCell = rowInstanse.FindNode("StockRatePCB") as TextData;
-                stockRateCell.AssignText(string.Format("{0:F2}", pcbObject.StockRate).Trim(), false, false, false);
-
                 TextData sampleSizeCell = rowInstanse.FindNode("SampleSizePCB") as TextData;
                 sampleSizeCell.AssignText(string.Format("{0}", pcbObject.SampleSize).Trim(), false, false, false);
 
@@ -251,6 +264,16 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
                 TextData totalCell = rowInstanse.FindNode("TotalPCB") as TextData;
                 totalCell.AssignText(string.Format("{0:F0}", total).Trim(), false, false, false);
+
+
+                foreach (var node in rowInstanse.Nodes)
+                {
+                    TextData cell = node as TextData;
+                    cell.AssignBackColor(Color.LightGray, false);
+                    cell.CharFormat = new CharFormat(new System.Drawing.Font("Arial", 10, FontStyle.Bold));
+                    cell.overrideFlags |= (OverrideFlags)0x4000; //щелкаем флагом
+                }
+
 
                 mainNodePCb.AddChildNode(rowInstanse, false, false);
 
@@ -281,6 +304,10 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
 
                     TextData amountWithUseCell = parentRowInstance.FindNode("AmountInOrderPCB") as TextData;
                     amountWithUseCell.AssignText(string.Format("{0:F0}", parent.AmountWithUse).Trim(), false, false, false);
+
+                    TextData stockRateCell = parentRowInstance.FindNode("StockRatePCB") as TextData;
+                    stockRateCell.AssignText(string.Format("{0:F2}", parent.StockRate).Trim(), false, false, false);
+
 
                     mainNodePCb.AddChildNode(parentRowInstance, false, false);
                 }

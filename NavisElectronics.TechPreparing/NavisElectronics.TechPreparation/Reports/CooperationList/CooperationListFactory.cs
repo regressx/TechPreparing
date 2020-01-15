@@ -75,12 +75,14 @@
                 if (nodeFromQueue.Type == 1078 || nodeFromQueue.Type == 1074 || nodeFromQueue.Type == 1159 ||
                     nodeFromQueue.Type == 1052 || nodeFromQueue.Type == 1097)
                 {
-                    if (nodeFromQueue.CooperationFlag)
+                    if (nodeFromQueue.CooperationFlag && !nodeFromQueue.ProduseSign)
                     {
                         IntermechTreeElement parentElement = (IntermechTreeElement)nodeFromQueue.Parent.Clone();
                         parentElement.Amount = nodeFromQueue.Amount;
                         parentElement.AmountWithUse = nodeFromQueue.AmountWithUse;
                         parentElement.TechTask = nodeFromQueue.TechTask;
+                        parentElement.StockRate = nodeFromQueue.StockRate;
+                        parentElement.TotalAmount = parentElement.AmountWithUse * parentElement.StockRate;
                         if (!uniqueCooperationElements.ContainsKey(nodeFromQueue.Id))
                         {
                             IntermechTreeElement currentObject = new IntermechTreeElement()
@@ -94,7 +96,6 @@
                                 PcbVersion = nodeFromQueue.PcbVersion,
                                 MeasureUnits = nodeFromQueue.MeasureUnits,
                                 TechProcessReference = nodeFromQueue.TechProcessReference,
-                                StockRate = nodeFromQueue.StockRate,
                                 SampleSize = nodeFromQueue.SampleSize,
                                 TechTask = nodeFromQueue.TechTask
                             };
