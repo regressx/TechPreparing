@@ -70,7 +70,7 @@ namespace NavisElectronics.Orders.Reports
                     ConstructCell("Первичная применяемость", CellValues.String, 2),
                     ConstructCell("Кол-во по спец.", CellValues.String, 2),
                     ConstructCell("Номер изменения", CellValues.String, 2),
-                    ConstructCell("Обозначение последнего изменения", CellValues.String, 2),
+                    ConstructCell("Извещение", CellValues.String, 2),
                     ConstructCell("Примечание", CellValues.String, 2),
                     ConstructCell("Литера", CellValues.String, 2),
                     ConstructCell("Тип объекта", CellValues.String, 2),
