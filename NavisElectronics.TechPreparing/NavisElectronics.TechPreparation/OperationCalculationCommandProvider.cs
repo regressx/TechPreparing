@@ -228,7 +228,11 @@ namespace NavisElectronics.TechPreparation
                         amountAttribute.Value = new MeasuredValue(sum, measureId);
 
                         holeDiameterAttribute.Value = new MeasuredValue(0, holeMeasureId);
-                        normsAtrribute.Value = new MeasuredValue(0, measureId);
+                        if (normsAtrribute != null)
+                        {
+                            normsAtrribute.Value = new MeasuredValue(0, measureId);
+                        }
+
                     }
                 }
 
