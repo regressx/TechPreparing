@@ -3,6 +3,7 @@ using Intermech;
 using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Helpers;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
 
 namespace NavisElectronics.IPS1C.IntegratorService

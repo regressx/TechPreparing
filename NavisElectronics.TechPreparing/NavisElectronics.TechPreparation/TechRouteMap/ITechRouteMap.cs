@@ -26,7 +26,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <summary>
         /// Удалить выделенные маршруты
         /// </summary>
-        event EventHandler<ClipboardEventArgs> DeleteRouteClick;
+        event EventHandler<NodesCollectionEventArgs> DeleteRouteClick;
 
         /// <summary>
         /// Загрузка формы
@@ -62,12 +62,12 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <summary>
         /// Проставить внутрипроизводственную кооперацию
         /// </summary>
-        event EventHandler<ClipboardEventArgs> SetInnerCooperation;
+        event EventHandler<NodesCollectionEventArgs> SetInnerCooperation;
 
         /// <summary>
         /// Убрать внутрипроизводственную кооперацию
         /// </summary>
-        event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
+        event EventHandler<NodesCollectionEventArgs> RemoveInnerCooperation;
 
         /// <summary>
         /// Установить модель в дерево

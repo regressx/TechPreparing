@@ -1,7 +1,7 @@
 ﻿namespace NavisElectronics.TechPreparation.Enums
 {
     /// <summary>
-    /// Где элемент родился
+    /// Перечисление для материалов из тех. процесса
     /// </summary>
     public enum ElementPlaceOfBirth
     {

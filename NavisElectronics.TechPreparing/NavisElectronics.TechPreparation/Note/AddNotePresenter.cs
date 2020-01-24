@@ -1,9 +1,8 @@
-﻿namespace NavisElectronics.TechPreparation.Presenters
+﻿using System.Windows.Forms;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+
+namespace NavisElectronics.TechPreparation.Note
 {
-    using System.Windows.Forms;
-
-    using NavisElectronics.TechPreparation.ViewInterfaces;
-
     /// <summary>
     /// Посредник между окном ввода примечания и некоторой логикой
     /// </summary>

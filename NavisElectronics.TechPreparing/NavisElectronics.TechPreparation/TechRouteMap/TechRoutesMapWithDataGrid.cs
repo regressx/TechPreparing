@@ -27,9 +27,9 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<EditTechRouteEventArgs> EditTechRouteClick;
         public event EventHandler<EditTechRouteEventArgs> EditMassTechRouteClick;
         public event EventHandler<SaveClickEventArgs> EditNoteClick;
-        public event EventHandler<ClipboardEventArgs> DeleteRouteClick;
-        public event EventHandler<ClipboardEventArgs> CopyClick;
-        public event EventHandler<ClipboardEventArgs> PasteClick;
+        public event EventHandler<NodesCollectionEventArgs> DeleteRouteClick;
+        public event EventHandler<NodesCollectionEventArgs> CopyClick;
+        public event EventHandler<NodesCollectionEventArgs> PasteClick;
         public event EventHandler<SaveClickEventArgs> ShowClick;
         public event EventHandler DownloadInfoFromIPS;
         public event EventHandler UpdateNodeFromIps;
@@ -38,8 +38,8 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
         public event EventHandler CreateCooperationList;
-        public event EventHandler<ClipboardEventArgs> SetInnerCooperation;
-        public event EventHandler<ClipboardEventArgs> RemoveInnerCooperation;
+        public event EventHandler<NodesCollectionEventArgs> SetInnerCooperation;
+        public event EventHandler<NodesCollectionEventArgs> RemoveInnerCooperation;
         public event EventHandler RefreshTree;
 
         public TechRoutesMapWithDataGrid()
@@ -107,7 +107,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void CopyRouteButton_Click(object sender, EventArgs e)
         {
-            EventHandler<ClipboardEventArgs> temp = Volatile.Read(ref CopyClick);
+            EventHandler<NodesCollectionEventArgs> temp = Volatile.Read(ref CopyClick);
             if (temp != null)
             {
                 ICollection<MyNode> nodes = new List<MyNode>();
@@ -116,13 +116,13 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node.Tag as MyNode);
                 }
 
-                temp(sender, new ClipboardEventArgs(nodes));
+                temp(sender, new NodesCollectionEventArgs(nodes));
             }
         }
 
         private void PasteRouteButton_Click(object sender, EventArgs e)
         {
-            EventHandler<ClipboardEventArgs> temp = Volatile.Read(ref PasteClick);
+            EventHandler<NodesCollectionEventArgs> temp = Volatile.Read(ref PasteClick);
             if (temp != null)
             {
                 ICollection<MyNode> nodes = new List<MyNode>();
@@ -131,7 +131,7 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node.Tag as MyNode);
                 }
 
-                temp(sender, new ClipboardEventArgs(nodes));
+                temp(sender, new NodesCollectionEventArgs(nodes));
             }
         }
 
@@ -222,7 +222,7 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node.Tag as MyNode);
                 }
 
-                SetInnerCooperation(sender, new ClipboardEventArgs(nodes));
+                SetInnerCooperation(sender, new NodesCollectionEventArgs(nodes));
             }
         }
 
@@ -236,7 +236,7 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node.Tag as MyNode);
                 }
 
-                RemoveInnerCooperation(sender, new ClipboardEventArgs(nodes));
+                RemoveInnerCooperation(sender, new NodesCollectionEventArgs(nodes));
             }
         }
 
@@ -275,7 +275,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void deleteRouteMenuItem_Click(object sender, EventArgs e)
         {
-            EventHandler<ClipboardEventArgs> temp = Volatile.Read(ref DeleteRouteClick);
+            EventHandler<NodesCollectionEventArgs> temp = Volatile.Read(ref DeleteRouteClick);
             if (temp != null)
             {
                 ICollection<MyNode> nodes = new List<MyNode>();
@@ -284,7 +284,7 @@ namespace NavisElectronics.TechPreparation.Views
                     nodes.Add(node.Tag as MyNode);
                 }
 
-                temp(sender, new ClipboardEventArgs(nodes));
+                temp(sender, new NodesCollectionEventArgs(nodes));
             }
         }
 

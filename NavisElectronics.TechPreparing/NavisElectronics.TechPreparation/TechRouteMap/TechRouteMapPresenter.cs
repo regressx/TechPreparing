@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using NavisElectronics.TechPreparation.Main;
-
 namespace NavisElectronics.TechPreparation.TechRouteMap
 {
     using System;
@@ -20,6 +18,8 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
     using Entities;
     using EventArguments;
     using Interfaces.Entities;
+    using Main;
+    using Note;
     using Presenters;
     using Reports;
     using Services;
@@ -137,7 +137,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
            await _model.DownloadTechInfoFromIPS(_view.GetMainNode());
         }
 
-        private void View_DeleteRouteClick(object sender, ClipboardEventArgs e)
+        private void View_DeleteRouteClick(object sender, NodesCollectionEventArgs e)
         {
             ICollection<MyNode> nodes = e.Nodes;
             foreach (MyNode node in nodes)
@@ -189,7 +189,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// <param name="e">
         /// The e.
         /// </param>
-        private void View_RemoveInnerCooperation(object sender, ClipboardEventArgs e)
+        private void View_RemoveInnerCooperation(object sender, NodesCollectionEventArgs e)
         {
 
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
@@ -223,7 +223,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             }
         }
 
-        private void View_SetInnerCooperation(object sender, ClipboardEventArgs e)
+        private void View_SetInnerCooperation(object sender, NodesCollectionEventArgs e)
         {
             IList<IntermechTreeElement> rows = new List<IntermechTreeElement>();
             foreach (MyNode myNode in e.Nodes)
