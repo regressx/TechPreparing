@@ -1,6 +1,8 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿using NavisElectronics.Orders.TreeComparer;
+
+namespace NavisElectronics.Orders.Views
 {
-    partial class TreeComparerView
+    public partial class TreeComparerView
     {
         /// <summary>
         /// Required designer variable.
@@ -49,28 +51,24 @@
             this.newAmountColumn = new Aga.Controls.Tree.TreeColumn();
             this.newRelationColumn = new Aga.Controls.Tree.TreeColumn();
             this.rightTreecontextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.findInOldArchiveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCooperationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.pushChangesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newNameTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newDesignationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newChangeNumberTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newAmountTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newRelationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.downloadTreeButton = new System.Windows.Forms.ToolStripButton();
             this.compareTreeButton = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.leftTreeContextMenuStrip.SuspendLayout();
             this.rightTreecontextMenuStrip.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -109,7 +107,7 @@
             this.treeViewAdv1.Text = "treeViewAdv1";
             this.treeViewAdv1.UseColumns = true;
             this.treeViewAdv1.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.treeViewAdv1_RowDraw);
-            this.treeViewAdv1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewAdv_KeyDown);
+            this.treeViewAdv1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeViewAdv_KeyDown);
             // 
             // nameColumn
             // 
@@ -155,7 +153,7 @@
             this.deleteNodeMenuItem.Name = "deleteNodeMenuItem";
             this.deleteNodeMenuItem.Size = new System.Drawing.Size(144, 22);
             this.deleteNodeMenuItem.Text = "Удалить узел";
-            this.deleteNodeMenuItem.Click += new System.EventHandler(this.deleteNodeMenuItem_Click);
+            this.deleteNodeMenuItem.Click += new System.EventHandler(this.DeleteNodeMenuItem_Click);
             // 
             // nameTextBox
             // 
@@ -224,7 +222,7 @@
             this.treeViewAdv2.Text = "treeViewAdv2";
             this.treeViewAdv2.UseColumns = true;
             this.treeViewAdv2.RowDraw += new System.EventHandler<Aga.Controls.Tree.TreeViewRowDrawEventArgs>(this.treeViewAdv2_RowDraw);
-            this.treeViewAdv2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewAdv_KeyDown);
+            this.treeViewAdv2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeViewAdv_KeyDown);
             // 
             // newNameColumn
             // 
@@ -261,49 +259,16 @@
             // rightTreecontextMenuStrip
             // 
             this.rightTreecontextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.findInOldArchiveMenuItem,
-            this.editCooperationMenuItem,
-            this.editRouteMenuItem,
-            this.toolStripSeparator1,
             this.pushChangesMenuItem});
             this.rightTreecontextMenuStrip.Name = "contextMenuStrip";
-            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 120);
-            // 
-            // findInOldArchiveMenuItem
-            // 
-            this.findInOldArchiveMenuItem.Name = "findInOldArchiveMenuItem";
-            this.findInOldArchiveMenuItem.Size = new System.Drawing.Size(341, 22);
-            this.findInOldArchiveMenuItem.Text = "Найти в старом архиве";
-            this.findInOldArchiveMenuItem.Click += new System.EventHandler(this.findInOldArchiveMenuItem_Click);
-            // 
-            // editCooperationMenuItem
-            // 
-            this.editCooperationMenuItem.Enabled = false;
-            this.editCooperationMenuItem.Name = "editCooperationMenuItem";
-            this.editCooperationMenuItem.Size = new System.Drawing.Size(341, 22);
-            this.editCooperationMenuItem.Text = "Редактировать кооперацию";
-            this.editCooperationMenuItem.Click += new System.EventHandler(this.editCooperationMenuItem_Click);
-            // 
-            // editRouteMenuItem
-            // 
-            this.editRouteMenuItem.Enabled = false;
-            this.editRouteMenuItem.Name = "editRouteMenuItem";
-            this.editRouteMenuItem.Size = new System.Drawing.Size(341, 22);
-            this.editRouteMenuItem.Text = "Редактировать маршруты";
-            this.editRouteMenuItem.Click += new System.EventHandler(this.editRouteMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(338, 6);
+            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 26);
             // 
             // pushChangesMenuItem
             // 
-            this.pushChangesMenuItem.Enabled = false;
             this.pushChangesMenuItem.Name = "pushChangesMenuItem";
             this.pushChangesMenuItem.Size = new System.Drawing.Size(341, 22);
             this.pushChangesMenuItem.Text = "Отправить выделенные изменения в старое дерево";
-            this.pushChangesMenuItem.Click += new System.EventHandler(this.pushChangesMenuItem_Click);
+            this.pushChangesMenuItem.Click += new System.EventHandler(this.PushChangesMenuItem_Click);
             // 
             // newNameTextBox
             // 
@@ -340,18 +305,18 @@
             this.newRelationTextBox.LeftMargin = 3;
             this.newRelationTextBox.ParentColumn = this.newRelationColumn;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel3,
             this.toolStripStatusLabel4});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 519);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1455, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 519);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1455, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
@@ -393,26 +358,6 @@
             this.toolStrip.TabIndex = 4;
             this.toolStrip.Text = "toolStrip";
             // 
-            // downloadTreeButton
-            // 
-            this.downloadTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.downloadTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.arrow_Down_16xLG;
-            this.downloadTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.downloadTreeButton.Name = "downloadTreeButton";
-            this.downloadTreeButton.Size = new System.Drawing.Size(23, 22);
-            this.downloadTreeButton.Text = "Загрузить дерево из базы данных";
-            this.downloadTreeButton.Click += new System.EventHandler(this.downloadTreeButton_Click);
-            // 
-            // compareTreeButton
-            // 
-            this.compareTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.compareTreeButton.Image = global::NavisElectronics.TechPreparation.Properties.Resources.icons8_forest_16;
-            this.compareTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.compareTreeButton.Name = "compareTreeButton";
-            this.compareTreeButton.Size = new System.Drawing.Size(23, 22);
-            this.compareTreeButton.Text = "Сравнить два дерева";
-            this.compareTreeButton.Click += new System.EventHandler(this.compareTreeButton_Click);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -430,6 +375,26 @@
             this.splitContainer1.SplitterDistance = 726;
             this.splitContainer1.TabIndex = 5;
             // 
+            // downloadTreeButton
+            // 
+            this.downloadTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.downloadTreeButton.Image = global::NavisElectronics.Orders.Properties.Resources.Download;
+            this.downloadTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.downloadTreeButton.Name = "downloadTreeButton";
+            this.downloadTreeButton.Size = new System.Drawing.Size(23, 22);
+            this.downloadTreeButton.Text = "Загрузить дерево из базы данных";
+            this.downloadTreeButton.Click += new System.EventHandler(this.downloadTreeButton_Click);
+            // 
+            // compareTreeButton
+            // 
+            this.compareTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.compareTreeButton.Image = global::NavisElectronics.Orders.Properties.Resources.icons8_forest_16;
+            this.compareTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.compareTreeButton.Name = "compareTreeButton";
+            this.compareTreeButton.Size = new System.Drawing.Size(23, 22);
+            this.compareTreeButton.Text = "Сравнить два дерева";
+            this.compareTreeButton.Click += new System.EventHandler(this.compareTreeButton_Click);
+            // 
             // TreeComparerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,13 +402,13 @@
             this.ClientSize = new System.Drawing.Size(1455, 541);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Name = "TreeComparerView";
             this.Text = "TreeComparerView";
             this.leftTreeContextMenuStrip.ResumeLayout(false);
             this.rightTreecontextMenuStrip.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -459,7 +424,7 @@
 
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv1;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv2;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
@@ -485,11 +450,7 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox newChangeNumberTextBox;
         private Aga.Controls.Tree.NodeControls.NodeTextBox newAmountTextBox;
         private System.Windows.Forms.ContextMenuStrip rightTreecontextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem editCooperationMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editRouteMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem pushChangesMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem findInOldArchiveMenuItem;
         private System.Windows.Forms.ContextMenuStrip leftTreeContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem deleteNodeMenuItem;
         private Aga.Controls.Tree.TreeColumn relationTypeColumn;

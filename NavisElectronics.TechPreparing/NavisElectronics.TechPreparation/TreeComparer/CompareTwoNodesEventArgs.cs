@@ -1,4 +1,4 @@
-﻿namespace NavisElectronics.TechPreparation.ViewInterfaces
+﻿namespace NavisElectronics.TechPreparation.TreeComparer
 {
     using System;
     using Interfaces.Entities;

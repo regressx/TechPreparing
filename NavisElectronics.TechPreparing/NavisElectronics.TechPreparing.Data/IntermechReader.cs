@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Intermech;
+using NavisElectronics.TechPreparation.Interfaces.Exceptions;
 
 namespace NavisElectronics.TechPreparation.Data
 {

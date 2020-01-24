@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Interfaces.Entities
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+
+namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +8,6 @@
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
-    using Enums;
     using Exceptions;
     using Newtonsoft.Json;
     using Substitutes;

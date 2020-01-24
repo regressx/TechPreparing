@@ -1,7 +1,7 @@
-﻿namespace NavisElectronics.TechPreparation.Enums
-{
-    using System;
+﻿using System;
 
+namespace NavisElectronics.TechPreparation.Interfaces.Enums
+{
     /// <summary>
     /// Перечисление состояний узла дерева
     /// </summary>

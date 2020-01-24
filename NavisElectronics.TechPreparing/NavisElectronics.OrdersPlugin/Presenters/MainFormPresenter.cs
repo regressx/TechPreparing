@@ -1,6 +1,7 @@
-﻿using System.Data;
-using Intermech.Interfaces;
-using Intermech.Kernel.Search;
+﻿using NavisElectronics.Orders.TreeComparer;
+using NavisElectronics.Orders.Views;
+using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace NavisElectronics.Orders.Presenters
 {
@@ -83,7 +84,8 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
         {
-            throw new NotImplementedException("Операция обновления и загрузки еще не реализована");
+            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(), new MergeNodesService()));
+            treeComparerPresenter.Run(_root);
         }
 
         private async void View_Save(object sender, EventArgs e)

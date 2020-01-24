@@ -7,18 +7,17 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using Aga.Controls.Tree;
-using NavisElectronics.Orders.TreeComparer;
-using NavisElectronics.Orders.ViewModels;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-using NavisElectronics.TechPreparation.Interfaces.Enums;
-using NavisElectronics.TechPreparation.Views;
-
-namespace NavisElectronics.Orders.Presenters
+namespace NavisElectronics.Orders.TreeComparer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using Aga.Controls.Tree;
+    using TechPreparation.Interfaces.Entities;
+    using TechPreparation.Interfaces.Enums;
+    using TechPreparation.Interfaces.Exceptions;
+    using TechPreparation.Views;
+
     /// <summary>
     /// The tree comparer presenter.
     /// </summary>
@@ -68,40 +67,40 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_DeleteNodeClick(object sender, ComparerNode e)
         {
-            //if (e.NodeState != NodeStates.Deleted)
-            //{
-            //    throw new DeleteAttempFoundException("Обнаружена попытка удаления компонента, который нельзя удалять");
-            //}
+            if (e.NodeState != NodeStates.Deleted)
+            {
+                throw new DeleteAttempFoundException("Обнаружена попытка удаления компонента, который нельзя удалять");
+            }
 
-            //IntermechTreeElement selectedNode = (IntermechTreeElement)e.Tag;
-            //IntermechTreeElement parent = selectedNode.Parent;
-
-            //int i = 0;
-
+            IntermechTreeElement selectedNode = (IntermechTreeElement)e.Tag;
+            IntermechTreeElement parent = selectedNode.Parent;
+            
+            int i = 0;
+            
             // я не могу гарантировать 100%, что в составе не будет повторяющихся элементов, во всяком случае на 15.10.2019г, поэтому
             // будем искать линейно первый попавшийся, который удовлетворяет условию, что совпадает его идентификатор,  и элемент отмечен на удаление
-            //foreach (IntermechTreeElement child in parent.Children)
-            //{
-            //    // это тот элемент, что там нужен
-            //    if (e.ObjectId == child.ObjectId && child.NodeState == NodeStates.Deleted)
-            //    {
-            //        parent.RemoveAt(i);
-            //        break;
-            //    }
+            foreach (IntermechTreeElement child in parent.Children)
+            {
+                // это тот элемент, что там нужен
+                if (e.ObjectId == child.ObjectId && child.NodeState == NodeStates.Deleted)
+                {
+                    parent.RemoveAt(i);
+                    break;
+                }
 
-            //    i++;
-            //}
+                i++;
+            }
 
-            //_view.FillOldTree(_model.GetModel(_oldElement));
+            _view.FillOldTree(_model.GetModel(_oldElement));
 
-            //TreeViewAdv treeViewAdv = _view.GetOldTree();
+            TreeViewAdv treeViewAdv = _view.GetOldTree();
 
             // найти родительский узел
-            //ComparerNode parentComparerNode = FindNodeWithTag(_view.GetOldNode(), parent);
+            ComparerNode parentComparerNode = FindNodeWithTag(_view.GetOldNode(), parent);
 
-            //TreeNodeAdv nodeToFind = treeViewAdv.FindNodeByTag(parentComparerNode);
-            //treeViewAdv.SelectedNode = nodeToFind;
-            //treeViewAdv.EnsureVisible(nodeToFind);
+            TreeNodeAdv nodeToFind = treeViewAdv.FindNodeByTag(parentComparerNode);
+            treeViewAdv.SelectedNode = nodeToFind;
+            treeViewAdv.EnsureVisible(nodeToFind);
 
         }
 
@@ -119,8 +118,6 @@ namespace NavisElectronics.Orders.Presenters
             CompareTwoNodesView view = new CompareTwoNodesView(e.LeftElement, e.RightElement);
             view.Show();
         }
-
-
 
         private ComparerNode FindNodeWithTag(ComparerNode mainNode, IntermechTreeElement tag)
         {
@@ -142,7 +139,7 @@ namespace NavisElectronics.Orders.Presenters
                 {
                     foreach (Node child in nodeFromQueue.Nodes)
                     {
-                        queue.Enqueue((ComparerNode) child);
+                        queue.Enqueue((ComparerNode)child);
                     }
                 }
             }
@@ -156,7 +153,7 @@ namespace NavisElectronics.Orders.Presenters
             ComparerNode nodeToFind = null;
             ComparerNode nodeWhereFind = null;
             TreeViewAdv treeWhereToFind = null;
-            if (((TreeViewAdv) sender).Name == "treeViewAdv1")
+            if (((TreeViewAdv)sender).Name == "treeViewAdv1")
             {
                 nodeWhereFind = _view.GetNewNode();
                 treeWhereToFind = _view.GetNewTree();
@@ -171,6 +168,41 @@ namespace NavisElectronics.Orders.Presenters
             _view.JumpToNode(treeWhereToFind, nodeToFind);
         }
 
+        private void _view_EditTechRoutesClick(object sender, IntermechTreeElement e)
+        {
+            // using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
+            // {
+            // if (manufacturerView.ShowDialog() == DialogResult.OK)
+            // {
+            // string filter = manufacturerView.SelectedAgentId;
+            // Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+            // queue.Enqueue(e);
+            // while (queue.Count > 0)
+            // {
+            // IntermechTreeElement elementFromQueue = queue.Dequeue();
+            // elementFromQueue.Agent = filter;
+            // if (elementFromQueue.Children.Count > 0)
+            // {
+            // foreach (IntermechTreeElement child in elementFromQueue.Children)
+            // {
+            // queue.Enqueue(child);
+            // }
+            // }
+            // }
+
+            // TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
+            // TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
+            // presenter.Run();
+            // }
+            // }
+        }
+
+        private void _view_EditCooperationClick(object sender, IntermechTreeElement e)
+        {
+            // CooperationView cooperationView = new CooperationView(false);
+            // CooperationPresenter presenter = new CooperationPresenter(cooperationView, e, null);
+            // presenter.Run();
+        }
 
         private void _view_PushChanges(object sender, EventArgs e)
         {
@@ -180,7 +212,7 @@ namespace NavisElectronics.Orders.Presenters
                 IntermechTreeElement lastElementToJump = null;
                 foreach (ComparerNode comparerNode in collection)
                 {
-                    lastElementToJump = (IntermechTreeElement) comparerNode.Tag;
+                    lastElementToJump = (IntermechTreeElement)comparerNode.Tag;
                     _model.Upload(_oldElement, _newElement, lastElementToJump);
                 }
 
@@ -196,6 +228,7 @@ namespace NavisElectronics.Orders.Presenters
                 treeViewAdv.SelectedNode = nodeToFind;
                 treeViewAdv.EnsureVisible(nodeToFind);
             }
+
         }
 
         private void _view_Compare(object sender, EventArgs e)
@@ -219,7 +252,7 @@ namespace NavisElectronics.Orders.Presenters
                 {
                     foreach (Node node in nodeFromQueue.Nodes)
                     {
-                        queueForOld.Enqueue((ComparerNode) node);
+                        queueForOld.Enqueue((ComparerNode)node);
                     }
                 }
             }
@@ -245,7 +278,7 @@ namespace NavisElectronics.Orders.Presenters
                 {
                     foreach (Node node in nodeFromQueue.Nodes)
                     {
-                        queueForNew.Enqueue((ComparerNode) node);
+                        queueForNew.Enqueue((ComparerNode)node);
                     }
                 }
             }

@@ -1,7 +1,7 @@
-﻿namespace NavisElectronics.TechPreparation.Exceptions
-{
-    using System;
+﻿using System;
 
+namespace NavisElectronics.TechPreparation.Interfaces.Exceptions
+{
     /// <summary>
     /// Исключение для выброса в случае, когда не был найден узел дерева
     /// </summary>

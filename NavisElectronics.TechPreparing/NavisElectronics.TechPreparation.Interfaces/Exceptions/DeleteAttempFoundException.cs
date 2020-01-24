@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NavisElectronics.TechPreparation.Exceptions
+namespace NavisElectronics.TechPreparation.Interfaces.Exceptions
 {
     public class DeleteAttempFoundException : Exception
     {

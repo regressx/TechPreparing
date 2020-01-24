@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using Intermech.Interfaces;
-using Intermech.Interfaces.Compositions;
-using Intermech.Kernel.Search;
-using NavisElectronics.Orders.Reports;
-
-namespace NavisElectronics.Orders.DataAccessLayer
+﻿namespace NavisElectronics.Orders.DataAccessLayer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using Intermech.Interfaces;
+    using Intermech.Interfaces.Compositions;
+    using Intermech.Kernel.Search;
+    using Reports;
+
     public class SupportingRepository
     { 
         /// <summary>

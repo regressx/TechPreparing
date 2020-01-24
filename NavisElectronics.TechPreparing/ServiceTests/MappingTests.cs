@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NavisElectronics.IPS1C.IntegratorService.Entities;
 using NavisElectronics.IPS1C.IntegratorService.Services;
-using NavisElectronics.TechPreparation.Enums;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
 
 namespace ServiceTests

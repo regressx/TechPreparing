@@ -46,6 +46,7 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
@@ -71,7 +72,6 @@
     <Compile Include="Services\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.Substitutes\NavisElectronics.Substitutes.csproj">
       <Project>{228c1b09-9e36-4cf7-b0b6-0e45dd4233ad}</Project>

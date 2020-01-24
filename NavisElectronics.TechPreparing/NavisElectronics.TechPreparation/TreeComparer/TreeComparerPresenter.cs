@@ -7,22 +7,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Windows.Forms;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using Aga.Controls.Tree;
 using NavisElectronics.TechPreparation.Exceptions;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Enums;
+using NavisElectronics.TechPreparation.Interfaces.Exceptions;
+using NavisElectronics.TechPreparation.Presenters;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+using NavisElectronics.TechPreparation.ViewModels;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 using NavisElectronics.TechPreparation.Views;
 
-namespace NavisElectronics.TechPreparation.Presenters
+namespace NavisElectronics.TechPreparation.TreeComparer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using Aga.Controls.Tree;
-    using Enums;
-    using Interfaces.Entities;
-    using ViewInterfaces;
-    using ViewModels;
-    using ViewModels.TreeNodes;
-
     /// <summary>
     /// The tree comparer presenter.
     /// </summary>

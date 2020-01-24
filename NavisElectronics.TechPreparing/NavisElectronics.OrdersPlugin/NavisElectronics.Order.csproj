@@ -39,9 +39,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="iGrid">
-      <HintPath>..\packages\iGrid.dll</HintPath>
-    </Reference>
     <Reference Include="Intermech.Client.Core">
       <HintPath>..\packages\Intermech.Client.Core.dll</HintPath>
     </Reference>
@@ -76,15 +73,25 @@
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="OrderCommandsProvider.cs" />
     <Compile Include="OrdersPlugin.cs" />
-    <Compile Include="InformDialogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InformDialogForm.Designer.cs">
-      <DependentUpon>InformDialogForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InformDialogFormPresenter.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="LevelColor.cs" />
+    <Compile Include="TreeComparer\ComparerNode.cs" />
+    <Compile Include="TreeComparer\CompareTwoNodesEventArgs.cs" />
+    <Compile Include="TreeComparer\CompareTwoNodesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeComparer\CompareTwoNodesView.Designer.cs">
+      <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeComparer\ITreeComparerView.cs" />
+    <Compile Include="TreeComparer\TreeComparerPresenter.cs" />
+    <Compile Include="TreeComparer\TreeComparerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeComparer\TreeComparerView.Designer.cs">
+      <DependentUpon>TreeComparerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeComparer\TreeComparerViewModel.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,15 +111,16 @@
     <Compile Include="Reports\IReportFactory.cs" />
     <Compile Include="Reports\ReportNode.cs" />
     <Compile Include="Services\CheckOrderService.cs" />
-    <Compile Include="ViewModels\ComparerNode.cs" />
     <Compile Include="ViewModels\MainFormModel.cs" />
-    <Compile Include="ViewModels\TreeComparerViewModel.cs" />
     <Compile Include="Views\OrderNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="InformDialogForm.resx">
-      <DependentUpon>InformDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="TreeComparer\CompareTwoNodesView.resx">
+      <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreeComparer\TreeComparerView.resx">
+      <DependentUpon>TreeComparerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -150,7 +158,9 @@
   <ItemGroup>
     <None Include="Resources\icons8-download-16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\icons8-forest-16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

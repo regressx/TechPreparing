@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.TechPreparation.Interfaces.Services
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+
+namespace NavisElectronics.TechPreparation.Interfaces.Services
 {
     using System;
     using System.Collections.Generic;
     using Entities;
-    using Enums;
     using Exceptions;
 
     /// <summary>

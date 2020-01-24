@@ -1,26 +1,27 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
-using NavisElectronics.TechPreparation.TreeComparer;
-
-namespace NavisElectronics.TechPreparation.Views
+﻿namespace NavisElectronics.Orders.Views
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using Interfaces.Entities;
-    using Entities;
-    using Enums;
-    using ViewInterfaces;
-    using ViewModels.TreeNodes;
+    using TechPreparation.Interfaces.Entities;
+    using TechPreparation.Interfaces.Enums;
+    using TreeComparer;
 
     public partial class TreeComparerView : Form, ITreeComparerView
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeComparerView"/> class.
+        /// </summary>
         public TreeComparerView()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Событие загрузки данных
+        /// </summary>
         public event EventHandler Download;
 
         /// <summary>
@@ -28,21 +29,24 @@ namespace NavisElectronics.TechPreparation.Views
         /// </summary>
         public event EventHandler Compare;
 
-        public event EventHandler CompareListsClick;
-
+        /// <summary>
+        /// СОбытие отправки изменений в старое дерево
+        /// </summary>
         public event EventHandler PushChanges;
+
+        /// <summary>
+        /// Удаление узла из старого дерева
+        /// </summary>
         public event EventHandler<ComparerNode> DeleteNodeClick;
-
-        public event EventHandler<IntermechTreeElement> EditCooperationClick;
-
-        public event EventHandler<IntermechTreeElement> EditTechRoutesClick;
 
         /// <summary>
         /// Событие для того, чтобы по узлу в одном дереве прыгнуть на этот же узел во втором дереве
         /// </summary>
         public event EventHandler<ComparerNode> JumpInit;
 
-        public event EventHandler<ComparerNode> FindInOldArchive;
+        /// <summary>
+        /// Сравнение двух узлов
+        /// </summary>
         public event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;
 
 
@@ -232,7 +236,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         }
 
-        private void pushChangesMenuItem_Click(object sender, EventArgs e)
+        private void PushChangesMenuItem_Click(object sender, EventArgs e)
         {
             if (PushChanges != null)
             {
@@ -240,27 +244,7 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void editCooperationMenuItem_Click(object sender, EventArgs e)
-        {
-            if (EditCooperationClick != null)
-            {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                IntermechTreeElement selectedIntermechElement = selectedNode.Tag as IntermechTreeElement;
-                EditCooperationClick(sender, selectedIntermechElement);
-            }
-        }
-
-        private void editRouteMenuItem_Click(object sender, EventArgs e)
-        {
-            if (EditTechRoutesClick != null)
-            {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                IntermechTreeElement selectedIntermechElement = selectedNode.Tag as IntermechTreeElement;
-                EditTechRoutesClick(sender, selectedIntermechElement);
-            }
-        }
-
-        private void treeViewAdv_KeyDown(object sender, KeyEventArgs e)
+        private void TreeViewAdv_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
@@ -291,16 +275,8 @@ namespace NavisElectronics.TechPreparation.Views
 
         }
 
-        private void findInOldArchiveMenuItem_Click(object sender, EventArgs e)
-        {
-            if (FindInOldArchive != null)
-            {
-                ComparerNode selectedNode = treeViewAdv2.SelectedNode.Tag as ComparerNode;
-                FindInOldArchive(sender, selectedNode);
-            }
-        }
 
-        private void deleteNodeMenuItem_Click(object sender, EventArgs e)
+        private void DeleteNodeMenuItem_Click(object sender, EventArgs e)
         {
             if (DeleteNodeClick != null)
             {
