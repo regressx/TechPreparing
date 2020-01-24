@@ -7,17 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Linq;
-using System.Threading.Tasks;
-using NavisElectronics.TechPreparation.Interfaces;
-
 namespace NavisElectronics.TechPreparation.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
     using Aga.Controls.Tree;
+    using Interfaces;
     using Interfaces.Entities;
     using Services;
     using TreeNodes;

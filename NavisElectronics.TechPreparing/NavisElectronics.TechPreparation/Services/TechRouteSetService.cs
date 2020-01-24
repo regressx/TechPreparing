@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.TechPreparation.Services
+﻿using Aga.Controls.Tree;
+
+namespace NavisElectronics.TechPreparation.Services
 {
     using System.Collections.Generic;
     using System.Text;
@@ -21,6 +23,35 @@
                 element.StockRate = treeElement.StockRate;
                 element.SampleSize = treeElement.SampleSize;
                 element.TechTask = treeElement.TechTask;
+
+                Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+                queue.Enqueue(treeElement);
+                while (queue.Count > 0)
+                {
+                    IntermechTreeElement elementFromQueue = queue.Dequeue();
+                    elementFromQueue.StockRate = element.StockRate;
+
+                    foreach (IntermechTreeElement child in elementFromQueue.Children)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+
+                Queue<MyNode> viewQueue = new Queue<MyNode>();
+                foreach (Node node in element.Nodes)
+                {
+                    viewQueue.Enqueue((MyNode)node);
+                    while (viewQueue.Count > 0)
+                    {
+                        MyNode elementFromQueue = viewQueue.Dequeue();
+                        elementFromQueue.StockRate = element.StockRate;
+
+                        foreach (Node child in elementFromQueue.Nodes)
+                        {
+                            viewQueue.Enqueue((MyNode)child);
+                        }
+                    }
+                }
 
                 IList<TechRouteNode> nodes = resultNodesList;
                 StringBuilder stringId = new StringBuilder();

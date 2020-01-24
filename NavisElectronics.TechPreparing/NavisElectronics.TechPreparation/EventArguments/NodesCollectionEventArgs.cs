@@ -8,7 +8,7 @@
     /// <summary>
     /// Аргумент для события копирования узлов в буфер
     /// </summary>
-    public class ClipboardEventArgs : EventArgs
+    public class NodesCollectionEventArgs : EventArgs
     {
         /// <summary>
         /// Узлы, которые были скопированы
@@ -16,12 +16,12 @@
         private readonly ICollection<MyNode> _nodes;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClipboardEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="NodesCollectionEventArgs"/> class.
         /// </summary>
         /// <param name="nodes">
         /// Узлы, скопированные в буфер
         /// </param>
-        public ClipboardEventArgs(ICollection<MyNode> nodes)
+        public NodesCollectionEventArgs(ICollection<MyNode> nodes)
         {
             _nodes = nodes;
         }

@@ -12,9 +12,6 @@ using NavisElectronics.TechPreparation.Interfaces.Entities;
 namespace NavisElectronics.TechPreparation.EventArguments
 {
     using System;
-
-    using NavisElectronics.TechPreparation.Entities;
-
     public class TreeNodeAgentValueEventArgs: EventArgs
     {
         private IntermechTreeElement _treeElement;

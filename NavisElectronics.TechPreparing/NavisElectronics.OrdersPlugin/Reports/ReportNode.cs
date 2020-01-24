@@ -67,7 +67,7 @@ namespace NavisElectronics.Orders.Reports
         {
             string[] values = new string[]
             {
-                NumberInOrder, Designation, Name, Amount.ToString("F2"), Note, Letter
+                NumberInOrder, Designation, Name, FirstUse, Amount.ToString("F0"), ChangeNumber,ChangeDocument, Note, Letter, TypeId.ToString(),string.Empty,Status
             };
             foreach (string str in values)
             {

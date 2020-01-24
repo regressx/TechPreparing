@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Intermech;
+
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
@@ -304,6 +306,9 @@ namespace NavisElectronics.TechPreparation.Data
                                                                     Id = groupTechProcessDBobject.ObjectID,
                                                                     Name = groupDesAttribute.AsString
                                                                 };
+
+                                                                // всегда 100
+                                                                element.SampleSize = "100%";
                                                             }
 
                                                             Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
@@ -484,7 +489,7 @@ namespace NavisElectronics.TechPreparation.Data
                 };
 
                 // Поиск состава
-                DataTable documents = compositionService.LoadComposition(keeper.Session, id, 1004, new List<ColumnDescriptor>(columnsForDocuments), string.Empty); // забрать всю документацию
+                DataTable documents = compositionService.LoadComposition(keeper.Session, id, 1004, new List<ColumnDescriptor>(columnsForDocuments), SystemGUIDs.filtrationBaseVersions); // забрать всю документацию
 
                 foreach (DataRow row in documents.Rows)
                 {
@@ -552,10 +557,10 @@ namespace NavisElectronics.TechPreparation.Data
 
                 // Поиск состава
                 // сборки, комплекты, детали
-                DataTable articlesCmposition = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1, new List<ColumnDescriptor>(columns), string.Empty, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
+                DataTable articlesCmposition = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1, new List<ColumnDescriptor>(columns), SystemGUIDs.filtrationBaseVersions, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
 
                 // по связи деталь-заготовка
-                DataTable detailBlank = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1038, new List<ColumnDescriptor>(columns), string.Empty, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
+                DataTable detailBlank = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1038, new List<ColumnDescriptor>(columns), SystemGUIDs.filtrationBaseVersions, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
 
                 // если есть изделия-заготовки, то не будем их добавлять в состав. Надо найти деталь, заготовкой которой они являются и перенести в него количество
                 IList<IntermechTreeElement> elementsForDetails = new List<IntermechTreeElement>();
@@ -586,7 +591,7 @@ namespace NavisElectronics.TechPreparation.Data
                 };
 
                 // по связи Подборной компонент
-                DataTable pickedElements = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1056, new List<ColumnDescriptor>(columnsForPickedRelation), string.Empty, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
+                DataTable pickedElements = compositionService.LoadComposition(keeper.Session.SessionGUID, id, 1056, new List<ColumnDescriptor>(columnsForPickedRelation), SystemGUIDs.filtrationBaseVersions, 1074, 1078, 1052, 1128, 1138, 1105, 1097);
 
                 foreach (DataRow row in pickedElements.Rows)
                 {
@@ -624,7 +629,7 @@ namespace NavisElectronics.TechPreparation.Data
                             new ColumnDescriptor(-15, AttributeSourceTypes.Object, ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // код извещения
                         };
 
-                        DataTable docComposition = compositionService.LoadComposition(keeper.Session.SessionGUID, Convert.ToInt64(element.Id), 1004, new List<ColumnDescriptor>(specificationColumns), string.Empty, 1259, 1682);
+                        DataTable docComposition = compositionService.LoadComposition(keeper.Session.SessionGUID, Convert.ToInt64(element.Id), 1004, new List<ColumnDescriptor>(specificationColumns), SystemGUIDs.filtrationBaseVersions, 1259, 1682);
 
                         if (docComposition.Rows.Count > 0)
                         {
@@ -1579,9 +1584,18 @@ namespace NavisElectronics.TechPreparation.Data
             {
                 using (SessionKeeper keeper = new SessionKeeper())
                 {
-                    IDBObject documentObject = keeper.Session.GetObject(changeDocumentId);
-                    element.ChangeDocument = documentObject.Caption;
-                }
+                    try
+                    {
+                        IDBObject documentObject = keeper.Session.GetObject(changeDocumentId);
+                        element.ChangeDocument = documentObject.Caption;
+                    }
+                    catch (Exception)
+                    {
+                        element.ChangeDocument = string.Empty;
+                    }
+
+
+                } 
             }
         }
     }

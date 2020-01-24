@@ -43,7 +43,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckSumService.cs" />
+    <Compile Include="..\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
     <Compile Include="Exceptions\FileAttributeIsEmptyException.cs" />

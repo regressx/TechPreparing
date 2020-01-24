@@ -92,12 +92,12 @@
         /// <returns>
         /// Возвращает содержимое атрибута Краткое наименование папок раздела IMbase Сетевой путь к старому архиву
         /// </returns>
-        public string GetManufacturePath(string value)
+        public string GetManufacturePath(string manufacturerCode)
         {
             // обычный линейный поиск. Быстро и просто, потому что мало элементов
             foreach (PathContainer line in _lines)
             {
-                if (line.Name.Equals(value))
+                if (line.Name.Equals(manufacturerCode))
                 {
                     return line.PseudoName;
                 }
