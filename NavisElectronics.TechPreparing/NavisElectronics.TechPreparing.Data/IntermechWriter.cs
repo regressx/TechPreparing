@@ -37,7 +37,7 @@ namespace NavisElectronics.TechPreparation.Data
         /// </param>
         /// <exception cref="Exception">
         /// </exception>
-        public void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment)
+        public void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment, ISerializeStrategy<T> serializeStrategy)
         {
             using (SessionKeeper keeper = new SessionKeeper())
             {
@@ -49,13 +49,8 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // сериализуем
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            byte[] bytes;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                binaryFormatter.Serialize(ms, element);
-                bytes = ms.ToArray();
-            }
+            byte[] bytes = serializeStrategy.Serialize(element);
+
 
             // если есть, что писать, пишем в базу
             if (bytes.Length > 0)
@@ -109,32 +104,7 @@ namespace NavisElectronics.TechPreparation.Data
 
             IntermechTreeElement elementToSave = (IntermechTreeElement)element.Clone();
 
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-
-            while (queue.Count != 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
-                elementFromQueue.UseAmount = 0;
-                elementFromQueue.AmountWithUse = 0;
-                elementFromQueue.TotalAmount = 0;
-                elementFromQueue.NodeState = NodeStates.Default;
-                foreach (IntermechTreeElement child in elementFromQueue.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
-
-            JsonSerializer jsonSerializer = new JsonSerializer();
-            jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
-            byte[] bytes;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (JsonWriter jsonWriter = new BsonWriter(ms))
-                {
-                    jsonSerializer.Serialize(jsonWriter, elementToSave);
-                }
-                bytes = ms.ToArray();
-            }
+            byte[] bytes = SerializeTreeElement(elementToSave);
 
             // если есть, что писать, пишем в базу
             if (bytes.Length > 0)
@@ -170,6 +140,39 @@ namespace NavisElectronics.TechPreparation.Data
             }
         }
 
+        private byte[] SerializeTreeElement(IntermechTreeElement elementToSave)
+        {
+            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
+
+            while (queue.Count != 0)
+            {
+                IntermechTreeElement elementFromQueue = queue.Dequeue();
+                elementFromQueue.UseAmount = 0;
+                elementFromQueue.AmountWithUse = 0;
+                elementFromQueue.TotalAmount = 0;
+                elementFromQueue.NodeState = NodeStates.Default;
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
+            byte[] bytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (JsonWriter jsonWriter = new BsonWriter(ms))
+                {
+                    jsonSerializer.Serialize(jsonWriter, elementToSave);
+                }
+
+                bytes = ms.ToArray();
+            }
+
+            return bytes;
+        }
+
         /// <summary>
         /// The write file attribute async.
         /// </summary>
@@ -202,11 +205,11 @@ namespace NavisElectronics.TechPreparation.Data
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment)
+        public Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment, ISerializeStrategy<T> serializeStrategy)
         {
             return Task.Run(() =>
             {
-                WriteBlobAttribute<T>(orderId, element, blobAttributeId, comment);
+                WriteBlobAttribute<T>(orderId, element, blobAttributeId, comment, serializeStrategy);
             });
         }
 

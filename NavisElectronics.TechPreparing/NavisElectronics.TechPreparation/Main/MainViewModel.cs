@@ -233,9 +233,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
 
         }
 
-        public Task WriteBlobAttributeAsync<T>(long rootVersionId, T element, int attrubuteId, string comment)
+        public Task WriteBlobAttributeAsync<T>(long rootVersionId, T element, int attrubuteId, string comment,  ISerializeStrategy<T> serializeStrategy)
         {
-            return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment);
+            return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment, serializeStrategy);
         }
 
         public Task<T> ReadDataFromBlobAttribute<T>(long rootVersionId, int attrubuteId) where T:class

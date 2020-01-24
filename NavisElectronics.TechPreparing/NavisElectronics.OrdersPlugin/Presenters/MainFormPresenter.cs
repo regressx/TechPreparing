@@ -1,6 +1,7 @@
 ﻿using NavisElectronics.Orders.TreeComparer;
 using NavisElectronics.Orders.Views;
 using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace NavisElectronics.Orders.Presenters
@@ -93,7 +94,7 @@ namespace NavisElectronics.Orders.Presenters
             try
             {
                 _view.UpdateSaveLabel("Начинаю сохранение");
-                await _model.WriteBlobAttributeAsync(_orderVersionId, _root, 17964, _root.Name);
+                await _model.WriteBlobAttributeAsync(_orderVersionId, _root, 17964, _root.Name, new SerializeStrategyBson<IntermechTreeElement>());
                 _view.UpdateSaveLabel("Последнее сохранение в " + DateTime.Now.ToString());
             }
             catch (Exception ex)

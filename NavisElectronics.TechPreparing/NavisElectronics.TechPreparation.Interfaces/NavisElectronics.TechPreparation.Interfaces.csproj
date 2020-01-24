@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.TechPreparation.Interfaces</RootNamespace>
     <AssemblyName>NavisElectronics.TechPreparation.Interfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -47,6 +47,7 @@
       <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
+    <Compile Include="ISerializeStrategy.cs" />
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
