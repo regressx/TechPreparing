@@ -25,6 +25,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
         private readonly OpenFolderService _openFolderService;
 
         private readonly MergeNodesService _mergeNodesService;
+        private readonly LastVersionService _lastVersionService;
 
         /// <summary>
         /// Репозиторий
@@ -40,9 +41,10 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <param name="reader">
         /// Репозиторий с данными о дереве состава заказа
         /// </param>
-        public TreeComparerViewModel(OpenFolderService openFolderService, IDataRepository reader, MergeNodesService mergeNodesService)
+        public TreeComparerViewModel(OpenFolderService openFolderService, IDataRepository reader, MergeNodesService mergeNodesService, LastVersionService lastVersionService)
         {
             _mergeNodesService = mergeNodesService;
+            _lastVersionService = lastVersionService;
             _openFolderService = openFolderService;
             _reader = reader;
         }
@@ -93,9 +95,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IntermechTreeElement> GetFullOrderFromDatabaseAsync(long id, CancellationToken token)
+        public Task<IntermechTreeElement> GetOrderDataAsync(long orderVersionId)
         {
-            return _reader.GetFullOrderAsync(id, token);
+            return _reader.GetDataFromBinaryAttributeAsync<IntermechTreeElement>(orderVersionId, 17964, new DeserializeStrategyBson<IntermechTreeElement>());
         }
 
         /// <summary>
@@ -242,6 +244,16 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 throw new Exception("Элемента нет по такому пути");
             }
             return FindNodeRecursive(currentNode, queueId);
+        }
+
+        public async Task<long> GetLastOrderVersionId(long oldElementObjectId)
+        {
+            Func<long> func = () =>
+            {
+                return _lastVersionService.GetLastOrderVersionId(oldElementObjectId);
+            };
+
+            return await Task.Run(func);
         }
     }
 }

@@ -19,6 +19,8 @@ namespace NavisElectronics.Orders.TreeComparer
         /// </summary>
         private readonly MergeNodesService _mergeNodesService;
 
+        private readonly LastVersionService _lastVersionService;
+
         /// <summary>
         /// Репозиторий
         /// </summary>
@@ -33,9 +35,10 @@ namespace NavisElectronics.Orders.TreeComparer
         /// <param name="mergeNodesService">
         /// Сервис для слияния веток
         /// </param>
-        public TreeComparerViewModel(IDataRepository reader, MergeNodesService mergeNodesService)
+        public TreeComparerViewModel(IDataRepository reader, MergeNodesService mergeNodesService, LastVersionService lastVersionService)
         {
             _mergeNodesService = mergeNodesService;
+            _lastVersionService = lastVersionService;
             _reader = reader;
         }
 
@@ -74,9 +77,9 @@ namespace NavisElectronics.Orders.TreeComparer
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IntermechTreeElement> GetFullOrderFromDatabaseAsync(long id, CancellationToken token)
+        public Task<IntermechTreeElement> GetFullOrderFromDatabaseAsync(long versionId, CancellationToken token)
         {
-            return _reader.GetFullOrderAsync(id, token);
+            return _reader.GetFullOrderAsync(versionId, token);
         }
 
         /// <summary>
@@ -223,6 +226,27 @@ namespace NavisElectronics.Orders.TreeComparer
                 throw new Exception("Элемента нет по такому пути");
             }
             return FindNodeRecursive(currentNode, queueId);
+        }
+
+        /// <summary>
+        /// Метод позволяет получить последнюю версию объекта по идентификатору объекта
+        /// </summary>
+        /// <param name="oldElementObjectId">
+        /// Идентификатор объекта старого заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+
+        public async Task<long> GetLastOrderVersionId(long oldElementObjectId)
+        {
+            Func<long> func = () =>
+            {
+                return _lastVersionService.GetLastOrderVersionId(oldElementObjectId);
+            };
+
+            return await Task.Run(func);
+
         }
     }
 }

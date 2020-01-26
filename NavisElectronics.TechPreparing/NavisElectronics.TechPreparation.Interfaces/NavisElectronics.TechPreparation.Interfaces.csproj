@@ -62,6 +62,7 @@
     <Compile Include="IStructElement.cs" />
     <Compile Include="ITreeNode.cs" />
     <Compile Include="Services\IntermechTreeElementBuilder.cs" />
+    <Compile Include="Services\LastVersionService.cs" />
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="ProgressReport.cs" />

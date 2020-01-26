@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using Intermech.Interfaces;
-using NavisElectronics.Orders.DataAccessLayer;
-using NavisElectronics.Orders.Enums;
-using NavisElectronics.Orders.Reports;
-using NavisElectronics.TechPreparation.Data;
-
-namespace NavisElectronics.Orders.ViewModels
+﻿namespace NavisElectronics.Orders.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Aga.Controls.Tree;
+    using DataAccessLayer;
+    using Enums;
+    using Intermech.Interfaces;
+    using Reports;
     using TechPreparation.Interfaces;
     using TechPreparation.Interfaces.Entities;
     using TechPreparation.Interfaces.Services;
@@ -32,6 +28,9 @@ namespace NavisElectronics.Orders.ViewModels
         /// </summary>
         private readonly SaveService _saveService;
 
+        /// <summary>
+        /// Репозиторий, их которого получаем типы документов.
+        /// </summary>
         private readonly SupportingRepository _repository;
 
         /// <summary>
@@ -42,6 +41,9 @@ namespace NavisElectronics.Orders.ViewModels
         /// </param>
         /// <param name="saveService">
         /// The save service.
+        /// </param>
+        /// <param name="repository">
+        /// Репозиторий типов документов
         /// </param>
         public MainFormModel(IDataRepository reader, SaveService saveService, SupportingRepository repository)
         {

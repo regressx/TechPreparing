@@ -18,8 +18,6 @@
         event EventHandler Compare;
         event EventHandler PushChanges;
         event EventHandler<ComparerNode> DeleteNodeClick;
-        event EventHandler<IntermechTreeElement> EditCooperationClick;
-        event EventHandler<IntermechTreeElement> EditTechRoutesClick;
         event EventHandler<ComparerNode> JumpInit;
         event EventHandler<ComparerNode> FindInOldArchive;
         event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;

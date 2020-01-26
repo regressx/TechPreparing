@@ -16,8 +16,8 @@ namespace NavisElectronics.TechPreparation.Views
         public CompareTwoNodesView(IntermechTreeElement leftElement, IntermechTreeElement rightElement)
         {
             InitializeComponent();
-            propertyGrid1.SelectedObject = leftElement;
-            propertyGrid2.SelectedObject = rightElement;
+            propertyGrid1.SelectedObject = leftElement.Clone();
+            propertyGrid2.SelectedObject = rightElement.Clone();
         }
     }
 }

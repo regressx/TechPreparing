@@ -1,4 +1,5 @@
-﻿using NavisElectronics.Orders.TreeComparer;
+﻿using Intermech.Client.Core.FormDesigner.Actions.ContextCommand;
+using NavisElectronics.Orders.TreeComparer;
 using NavisElectronics.Orders.Views;
 using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces;
@@ -60,6 +61,7 @@ namespace NavisElectronics.Orders.Presenters
         {
             _model.DecryptDocuments(_root);
             _view.UpdateTreeModel(_root);
+            MessageBox.Show("Расшифровка произведена");
         }
 
         private void View_CreateReport(object sender, ReportStyle e)
@@ -85,7 +87,7 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
         {
-            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(), new MergeNodesService()));
+            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(), new MergeNodesService(), new LastVersionService()));
             treeComparerPresenter.Run(_root);
         }
 

@@ -76,6 +76,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                 elementInOldTree.MeasureUnits = elementFromUpdateInitialized.MeasureUnits;
                 elementInOldTree.Name = elementFromUpdateInitialized.Name;
                 elementInOldTree.RelationNote = elementFromUpdateInitialized.RelationNote;
+                elementInOldTree.ProduseSign = elementFromUpdateInitialized.ProduseSign;
             }
         }
 

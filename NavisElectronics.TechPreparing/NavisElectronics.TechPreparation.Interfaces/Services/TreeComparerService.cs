@@ -118,7 +118,8 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                         || elementToFind.Position != elementFromQueue.Position
                         || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation
                         || elementToFind.Name != elementFromQueue.Name
-                        || elementToFind.RelationNote != elementFromQueue.RelationNote)
+                        || elementToFind.RelationNote != elementFromQueue.RelationNote
+                        || elementToFind.ProduseSign != elementFromQueue.ProduseSign)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }

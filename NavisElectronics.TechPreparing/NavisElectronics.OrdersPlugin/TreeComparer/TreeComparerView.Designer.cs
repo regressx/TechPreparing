@@ -63,9 +63,9 @@ namespace NavisElectronics.Orders.Views
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.downloadTreeButton = new System.Windows.Forms.ToolStripButton();
             this.compareTreeButton = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.leftTreeContextMenuStrip.SuspendLayout();
             this.rightTreecontextMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -358,23 +358,6 @@ namespace NavisElectronics.Orders.Views
             this.toolStrip.TabIndex = 4;
             this.toolStrip.Text = "toolStrip";
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeViewAdv1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.treeViewAdv2);
-            this.splitContainer1.Size = new System.Drawing.Size(1455, 494);
-            this.splitContainer1.SplitterDistance = 726;
-            this.splitContainer1.TabIndex = 5;
-            // 
             // downloadTreeButton
             // 
             this.downloadTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -395,6 +378,23 @@ namespace NavisElectronics.Orders.Views
             this.compareTreeButton.Text = "Сравнить два дерева";
             this.compareTreeButton.Click += new System.EventHandler(this.compareTreeButton_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.treeViewAdv1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.treeViewAdv2);
+            this.splitContainer1.Size = new System.Drawing.Size(1455, 494);
+            this.splitContainer1.SplitterDistance = 726;
+            this.splitContainer1.TabIndex = 5;
+            // 
             // TreeComparerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,7 +404,7 @@ namespace NavisElectronics.Orders.Views
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.statusStrip);
             this.Name = "TreeComparerView";
-            this.Text = "TreeComparerView";
+            this.Text = "Сравнение деревьев";
             this.leftTreeContextMenuStrip.ResumeLayout(false);
             this.rightTreecontextMenuStrip.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);

@@ -262,8 +262,11 @@ namespace NavisElectronics.Orders.Presenters
             model.Nodes.Add(node);
             _view.FillNewTree(model);
             _view.LockButtons();
+
+            long lastOrderVersionId = await _model.GetLastOrderVersionId(_oldElement.ObjectId);
+
             IntermechTreeElement order =
-                await _model.GetFullOrderFromDatabaseAsync(_oldElement.Id, CancellationToken.None);
+                await _model.GetFullOrderFromDatabaseAsync(lastOrderVersionId, CancellationToken.None);
             _newElement = order;
             _view.FillNewTree(_model.GetModel(order));
             _view.UnlockButtons();
