@@ -111,9 +111,9 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// </returns>
         Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId);
 
-        Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId) where T : class;
+        Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId, IDeserializeStrategy<T> deserializeStrategy) where T : class;
 
-        T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId) where T : class;
+        T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId, IDeserializeStrategy<T> deserializeStrategy) where T : class;
 
         /// <summary>
         /// Получение типов тех. отхода
@@ -167,19 +167,6 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// </returns>
         Task<ICollection<TechRouteNode>> GetTechRouteAsync(IntermechTreeElement element,
             IDictionary<long, TechRouteNode> dictionary, string organizationStructName, string productionType);
-
-
-        /// <summary>
-        /// Получает тех. маршрут
-        /// </summary>
-        /// <param name="id">
-        /// идентификатор версии сборочной единицы
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        //Task<ICollection<Production>> GetTechRouteAsync(IntermechTreeElement element,
-        //    IDictionary<long, TechRouteNode> dictionary, string organizationStructName);
 
     }
 }

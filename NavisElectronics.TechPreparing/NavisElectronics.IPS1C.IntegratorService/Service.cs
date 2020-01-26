@@ -1,4 +1,6 @@
-﻿namespace NavisElectronics.IPS1C.IntegratorService
+﻿using NavisElectronics.TechPreparation.Interfaces;
+
+namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;
@@ -280,7 +282,7 @@
         {
             IntermechReader reader = new IntermechReader();
             TechRouteNode organizationStruct = null;
-            Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute));
+            Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute, new DeserializeStrategyBson<TechRouteNode>()));
             organizationStruct = task.Result;
             if (organizationStruct == null)
             {

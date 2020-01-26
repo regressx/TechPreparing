@@ -721,7 +721,6 @@ namespace NavisElectronics.TechPreparation.Data
         {
             // получаем из базы
             byte[] bytes = null;
-            bool isDataset = false;
             using (SessionKeeper keeper = new SessionKeeper())
             {
                 IDBObject orderObject = keeper.Session.GetObject(versionId);
@@ -733,11 +732,6 @@ namespace NavisElectronics.TechPreparation.Data
                     blobReader.OpenBlob(0);
                     bytes = blobReader.ReadDataBlock();
                     blobReader.CloseBlob();
-
-                    if (((string)fileAttribute.Value).Contains(".blb"))
-                    {
-                        isDataset = true;
-                    }
                 }
             }
 
@@ -772,21 +766,11 @@ namespace NavisElectronics.TechPreparation.Data
             IntermechTreeElement root = null;
             using (MemoryStream ms = new MemoryStream(unpackedBytes))
             {
-                if (!isDataset)
+                // десериализуем
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (JsonReader jsonReader = new BsonReader(ms))
                 {
-                    // десериализуем
-                    JsonSerializer jsonSerializer = new JsonSerializer();
-                    using (JsonReader jsonReader = new BsonReader(ms))
-                    {
-                        root = (IntermechTreeElement)jsonSerializer.Deserialize(jsonReader, typeof(IntermechTreeElement));
-                    }
-                }
-                else
-                {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    DataSet ds = (DataSet)binaryFormatter.Deserialize(ms);
-                    TreeBuilderService treeBuilderService = new TreeBuilderService();
-                    root = treeBuilderService.Build(ds);
+                    root = (IntermechTreeElement)jsonSerializer.Deserialize(jsonReader, typeof(IntermechTreeElement));
                 }
             }
 
@@ -795,69 +779,6 @@ namespace NavisElectronics.TechPreparation.Data
             return root;
         }
 
-        public DataSet GetDataset(long orderId, int dataAttributeId)
-        {
-            // получаем из базы
-            byte[] bytes = null;
-            using (SessionKeeper keeper = new SessionKeeper())
-            {
-                IDBObject orderObject = keeper.Session.GetObject(orderId);
-                IDBAttribute binaryAtt = orderObject.GetAttributeByID((int)dataAttributeId);
-
-                if (binaryAtt != null)
-                {
-                    IBlobReader blobReader = binaryAtt as IBlobReader;
-                    blobReader.OpenBlob(0);
-                    bytes = blobReader.ReadDataBlock();
-                    blobReader.CloseBlob();
-                }
-            }
-
-            if (bytes == null)
-            {
-                throw new FileAttributeIsEmptyException("Атрибута нет, поэтому нет и данных");
-            }
-
-            // распаковываем
-            Inflater inflater = new Inflater();
-            byte[] temp = new byte[1024];
-            byte[] unpackedBytes = null;
-            using (MemoryStream memory = new MemoryStream())
-            {
-                inflater.SetInput(bytes);
-                while (!inflater.IsFinished)
-                {
-                    int extracted = inflater.Inflate(temp);
-                    if (extracted > 0)
-                    {
-                        memory.Write(temp, 0, extracted);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                unpackedBytes = memory.ToArray();
-            }
-
-            // пакуем в Dataset
-            BinaryFormatter binFormatter = new BinaryFormatter();
-            DataSet dataSet;
-            using (MemoryStream ms = new MemoryStream(unpackedBytes))
-            {
-                dataSet = (DataSet)binFormatter.Deserialize(ms);
-            }
-            return dataSet;
-        }
-
-        public Task<DataSet> GetDatasetAsync(long orderId, int dataAttributeId)
-        {
-            return Task.Run<DataSet>(() =>
-            {
-                return GetDataset(orderId, dataAttributeId);
-            });
-        }
 
         public Task<IntermechTreeElement> GetDataFromFileAsync(long versionId, int dataAttributeId)
         {
@@ -867,12 +788,12 @@ namespace NavisElectronics.TechPreparation.Data
             });
         }
 
-        public Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId) where T:class
+        public Task<T> GetDataFromBinaryAttributeAsync<T>(long versionId, int dataAttributeId, IDeserializeStrategy<T> deserializeStrategy) where T:class
         {
-            return Task.Run<T>(() => { return GetDataFromBinaryAttribute<T>(versionId, dataAttributeId); });
+            return Task.Run<T>(() => { return GetDataFromBinaryAttribute<T>(versionId, dataAttributeId,deserializeStrategy); });
         }
 
-        public T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId) where T:class
+        public T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId, IDeserializeStrategy<T> deserializeStrategy) where T:class
         {
             // получаем из базы
             byte[] bytes = null;
@@ -913,13 +834,9 @@ namespace NavisElectronics.TechPreparation.Data
                 unpackedBytes = memory.ToArray();
             }
 
-            // пакуем в Dataset
-            BinaryFormatter binFormatter = new BinaryFormatter();
-            T deserializedObject;
-            using (MemoryStream ms = new MemoryStream(unpackedBytes))
-            {
-                deserializedObject = (T)binFormatter.Deserialize(ms);
-            }
+
+            T deserializedObject = deserializeStrategy.Deserialize(unpackedBytes);
+
             return deserializedObject;
         }
 
@@ -1366,6 +1283,8 @@ namespace NavisElectronics.TechPreparation.Data
         /// </returns>
         private IntermechTreeElement CreateNewElement(DataRow row, IUserSession session, IList<IntermechTreeElement> elementsForDetails, string parentDesignation)
         {
+            //TODO Этот метод можно попозже заменить на уже существующий класс IntermechTreeElementBulder, в нём тоже не всё замечательно, но тогда мы снимаем лишнюю обязанность с текущего класса
+
             IntermechTreeElement element = new IntermechTreeElement()
             {
                 Id = Convert.ToInt64(row[0]),

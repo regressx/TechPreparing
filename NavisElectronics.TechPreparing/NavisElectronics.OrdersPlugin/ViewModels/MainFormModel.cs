@@ -75,7 +75,7 @@ namespace NavisElectronics.Orders.ViewModels
 
         public Task<T> ReadDataFromBlobAttribute<T>(long rootVersionId, int attrubuteId) where T:class
         {
-            return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId);
+            return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId, new DeserializeStrategyBson<T>());
         }
 
         public Task<bool> AttributeExist(long versionId, int attributeId)

@@ -47,6 +47,7 @@
       <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
+    <Compile Include="IDeserializeStrategy.cs" />
     <Compile Include="ISerializeStrategy.cs" />
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
