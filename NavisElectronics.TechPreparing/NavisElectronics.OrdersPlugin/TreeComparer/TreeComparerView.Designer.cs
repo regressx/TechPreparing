@@ -371,7 +371,7 @@ namespace NavisElectronics.Orders.Views
             // compareTreeButton
             // 
             this.compareTreeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.compareTreeButton.Image = global::NavisElectronics.Orders.Properties.Resources.icons8_forest_16;
+            this.compareTreeButton.Image = global::NavisElectronics.Orders.Properties.Resources.Forest;
             this.compareTreeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.compareTreeButton.Name = "compareTreeButton";
             this.compareTreeButton.Size = new System.Drawing.Size(23, 22);

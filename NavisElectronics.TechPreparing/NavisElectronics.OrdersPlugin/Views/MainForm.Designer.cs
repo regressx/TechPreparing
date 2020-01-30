@@ -114,7 +114,6 @@
             this.doNotProduceButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.notProdInCurrentNodeButton,
             this.notProdInTreeButton});
-            this.doNotProduceButton.Image = global::NavisElectronics.Orders.Properties.Resources.DeleteNode;
             this.doNotProduceButton.Name = "doNotProduceButton";
             this.doNotProduceButton.Size = new System.Drawing.Size(245, 22);
             this.doNotProduceButton.Text = "Не изготавливать";
@@ -226,6 +225,7 @@
             this.DecryptDocumentsButton.Name = "DecryptDocumentsButton";
             this.DecryptDocumentsButton.Size = new System.Drawing.Size(23, 22);
             this.DecryptDocumentsButton.Text = "Расшифровать названия документов";
+            this.DecryptDocumentsButton.ToolTipText = "Расшифровать типы документов";
             this.DecryptDocumentsButton.Click += new System.EventHandler(this.DecryptDocumentsButton_Click);
             // 
             // statusStrip

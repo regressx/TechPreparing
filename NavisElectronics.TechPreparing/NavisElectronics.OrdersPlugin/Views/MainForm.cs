@@ -68,6 +68,8 @@ namespace NavisElectronics.Orders
             root.AmountWithUse = elementToView.AmountWithUse;
             root.Name = elementToView.Name;
             root.Designation = elementToView.Designation;
+            root.PcbVersion = elementToView.PcbVersion;
+            root.IsPcb = elementToView.IsPcb;
             root.Tag = elementToView;
             GetOrderNodeRecursive(root, elementToView);
             TreeModel model = new TreeModel();
@@ -94,6 +96,34 @@ namespace NavisElectronics.Orders
                 node.Note = child.RelationNote;
                 node.RelationType = child.RelationName;
                 node.Tag = child;
+                node.PcbVersion = child.PcbVersion;
+                node.IsPcb = child.IsPcb;
+                if (node.IsPcb)
+                {
+                    if (string.IsNullOrEmpty(node.Note))
+                    {
+                        node.Note = "V" + node.PcbVersion.ToString();
+                    }
+                    else
+                    {
+                        node.Note = node.Note + "V" + node.PcbVersion.ToString();
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(child.SubstituteInfo))
+                {
+                    if (string.IsNullOrEmpty(node.Note))
+                    {
+                        node.Note = child.SubstituteInfo;
+                    }
+                    else
+                    {
+                        node.Note = node.Note + ", " + child.SubstituteInfo;
+                    }
+                }
+
+
+
                 root.Nodes.Add(node);
                 GetOrderNodeRecursive(node, child);
             }

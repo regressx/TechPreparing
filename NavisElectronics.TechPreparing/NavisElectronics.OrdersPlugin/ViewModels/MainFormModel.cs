@@ -111,6 +111,7 @@
             root.Name = elementToView.Name;
             root.Designation = elementToView.Designation;
             root.Tag = elementToView;
+
             GetOrderNodeRecursive(root, elementToView);
             TreeModel model = new TreeModel();
             model.Nodes.Add(root);
@@ -120,6 +121,8 @@
         public void CreateReport(string reportName, OrderNode element, ReportStyle reportStyle)
         {
             IReportFactory factory = null;
+            IReport report = null;
+            ReportNode root = new ReportNode(element);
             switch (reportStyle)
             {
                 case ReportStyle.Excel:
@@ -127,11 +130,19 @@
                     ICollection<LevelColor> colors = _repository.GetHexStringColorsCollection();
                     factory = new ExcelReportFactory(reportName, new MapTreeOnListService<ReportNode>(), colors);
 
-                    ReportNode root = new ReportNode(element);
+                    root = new ReportNode(element);
                     GetReportNodeRecursive(element, root);
-                    factory.Create(root);
                     break;
             }
+
+            if (factory != null)
+            {
+                report = factory.Create();
+                report.CreateReportView(root);
+            }
+
+
+
         }
 
         private void GetReportNodeRecursive(OrderNode orderNode, ReportNode reportNode)

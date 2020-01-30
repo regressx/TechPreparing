@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+//using Jace;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+
 namespace NavisElectronics.TechPreparation
 {
     using System;
@@ -58,10 +61,10 @@ namespace NavisElectronics.TechPreparation
                 ICommandsProvider prov = new CooperationListCommandProvider(presentationFactory);
 
                 menu.Nodes.Add(new MenuTemplateNode("CalculateOperation", "Рассчитать потребность материалов на операцию", -1, 2, int.MaxValue));
-                ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider();
+                //ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider(new RateService(new CalculationEngine()));
 
                 factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1019, prov);
-                factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
+                //factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
             }
         }
 
