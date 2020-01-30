@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.TechPreparation</RootNamespace>
     <AssemblyName>NavisElectronics.TechPreparation</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -89,7 +89,10 @@
     <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
+    <Compile Include="Entities\RateCatalog.cs" />
+    <Compile Include="Entities\RateCatalogNode.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
+    <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\ElementPlaceOfBirth.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
     <Compile Include="Reports\CooperationList\CooperationListView.cs" />
     <Compile Include="Reports\IReportService.cs" />
+    <Compile Include="Services\RateService.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
     <Compile Include="TechRouteMap\ProductionTypeDialog.cs">
@@ -279,6 +283,7 @@
     <None Include="Manual\NavisElectronics.TechPreparation %28Руководство пользователя%29 .docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\icons8-business-report-16%281%29.png" />
     <None Include="Resources\icons8-flow-chart-16.png" />
     <None Include="Resources\icons8-simple-tree-16.png" />

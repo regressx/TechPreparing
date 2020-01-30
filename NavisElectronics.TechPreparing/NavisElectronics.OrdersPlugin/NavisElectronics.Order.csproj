@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.Orders</RootNamespace>
     <AssemblyName>NavisElectronics.Orders</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -132,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Save.png" />
+    <Content Include="Работа с заказом.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.TechPreparation.Interfaces\NavisElectronics.TechPreparation.Interfaces.csproj">
@@ -144,12 +147,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AddNode.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DeleteNode.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Start.png" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-forest-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Key.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
