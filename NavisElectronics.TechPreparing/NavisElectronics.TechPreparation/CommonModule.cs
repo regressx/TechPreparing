@@ -52,8 +52,8 @@ namespace NavisElectronics.TechPreparation
             Bind<TreeNodeDialogViewModel>().ToSelf();
             Bind<TreeComparerViewModel>().ToSelf();
             Bind<IMainView>().To<MdiMainForm>();
-            Bind<ITreeComparerView>().To<TreeComparerView>();
-            //Bind<ITechRouteMap>().To<TechRoutesMap>();
+            Bind<ITreeComparerView>().To<TreeComparerView>();       
+            Bind<RecountService>().ToSelf();
             Bind<ITechRouteMap>().To<TechRoutesMapWithDataGrid>();
             
         }

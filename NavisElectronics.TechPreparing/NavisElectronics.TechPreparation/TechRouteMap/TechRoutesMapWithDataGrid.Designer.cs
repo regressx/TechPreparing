@@ -181,13 +181,6 @@
             this.updateFromIPSButton.Text = "Обновить узел из IPS";
             this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
             // 
-            // ShowButton
-            // 
-            this.ShowButton.Name = "ShowButton";
-            this.ShowButton.Size = new System.Drawing.Size(292, 22);
-            this.ShowButton.Text = "Посмотреть";
-            this.ShowButton.Click += new System.EventHandler(this.ShowButton_Click);
-            // 
             // goToArchiveButton
             // 
             this.goToArchiveButton.Name = "goToArchiveButton";
@@ -294,14 +287,6 @@
             this.PasteRouteButton.Size = new System.Drawing.Size(292, 22);
             this.PasteRouteButton.Text = "Вставить маршрут";
             this.PasteRouteButton.Click += new System.EventHandler(this.PasteRouteButton_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Enabled = false;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(292, 22);
-            this.toolStripMenuItem1.Text = "Создать ТП по указанному маршруту";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // createReport
             // 

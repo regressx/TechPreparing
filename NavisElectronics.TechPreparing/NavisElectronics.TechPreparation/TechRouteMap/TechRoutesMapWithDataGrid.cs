@@ -134,32 +134,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            //IAutoSelectionService autoSelectionService = ServicesManager.GetService(typeof(IAutoSelectionService)) as IAutoSelectionService;
-
-            //if (autoSelectionService == null)
-            //{
-            //    return;
-            //}
-
-            //List<long> list = autoSelectionService.ExecuteSelection(-1283382, AutoSelectionMode.All);
-
-
-
-            // if (list != null)
-            // {
-            // if (list.Count != 0)
-            // {
-            // INotificationService notificationService = ServicesManager.GetService(typeof(INotificationService)) as INotificationService;
-            // if (notificationService != null)
-            // {
-            // notificationService.FireEvent(null, new DBRelationsEventArgs("RelationsCreated", list));
-            // }
-            // }
-            // }
-        }
-
         private void goToArchiveButton_Click(object sender, EventArgs e)
         {
             if (GoToOldArchive != null)
