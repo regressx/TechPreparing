@@ -87,7 +87,7 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
         {
-            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(), new MergeNodesService(), new LastVersionService()));
+            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(new RecountService()), new MergeNodesService(), new LastVersionService()));
             treeComparerPresenter.Run(_root);
         }
 

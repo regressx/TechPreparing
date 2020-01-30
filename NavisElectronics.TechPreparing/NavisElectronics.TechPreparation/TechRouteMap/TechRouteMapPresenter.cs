@@ -166,7 +166,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void _view_CreateCooperationList(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
@@ -260,7 +260,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void View_CreateDevideList(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
@@ -279,7 +279,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void View_CreateReportClick(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {

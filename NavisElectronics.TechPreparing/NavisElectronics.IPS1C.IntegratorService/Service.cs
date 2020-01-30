@@ -249,7 +249,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
             // технологические данные заказа: сведения о кооперации, тех. маршруты
             IntermechTreeElement techDataOrderElement = null;
-            IntermechReader reader = new IntermechReader();
+            IntermechReader reader = new IntermechReader(new RecountService());
             
             Task<IntermechTreeElement> myTask = Task.Run(async () => await reader.GetDataFromFileAsync(versionId, ConstHelper.FileAttribute));
             techDataOrderElement = myTask.Result;
@@ -280,7 +280,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
         /// </exception>
         public OrganizationNode GetOrganizationStruct(long orderVersionId)
         {
-            IntermechReader reader = new IntermechReader();
+            IntermechReader reader = new IntermechReader(new RecountService());
             TechRouteNode organizationStruct = null;
             Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute, new DeserializeStrategyBson<TechRouteNode>()));
             organizationStruct = task.Result;

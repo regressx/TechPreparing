@@ -205,7 +205,7 @@ namespace NavisElectronics.TechPreparation.Views
 
         private void createSingleCompleteListMenuItem_Click(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             MyNode selectedNode = treeViewAdv.SelectedNode.Tag as MyNode;
             reportService.CreateReport(selectedNode, selectedNode.Name, ReportType.CompleteList, DocumentType.Intermech);
         }
