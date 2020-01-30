@@ -1,9 +1,10 @@
-﻿namespace NavisElectronics.TechPreparation.Interfaces.Services
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+
+namespace NavisElectronics.TechPreparation.Interfaces.Services
 {
     using System;
     using System.Collections.Generic;
     using Entities;
-    using Enums;
     using Exceptions;
 
     /// <summary>
@@ -117,7 +118,8 @@
                         || elementToFind.Position != elementFromQueue.Position
                         || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation
                         || elementToFind.Name != elementFromQueue.Name
-                        || elementToFind.RelationNote != elementFromQueue.RelationNote)
+                        || elementToFind.RelationNote != elementFromQueue.RelationNote
+                        || elementToFind.ProduseSign != elementFromQueue.ProduseSign)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }

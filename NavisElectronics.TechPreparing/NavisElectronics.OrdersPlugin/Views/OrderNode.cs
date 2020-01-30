@@ -18,5 +18,8 @@ namespace NavisElectronics.Orders
         public string Note { get; set; }
         public bool DoNotProduce { get; set; }
         public string RelationType { get; set; }
+        public string SubInfo { get; set; }
+        public int PcbVersion { get; set; }
+        public bool IsPcb { get; set; }
     }
 }

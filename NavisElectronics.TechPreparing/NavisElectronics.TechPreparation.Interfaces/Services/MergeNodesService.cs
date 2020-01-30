@@ -1,8 +1,9 @@
-﻿namespace NavisElectronics.TechPreparation.Interfaces.Services
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+
+namespace NavisElectronics.TechPreparation.Interfaces.Services
 {
     using System.Collections.Generic;
     using Entities;
-    using Enums;
 
     /// <summary>
     /// Сервис для слияния веток
@@ -75,6 +76,7 @@
                 elementInOldTree.MeasureUnits = elementFromUpdateInitialized.MeasureUnits;
                 elementInOldTree.Name = elementFromUpdateInitialized.Name;
                 elementInOldTree.RelationNote = elementFromUpdateInitialized.RelationNote;
+                elementInOldTree.ProduseSign = elementFromUpdateInitialized.ProduseSign;
             }
         }
 

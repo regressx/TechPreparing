@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NavisElectronics.TechPreparation.Interfaces;
 
 namespace NavisElectronics.Orders.Reports
 {
-    public class ReportNode : ITreeNode, IEnumerable
+    public class ReportNode : ITreeNode, IEnumerable<string>
     {
         private ICollection<ITreeNode> _nodes;
 
@@ -25,6 +26,8 @@ namespace NavisElectronics.Orders.Reports
             Note = node.Note;
             Index = node.Index;
             DoNotProduce = node.DoNotProduce;
+            PcbVersion = node.PcbVersion;
+            IsPcb = node.IsPcb;
         }
 
         public int TypeId { get; set; }
@@ -55,24 +58,43 @@ namespace NavisElectronics.Orders.Reports
         public string ChangeNumber { get; set; }
         public string ChangeDocument { get; set; }
         public string Note { get; set; }
-
-
+        public int PcbVersion { get; set; }
+        public bool IsPcb { get; set; }
         public void Add(ReportNode node)
         {
             _nodes.Add(node);
             node.Parent = this;
         }
 
-        public IEnumerator GetEnumerator()
+        public IEnumerator<string> GetEnumerator()
         {
             string[] values = new string[]
             {
-                NumberInOrder, Designation, Name, FirstUse, Amount.ToString("F0"), ChangeNumber,ChangeDocument, Note, Letter, TypeId.ToString(),string.Empty,Status
+                NumberInOrder, Designation, Name, FirstUse, Amount.ToString("F0"), ChangeNumber, ChangeDocument, Note, Letter, TypeId.ToString(),string.Empty,Status
             };
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] == null)
+                {
+                    values[i] = string.Empty;
+                }
+
+                if (values[4] == "0")
+                {
+                    values[4] = string.Empty;
+                }
+            }
+
             foreach (string str in values)
             {
                 yield return str;
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

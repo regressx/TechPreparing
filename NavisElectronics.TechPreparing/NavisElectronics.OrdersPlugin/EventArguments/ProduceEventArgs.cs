@@ -1,8 +1,8 @@
-﻿using NavisElectronics.Orders.Enums;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
-namespace NavisElectronics.Orders.EventArguments
+﻿namespace NavisElectronics.Orders.EventArguments
 {
+    using Enums;
+    using TechPreparation.Interfaces.Entities;
+
     public class ProduceEventArgs
     {
         private readonly IntermechTreeElement _element;

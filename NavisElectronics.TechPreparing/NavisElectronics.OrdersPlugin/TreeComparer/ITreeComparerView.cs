@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace NavisElectronics.TechPreparation.ViewInterfaces
+﻿namespace NavisElectronics.Orders.TreeComparer
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
-    using Interfaces.Entities;
-    using ViewModels.TreeNodes;
+    using TechPreparation.Interfaces.Entities;
 
     /// <summary>
     /// Интерфейс представления сравнения двух деревьев
@@ -18,10 +16,7 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
         event EventHandler Compare;
         event EventHandler PushChanges;
         event EventHandler<ComparerNode> DeleteNodeClick;
-        event EventHandler<IntermechTreeElement> EditCooperationClick;
-        event EventHandler<IntermechTreeElement> EditTechRoutesClick;
         event EventHandler<ComparerNode> JumpInit;
-        event EventHandler<ComparerNode> FindInOldArchive;
         event EventHandler<CompareTwoNodesEventArgs> CompareTwoNodesClick;
 
         void FillOldTree(TreeModel mainElement);
@@ -32,13 +27,14 @@ namespace NavisElectronics.TechPreparation.ViewInterfaces
 
         DialogResult ShowDialog();
 
-
         ComparerNode GetOldNode();
         ComparerNode GetNewNode();
+
         void Show();
         void ExpandFirstTree();
         void ExpandSecondTree();
         void JumpToNode(object sender, ComparerNode nodeToFind);
+
         TreeViewAdv GetNewTree();
         TreeViewAdv GetOldTree();
         ICollection<ComparerNode> GetSelectedNodesInRightTree();

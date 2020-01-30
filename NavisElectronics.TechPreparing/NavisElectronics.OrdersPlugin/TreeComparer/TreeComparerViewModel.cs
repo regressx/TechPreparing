@@ -1,21 +1,25 @@
-﻿namespace NavisElectronics.Orders.ViewModels
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Aga.Controls.Tree;
-    using TechPreparation.Interfaces;
-    using TechPreparation.Interfaces.Entities;
-    using TechPreparation.Interfaces.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Aga.Controls.Tree;
+using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
+namespace NavisElectronics.Orders.TreeComparer
+{
     /// <summary>
     /// Фасад для основной логики для обслуживания команд от окна TreeComparerView
     /// </summary>
     public class TreeComparerViewModel
     {
+        /// <summary>
+        /// The _merge nodes service.
+        /// </summary>
         private readonly MergeNodesService _mergeNodesService;
-        private readonly TreeComparerService _comparerService;
+
+        private readonly LastVersionService _lastVersionService;
 
         /// <summary>
         /// Репозиторий
@@ -28,12 +32,16 @@
         /// <param name="reader">
         /// Репозиторий с данными о дереве состава заказа
         /// </param>
-        public TreeComparerViewModel(IDataRepository reader, MergeNodesService mergeNodesService, TreeComparerService comparerService)
+        /// <param name="mergeNodesService">
+        /// Сервис для слияния веток
+        /// </param>
+        public TreeComparerViewModel(IDataRepository reader, MergeNodesService mergeNodesService, LastVersionService lastVersionService)
         {
             _mergeNodesService = mergeNodesService;
-            _comparerService = comparerService;
+            _lastVersionService = lastVersionService;
             _reader = reader;
         }
+
 
         /// <summary>
         /// Получение модели дерева
@@ -69,9 +77,9 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IntermechTreeElement> GetFullOrderFromDatabaseAsync(long id, CancellationToken token)
+        public Task<IntermechTreeElement> GetFullOrderFromDatabaseAsync(long versionId, CancellationToken token)
         {
-            return _reader.GetFullOrderAsync(id, token);
+            return _reader.GetFullOrderAsync(versionId, token);
         }
 
         /// <summary>
@@ -85,7 +93,8 @@
         /// </param>
         public void Compare(IntermechTreeElement oldElement, IntermechTreeElement newElement)
         {
-            _comparerService.Compare(oldElement, newElement);
+            TreeComparerService comparerService = new TreeComparerService();
+            comparerService.Compare(oldElement, newElement);
         }
 
         /// <summary>
@@ -172,6 +181,7 @@
                     childNode.CooperationFlag = child.CooperationFlag;
                     childNode.NodeState = child.NodeState;
                     childNode.Tag = child;
+                    childNode.RelationType = child.RelationName;
                     mainNode.Nodes.Add(childNode);
                     BuildNodeRecursive(childNode, child);
                 }
@@ -216,6 +226,27 @@
                 throw new Exception("Элемента нет по такому пути");
             }
             return FindNodeRecursive(currentNode, queueId);
+        }
+
+        /// <summary>
+        /// Метод позволяет получить последнюю версию объекта по идентификатору объекта
+        /// </summary>
+        /// <param name="oldElementObjectId">
+        /// Идентификатор объекта старого заказа
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+
+        public async Task<long> GetLastOrderVersionId(long oldElementObjectId)
+        {
+            Func<long> func = () =>
+            {
+                return _lastVersionService.GetLastOrderVersionId(oldElementObjectId);
+            };
+
+            return await Task.Run(func);
+
         }
     }
 }

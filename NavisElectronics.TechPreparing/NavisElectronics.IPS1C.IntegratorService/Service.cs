@@ -1,25 +1,24 @@
-﻿using System.Security.Authentication;
-using Intermech;
-using NavisElectronics.TechPreparation.Data;
-using NavisElectronics.TechPreparation.Interfaces;
-using NavisElectronics.TechPreparation.Interfaces.Helpers;
-using NavisElectronics.TechPreparation.Interfaces.Services;
-
+﻿using NavisElectronics.TechPreparation.Interfaces;
 
 namespace NavisElectronics.IPS1C.IntegratorService
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Security.Authentication;
     using System.Threading.Tasks;
     using Entities;
     using Exceptions;
+    using Intermech;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Interfaces.Server;
     using Intermech.Kernel.Search;
     using Services;
+    using TechPreparation.Data;
     using TechPreparation.Interfaces.Entities;
+    using TechPreparation.Interfaces.Helpers;
+    using TechPreparation.Interfaces.Services;
 
     /// <summary>
     /// Реализация интерфейса IService
@@ -131,6 +130,19 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     tempId = myObject.ID;
 
                     isVersion = true;
+                }
+
+                // выбрать из всех версий объектов базовую
+                List<long> allObjectVersionsList = keeper.Session.GetAllObjectVersionsList(tempId, true, false, false);
+                foreach (long versionId in allObjectVersionsList)
+                {
+                    IDBObject versionObject = keeper.Session.GetObject(versionId);
+                    if (versionObject.IsBaseVersion)
+                    {
+                        myObject = versionObject;
+                        tempId = versionId;
+                        break;
+                    }
                 }
 
                 // забираем атрибут Единицы измерения, причем его краткую часть
@@ -270,7 +282,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
         {
             IntermechReader reader = new IntermechReader();
             TechRouteNode organizationStruct = null;
-            Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute));
+            Task<TechRouteNode> task = Task.Run(async () => await reader.GetDataFromBinaryAttributeAsync<TechRouteNode>(orderVersionId, ConstHelper.OrganizationStructAttribute, new DeserializeStrategyBson<TechRouteNode>()));
             organizationStruct = task.Result;
             if (organizationStruct == null)
             {

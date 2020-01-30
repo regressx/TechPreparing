@@ -1,8 +1,8 @@
-﻿using Aga.Controls.Tree;
-using NavisElectronics.TechPreparation.Enums;
-
-namespace NavisElectronics.Orders.ViewModels
+﻿namespace NavisElectronics.Orders.TreeComparer
 {
+    using Aga.Controls.Tree;
+    using TechPreparation.Interfaces.Enums;
+
     /// <summary>
     /// Узел для отображения в Aga.Controls.Tree. Служит для построения модели данных для сравнения деревьев
     /// </summary>
@@ -28,6 +28,9 @@ namespace NavisElectronics.Orders.ViewModels
         /// </summary>
         public string ChangeNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether cooperation flag.
+        /// </summary>
         public bool CooperationFlag { get; set; }
 
         /// <summary>
@@ -45,5 +48,7 @@ namespace NavisElectronics.Orders.ViewModels
         /// </summary>
         public NodeStates NodeState { get; set; }
 
+
+        public string RelationType { get; set; }
     }
 }

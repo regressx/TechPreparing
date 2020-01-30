@@ -8,9 +8,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces;
 using NavisElectronics.TechPreparation.Interfaces.Helpers;
 using NavisElectronics.TechPreparation.Main;
 using NavisElectronics.TechPreparation.TechRouteMap;
+using NavisElectronics.TechPreparation.TreeComparer;
 
 namespace NavisElectronics.TechPreparation.Presenters
 {
@@ -272,7 +274,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 {
                     TechRouteNodeAdapter resultNode = (TechRouteNodeAdapter)settings.Result;
                     _organizationStruct = resultNode.TechRouteNode;
-                    await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode, ConstHelper.OrganizationStructAttribute, "Структура предприятия " + resultNode.Name);
+                    await _model.WriteBlobAttributeAsync<TechRouteNode>(_rootVersionId, resultNode.TechRouteNode, ConstHelper.OrganizationStructAttribute, "Структура предприятия " + resultNode.Name, new SerializeStrategyBson<TechRouteNode>());
                 }
                 else
                 {

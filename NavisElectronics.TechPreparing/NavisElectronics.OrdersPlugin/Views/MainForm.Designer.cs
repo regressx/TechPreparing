@@ -114,7 +114,6 @@
             this.doNotProduceButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.notProdInCurrentNodeButton,
             this.notProdInTreeButton});
-            this.doNotProduceButton.Image = global::NavisElectronics.Orders.Properties.Resources.DeleteNode;
             this.doNotProduceButton.Name = "doNotProduceButton";
             this.doNotProduceButton.Size = new System.Drawing.Size(245, 22);
             this.doNotProduceButton.Text = "Не изготавливать";
@@ -226,6 +225,7 @@
             this.DecryptDocumentsButton.Name = "DecryptDocumentsButton";
             this.DecryptDocumentsButton.Size = new System.Drawing.Size(23, 22);
             this.DecryptDocumentsButton.Text = "Расшифровать названия документов";
+            this.DecryptDocumentsButton.ToolTipText = "Расшифровать типы документов";
             this.DecryptDocumentsButton.Click += new System.EventHandler(this.DecryptDocumentsButton_Click);
             // 
             // statusStrip
@@ -255,7 +255,7 @@
             this.treeViewAdv.DefaultToolTipProvider = null;
             this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
-            this.treeViewAdv.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.treeViewAdv.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.GridLineStyle = ((Aga.Controls.Tree.GridLineStyle)((Aga.Controls.Tree.GridLineStyle.Horizontal | Aga.Controls.Tree.GridLineStyle.Vertical)));

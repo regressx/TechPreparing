@@ -48,7 +48,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment);
+        Task WriteBlobAttributeAsync<T>(long orderId, T element, int blobAttributeId, string comment, ISerializeStrategy<T> serializeStrategy);
 
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         /// <param name="element">
         /// The element.
         /// </param>
-        void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment);
+        void WriteBlobAttribute<T>(long orderId, T element, int blobAttributeId, string comment,ISerializeStrategy<T> serializeStrategy);
 
 
         /// <summary>

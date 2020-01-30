@@ -1,6 +1,9 @@
-﻿using System.Data;
-using Intermech.Interfaces;
-using Intermech.Kernel.Search;
+﻿using Intermech.Client.Core.FormDesigner.Actions.ContextCommand;
+using NavisElectronics.Orders.TreeComparer;
+using NavisElectronics.Orders.Views;
+using NavisElectronics.TechPreparation.Data;
+using NavisElectronics.TechPreparation.Interfaces;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace NavisElectronics.Orders.Presenters
 {
@@ -58,6 +61,7 @@ namespace NavisElectronics.Orders.Presenters
         {
             _model.DecryptDocuments(_root);
             _view.UpdateTreeModel(_root);
+            MessageBox.Show("Расшифровка произведена");
         }
 
         private void View_CreateReport(object sender, ReportStyle e)
@@ -83,7 +87,8 @@ namespace NavisElectronics.Orders.Presenters
 
         private void View_DownloadAndUpdate(object sender, EventArgs e)
         {
-            throw new NotImplementedException("Операция обновления и загрузки еще не реализована");
+            TreeComparerPresenter treeComparerPresenter = new TreeComparerPresenter(new TreeComparerView(), new TreeComparerViewModel(new IntermechReader(), new MergeNodesService(), new LastVersionService()));
+            treeComparerPresenter.Run(_root);
         }
 
         private async void View_Save(object sender, EventArgs e)
@@ -91,7 +96,7 @@ namespace NavisElectronics.Orders.Presenters
             try
             {
                 _view.UpdateSaveLabel("Начинаю сохранение");
-                await _model.WriteBlobAttributeAsync(_orderVersionId, _root, 17964, _root.Name);
+                await _model.WriteBlobAttributeAsync(_orderVersionId, _root, 17964, _root.Name, new SerializeStrategyBson<IntermechTreeElement>());
                 _view.UpdateSaveLabel("Последнее сохранение в " + DateTime.Now.ToString());
             }
             catch (Exception ex)

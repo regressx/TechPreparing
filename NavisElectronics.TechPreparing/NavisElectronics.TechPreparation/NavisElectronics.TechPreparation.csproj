@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.TechPreparation</RootNamespace>
     <AssemblyName>NavisElectronics.TechPreparation</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -89,9 +89,11 @@
     <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
+    <Compile Include="Entities\RateCatalog.cs" />
+    <Compile Include="Entities\RateCatalogNode.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
+    <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\ElementPlaceOfBirth.cs" />
-    <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
     <Compile Include="Main\IMainView.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Reports\CooperationList\CooperationListFactory.cs" />
     <Compile Include="Reports\CooperationList\CooperationListView.cs" />
     <Compile Include="Reports\IReportService.cs" />
+    <Compile Include="Services\RateService.cs" />
     <Compile Include="Services\TechRouteSetService.cs" />
     <Compile Include="Services\TechRouteStringBuilder.cs" />
     <Compile Include="TechRouteMap\ProductionTypeDialog.cs">
@@ -126,7 +129,15 @@
     <Compile Include="TechRouteMap\TechRoutesMapWithDataGrid.Designer.cs">
       <DependentUpon>TechRoutesMapWithDataGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewInterfaces\CompareTwoNodesEventArgs.cs" />
+    <Compile Include="TreeComparer\ComparerNode.cs" />
+    <Compile Include="TreeComparer\TreeComparerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeComparer\TreeComparerView.Designer.cs">
+      <DependentUpon>TreeComparerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeComparer\TreeComparerViewModel.cs" />
+    <Compile Include="TreeComparer\CompareTwoNodesEventArgs.cs" />
     <Compile Include="ViewInterfaces\ISelectManufacturerView.cs" />
     <Compile Include="Presenters\PresentationFactory.cs" />
     <Compile Include="Presenters\TreeNodeDialogPresenter.cs" />
@@ -182,18 +193,12 @@
     <Compile Include="Views\StructDialogView.designer.cs">
       <DependentUpon>StructDialogView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presenters\TreeComparerPresenter.cs" />
+    <Compile Include="TreeComparer\TreeComparerPresenter.cs" />
     <Compile Include="Views\ReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TreeComparer\TreeComparerView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TreeComparer\TreeComparerView.Designer.cs">
-      <DependentUpon>TreeComparerView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewInterfaces\IMultiplyParametersView.cs" />
     <Compile Include="Presenters\MultiplyParametersViewPresenter.cs" />
@@ -226,8 +231,7 @@
     <Compile Include="Reports\DocumentType.cs" />
     <Compile Include="Reports\ReportType.cs" />
     <Compile Include="EventArguments\SaveClickEventArgs.cs" />
-    <Compile Include="ViewInterfaces\ITreeComparerView.cs" />
-    <Compile Include="TreeComparer\ComparerNode.cs" />
+    <Compile Include="TreeComparer\ITreeComparerView.cs" />
     <Compile Include="ViewModels\IMultiplyParametersViewModel.cs" />
     <Compile Include="Main\MainViewModel.cs" />
     <Compile Include="ViewModels\MultiplyParametersViewModel.cs" />
@@ -235,7 +239,6 @@
     <Compile Include="Entities\Parameter.cs" />
     <Compile Include="TechRouteMap\TechRouteNodeView.cs" />
     <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
-    <Compile Include="TreeComparer\TreeComparerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main\MdiMainForm.resx">
@@ -249,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Note\AddNoteForm.resx">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreeComparer\TreeComparerView.resx">
+      <DependentUpon>TreeComparerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CompareTwoNodesView.resx">
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
@@ -272,14 +278,12 @@
     <EmbeddedResource Include="Views\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TreeComparer\TreeComparerView.resx">
-      <DependentUpon>TreeComparerView.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Manual\NavisElectronics.TechPreparation %28Руководство пользователя%29 .docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\icons8-business-report-16%281%29.png" />
     <None Include="Resources\icons8-flow-chart-16.png" />
     <None Include="Resources\icons8-simple-tree-16.png" />

@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Services;
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
 namespace ListOfCooperationTests
 {

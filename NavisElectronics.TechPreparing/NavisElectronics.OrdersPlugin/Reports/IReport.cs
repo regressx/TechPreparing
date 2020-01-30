@@ -2,6 +2,6 @@
 {
     public interface IReport
     {
-        void CreateReportView();
+        void CreateReportView(ReportNode reportNode);
     }
 }

@@ -9,6 +9,7 @@
 
 using NavisElectronics.TechPreparation.Main;
 using NavisElectronics.TechPreparation.TechRouteMap;
+using NavisElectronics.TechPreparation.TreeComparer;
 
 namespace NavisElectronics.TechPreparation
 {

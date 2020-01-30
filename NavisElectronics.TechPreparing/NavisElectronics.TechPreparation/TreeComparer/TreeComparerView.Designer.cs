@@ -34,17 +34,20 @@
             this.designationColumn = new Aga.Controls.Tree.TreeColumn();
             this.changeNumberColumn = new Aga.Controls.Tree.TreeColumn();
             this.amountColumn = new Aga.Controls.Tree.TreeColumn();
+            this.relationTypeColumn = new Aga.Controls.Tree.TreeColumn();
             this.leftTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.designationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.changeNumberTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.amounTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.relationTypeTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.treeViewAdv2 = new Aga.Controls.Tree.TreeViewAdv();
             this.newNameColumn = new Aga.Controls.Tree.TreeColumn();
             this.newDesignationColumn = new Aga.Controls.Tree.TreeColumn();
             this.newChangeNumberColumn = new Aga.Controls.Tree.TreeColumn();
             this.newAmountColumn = new Aga.Controls.Tree.TreeColumn();
+            this.newRelationColumn = new Aga.Controls.Tree.TreeColumn();
             this.rightTreecontextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.findInOldArchiveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCooperationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +58,7 @@
             this.newDesignationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newChangeNumberTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.newAmountTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.newRelationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -64,10 +68,6 @@
             this.downloadTreeButton = new System.Windows.Forms.ToolStripButton();
             this.compareTreeButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.relationTypeTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.relationTypeColumn = new Aga.Controls.Tree.TreeColumn();
-            this.newRelationColumn = new Aga.Controls.Tree.TreeColumn();
-            this.newRelationTextBox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.leftTreeContextMenuStrip.SuspendLayout();
             this.rightTreecontextMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -137,6 +137,12 @@
             this.amountColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.amountColumn.TooltipText = null;
             // 
+            // relationTypeColumn
+            // 
+            this.relationTypeColumn.Header = "Связь";
+            this.relationTypeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.relationTypeColumn.TooltipText = null;
+            // 
             // leftTreeContextMenuStrip
             // 
             this.leftTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -178,6 +184,13 @@
             this.amounTextBox.IncrementalSearchEnabled = true;
             this.amounTextBox.LeftMargin = 3;
             this.amounTextBox.ParentColumn = this.amountColumn;
+            // 
+            // relationTypeTextBox
+            // 
+            this.relationTypeTextBox.DataPropertyName = "RelationType";
+            this.relationTypeTextBox.IncrementalSearchEnabled = true;
+            this.relationTypeTextBox.LeftMargin = 3;
+            this.relationTypeTextBox.ParentColumn = this.relationTypeColumn;
             // 
             // treeViewAdv2
             // 
@@ -239,6 +252,12 @@
             this.newAmountColumn.SortOrder = System.Windows.Forms.SortOrder.None;
             this.newAmountColumn.TooltipText = null;
             // 
+            // newRelationColumn
+            // 
+            this.newRelationColumn.Header = "Связь";
+            this.newRelationColumn.SortOrder = System.Windows.Forms.SortOrder.None;
+            this.newRelationColumn.TooltipText = null;
+            // 
             // rightTreecontextMenuStrip
             // 
             this.rightTreecontextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -248,7 +267,7 @@
             this.toolStripSeparator1,
             this.pushChangesMenuItem});
             this.rightTreecontextMenuStrip.Name = "contextMenuStrip";
-            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 98);
+            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 120);
             // 
             // findInOldArchiveMenuItem
             // 
@@ -259,6 +278,7 @@
             // 
             // editCooperationMenuItem
             // 
+            this.editCooperationMenuItem.Enabled = false;
             this.editCooperationMenuItem.Name = "editCooperationMenuItem";
             this.editCooperationMenuItem.Size = new System.Drawing.Size(341, 22);
             this.editCooperationMenuItem.Text = "Редактировать кооперацию";
@@ -266,6 +286,7 @@
             // 
             // editRouteMenuItem
             // 
+            this.editRouteMenuItem.Enabled = false;
             this.editRouteMenuItem.Name = "editRouteMenuItem";
             this.editRouteMenuItem.Size = new System.Drawing.Size(341, 22);
             this.editRouteMenuItem.Text = "Редактировать маршруты";
@@ -278,6 +299,7 @@
             // 
             // pushChangesMenuItem
             // 
+            this.pushChangesMenuItem.Enabled = false;
             this.pushChangesMenuItem.Name = "pushChangesMenuItem";
             this.pushChangesMenuItem.Size = new System.Drawing.Size(341, 22);
             this.pushChangesMenuItem.Text = "Отправить выделенные изменения в старое дерево";
@@ -310,6 +332,13 @@
             this.newAmountTextBox.IncrementalSearchEnabled = true;
             this.newAmountTextBox.LeftMargin = 3;
             this.newAmountTextBox.ParentColumn = this.newAmountColumn;
+            // 
+            // newRelationTextBox
+            // 
+            this.newRelationTextBox.DataPropertyName = "RelationType";
+            this.newRelationTextBox.IncrementalSearchEnabled = true;
+            this.newRelationTextBox.LeftMargin = 3;
+            this.newRelationTextBox.ParentColumn = this.newRelationColumn;
             // 
             // statusStrip1
             // 
@@ -400,32 +429,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(1455, 494);
             this.splitContainer1.SplitterDistance = 726;
             this.splitContainer1.TabIndex = 5;
-            // 
-            // relationTypeTextBox
-            // 
-            this.relationTypeTextBox.DataPropertyName = "RelationType";
-            this.relationTypeTextBox.IncrementalSearchEnabled = true;
-            this.relationTypeTextBox.LeftMargin = 3;
-            this.relationTypeTextBox.ParentColumn = this.relationTypeColumn;
-            // 
-            // relationTypeColumn
-            // 
-            this.relationTypeColumn.Header = "Связь";
-            this.relationTypeColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.relationTypeColumn.TooltipText = null;
-            // 
-            // newRelationColumn
-            // 
-            this.newRelationColumn.Header = "Связь";
-            this.newRelationColumn.SortOrder = System.Windows.Forms.SortOrder.None;
-            this.newRelationColumn.TooltipText = null;
-            // 
-            // newRelationTextBox
-            // 
-            this.newRelationTextBox.DataPropertyName = "RelationType";
-            this.newRelationTextBox.IncrementalSearchEnabled = true;
-            this.newRelationTextBox.LeftMargin = 3;
-            this.newRelationTextBox.ParentColumn = this.newRelationColumn;
             // 
             // TreeComparerView
             // 

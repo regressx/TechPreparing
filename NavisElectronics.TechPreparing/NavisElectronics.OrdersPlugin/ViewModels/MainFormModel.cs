@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using Intermech.Interfaces;
-using NavisElectronics.Orders.DataAccessLayer;
-using NavisElectronics.Orders.Enums;
-using NavisElectronics.Orders.Reports;
-using NavisElectronics.TechPreparation.Data;
-
-namespace NavisElectronics.Orders.ViewModels
+﻿namespace NavisElectronics.Orders.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Aga.Controls.Tree;
+    using DataAccessLayer;
+    using Enums;
+    using Intermech.Interfaces;
+    using Reports;
     using TechPreparation.Interfaces;
     using TechPreparation.Interfaces.Entities;
     using TechPreparation.Interfaces.Services;
@@ -32,6 +28,9 @@ namespace NavisElectronics.Orders.ViewModels
         /// </summary>
         private readonly SaveService _saveService;
 
+        /// <summary>
+        /// Репозиторий, их которого получаем типы документов.
+        /// </summary>
         private readonly SupportingRepository _repository;
 
         /// <summary>
@@ -42,6 +41,9 @@ namespace NavisElectronics.Orders.ViewModels
         /// </param>
         /// <param name="saveService">
         /// The save service.
+        /// </param>
+        /// <param name="repository">
+        /// Репозиторий типов документов
         /// </param>
         public MainFormModel(IDataRepository reader, SaveService saveService, SupportingRepository repository)
         {
@@ -68,14 +70,14 @@ namespace NavisElectronics.Orders.ViewModels
             return await _reader.GetFullOrderAsync(versionId, token);
         }
 
-        public Task WriteBlobAttributeAsync<T>(long rootVersionId, T element, int attrubuteId, string comment)
+        public Task WriteBlobAttributeAsync<T>(long rootVersionId, T element, int attrubuteId, string comment,  ISerializeStrategy<T> serializeStrategy)
         {
-            return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment);
+            return _saveService.SaveIntoBlobAttributeAsync(rootVersionId, element, attrubuteId, comment, serializeStrategy);
         }
 
         public Task<T> ReadDataFromBlobAttribute<T>(long rootVersionId, int attrubuteId) where T:class
         {
-            return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId);
+            return _reader.GetDataFromBinaryAttributeAsync<T>(rootVersionId, attrubuteId, new DeserializeStrategyBson<T>());
         }
 
         public Task<bool> AttributeExist(long versionId, int attributeId)
@@ -109,6 +111,7 @@ namespace NavisElectronics.Orders.ViewModels
             root.Name = elementToView.Name;
             root.Designation = elementToView.Designation;
             root.Tag = elementToView;
+
             GetOrderNodeRecursive(root, elementToView);
             TreeModel model = new TreeModel();
             model.Nodes.Add(root);
@@ -118,6 +121,8 @@ namespace NavisElectronics.Orders.ViewModels
         public void CreateReport(string reportName, OrderNode element, ReportStyle reportStyle)
         {
             IReportFactory factory = null;
+            IReport report = null;
+            ReportNode root = new ReportNode(element);
             switch (reportStyle)
             {
                 case ReportStyle.Excel:
@@ -125,11 +130,19 @@ namespace NavisElectronics.Orders.ViewModels
                     ICollection<LevelColor> colors = _repository.GetHexStringColorsCollection();
                     factory = new ExcelReportFactory(reportName, new MapTreeOnListService<ReportNode>(), colors);
 
-                    ReportNode root = new ReportNode(element);
+                    root = new ReportNode(element);
                     GetReportNodeRecursive(element, root);
-                    factory.Create(root);
                     break;
             }
+
+            if (factory != null)
+            {
+                report = factory.Create();
+                report.CreateReportView(root);
+            }
+
+
+
         }
 
         private void GetReportNodeRecursive(OrderNode orderNode, ReportNode reportNode)

@@ -70,9 +70,9 @@
             return _writer.WriteFileAttributeAsync(orderVersionId, mainTreeElement, _progress);
         }
 
-        public Task SaveIntoBlobAttributeAsync<T>(long orderVersionId, T elementToSave, int attributeId, string comment)
+        public Task SaveIntoBlobAttributeAsync<T>(long orderVersionId, T elementToSave, int attributeId, string comment, ISerializeStrategy<T> serializeStrategy)
         {
-            return _writer.WriteBlobAttributeAsync<T>(orderVersionId, elementToSave, attributeId, comment);
+            return _writer.WriteBlobAttributeAsync<T>(orderVersionId, elementToSave, attributeId, comment, serializeStrategy);
         }
     }
 }

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NavisElectronics.TechPreparation.Interfaces</RootNamespace>
     <AssemblyName>NavisElectronics.TechPreparation.Interfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -46,6 +46,9 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
+    <Compile Include="IDeserializeStrategy.cs" />
+    <Compile Include="ISerializeStrategy.cs" />
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
     <Compile Include="Entities\Document.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="IStructElement.cs" />
     <Compile Include="ITreeNode.cs" />
     <Compile Include="Services\IntermechTreeElementBuilder.cs" />
+    <Compile Include="Services\LastVersionService.cs" />
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="Services\MergeNodesService.cs" />
     <Compile Include="ProgressReport.cs" />
@@ -71,7 +75,6 @@
     <Compile Include="Services\SaveServiceEventArgs.cs" />
     <Compile Include="Services\TreeComparerService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NavisElectronics.Substitutes\NavisElectronics.Substitutes.csproj">
       <Project>{228c1b09-9e36-4cf7-b0b6-0e45dd4233ad}</Project>

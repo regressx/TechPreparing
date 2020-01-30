@@ -1,4 +1,7 @@
-﻿namespace NavisElectronics.TechPreparation.Views
+﻿using NavisElectronics.TechPreparation.Interfaces.Enums;
+using NavisElectronics.TechPreparation.TreeComparer;
+
+namespace NavisElectronics.TechPreparation.Views
 {
     using System;
     using System.Collections.Generic;

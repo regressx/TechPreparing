@@ -7,22 +7,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Windows.Forms;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using Aga.Controls.Tree;
 using NavisElectronics.TechPreparation.Exceptions;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Enums;
+using NavisElectronics.TechPreparation.Interfaces.Exceptions;
+using NavisElectronics.TechPreparation.Presenters;
+using NavisElectronics.TechPreparation.ViewInterfaces;
+using NavisElectronics.TechPreparation.ViewModels;
+using NavisElectronics.TechPreparation.ViewModels.TreeNodes;
 using NavisElectronics.TechPreparation.Views;
 
-namespace NavisElectronics.TechPreparation.Presenters
+namespace NavisElectronics.TechPreparation.TreeComparer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using Aga.Controls.Tree;
-    using Enums;
-    using Interfaces.Entities;
-    using ViewInterfaces;
-    using ViewModels;
-    using ViewModels.TreeNodes;
-
     /// <summary>
     /// The tree comparer presenter.
     /// </summary>
@@ -65,8 +65,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.Download += _view_Download;
             _view.Compare += _view_Compare;
             _view.PushChanges += _view_PushChanges;
-            _view.EditCooperationClick += _view_EditCooperationClick;
-            _view.EditTechRoutesClick += _view_EditTechRoutesClick;
             _view.JumpInit += _view_JumpInit;
             _view.FindInOldArchive += _view_FindInOldArchive;
             _view.CompareTwoNodesClick += View_CompareTwoNodesClick;
@@ -190,41 +188,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             _view.JumpToNode(treeWhereToFind, nodeToFind);
         }
 
-        private void _view_EditTechRoutesClick(object sender, IntermechTreeElement e)
-        {
-            // using (SelectManufacturerView manufacturerView = new SelectManufacturerView(_agents.Values))
-            // {
-            // if (manufacturerView.ShowDialog() == DialogResult.OK)
-            // {
-            // string filter = manufacturerView.SelectedAgentId;
-            // Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            // queue.Enqueue(e);
-            // while (queue.Count > 0)
-            // {
-            // IntermechTreeElement elementFromQueue = queue.Dequeue();
-            // elementFromQueue.Agent = filter;
-            // if (elementFromQueue.Children.Count > 0)
-            // {
-            // foreach (IntermechTreeElement child in elementFromQueue.Children)
-            // {
-            // queue.Enqueue(child);
-            // }
-            // }
-            // }
-
-            // TechRoutesMap view = new TechRoutesMap(manufacturerView.SelectedAgentName, false);
-            // TechRouteMapPresenter presenter = new TechRouteMapPresenter(view, e,filter, _agents);
-            // presenter.Run();
-            // }
-            // }
-        }
-
-        private void _view_EditCooperationClick(object sender, IntermechTreeElement e)
-        {
-            // CooperationView cooperationView = new CooperationView(false);
-            // CooperationPresenter presenter = new CooperationPresenter(cooperationView, e, null);
-            // presenter.Run();
-        }
 
         private void _view_PushChanges(object sender, EventArgs e)
         {
@@ -317,8 +280,11 @@ namespace NavisElectronics.TechPreparation.Presenters
             model.Nodes.Add(node);
             _view.FillNewTree(model);
             _view.LockButtons();
+
+            long lastOrderVersionId = await _model.GetLastOrderVersionId(_oldElement.ObjectId);
+
             IntermechTreeElement order =
-                await _model.GetFullOrderFromDatabaseAsync(_oldElement.Id, CancellationToken.None);
+                await _model.GetOrderDataAsync(lastOrderVersionId);
             _newElement = order;
             _view.FillNewTree(_model.GetModel(order));
             _view.UnlockButtons();
