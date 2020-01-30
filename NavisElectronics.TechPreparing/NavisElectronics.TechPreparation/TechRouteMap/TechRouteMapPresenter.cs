@@ -51,11 +51,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         private readonly IPresentationFactory _presentationFactory;
 
         /// <summary>
-        /// Класс, позволяющий по номеру объекта показать его файлы
-        /// </summary>
-        private readonly ShowFileManager _showFileManager;
-
-        /// <summary>
         /// Представляет собой узел из Imbase, в котором представлена структура предприятия
         /// </summary>
         private TechRouteNode _organizationStruct;
@@ -89,7 +84,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.DeleteRouteClick += View_DeleteRouteClick;
             _view.Load += _view_Load;
             _view.EditNoteClick += View_EditNoteClick;
-            _view.ShowClick += _view_ShowClick;
             _view.GoToOldArchive += _view_GoToOldArchive;
             _view.CreateReportClick += View_CreateReportClick;
             _view.CreateDevideList += View_CreateDevideList;
@@ -292,12 +286,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
                 reportService.CreateReport(node, node.Name, ReportType.ListOfTechRoutes, DocumentType.Intermech);
             }
 
-        }
-
-        private void _view_ShowClick(object sender, SaveClickEventArgs e)
-        {
-            IntermechTreeElement element = e.Node.Tag as IntermechTreeElement;
-            _model.ShowProductCard(element);
         }
 
         private void View_EditNoteClick(object sender, SaveClickEventArgs e)

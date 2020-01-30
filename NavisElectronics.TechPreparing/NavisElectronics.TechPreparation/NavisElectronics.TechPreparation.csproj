@@ -180,7 +180,6 @@
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
-    <Compile Include="Services\ShowFileManager.cs" />
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
     </Compile>

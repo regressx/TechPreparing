@@ -30,7 +30,6 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler<NodesCollectionEventArgs> DeleteRouteClick;
         public event EventHandler<NodesCollectionEventArgs> CopyClick;
         public event EventHandler<NodesCollectionEventArgs> PasteClick;
-        public event EventHandler<SaveClickEventArgs> ShowClick;
         public event EventHandler DownloadInfoFromIPS;
         public event EventHandler UpdateNodeFromIps;
 
@@ -132,16 +131,6 @@ namespace NavisElectronics.TechPreparation.Views
                 }
 
                 temp(sender, new NodesCollectionEventArgs(nodes));
-            }
-        }
-
-        private void ShowButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<SaveClickEventArgs> temp = Volatile.Read(ref ShowClick);
-            if (temp != null)
-            {
-                MyNode node = treeViewAdv.SelectedNode.Tag as MyNode;
-                temp(sender, new SaveClickEventArgs(node));
             }
         }
 
