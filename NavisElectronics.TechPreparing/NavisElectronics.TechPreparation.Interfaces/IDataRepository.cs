@@ -7,6 +7,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
     using System.Threading;
     using System.Threading.Tasks;
     using Entities;
+    using NavisElectronics.TechPreparation.Interfaces.Services;
 
     /// <summary>
     /// Основной интерфейс получения данных

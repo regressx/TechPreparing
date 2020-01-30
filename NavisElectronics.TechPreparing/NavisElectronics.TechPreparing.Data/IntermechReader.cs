@@ -17,7 +17,6 @@ namespace NavisElectronics.TechPreparation.Data
     using System.Data;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -45,12 +44,15 @@ namespace NavisElectronics.TechPreparation.Data
         /// </summary>
         private readonly SubsituteDecryptorService _substituteDecriptorService;
 
+        private RecountService _recountService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="IntermechReader"/> class.
         /// </summary>
-        public IntermechReader()
+        public IntermechReader(RecountService recountService)
         {
             _substituteDecriptorService = new SubsituteDecryptorService(new ActualSubsitutesDecryptor(), new SubGroupsDecryptor(new SubGroupDecryptor()));
+            _recountService = recountService;
         }
 
 
@@ -441,7 +443,7 @@ namespace NavisElectronics.TechPreparation.Data
             // загрузка всего остального дерева
             FetchNodeRecursive(orderElement, downloadedParts, token);
 
-            RecountAmountInTree(orderElement);
+            _recountService.RecountAmount(orderElement);
 
             return orderElement;
         }
@@ -775,7 +777,7 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // расчет применяемостей
-            RecountAmountInTree(root);
+            _recountService.RecountAmount(root);
             return root;
         }
 
@@ -1444,36 +1446,6 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             return element;
-        }
-
-
-        /// <summary>
-        /// пересчитать применяемости в дереве
-        /// </summary>
-        /// <param name="node">
-        /// The node.
-        /// </param>
-        internal void RecountAmountInTree(IntermechTreeElement node)
-        {
-            // расчет применяемостей
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(node);
-            while (queue.Count > 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
-                IntermechTreeElement parent = elementFromQueue.Parent;
-                if (parent != null)
-                {
-                    elementFromQueue.UseAmount = (int)Math.Round(parent.AmountWithUse, MidpointRounding.ToEven);
-                    elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
-                    elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
-                }
-
-                foreach (IntermechTreeElement child in elementFromQueue.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
         }
 
         /// <summary>
