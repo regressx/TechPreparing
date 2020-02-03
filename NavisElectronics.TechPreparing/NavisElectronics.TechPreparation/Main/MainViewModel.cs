@@ -124,11 +124,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
             }
         }
 
-        public async Task<WithdrawalType> GetWithdrawalTypesAsync()
-        {
-            return await _reader.GetWithdrawalTypesAsync();
-        }
-
         public async Task<IntermechTreeElement> GetTreeFromFileAsync(long orderVersionId)
         {
             return await _reader.GetDataFromFileAsync(orderVersionId, ConstHelper.FileAttribute);
