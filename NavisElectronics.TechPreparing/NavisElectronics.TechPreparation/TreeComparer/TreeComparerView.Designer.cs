@@ -299,7 +299,6 @@
             // 
             // pushChangesMenuItem
             // 
-            this.pushChangesMenuItem.Enabled = false;
             this.pushChangesMenuItem.Name = "pushChangesMenuItem";
             this.pushChangesMenuItem.Size = new System.Drawing.Size(341, 22);
             this.pushChangesMenuItem.Text = "Отправить выделенные изменения в старое дерево";

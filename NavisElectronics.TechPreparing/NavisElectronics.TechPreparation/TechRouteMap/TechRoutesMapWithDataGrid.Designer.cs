@@ -181,6 +181,11 @@
             this.updateFromIPSButton.Text = "Обновить узел из IPS";
             this.updateFromIPSButton.Click += new System.EventHandler(this.updateFromIPSButton_Click);
             // 
+            // ShowButton
+            // 
+            this.ShowButton.Name = "ShowButton";
+            this.ShowButton.Size = new System.Drawing.Size(292, 22);
+            // 
             // goToArchiveButton
             // 
             this.goToArchiveButton.Name = "goToArchiveButton";
@@ -288,6 +293,11 @@
             this.PasteRouteButton.Text = "Вставить маршрут";
             this.PasteRouteButton.Click += new System.EventHandler(this.PasteRouteButton_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(292, 22);
+            // 
             // createReport
             // 
             this.createReport.Name = "createReport";
@@ -372,7 +382,7 @@
             this.treeViewAdv.DefaultToolTipProvider = null;
             this.treeViewAdv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAdv.DragDropMarkColor = System.Drawing.Color.Black;
-            this.treeViewAdv.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.treeViewAdv.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.treeViewAdv.FullRowSelectActiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.FullRowSelectInactiveColor = System.Drawing.Color.Empty;
             this.treeViewAdv.GridLineStyle = ((Aga.Controls.Tree.GridLineStyle)((Aga.Controls.Tree.GridLineStyle.Horizontal | Aga.Controls.Tree.GridLineStyle.Vertical)));
