@@ -125,12 +125,8 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     
                     // это поиск версии
                     myObject = keeper.Session.GetObject(tempId, true);
-
                     // из этой версии получаем опять первую попавшуюся, чтобы не напрягаться переписыванием кода
                     myObject = keeper.Session.GetObjectByID(myObject.ID, true);
-                    tempId = myObject.ID;
-
-                    isVersion = true;
                 }
 
                 // выбрать из всех версий объектов базовую
@@ -141,7 +137,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     if (versionObject.IsBaseVersion)
                     {
                         myObject = versionObject;
-                        tempId = versionId;
                         break;
                     }
                 }
@@ -163,17 +158,6 @@ namespace NavisElectronics.IPS1C.IntegratorService
                     treeNode.MeasureUnits = "шт";
                 }
 
-
-                // если искали по коду объекта, то надо найти все версии
-                IDBObjectCollection objectCollection = null;
-                DataTable table = null;
-                objectCollection = keeper.Session.GetObjectCollection(myObject.TypeID);
-                treeNode.Type = myObject.TypeID.ToString();
-                ConditionStructure[] conditions = new ConditionStructure[1];
-
-                ConditionStructure condition = new ConditionStructure(-3, RelationalOperators.Equal, myObject.ID, LogicalOperators.NONE, 0, false);
-                conditions[0] = condition;
-
                 // номер изменения 1035
                 // PartNumber 17784
                 // Id версии -2
@@ -181,43 +165,43 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 // 10 - наименование
                 // 17965 - Версия печатной платы
                 // 18079 - флаг печатной платы
-                DBRecordSetParams pars = new DBRecordSetParams(conditions, new object[] { -2, 9, 10, 17784, 1035, 18079, 17965 }, null, null);
-                table = objectCollection.Select(pars);
-                foreach (DataRow row in table.Rows)
-                {
-                    long mainObjectVersion = Convert.ToInt64(row[0]);
                     
-                    // если мы искали по версии, то пропустить все несовпадающие по номеру объекты
-                    if (isVersion)
-                    {
-                        if (mainObjectVersion != objectId)
-                        {
-                            continue;
-                        }
-                    }
+                ProductTreeNode versionNode = new ProductTreeNode();
 
-                    ProductTreeNode versionNode = new ProductTreeNode();
-                    versionNode.VersionId = mainObjectVersion.ToString();
+                versionNode.VersionId = myObject.ObjectID.ToString();
+                long mainObjectVersion = myObject.ObjectID;
 
-                    versionNode.ObjectId = tempId.ToString();
-                    versionNode.Type = myObject.TypeID.ToString();
+                versionNode.ObjectId = myObject.ID.ToString();
+                versionNode.Type = myObject.TypeID.ToString();
 
-                    versionNode.Designation = row[1] != DBNull.Value ? (string)row[1] : string.Empty;
-                    versionNode.Name = row[2] != DBNull.Value ? (string)row[2] : string.Empty;
-                    versionNode.PartNumber = row[3] != DBNull.Value ? (string)row[3] : string.Empty;
-                    versionNode.LastVersion = row[4] != DBNull.Value ? (string)row[4] : string.Empty;
-                    versionNode.IsPCB = row[5] != DBNull.Value ? (Convert.ToBoolean(row[5])).ToString() : "False";
-                    versionNode.PcbVersion = row[6] != DBNull.Value ? (Convert.ToInt32(row[6])).ToString() : string.Empty;
+                IDBAttribute designationAttribute = myObject.GetAttributeByID(9);
+                versionNode.Designation = designationAttribute.Value != DBNull.Value ? (string)designationAttribute.Value : string.Empty;
 
-                    versionNode.MeasureUnits = treeNode.MeasureUnits;
-                    treeNode.ObjectId = tempId.ToString();
-                    treeNode.Name = versionNode.Name;
-                    treeNode.Designation = versionNode.Designation;
-                    treeNode.Add(versionNode);
-                    int treeNodeType = myObject.TypeID;
+                IDBAttribute nameAttribute = myObject.GetAttributeByID(10);
+                versionNode.Name = nameAttribute.Value != DBNull.Value ? (string)nameAttribute.Value : string.Empty;
 
-                    PickVersion(versionNode, treeNodeType, mainObjectVersion, keeper.Session, compositionService);
-                }
+                IDBAttribute partNumberAttribute = myObject.GetAttributeByID(17784);
+                versionNode.PartNumber = partNumberAttribute.Value != DBNull.Value ? (string)partNumberAttribute.Value : string.Empty;
+
+                IDBAttribute currentNumberOfChangeAttribute = myObject.GetAttributeByID(1035);
+                versionNode.LastVersion = currentNumberOfChangeAttribute.Value != DBNull.Value ? (string)currentNumberOfChangeAttribute.Value : string.Empty;
+
+                IDBAttribute pcbFlagAttribute = myObject.GetAttributeByID(18079);
+                versionNode.IsPCB = pcbFlagAttribute.Value != DBNull.Value ? (Convert.ToBoolean(pcbFlagAttribute.Value)).ToString() : "False";
+
+                IDBAttribute pcbVersionAttribute = myObject.GetAttributeByID(17965);
+                versionNode.PcbVersion = pcbVersionAttribute.Value != DBNull.Value ? (Convert.ToInt32(pcbVersionAttribute.Value)).ToString() : string.Empty;
+
+                versionNode.MeasureUnits = treeNode.MeasureUnits;
+                
+                
+                treeNode.ObjectId = versionNode.ObjectId;
+                treeNode.Name = versionNode.Name;
+                treeNode.Designation = versionNode.Designation;
+                treeNode.Add(versionNode);
+                int treeNodeType = myObject.TypeID;
+
+                PickVersion(versionNode, treeNodeType, mainObjectVersion, keeper.Session, compositionService);
 
             }
             return treeNode;
