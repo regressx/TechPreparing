@@ -17,10 +17,10 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
-                IntermechTreeElement parent = elementFromQueue.Parent;
 
-                if (parent != null)
+                if (elementFromQueue.Parent != null)
                 {
+                    IntermechTreeElement parent = elementFromQueue.Parent;
                     elementFromQueue.UseAmount = (int)Math.Round(parent.AmountWithUse, MidpointRounding.ToEven);
                     elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
                     elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
