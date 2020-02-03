@@ -46,8 +46,10 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Collections\RedBlackTree.cs" />
     <Compile Include="Exceptions\DeleteAttempFoundException.cs" />
     <Compile Include="IDeserializeStrategy.cs" />
+    <Compile Include="IRateCatalogReader.cs" />
     <Compile Include="ISerializeStrategy.cs" />
     <Compile Include="Services\CheckSumService.cs" />
     <Compile Include="Entities\Agent.cs" />
@@ -70,7 +72,6 @@
     <Compile Include="Entities\TechProcess.cs" />
     <Compile Include="Entities\TechRouteNode.cs" />
     <Compile Include="Exceptions\TreeNodeNotFoundException.cs" />
-    <Compile Include="Entities\WithdrawalType.cs" />
     <Compile Include="Services\RecountService.cs" />
     <Compile Include="Services\SaveService.cs" />
     <Compile Include="Services\SaveServiceEventArgs.cs" />

@@ -21,33 +21,42 @@ namespace NavisElectronics.TechPreparation.Services
             //_calculationEngine = calculationEngine;
         }
 
-        public OperationCatalogNode Find(RateCatalog rateCatalog, string materialName, string operationName)
+        public ModeOperationCatalogNode Find(RateCatalog rateCatalog,
+                                             string materialName,
+                                             string operationName,
+                                             string operationMode)
         {
             MaterialCatalogNode material = (MaterialCatalogNode)rateCatalog.FindMaterial(materialName);
-            OperationCatalogNode operationCatalog = (OperationCatalogNode)material.FindOperation(operationName);
-            return operationCatalog;
+            OperationCatalogNode operationCatalog = material.FindOperation(operationName);
+            ModeOperationCatalogNode operationModeCatalogNode = operationCatalog.FindOperationMode(operationMode);
+            return operationModeCatalogNode;
         }
 
     }
 
     public class MaterialCatalogNode : RateCatalogNode
     {
-        public RateCatalogNode FindOperation(string operationName)
+        public OperationCatalogNode FindOperation(string operationName)
         {
-            if (Nodes.ContainsKey(operationName))
-            {
-                return Nodes[operationName];
-            }
-
-            throw new KeyNotFoundException("У материала нет норм на запрошенную операцию " + operationName);
+            return (OperationCatalogNode)base.Find(operationName);
         }
     }
 
     public class OperationCatalogNode : RateCatalogNode
     {
+        public string Name { get; set; }
+        public ModeOperationCatalogNode FindOperationMode(string operationMode)
+        {
+            return (ModeOperationCatalogNode)base.Find(operationMode);
+        }
+
+    }
+
+    public class ModeOperationCatalogNode : RateCatalogNode
+    {
         public string FormulaText { get; set; }
         public ActionType ActionType { get; set; }
-        public int ObjectTypeToCalculateAttribute{ get; set; }
+        public int ObjectTypeToCalculateAttribute { get; set; }
         public long MeasureId { get; set; }
     }
 }

@@ -26,16 +26,9 @@ namespace NavisElectronics.TechPreparation
     public class OperationCalculationCommandProvider : ICommandsProvider
     {
         private readonly RateService _rateService;
+        
         //private readonly CalculationEngine _engine;
         private RateCatalog _rateCatalog;
-
-        // встроенный класс
-        public class Element
-        {
-            public int AmountOfContacts {get;set;}
-            public int Amount {get;set;}
-            public string Diameter {get;set;}
-        }
 
         public OperationCalculationCommandProvider(RateService rateService)
         {
@@ -202,19 +195,19 @@ namespace NavisElectronics.TechPreparation
 
         private void OnClickCalculateOperation(ISelectedItems items, IServiceProvider viewservices, object additionalinfo)
         {
-
-
+            long typeOfOperation = 0;
 
             INodeID nodeId = items.GetItemID(0);
 
             // идентификатор версии операции
             long id = nodeId.GetObjVerID();
 
+
             // получить наименование операции
             // получить состав операции
             // по каждому наименованию материала осуществить поиск в справочнике норм расхода
-            // определить, где искать требуемые для расчета атрибуты и количества
-            // получить формулу
+            // определить по справочнику, где искать требуемые для расчета атрибуты и количества
+            // получить формулу из справочника
             // подставить недостающие параметры в формулу
             // рассчитать формулу
             // рассчитать количество на основе статистических данных
@@ -222,10 +215,13 @@ namespace NavisElectronics.TechPreparation
 
             // получить наименование операции
             string operationName = string.Empty;
+            string operationMode = string.Empty;
+
             using (SessionKeeper keeper = new SessionKeeper())
             {
                 IDBObject operationObject = keeper.Session.GetObject(id);
                 operationName = (string)operationObject.GetAttributeByID(10).Value;
+                IDBAttribute modeOfOperationAttribute = operationObject.GetAttributeByID(18098);
             }
 
             ColumnDescriptor[] mainColumns =
@@ -266,7 +262,7 @@ namespace NavisElectronics.TechPreparation
                         IDBRelation relationId = keeper.Session.GetRelation((long)row[4]);
                         double sum = 0;
                         
-                        OperationCatalogNode rate = _rateService.Find(_rateCatalog, name, operationName);
+                        ModeOperationCatalogNode rate = _rateService.Find(_rateCatalog, name, operationName, operationMode);
 
                         switch (rate.ActionType)
                         {
@@ -281,6 +277,7 @@ namespace NavisElectronics.TechPreparation
                         // Разобрать формулу по переменным при помощи Jace
                         string formula = rate.FormulaText;
 
+                        MessageBox.Show(formula);
                         //TokenReader reader = new TokenReader(CultureInfo.InvariantCulture);
                         //List<Token> tokens = reader.Read(formula);
 
@@ -301,13 +298,13 @@ namespace NavisElectronics.TechPreparation
 
                         // sum += ((MeasuredValue)value).Value * pair.Value.AmountOfContacts * pair.Value.Amount;
 
-                        IDBAttribute amountAttribute = relationId.GetAttributeByID(1129);
-                        if (amountAttribute == null)
-                        {
-                            relationId.Attributes.AddAttribute(1129, false);
-                        }
-                        amountAttribute = relationId.GetAttributeByID(1129);
-                        amountAttribute.Value = new MeasuredValue(sum, rate.MeasureId);
+                        //IDBAttribute amountAttribute = relationId.GetAttributeByID(1129);
+                        //if (amountAttribute == null)
+                        //{
+                        //    relationId.Attributes.AddAttribute(1129, false);
+                        //}
+                        //amountAttribute = relationId.GetAttributeByID(1129);
+                        //amountAttribute.Value = new MeasuredValue(sum, rate.MeasureId);
                     }
                 }
 

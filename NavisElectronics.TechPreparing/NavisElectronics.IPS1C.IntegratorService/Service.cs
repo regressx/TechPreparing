@@ -114,6 +114,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
                 // нашли первый попавшийся объект с таким номером
                 IDBObject myObject;
+
                 try
                 {
                     myObject = keeper.Session.GetObjectByID(tempId, true);
