@@ -106,10 +106,6 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                         elementToFind.ChangeNumber = string.Empty;
                     }
 
-                    if (elementFromQueue.ChangeNumber == null)
-                    {
-                        elementFromQueue.ChangeNumber = string.Empty;
-                    }
 
                     if ((Math.Round(elementToFind.Amount, 6) - Math.Round(elementFromQueue.Amount, 6)) != 0
                         || elementToFind.ChangeNumber != elementFromQueue.ChangeNumber
@@ -119,7 +115,8 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                         || elementToFind.PositionDesignation != elementFromQueue.PositionDesignation
                         || elementToFind.Name != elementFromQueue.Name
                         || elementToFind.RelationNote != elementFromQueue.RelationNote
-                        || elementToFind.ProduseSign != elementFromQueue.ProduseSign)
+                        || elementToFind.ProduseSign != elementFromQueue.ProduseSign
+                        || elementToFind.ChangeDocument != elementFromQueue.ChangeDocument)
                     {
                         elementFromQueue.NodeState = NodeStates.Modified;
                     }
