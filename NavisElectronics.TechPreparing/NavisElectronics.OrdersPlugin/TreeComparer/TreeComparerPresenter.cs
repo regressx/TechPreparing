@@ -7,17 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace NavisElectronics.Orders.TreeComparer
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using Aga.Controls.Tree;
-    using TechPreparation.Interfaces.Entities;
-    using TechPreparation.Interfaces.Enums;
-    using TechPreparation.Interfaces.Exceptions;
-    using TechPreparation.Views;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using Aga.Controls.Tree;
+using NavisElectronics.Orders.TreeComparer;
+using NavisElectronics.TechPreparation.Interfaces.Exceptions;
+using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Enums;
+using NavisElectronics.TechPreparation.Views;
 
+namespace NavisElectronics.Orders.Presenters
+{
     /// <summary>
     /// The tree comparer presenter.
     /// </summary>
@@ -74,10 +75,10 @@ namespace NavisElectronics.Orders.TreeComparer
 
             IntermechTreeElement selectedNode = (IntermechTreeElement)e.Tag;
             IntermechTreeElement parent = selectedNode.Parent;
-            
+
             int i = 0;
-            
-            // я не могу гарантировать 100%, что в составе не будет повторяющихся элементов, во всяком случае на 15.10.2019г, поэтому
+
+            //я не могу гарантировать 100 %, что в составе не будет повторяющихся элементов, во всяком случае на 15.10.2019г, поэтому
             // будем искать линейно первый попавшийся, который удовлетворяет условию, что совпадает его идентификатор,  и элемент отмечен на удаление
             foreach (IntermechTreeElement child in parent.Children)
             {
@@ -95,8 +96,8 @@ namespace NavisElectronics.Orders.TreeComparer
 
             TreeViewAdv treeViewAdv = _view.GetOldTree();
 
-            // найти родительский узел
-            ComparerNode parentComparerNode = FindNodeWithTag(_view.GetOldNode(), parent);
+            //найти родительский узел
+           ComparerNode parentComparerNode = FindNodeWithTag(_view.GetOldNode(), parent);
 
             TreeNodeAdv nodeToFind = treeViewAdv.FindNodeByTag(parentComparerNode);
             treeViewAdv.SelectedNode = nodeToFind;
@@ -119,6 +120,8 @@ namespace NavisElectronics.Orders.TreeComparer
             view.Show();
         }
 
+
+
         private ComparerNode FindNodeWithTag(ComparerNode mainNode, IntermechTreeElement tag)
         {
             Queue<ComparerNode> queue = new Queue<ComparerNode>();
@@ -139,7 +142,7 @@ namespace NavisElectronics.Orders.TreeComparer
                 {
                     foreach (Node child in nodeFromQueue.Nodes)
                     {
-                        queue.Enqueue((ComparerNode)child);
+                        queue.Enqueue((ComparerNode) child);
                     }
                 }
             }
@@ -153,7 +156,7 @@ namespace NavisElectronics.Orders.TreeComparer
             ComparerNode nodeToFind = null;
             ComparerNode nodeWhereFind = null;
             TreeViewAdv treeWhereToFind = null;
-            if (((TreeViewAdv)sender).Name == "treeViewAdv1")
+            if (((TreeViewAdv) sender).Name == "treeViewAdv1")
             {
                 nodeWhereFind = _view.GetNewNode();
                 treeWhereToFind = _view.GetNewTree();
@@ -168,6 +171,7 @@ namespace NavisElectronics.Orders.TreeComparer
             _view.JumpToNode(treeWhereToFind, nodeToFind);
         }
 
+
         private void _view_PushChanges(object sender, EventArgs e)
         {
             ICollection<ComparerNode> collection = _view.GetSelectedNodesInRightTree();
@@ -176,7 +180,7 @@ namespace NavisElectronics.Orders.TreeComparer
                 IntermechTreeElement lastElementToJump = null;
                 foreach (ComparerNode comparerNode in collection)
                 {
-                    lastElementToJump = (IntermechTreeElement)comparerNode.Tag;
+                    lastElementToJump = (IntermechTreeElement) comparerNode.Tag;
                     _model.Upload(_oldElement, _newElement, lastElementToJump);
                 }
 
@@ -192,7 +196,6 @@ namespace NavisElectronics.Orders.TreeComparer
                 treeViewAdv.SelectedNode = nodeToFind;
                 treeViewAdv.EnsureVisible(nodeToFind);
             }
-
         }
 
         private void _view_Compare(object sender, EventArgs e)
@@ -216,7 +219,7 @@ namespace NavisElectronics.Orders.TreeComparer
                 {
                     foreach (Node node in nodeFromQueue.Nodes)
                     {
-                        queueForOld.Enqueue((ComparerNode)node);
+                        queueForOld.Enqueue((ComparerNode) node);
                     }
                 }
             }
@@ -242,7 +245,7 @@ namespace NavisElectronics.Orders.TreeComparer
                 {
                     foreach (Node node in nodeFromQueue.Nodes)
                     {
-                        queueForNew.Enqueue((ComparerNode)node);
+                        queueForNew.Enqueue((ComparerNode) node);
                     }
                 }
             }
@@ -259,8 +262,11 @@ namespace NavisElectronics.Orders.TreeComparer
             model.Nodes.Add(node);
             _view.FillNewTree(model);
             _view.LockButtons();
+
+            long lastOrderVersionId = await _model.GetLastOrderVersionId(_oldElement.ObjectId);
+
             IntermechTreeElement order =
-                await _model.GetFullOrderFromDatabaseAsync(_oldElement.Id, CancellationToken.None);
+                await _model.GetFullOrderFromDatabaseAsync(lastOrderVersionId, CancellationToken.None);
             _newElement = order;
             _view.FillNewTree(_model.GetModel(order));
             _view.UnlockButtons();
