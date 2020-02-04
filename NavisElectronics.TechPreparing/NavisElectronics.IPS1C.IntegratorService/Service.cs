@@ -57,12 +57,15 @@ namespace NavisElectronics.IPS1C.IntegratorService
 
             DataTable[] tables = new DataTable[countOfitems];
 
+            IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
 
-            using (SessionKeeper sessionKeeper = new SessionKeeper())
+            IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
+
+            try
             {
-                objectCollection[0] = sessionKeeper.Session.GetObjectCollection(1138);
-                objectCollection[1] = sessionKeeper.Session.GetObjectCollection(1105);
-                objectCollection[2] = sessionKeeper.Session.GetObjectCollection(1128);
+                objectCollection[0] = session.GetObjectCollection(1138);
+                objectCollection[1] = session.GetObjectCollection(1105);
+                objectCollection[2] = session.GetObjectCollection(1128);
 
                 // -2 идентификатор версии объекта, -3 - индентификатор объекта
                 DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2, -3 }, null, null);
@@ -71,19 +74,24 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 {
                     tables[i] = objectCollection[i].Select(pars);
                 }
-            }
 
-            foreach (DataTable table in tables)
-            {
-                foreach (DataRow row in table.Rows)
+
+                foreach (DataTable table in tables)
                 {
-                    ProductTreeNode node = new ProductTreeNode()
+                    foreach (DataRow row in table.Rows)
                     {
-                        VersionId = Convert.ToInt64(row[0]).ToString(),
-                        ObjectId = Convert.ToInt64(row[1]).ToString()
-                    };
-                    resultNode.Add(node);
+                        ProductTreeNode node = new ProductTreeNode()
+                        {
+                            VersionId = Convert.ToInt64(row[0]).ToString(),
+                            ObjectId = Convert.ToInt64(row[1]).ToString()
+                        };
+                        resultNode.Add(node);
+                    }
                 }
+            }
+            finally
+            {
+                session.Logout();
             }
 
             return resultNode;
@@ -104,36 +112,41 @@ namespace NavisElectronics.IPS1C.IntegratorService
         {
             long tempId = objectId;
             ProductTreeNode treeNode = new ProductTreeNode();
-            using (SessionKeeper keeper = new SessionKeeper())
+
+            IDBTimedEvents timedEvents = ServerServices.GetService(typeof(IDBTimedEvents)) as IDBTimedEvents;
+
+            IUserSession session = timedEvents.GetSystemSessionTemporaryClone();
+
+            try
             {
                 // Сервис для получения составов
                 ICompositionLoadService compositionService =
-                    (ICompositionLoadService)keeper.Session.GetCustomService(typeof(ICompositionLoadService));
-
-                bool isVersion = false;
+                    (ICompositionLoadService)session.GetCustomService(typeof(ICompositionLoadService));
 
                 // нашли первый попавшийся объект с таким номером
                 IDBObject myObject;
 
                 try
                 {
-                    myObject = keeper.Session.GetObjectByID(tempId, true);
+                    myObject = session.GetObjectByID(tempId, true);
                 }
-                catch (Exception) 
+                catch (Exception)
                 {
                     // перехватываем все исключения
-                    
+
                     // это поиск версии
-                    myObject = keeper.Session.GetObject(tempId, true);
-                    // из этой версии получаем опять первую попавшуюся, чтобы не напрягаться переписыванием кода
-                    myObject = keeper.Session.GetObjectByID(myObject.ID, true);
+                    myObject = session.GetObject(tempId, true);
+                    // из этой версии получаем опять первую попавшуюся
+                    myObject = session.GetObjectByID(myObject.ID, true);
+                    // Сохрагняем во временной переменной идентификатор объекта. По нему будем искать все существующие версии
+                    tempId = myObject.ID;
                 }
 
                 // выбрать из всех версий объектов базовую
-                List<long> allObjectVersionsList = keeper.Session.GetAllObjectVersionsList(tempId, true, false, false);
+                List<long> allObjectVersionsList = session.GetAllObjectVersionsList(tempId, true, false, false);
                 foreach (long versionId in allObjectVersionsList)
                 {
-                    IDBObject versionObject = keeper.Session.GetObject(versionId);
+                    IDBObject versionObject = session.GetObject(versionId);
                     if (versionObject.IsBaseVersion)
                     {
                         myObject = versionObject;
@@ -146,7 +159,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 if (measureUnitAttribute != null)
                 {
                     // надо теперь выцепить по атрибуту ед. измерения сам объект единиц измерения
-                    IDBObject unitsObject = keeper.Session.GetObject(measureUnitAttribute.AsInteger, false);
+                    IDBObject unitsObject = session.GetObject(measureUnitAttribute.AsInteger, false);
                     if (unitsObject != null)
                     {
                         IDBAttribute shortNameUnit = unitsObject.GetAttributeByID(13);
@@ -165,7 +178,7 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 // 10 - наименование
                 // 17965 - Версия печатной платы
                 // 18079 - флаг печатной платы
-                    
+
                 ProductTreeNode versionNode = new ProductTreeNode();
 
                 versionNode.VersionId = myObject.ObjectID.ToString();
@@ -175,35 +188,62 @@ namespace NavisElectronics.IPS1C.IntegratorService
                 versionNode.Type = myObject.TypeID.ToString();
 
                 IDBAttribute designationAttribute = myObject.GetAttributeByID(9);
-                versionNode.Designation = designationAttribute.Value != DBNull.Value ? (string)designationAttribute.Value : string.Empty;
+                if (designationAttribute != null)
+                {
+                    versionNode.Designation = designationAttribute.Value != DBNull.Value ? (string)designationAttribute.Value : string.Empty;
+                }
+
 
                 IDBAttribute nameAttribute = myObject.GetAttributeByID(10);
-                versionNode.Name = nameAttribute.Value != DBNull.Value ? (string)nameAttribute.Value : string.Empty;
+                if (nameAttribute != null)
+                {
+                    versionNode.Name = nameAttribute.Value != DBNull.Value ? (string)nameAttribute.Value : string.Empty;
+                }
+
 
                 IDBAttribute partNumberAttribute = myObject.GetAttributeByID(17784);
-                versionNode.PartNumber = partNumberAttribute.Value != DBNull.Value ? (string)partNumberAttribute.Value : string.Empty;
+                if (partNumberAttribute != null)
+                {
+                    versionNode.PartNumber = partNumberAttribute.Value != DBNull.Value ? (string)partNumberAttribute.Value : string.Empty;
+                }
+
 
                 IDBAttribute currentNumberOfChangeAttribute = myObject.GetAttributeByID(1035);
-                versionNode.LastVersion = currentNumberOfChangeAttribute.Value != DBNull.Value ? (string)currentNumberOfChangeAttribute.Value : string.Empty;
+                if (currentNumberOfChangeAttribute != null)
+                {
+                    versionNode.LastVersion = currentNumberOfChangeAttribute.Value != DBNull.Value ? (string)currentNumberOfChangeAttribute.Value : string.Empty;
+                }
+
 
                 IDBAttribute pcbFlagAttribute = myObject.GetAttributeByID(18079);
-                versionNode.IsPCB = pcbFlagAttribute.Value != DBNull.Value ? (Convert.ToBoolean(pcbFlagAttribute.Value)).ToString() : "False";
+                if (pcbFlagAttribute != null)
+                {
+                    versionNode.IsPCB = pcbFlagAttribute.Value != DBNull.Value ? (Convert.ToBoolean(pcbFlagAttribute.Value)).ToString() : "False";
+                }
+
 
                 IDBAttribute pcbVersionAttribute = myObject.GetAttributeByID(17965);
-                versionNode.PcbVersion = pcbVersionAttribute.Value != DBNull.Value ? (Convert.ToInt32(pcbVersionAttribute.Value)).ToString() : string.Empty;
+                if (pcbVersionAttribute != null)
+                {
+                    versionNode.PcbVersion = pcbVersionAttribute.Value != DBNull.Value ? (Convert.ToInt32(pcbVersionAttribute.Value)).ToString() : string.Empty;
+                }
 
                 versionNode.MeasureUnits = treeNode.MeasureUnits;
-                
-                
+
+
                 treeNode.ObjectId = versionNode.ObjectId;
                 treeNode.Name = versionNode.Name;
                 treeNode.Designation = versionNode.Designation;
                 treeNode.Add(versionNode);
                 int treeNodeType = myObject.TypeID;
 
-                PickVersion(versionNode, treeNodeType, mainObjectVersion, keeper.Session, compositionService);
-
+                PickVersion(versionNode, treeNodeType, mainObjectVersion, session, compositionService);
             }
+            finally
+            {
+                session.Logout();
+            }
+
             return treeNode;
         }
 
