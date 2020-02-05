@@ -228,63 +228,6 @@
             _products.Remove(nodeToRemove);
         }
 
-        ///// <summary>
-        ///// Ищет в ширину элемент по его пути
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //public ProductTreeNode Find(string path)
-        //{
-        //    if (path == null)
-        //    {
-        //        throw new ArgumentNullException("path");
-        //    }
-
-        //    IList<string> lines = path.Split('\\');
-        //    Queue<long> queue = new Queue<long>();
-        //    foreach (string s in lines)
-        //    {
-        //        queue.Enqueue(long.Parse(s));
-        //    }
-
-        //    // уберем первый элемент
-        //    queue.Dequeue();
-        //    Stack<ProductTreeNode> stackElements = new Stack<ProductTreeNode>();
-        //    FindNodeRecursive(queue, this, stackElements);
-
-        //    if (stackElements.Count != lines.Count)
-        //    {
-        //        throw new TreeNodeNotFoundException("Элемент не был найден в дереве по такому пути");
-        //    }
-
-        //    return stackElements.Peek();
-
-        //}
-
-
-        //private void FindNodeRecursive(Queue<long> queue, ProductTreeNode elementWhereFind, Stack<ProductTreeNode> stackElements)
-        //{
-        //    stackElements.Push(elementWhereFind);
-        //    while (queue.Count > 0)
-        //    {
-        //        long childId = queue.Dequeue();
-        //        bool foundFlag = false;
-        //        foreach (ProductTreeNode childElement in elementWhereFind.Products)
-        //        {
-        //            if (childId == Convert.ToInt64(childElement.ObjectId))
-        //            {
-        //                foundFlag = true;
-        //                FindNodeRecursive(queue, childElement, stackElements);
-        //            }
-        //        }
-
-        //        if (!foundFlag)
-        //        {
-        //            throw new NullReferenceException(string.Format("Элемент с номером {0} в узле {1} не найден", childId, elementWhereFind));
-        //        }
-        //    }
-        //}
-
         public object Clone()
         {
             using (MemoryStream ms = new MemoryStream())
