@@ -181,10 +181,10 @@
 
 
         /// <summary>
-        /// Признак производства
+        /// Не изготавливать
         /// </summary>
         [DataMember]
-        public string ProduseSign { get; set; }
+        public string DoNotProduce { get; set; }
 
         /// <summary>
         /// Тип монтажа
