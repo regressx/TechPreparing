@@ -6,7 +6,7 @@
     /// <summary>
     /// Главный интерфейс сервиса
     /// </summary>
-    [ServiceContract]
+    [ServiceContract(Namespace = "OrderCompositionService")]
     public interface IService
     {
         /// <summary>
