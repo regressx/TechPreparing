@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NavisElectronics.Orders.Enums;
+﻿using NavisElectronics.Orders.Enums;
 
 namespace NavisElectronics.Orders
 {
