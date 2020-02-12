@@ -103,6 +103,7 @@
     <Compile Include="Main\MdiMainForm.Designer.cs">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\ParametersParser.cs" />
     <Compile Include="Services\OperationCalculationCommandProvider.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
