@@ -63,6 +63,9 @@
     <Reference Include="Intermech.Interfaces.Document">
       <HintPath>..\packages\Intermech.Interfaces.Document.dll</HintPath>
     </Reference>
+    <Reference Include="Jace">
+      <HintPath>..\packages\Jace.dll</HintPath>
+    </Reference>
     <Reference Include="NavisArchiveWork.Data">
       <HintPath>..\packages\NavisArchiveWork.Data.dll</HintPath>
     </Reference>
@@ -85,14 +88,12 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Calculations\FormulaVariable.cs" />
     <Compile Include="CommonModule.cs" />
     <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
-    <Compile Include="Entities\RateCatalog.cs" />
-    <Compile Include="Entities\RateCatalogNode.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
-    <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\ElementPlaceOfBirth.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
