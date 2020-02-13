@@ -75,7 +75,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     {
         public string FormulaText { get; set; }
         public ActionType ActionType { get; set; }
-        public int ObjectTypeToCalculateAttribute { get; set; }
+        public System.Guid ObjectTypeToCalculateAttribute { get; set; }
         public long MeasureId { get; set; }
     }
 }
