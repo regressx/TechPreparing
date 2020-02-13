@@ -12,32 +12,28 @@ namespace NavisElectronics.TechPreparation.Services
         {
             if (string.IsNullOrEmpty(formula))
             {
-                throw new ArgumentNullException("formula");
+                throw new ArgumentNullException("formula", "У материала не указана формула!");
             }
             ICollection<string> parameters = new List<string>();
-            // проверим, что скобочная последовательность правильная
-            if (IsValidParentheses(formula))
+            int openedIndex = -1;
+            int i = 0;
+            foreach (char c in formula)
             {
-                int openedIndex = -1;
-                int i = 0;
-                foreach (char c in formula)
+                switch (c)
                 {
-                    switch (c)
-                    {
-                        case '[':
-                            openedIndex = i;
-                            break;
+                    case '[':
+                        openedIndex = i;
+                        break;
 
-                        case ']':
+                    case ']':
 
-                            // вырезать то, что между скобками
-                            string parameter = formula.Substring(openedIndex + 1, i - openedIndex - 1);
-                            parameters.Add(parameter);
-                            openedIndex = -1;
-                            break;
-                    }
-                    i++;
+                        // вырезать то, что между скобками
+                        string parameter = formula.Substring(openedIndex + 1, i - openedIndex - 1);
+                        parameters.Add(parameter);
+                        openedIndex = -1;
+                        break;
                 }
+                i++;
             }
             return parameters;
         }
@@ -66,6 +62,11 @@ namespace NavisElectronics.TechPreparation.Services
                         }
                         else
                         {
+                            if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c) || c == '*' || c == '+' || c == '-')
+                            {
+                                continue;
+                            }
+
                             if (toClose.Count == 0)
                             {
                                 return false;
