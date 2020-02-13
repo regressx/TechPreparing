@@ -5,7 +5,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
 {
     public class RateCatalog
     {
-        SortedList<string, RateCatalogNode> _nodes;
+        readonly SortedList<string, RateCatalogNode> _nodes;
 
 
         public RateCatalog()
@@ -16,6 +16,14 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         public void AddMaterial(RateCatalogNode material)
         {
             _nodes.Add(material.Name, material);
+        }
+
+        public IEnumerable<RateCatalogNode> Materials
+        {
+            get
+            {
+                return _nodes.Values ;
+            }
         }
 
 

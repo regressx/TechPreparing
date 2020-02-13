@@ -1,4 +1,5 @@
-﻿using NavisElectronics.TechPreparation.Interfaces.Collections;
+﻿using NavisElectronics.TechPreparation.Enums;
+using NavisElectronics.TechPreparation.Interfaces.Collections;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
     /// </summary>
     public abstract class RateCatalogNode : System.IComparable<RateCatalogNode>, System.IComparable
     {
+
         private SortedList<string, RateCatalogNode> _nodes;
         
         /// <summary>
@@ -20,6 +22,8 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         }
 
         public string Name { get; set; }
+        
+        public long Id { get; set; }
 
         public RateCatalogNode Parent { get; set; }
 
@@ -29,7 +33,7 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
             {
                 return _nodes[key];
             }
-            throw new KeyNotFoundException(string.Format($"В каталоге {Name} нет указанного ключа {key}"));
+            throw new KeyNotFoundException(string.Format($"В каталоге нет указанного ключа {key}"));
         }
 
         public void Add(RateCatalogNode nodeToAdd)
@@ -46,5 +50,32 @@ namespace NavisElectronics.TechPreparation.Interfaces.Entities
         {
             return CompareTo((RateCatalogNode)obj);
         }
+    }
+
+
+
+    public class MaterialCatalogNode : RateCatalogNode
+    {
+        public OperationCatalogNode FindOperation(string operationName)
+        {
+            return (OperationCatalogNode)base.Find(operationName);
+        }
+    }
+
+    public class OperationCatalogNode : RateCatalogNode
+    {
+        public ModeOperationCatalogNode FindOperationMode(string operationMode)
+        {
+            return (ModeOperationCatalogNode)base.Find(operationMode);
+        }
+
+    }
+
+    public class ModeOperationCatalogNode : RateCatalogNode
+    {
+        public string FormulaText { get; set; }
+        public ActionType ActionType { get; set; }
+        public int ObjectTypeToCalculateAttribute { get; set; }
+        public long MeasureId { get; set; }
     }
 }
