@@ -13,7 +13,7 @@ using NavisElectronics.TechPreparation.Services;
 
 namespace NavisElectronics.TechPreparation
 {
-    public class OperationCalculationCommandProvider : ICommandsProvider
+    internal class OperationCalculationCommandProvider : ICommandsProvider
     {
         private readonly RateService _rateService;
 

@@ -5,21 +5,15 @@ using System.Globalization;
 using Intermech.Interfaces;
 using Intermech.Interfaces.Compositions;
 using Intermech.Kernel.Search;
-using Jace;
 using NavisElectronics.TechPreparation.Calculations;
-//using Jace;
-//using Jace.Execution;
-//using Jace.Operations;
-//using Jace.Tokenizer;
 using NavisElectronics.TechPreparation.Enums;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation.Services
 {
     /// <summary>
     /// Сервис-фасад. Позволяет получить норму расхода материала на операцию
     /// </summary>
-    public class RateService
+    internal class RateService
     {
         private readonly CalculationEngine _calculationEngine;
 
@@ -87,7 +81,7 @@ namespace NavisElectronics.TechPreparation.Services
                         operationModeCatalogNode.FormulaText = newFormula;
                     }
 
-                    result = _calculationEngine.Calculate(operationModeCatalogNode.FormulaText);
+                    result = Convert.ToDouble(_calculationEngine.Calculate(operationModeCatalogNode.FormulaText.Replace(',','.')));
 
                     break;
             }

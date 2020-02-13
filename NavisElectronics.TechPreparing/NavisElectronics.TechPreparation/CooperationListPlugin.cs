@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-//using Jace;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation
 {
     using System;
@@ -21,9 +18,8 @@ namespace NavisElectronics.TechPreparation
     using Intermech.Navigator.Interfaces;
     using Presenters;
     using Services;
-
     using Ninject;
-    using Jace;
+    using NavisElectronics.TechPreparation.Calculations;
 
     /// <summary>
     /// Плагин для работы с ведомостью кооперации
