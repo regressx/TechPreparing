@@ -47,6 +47,8 @@ namespace NavisElectronics.TechPreparation
 
                 menu.Nodes.Add(new MenuTemplateNode("EditTechLists", "Редактировать технологические ведомости", -1, 2, int.MaxValue));
 
+
+
                 CommonModule module = new CommonModule();
                 IKernel kernel = new StandardKernel();
                 kernel.Load(module);
@@ -59,8 +61,14 @@ namespace NavisElectronics.TechPreparation
                 menu.Nodes.Add(new MenuTemplateNode("CalculateOperation", "Рассчитать потребность материалов на операцию", -1, 2, int.MaxValue));
                 ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider(new RateService(new CalculationEngine()));
 
+                menu.Nodes.Add(new MenuTemplateNode("OrderCompareTo", "Сравнить заказ с ", -1, 3, int.MaxValue));
+                ICommandsProvider orderCompareToProvider = new OrdersComparerCommandProvider(presentationFactory);
+
+
                 factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1019, prov);
+                factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1019, orderCompareToProvider);
                 factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
+
             }
         }
 
