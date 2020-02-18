@@ -15,6 +15,15 @@ namespace NavisElectronics.TechPreparation.Services
     /// </summary>
     internal class RateService
     {
+
+
+        public class AsssembleUnit
+        {
+            internal long Id { get; set; }
+            internal long RelationId { get; set; }
+            internal double Amount { get; set; }
+        }
+
         private readonly CalculationEngine _calculationEngine;
 
         public RateService(CalculationEngine calculationEngine)
@@ -57,20 +66,23 @@ namespace NavisElectronics.TechPreparation.Services
                     break;
 
                 case ActionType.GetFromComposition:
-                    IEnumerable<long> elements = FindAssembleUnits(operationVersionId);
+                    IEnumerable<AsssembleUnit> elements = FindAssembleUnits(operationVersionId);
 
-
-                    foreach(long id in elements)
+                    double currentAmount = 0;
+                    foreach(AsssembleUnit unit in elements)
                     {
                         long referenceOnObjectVersionId = 0;
                         using (SessionKeeper keeper = new SessionKeeper())
                         {
-                            IDBObject currentObject = keeper.Session.GetObject(id);
+                            IDBObject currentObject = keeper.Session.GetObject(unit.Id);
                             IDBAttribute referenceOnObjectAttribute = currentObject.GetAttributeByID(1217);
+
+                            IDBRelation currentRelation = keeper.Session.GetRelation(unit.RelationId);
+                            IDBAttribute amountAttribute = currentRelation.GetAttributeByID(1129);
+                            currentAmount = ((MeasuredValue)amountAttribute.Value).Value;
                             referenceOnObjectVersionId = (long)referenceOnObjectAttribute.Value;
                         }
-                        double currentRate = GetRate(referenceOnObjectVersionId, operationModeCatalogNode.FormulaText);
-
+                        double currentRate = GetRate(referenceOnObjectVersionId, operationModeCatalogNode.FormulaText)*currentAmount;
                         result += currentRate;
                     }
 
@@ -133,9 +145,9 @@ namespace NavisElectronics.TechPreparation.Services
 
 
 
-        private IEnumerable<long> FindAssembleUnits(long operationId)
+        private IEnumerable<AsssembleUnit> FindAssembleUnits(long operationId)
         {
-            ICollection<long> collection = new List<long>();
+            ICollection<AsssembleUnit> collection = new List<AsssembleUnit>();
 
             using (SessionKeeper keeper = new SessionKeeper())
             {
@@ -147,13 +159,18 @@ namespace NavisElectronics.TechPreparation.Services
 {
                     new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object,
                         ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                    new ColumnDescriptor(-20, AttributeSourceTypes.Relation,
+                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор отношения
                 };
 
                 DataTable assemblyUnitsTable = compositionService.LoadComposition(keeper.Session, operationId, 1002, new List<ColumnDescriptor>(columnsForOperationComposition), Intermech.SystemGUIDs.filtrationBaseVersions, 1201); // забрать собираемые единицы
 
                 foreach (DataRow row in assemblyUnitsTable.Rows)
                 {
-                    collection.Add((long)row[0]);
+                    AsssembleUnit asssembleUnit = new AsssembleUnit();
+                    asssembleUnit.Id = (long)row[0];
+                    asssembleUnit.RelationId = (long)row[1];
+                    collection.Add(asssembleUnit);
                 }
             }
 
