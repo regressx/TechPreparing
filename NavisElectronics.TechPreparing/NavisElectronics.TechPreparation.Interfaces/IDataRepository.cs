@@ -1,5 +1,5 @@
 ﻿using Intermech.Interfaces;
-using NavisElectronics.TechPreparation.Entities;
+
 
 namespace NavisElectronics.TechPreparation.Interfaces
 {
@@ -7,6 +7,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
     using System.Threading;
     using System.Threading.Tasks;
     using Entities;
+    using NavisElectronics.TechPreparation.Interfaces.Services;
 
     /// <summary>
     /// Основной интерфейс получения данных
@@ -115,21 +116,6 @@ namespace NavisElectronics.TechPreparation.Interfaces
 
         T GetDataFromBinaryAttribute<T>(long versionId, int dataAttributeId, IDeserializeStrategy<T> deserializeStrategy) where T : class;
 
-        /// <summary>
-        /// Получение типов тех. отхода
-        /// </summary>
-        /// <returns>
-        /// The <see cref="WithdrawalType"/>.
-        /// </returns>
-        WithdrawalType GetWithdrawalTypes();
-
-        /// <summary>
-        /// Асинхронное получение типов тех. отхода 
-        /// </summary>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        Task<WithdrawalType> GetWithdrawalTypesAsync();
 
         /// <summary>
         /// Асинхронно получает цеха из IMBase

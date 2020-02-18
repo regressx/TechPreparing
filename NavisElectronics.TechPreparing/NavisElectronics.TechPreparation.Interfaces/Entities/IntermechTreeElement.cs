@@ -294,6 +294,15 @@
         /// </summary>
         public string ChangeDocument { get; set; }
 
+
+        /// <summary>
+        /// Идентификаторы версий тех. процессов, задействованных в маршруте
+        /// </summary>
+        [Description("Идентификаторы версий тех. процессов, задействованных в маршруте")]
+        public string TechProcessCodes { get; set; }
+
+
+
         /// <summary>
         /// Индексатор
         /// </summary>

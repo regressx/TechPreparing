@@ -179,6 +179,19 @@ namespace NavisElectronics.TechPreparation.Presenters
                     sb.Append(str + Environment.NewLine);
                 }
 
+
+                if (string.IsNullOrEmpty(elementFromQueue.TechRoute) && !elementFromQueue.ProduseSign)
+                {
+                    string str = string.Format("В узле {0} {1} из состава {2} {3} не указан маршрут",
+                        elementFromQueue.Designation,
+                        elementFromQueue.Name,
+                        elementFromQueue.Parent.Designation,
+                        elementFromQueue.Parent.Name);
+
+                    sb.Append(str + Environment.NewLine);
+                }
+
+
                 if (elementFromQueue.Type == 1159 || elementFromQueue.Type == 1052)
                 {
                     if (elementFromQueue.Children.Count == 0)

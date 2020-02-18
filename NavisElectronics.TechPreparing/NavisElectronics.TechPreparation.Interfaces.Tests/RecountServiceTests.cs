@@ -1,18 +1,17 @@
 ﻿using System;
-using System.ComponentModel.Design.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NavisElectronics.TechPreparation.Data;
 using NavisElectronics.TechPreparation.Interfaces.Entities;
+using NavisElectronics.TechPreparation.Interfaces.Services;
 
-namespace DataTests
+namespace NavisElectronics.TechPreparation.Interfaces.Tests
 {
     [TestClass]
-    public class RecountTests
+    public class RecountServiceTests
     {
         [TestMethod]
-        public void RecountTest()
+        public void RecountServiceTest()
         {
-            IntermechReader reader = new IntermechReader();
+            RecountService recountService = new RecountService();
 
             IntermechTreeElement root = new IntermechTreeElement();
             root.Amount = 1;
@@ -45,15 +44,16 @@ namespace DataTests
             node4.Amount = 6;
             node3.Add(node4);
 
-            reader.RecountAmountInTree(root);
+            recountService.RecountAmount(root);
 
-            Assert.AreEqual("2,000",root[0].AmountWithUse.ToString("F3"));
-            Assert.AreEqual("20,000",root[0].Children[0].AmountWithUse.ToString("F3"));
-            Assert.AreEqual("140,000",root[0].Children[0].Children[0].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("2,000", root[0].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("20,000", root[0].Children[0].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("140,000", root[0].Children[0].Children[0].AmountWithUse.ToString("F3"));
 
-            Assert.AreEqual("3,000",root[1].AmountWithUse.ToString("F3"));
-            Assert.AreEqual("9,000",root[1].Children[0].AmountWithUse.ToString("F3"));
-            Assert.AreEqual("54,000",root[1].Children[0].Children[0].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("3,000", root[1].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("9,000", root[1].Children[0].AmountWithUse.ToString("F3"));
+            Assert.AreEqual("54,000", root[1].Children[0].Children[0].AmountWithUse.ToString("F3"));
+
 
         }
     }

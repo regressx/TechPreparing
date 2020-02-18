@@ -51,11 +51,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         private readonly IPresentationFactory _presentationFactory;
 
         /// <summary>
-        /// Класс, позволяющий по номеру объекта показать его файлы
-        /// </summary>
-        private readonly ShowFileManager _showFileManager;
-
-        /// <summary>
         /// Представляет собой узел из Imbase, в котором представлена структура предприятия
         /// </summary>
         private TechRouteNode _organizationStruct;
@@ -89,7 +84,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.DeleteRouteClick += View_DeleteRouteClick;
             _view.Load += _view_Load;
             _view.EditNoteClick += View_EditNoteClick;
-            _view.ShowClick += _view_ShowClick;
             _view.GoToOldArchive += _view_GoToOldArchive;
             _view.CreateReportClick += View_CreateReportClick;
             _view.CreateDevideList += View_CreateDevideList;
@@ -172,7 +166,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void _view_CreateCooperationList(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
@@ -266,7 +260,7 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void View_CreateDevideList(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
@@ -285,19 +279,13 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </param>
         private void View_CreateReportClick(object sender, EventArgs e)
         {
-            ReportService reportService = new ReportService();
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
             ICollection<MyNode> elements = _view.GetSelectedRows();
             foreach (MyNode node in elements)
             {
                 reportService.CreateReport(node, node.Name, ReportType.ListOfTechRoutes, DocumentType.Intermech);
             }
 
-        }
-
-        private void _view_ShowClick(object sender, SaveClickEventArgs e)
-        {
-            IntermechTreeElement element = e.Node.Tag as IntermechTreeElement;
-            _model.ShowProductCard(element);
         }
 
         private void View_EditNoteClick(object sender, SaveClickEventArgs e)

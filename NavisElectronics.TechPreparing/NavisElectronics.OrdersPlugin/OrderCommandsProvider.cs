@@ -45,7 +45,7 @@ namespace NavisElectronics.Orders
         {
             INodeID nodeId = items.GetItemID(0);
             long id = nodeId.GetObjVerID(); // определяем id
-            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(), new SaveService(new IntermechWriter()), new SupportingRepository()));
+            IPresenter<long, CancellationTokenSource> mainPresenter = new MainFormPresenter(new MainForm(), new MainFormModel(new IntermechReader(new RecountService()), new SaveService(new IntermechWriter()), new SupportingRepository()));
             mainPresenter.Run(id, new CancellationTokenSource());
         }
 

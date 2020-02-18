@@ -84,7 +84,6 @@
       <DependentUpon>CompareTwoNodesView.cs</DependentUpon>
     </Compile>
     <Compile Include="TreeComparer\ITreeComparerView.cs" />
-    <Compile Include="TreeComparer\TreeComparerPresenter.cs" />
     <Compile Include="TreeComparer\TreeComparerView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,7 +98,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\MainFormPresenter.cs" />
-    <Compile Include="Presenters\TreeComparerPresenter.cs" />
+    <Compile Include="TreeComparer\TreeComparerPresenter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

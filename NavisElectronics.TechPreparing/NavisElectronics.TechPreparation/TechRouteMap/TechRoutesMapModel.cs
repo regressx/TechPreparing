@@ -26,7 +26,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
     internal class TechRoutesMapModel
     {
         private readonly OpenFolderService _openFolderService;
-        private readonly ShowFileManager _showFileManager;
         private readonly IDataRepository _repository;
         private readonly TechRouteSetService _techRouteSetService;
 
@@ -41,10 +40,9 @@ namespace NavisElectronics.TechPreparation.ViewModels
         /// </param>
         /// <param name="repository"></param>
         /// <param name="techRouteSetService"></param>
-        public TechRoutesMapModel(OpenFolderService openFolderService, ShowFileManager showFileManager, IDataRepository repository, TechRouteSetService techRouteSetService)
+        public TechRoutesMapModel(OpenFolderService openFolderService,IDataRepository repository, TechRouteSetService techRouteSetService)
         {
             _openFolderService = openFolderService;
-            _showFileManager = showFileManager;
             _repository = repository;
             _techRouteSetService = techRouteSetService;
         }
@@ -265,19 +263,6 @@ namespace NavisElectronics.TechPreparation.ViewModels
         {
             _openFolderService.OpenFolder(designation);
         }
-
-
-        /// <summary>
-        /// The show product card.
-        /// </summary>
-        /// <param name="element">
-        /// Указанный элемент
-        /// </param>
-        public void ShowProductCard(IntermechTreeElement element)
-        {
-            _showFileManager.Show(element.Id, element.Type);
-        }
-
 
         public void SetInnerCooperation(IntermechTreeElement element, bool value)
         {

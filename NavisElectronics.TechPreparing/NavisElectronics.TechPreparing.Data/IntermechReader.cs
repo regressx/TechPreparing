@@ -17,11 +17,9 @@ namespace NavisElectronics.TechPreparation.Data
     using System.Data;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Entities;
     using Exceptions;
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using Interfaces;
@@ -45,12 +43,15 @@ namespace NavisElectronics.TechPreparation.Data
         /// </summary>
         private readonly SubsituteDecryptorService _substituteDecriptorService;
 
+        private RecountService _recountService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="IntermechReader"/> class.
         /// </summary>
-        public IntermechReader()
+        public IntermechReader(RecountService recountService)
         {
             _substituteDecriptorService = new SubsituteDecryptorService(new ActualSubsitutesDecryptor(), new SubGroupsDecryptor(new SubGroupDecryptor()));
+            _recountService = recountService;
         }
 
 
@@ -441,7 +442,7 @@ namespace NavisElectronics.TechPreparation.Data
             // загрузка всего остального дерева
             FetchNodeRecursive(orderElement, downloadedParts, token);
 
-            RecountAmountInTree(orderElement);
+            _recountService.RecountAmount(orderElement);
 
             return orderElement;
         }
@@ -647,6 +648,12 @@ namespace NavisElectronics.TechPreparation.Data
                                             SetChangeDocumentName(tempElement, dataRow[3]);
                                             element.ChangeDocument = tempElement.ChangeDocument;
                                         }
+                                        if (dataRow[3] != DBNull.Value)
+                                        {
+                                            IntermechTreeElement tempElement = new IntermechTreeElement() { Id = Convert.ToInt64(dataRow[0]) };
+                                            SetChangeDocumentName(tempElement, dataRow[3]);
+                                            element.ChangeDocument = tempElement.ChangeDocument;
+                                        }
 
                                         break;
                                 }
@@ -775,7 +782,7 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             // расчет применяемостей
-            RecountAmountInTree(root);
+            _recountService.RecountAmount(root);
             return root;
         }
 
@@ -838,139 +845,6 @@ namespace NavisElectronics.TechPreparation.Data
             T deserializedObject = deserializeStrategy.Deserialize(unpackedBytes);
 
             return deserializedObject;
-        }
-
-
-        /// <summary>
-        /// Получает из IPS данные по запрошенному тех. отходу
-        /// </summary>
-        /// <returns>
-        /// The <see cref="WithdrawalType"/>.
-        /// </returns>
-        public WithdrawalType GetWithdrawalTypes()
-        {
-            WithdrawalType mainNode = new WithdrawalType();
-            mainNode.Id = 1440207;
-            mainNode.Description = "Типы тех. отхода";
-            Queue<WithdrawalType> queue = new Queue<WithdrawalType>();
-            queue.Enqueue(mainNode);
-
-            while (queue.Count > 0)
-            {
-                WithdrawalType nodeFromQueue = queue.Dequeue();
-                using (SessionKeeper keeper = new SessionKeeper())
-                {
-                    IDBObject myObject = keeper.Session.GetObject(nodeFromQueue.Id);
-
-                    // Сервис для получения составов
-                    ICompositionLoadService compositionService =
-                        (ICompositionLoadService)keeper.Session.GetCustomService(
-                            typeof(ICompositionLoadService));
-
-                    // Получим состав по связи Простая связь с сортировкой
-                    // Необходимые колонки
-                    ColumnDescriptor[] columns =
-                    {
-                        new ColumnDescriptor(
-                            (int)ObligatoryObjectAttributes.F_OBJECT_ID,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // идентификатор версии объекта
-                        new ColumnDescriptor(
-                            (int)ObligatoryObjectAttributes.F_OBJECT_TYPE,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // тип объекта
-                        new ColumnDescriptor(10,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // наименование
-                        new ColumnDescriptor(11,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // примечание
-                        new ColumnDescriptor(17727,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // значение-величина
-                        new ColumnDescriptor(1317,
-                            AttributeSourceTypes.Object,
-                            ColumnContents.Text,
-                            ColumnNameMapping.Index,
-                            SortOrders.NONE,
-                            0), // идентификатор  tag
-
-                    };
-
-                    // забрать содержимое папки Imbase
-                    DataTable composition = compositionService.LoadComposition(
-                        keeper.Session.SessionGUID,
-                        myObject.ObjectID,
-                        1003,
-                        new List<ColumnDescriptor>(columns),
-                        string.Empty,
-                        1095);
-
-
-                    foreach (DataRow row in composition.Rows)
-                    {
-                        WithdrawalType withdrawalType = new WithdrawalType();
-                        withdrawalType.Id = Convert.ToInt64(row[0]);
-                        if (row[5] != DBNull.Value)
-                        {
-                            withdrawalType.Type = Convert.ToByte(row[5]);
-                        }
-
-                        if (row[2] != DBNull.Value)
-                        {
-                            withdrawalType.Name= Convert.ToString(row[2]);
-                        }
-
-                        if (row[3] != DBNull.Value)
-                        {
-                            withdrawalType.Description = (string)row[3];
-                        }
-
-                        if (row[4] != DBNull.Value)
-                        {
-                            withdrawalType.Value = (string)row[4];
-                        }
-
-                        nodeFromQueue.Add(withdrawalType);
-                    }
-
-                    foreach (WithdrawalType child in nodeFromQueue.Children)
-                    {
-                        queue.Enqueue(child);
-                    }
-                }
-            }
-
-            return mainNode;
-
-        }
-
-
-        /// <summary>
-        /// Асинхронно получает из IPS данные по запрошенному тех. отходу
-        /// </summary>
-        /// <returns>
-        /// Набор типов тех. отходов
-        /// </returns>
-        public Task<WithdrawalType> GetWithdrawalTypesAsync()
-        {
-            Func<WithdrawalType> funcDelegate = () => { return GetWithdrawalTypes(); };
-            return Task.Run(funcDelegate);
         }
 
         /// <summary>
@@ -1444,36 +1318,6 @@ namespace NavisElectronics.TechPreparation.Data
             }
 
             return element;
-        }
-
-
-        /// <summary>
-        /// пересчитать применяемости в дереве
-        /// </summary>
-        /// <param name="node">
-        /// The node.
-        /// </param>
-        internal void RecountAmountInTree(IntermechTreeElement node)
-        {
-            // расчет применяемостей
-            Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(node);
-            while (queue.Count > 0)
-            {
-                IntermechTreeElement elementFromQueue = queue.Dequeue();
-                IntermechTreeElement parent = elementFromQueue.Parent;
-                if (parent != null)
-                {
-                    elementFromQueue.UseAmount = (int)Math.Round(parent.AmountWithUse, MidpointRounding.ToEven);
-                    elementFromQueue.AmountWithUse = elementFromQueue.UseAmount * elementFromQueue.Amount;
-                    elementFromQueue.TotalAmount = elementFromQueue.AmountWithUse * elementFromQueue.StockRate;
-                }
-
-                foreach (IntermechTreeElement child in elementFromQueue.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
         }
 
         /// <summary>

@@ -39,11 +39,6 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         event EventHandler<SaveClickEventArgs> EditNoteClick;
 
         /// <summary>
-        /// Показать чертеж
-        /// </summary>
-        event EventHandler<SaveClickEventArgs> ShowClick;
-
-        /// <summary>
         /// The create report click.
         /// </summary>
         event EventHandler CreateReportClick;

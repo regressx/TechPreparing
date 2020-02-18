@@ -14,12 +14,20 @@ namespace NavisElectronics.TechPreparation.Reports
     using Aga.Controls.Tree;
 
     using NavisElectronics.TechPreparation.Entities;
+    using NavisElectronics.TechPreparation.Interfaces.Services;
 
     /// <summary>
     /// The report service.
     /// </summary>
     public class ReportService : IReportService
     {
+        private readonly RecountService recountService;
+
+        public ReportService(RecountService recountService)
+        {
+            this.recountService = recountService;
+        }
+
         /// <summary>
         /// The create report.
         /// </summary>
@@ -56,7 +64,7 @@ namespace NavisElectronics.TechPreparation.Reports
             switch (documentType)
             {
                 case DocumentType.Intermech:
-                    report = new ReportIntermech(reportType);
+                    report = new ReportIntermech(reportType, recountService);
                     break;
             }
 

@@ -3,7 +3,6 @@
     public enum ActionType
     {
         GetAttributeFromOneObject,
-        GetAttributeFromAbunchOfObjects,
-        GetTotalAmountOfObjects
+        GetFromComposition
     }
 }

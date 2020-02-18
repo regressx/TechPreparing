@@ -56,7 +56,7 @@
         }
 
         /// <summary>
-        /// Маппинг одного элемента дерева в другой. И здесь есть чуть-чуть рефлексии
+        /// Маппинг одного элемента дерева в другой
         /// </summary>
         /// <param name="product">
         /// The product.
@@ -98,7 +98,7 @@
             root.TechTaskOnPCB = product.TechTask;
             root.Case = product.Case;
             root.MountingType = product.MountingType;
-            root.ProduseSign = product.ProduseSign.ToString();
+            root.DoNotProduce = product.ProduseSign.ToString();
             root.TechRoute = product.TechRoute;
             root.RelationName = product.RelationName;
             root.ChangeDocumentName = product.ChangeDocument;

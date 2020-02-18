@@ -69,6 +69,9 @@
     <Reference Include="NavisArchiveWork.Model">
       <HintPath>..\packages\NavisArchiveWork.Model.dll</HintPath>
     </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\packages\NCalc.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.dll</HintPath>
@@ -85,14 +88,13 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Services\CalculationEngine.cs" />
+    <Compile Include="Calculations\FormulaVariable.cs" />
     <Compile Include="CommonModule.cs" />
     <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
-    <Compile Include="Entities\RateCatalog.cs" />
-    <Compile Include="Entities\RateCatalogNode.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
-    <Compile Include="Enums\ActionType.cs" />
     <Compile Include="Enums\ElementPlaceOfBirth.cs" />
     <Compile Include="Exceptions\OrganizationStructNotDownloadedException.cs" />
     <Compile Include="IO\IntermechPathRepository.cs" />
@@ -103,7 +105,8 @@
     <Compile Include="Main\MdiMainForm.Designer.cs">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperationCalculationCommandProvider.cs" />
+    <Compile Include="Services\ParametersParser.cs" />
+    <Compile Include="Services\OperationCalculationCommandProvider.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\IPresentationFactory.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
@@ -180,7 +183,6 @@
     <Compile Include="Services\MapTreeOnListService.cs" />
     <Compile Include="ViewInterfaces\ITreeNodeDialogView.cs" />
     <Compile Include="ViewInterfaces\ITableView.cs" />
-    <Compile Include="Services\ShowFileManager.cs" />
     <Compile Include="Views\MultiplyParametersView.cs">
       <SubType>Form</SubType>
     </Compile>

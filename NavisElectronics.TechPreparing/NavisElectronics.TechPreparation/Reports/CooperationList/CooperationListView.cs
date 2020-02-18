@@ -9,6 +9,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
     using Intermech.Document.Model;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
+    using NavisElectronics.TechPreparation.Interfaces.Services;
     using ViewModels.TreeNodes;
 
     /// <summary>
@@ -16,10 +17,17 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
     /// </summary>
     public class CooperationListView : IDocumentTypeFactory
     {
+        private readonly RecountService recountService;
+        public CooperationListView(RecountService recountService)
+        {
+            this.recountService = recountService;
+        }
+
         /// <summary>
         /// id шаблона ведомости кооперации из IPS
         /// </summary>
         private const int TemplateId = 1485992;
+
 
         /// <summary>
         /// Метод создания документа "Ведомость кооперации"
@@ -84,7 +92,7 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
             TableData rowPcbTemplate = docTemplate.FindNode("RowPCB") as TableData;
 
 
-            CooperationListFactory cooperationListFactory = new CooperationListFactory(myNode);
+            CooperationListFactory cooperationListFactory = new CooperationListFactory(myNode, recountService);
             CooperationListDocument cooperationListDocument = cooperationListFactory.Create();
 
             ICollection<IntermechTreeElement> commonObjects = cooperationListDocument.CommonObjects;

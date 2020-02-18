@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-//using Jace;
-using NavisElectronics.TechPreparation.Interfaces.Entities;
-
 namespace NavisElectronics.TechPreparation
 {
     using System;
@@ -21,8 +18,8 @@ namespace NavisElectronics.TechPreparation
     using Intermech.Navigator.Interfaces;
     using Presenters;
     using Services;
-
     using Ninject;
+    using NavisElectronics.TechPreparation.Calculations;
 
     /// <summary>
     /// Плагин для работы с ведомостью кооперации
@@ -40,7 +37,6 @@ namespace NavisElectronics.TechPreparation
             IFactory factory = ApplicationServices.Container.GetService(typeof(IFactory)) as IFactory;
             if (factory != null)
             {
-
                 MenuTemplate menu = factory.ContextMenuTemplate;
 
                 // Нет меню - свой пункт в нём не создаём - выход
@@ -61,10 +57,10 @@ namespace NavisElectronics.TechPreparation
                 ICommandsProvider prov = new CooperationListCommandProvider(presentationFactory);
 
                 menu.Nodes.Add(new MenuTemplateNode("CalculateOperation", "Рассчитать потребность материалов на операцию", -1, 2, int.MaxValue));
-                //ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider(new RateService(new CalculationEngine()));
+                ICommandsProvider operationCalculationProvider = new OperationCalculationCommandProvider(new RateService(new CalculationEngine()));
 
                 factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1019, prov);
-                //factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
+                factory.AddCommandsProvider(Consts.CategoryObjectVersion, 1075, operationCalculationProvider);
             }
         }
 

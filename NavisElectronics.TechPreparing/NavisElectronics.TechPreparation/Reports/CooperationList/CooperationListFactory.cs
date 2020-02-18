@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Interfaces.Entities;
+    using NavisElectronics.TechPreparation.Interfaces.Services;
     using ViewModels.TreeNodes;
 
     /// <summary>
@@ -13,6 +14,7 @@
         /// Узел, для которого делается ведомость кооперации
         /// </summary>
         private readonly MyNode _mainNode;
+        private readonly RecountService _service;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CooperationListFactory"/> class. 
@@ -20,9 +22,11 @@
         /// <param name="mainNode">
         /// Выбранный Вами узел
         /// </param>
-        public CooperationListFactory(MyNode mainNode)
+        /// <param name="service">Сервис для пересчета количеств</param>
+        public CooperationListFactory(MyNode mainNode, RecountService service)
         {
             _mainNode = mainNode;
+            _service = service;
         }
 
 
@@ -41,26 +45,9 @@
             IntermechTreeElement clonedElement = (IntermechTreeElement)taggedElement.Clone();
             clonedElement.Amount = 1;
             clonedElement.AmountWithUse = 1;
-            
+
             // пересчитаем количества
-            Stack<IntermechTreeElement> stack = new Stack<IntermechTreeElement>();
-            stack.Push(clonedElement);
-            while (stack.Count > 0)
-            {
-                IntermechTreeElement elementFromStack = stack.Pop();
-
-                IntermechTreeElement parent = elementFromStack.Parent;
-                if (parent != null)
-                {
-                    elementFromStack.AmountWithUse = parent.AmountWithUse * elementFromStack.Amount;
-                    elementFromStack.TotalAmount = elementFromStack.AmountWithUse * elementFromStack.StockRate;
-                }
-
-                foreach (IntermechTreeElement child in elementFromStack.Children)
-                {
-                    stack.Push(child);
-                }
-            }
+            _service.RecountAmount(clonedElement);
 
             // заполнить словарик уникальных элементов, делающихся по кооперации
             IDictionary<long, IntermechTreeElement> uniqueCooperationElements = new Dictionary<long, IntermechTreeElement>();
