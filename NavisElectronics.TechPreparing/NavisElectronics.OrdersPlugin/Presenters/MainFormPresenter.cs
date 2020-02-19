@@ -13,6 +13,7 @@ namespace NavisElectronics.Orders.Presenters
     using System.Windows.Forms;
     using Enums;
     using EventArguments;
+    using NavisElectronics.Orders.Services;
     using TechPreparation.Interfaces.Entities;
     using ViewModels;
 
@@ -55,6 +56,83 @@ namespace NavisElectronics.Orders.Presenters
             _view.DownloadAndUpdate += View_DownloadAndUpdate;
             _view.CreateReport += View_CreateReport;
             _view.DecryptDocumentNames += _view_DecryptDocumentNames;
+            _view.AddNoteToThisNode += _view_AddNoteToThisNode;
+            _view.AddNoteToThisNodeInWholeTree += _view_AddNoteToThisNodeInWholeTree;
+        }
+
+        private void _view_AddNoteToThisNodeInWholeTree(object sender, EventArgs e)
+        {
+            OrderNode orderNode = _view.GetSelectedTreeElement();
+            IntermechTreeElement currentElement = orderNode.Tag as IntermechTreeElement;
+
+            if (currentElement != null)
+            {
+                using (NoteForm noteForm = new NoteForm())
+                {
+                    if (noteForm.ShowDialog() == DialogResult.OK)
+                    {
+                        _model.AddNote(currentElement, noteForm.NoteText, new AddNoteToWholeTreeStrategy());
+
+                        OrderNode root = orderNode;
+                        while(true)
+                        {
+                            OrderNode currentNode = (OrderNode)root.Parent;
+
+                            // если родитель есть
+                            if (currentNode!=null)
+                            {
+                                root = currentNode;
+                                if (currentNode.Type == 1019 || currentNode.Type == 0)
+                                {
+                                    break;
+                                }
+    
+                            }
+                            else
+                            {
+                                // остановить цикл, если у узла нет родителя. Он и есть родитель
+                                break;
+                            }
+                        }
+
+                        Queue<OrderNode> queue = new Queue<OrderNode>();
+                        queue.Enqueue(root);
+                        while (queue.Count > 0)
+                        {
+                            OrderNode nodeFromQueue = queue.Dequeue();
+                            if (nodeFromQueue.ObjectId == currentElement.ObjectId)
+                            {
+                                nodeFromQueue.Note = currentElement.Note;
+                            }
+
+                            foreach(OrderNode child in nodeFromQueue.Nodes)
+                            {
+                                queue.Enqueue(child);
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void _view_AddNoteToThisNode(object sender, EventArgs e)
+        {
+            OrderNode orderNode = _view.GetSelectedTreeElement();
+            IntermechTreeElement currentElement = orderNode.Tag as IntermechTreeElement;
+
+            if (currentElement != null)
+            {
+                using (NoteForm noteForm = new NoteForm())
+                {
+                    if (noteForm.ShowDialog() == DialogResult.OK)
+                    {
+                        _model.AddNote(currentElement, noteForm.NoteText, new AddNoteToThisNodeStrategy());
+                        _view.GetSelectedTreeElement().Note = currentElement.Note;
+                    }
+                }
+            }
         }
 
         private void _view_DecryptDocumentNames(object sender, EventArgs e)

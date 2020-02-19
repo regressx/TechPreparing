@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AddNoteButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddNoteOnlyThisNodeButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNoteInWholeTreeButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.produceButton = new System.Windows.Forms.ToolStripMenuItem();
             this.produceInCurrentNodeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.produceInAllTreeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,12 +83,42 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddNoteButton,
+            this.toolStripSeparator2,
             this.produceButton,
             this.doNotProduceButton,
             this.toolStripSeparator1,
             this.createReportButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 76);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 104);
+            // 
+            // AddNoteButton
+            // 
+            this.AddNoteButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddNoteOnlyThisNodeButton,
+            this.addNoteInWholeTreeButton});
+            this.AddNoteButton.Name = "AddNoteButton";
+            this.AddNoteButton.Size = new System.Drawing.Size(245, 22);
+            this.AddNoteButton.Text = "Добавить примечание узлу";
+            // 
+            // AddNoteOnlyThisNodeButton
+            // 
+            this.AddNoteOnlyThisNodeButton.Name = "AddNoteOnlyThisNodeButton";
+            this.AddNoteOnlyThisNodeButton.Size = new System.Drawing.Size(183, 22);
+            this.AddNoteOnlyThisNodeButton.Text = "только в этой сборке";
+            this.AddNoteOnlyThisNodeButton.Click += new System.EventHandler(this.OnAddNoteOnlyThisNodeButtonClick);
+            // 
+            // addNoteInWholeTreeButton
+            // 
+            this.addNoteInWholeTreeButton.Name = "addNoteInWholeTreeButton";
+            this.addNoteInWholeTreeButton.Size = new System.Drawing.Size(183, 22);
+            this.addNoteInWholeTreeButton.Text = "во всем дереве";
+            this.addNoteInWholeTreeButton.Click += new System.EventHandler(this.OnAddNoteInWholeTreeButtonClick);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(242, 6);
             // 
             // produceButton
             // 
@@ -98,14 +132,14 @@
             // produceInCurrentNodeButton
             // 
             this.produceInCurrentNodeButton.Name = "produceInCurrentNodeButton";
-            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
+            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(180, 22);
             this.produceInCurrentNodeButton.Text = "только в этом узле";
             this.produceInCurrentNodeButton.Click += new System.EventHandler(this.produceInCurrentNodeButton_Click);
             // 
             // produceInAllTreeButton
             // 
             this.produceInAllTreeButton.Name = "produceInAllTreeButton";
-            this.produceInAllTreeButton.Size = new System.Drawing.Size(171, 22);
+            this.produceInAllTreeButton.Size = new System.Drawing.Size(180, 22);
             this.produceInAllTreeButton.Text = "во всём дереве";
             this.produceInAllTreeButton.Click += new System.EventHandler(this.produceInAllTreeButton_Click);
             // 
@@ -495,5 +529,9 @@
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox10;
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBox11;
         private System.Windows.Forms.ToolStripButton DecryptDocumentsButton;
+        private System.Windows.Forms.ToolStripMenuItem AddNoteButton;
+        private System.Windows.Forms.ToolStripMenuItem AddNoteOnlyThisNodeButton;
+        private System.Windows.Forms.ToolStripMenuItem addNoteInWholeTreeButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

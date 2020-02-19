@@ -16,8 +16,22 @@ namespace NavisElectronics.Orders.Services
     {
         public void AddNote(IntermechTreeElement element, string note)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element", "Не выбран элемент, которому требуется добавить примечание");
+            }
+
+            if (note == null)
+            {
+                throw new ArgumentNullException("note", "Не указано примечание!");
+            }
+
             string oldNote = element.Note == null ? string.Empty : element.Note;
-            element.Note = string.Format($"{note} {oldNote}"); 
+            
+            // если была передана пустая строка, то затереть все примечания
+            element.RelationNote = note == string.Empty ? string.Empty : string.Format($"{note} {oldNote}");
+
+
         }
     }
 
@@ -25,6 +39,17 @@ namespace NavisElectronics.Orders.Services
     {
         public void AddNote(IntermechTreeElement element, string note)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element", "Не выбран элемент, которому требуется добавить примечание");
+            }
+
+            if (note == null)
+            {
+                throw new ArgumentNullException("note", "Не указано примечание!");
+            }
+
+
             // дойти до корня
             IntermechTreeElement root = element;
             while(root.Parent!=null)
@@ -43,7 +68,8 @@ namespace NavisElectronics.Orders.Services
                 if (elementFromQueue.ObjectId == element.ObjectId)
                 {
                     string oldNote = elementFromQueue.Note == null ? string.Empty : elementFromQueue.Note;
-                    elementFromQueue.Note = string.Format($"{note} {oldNote}");
+
+                    elementFromQueue.RelationNote = note == string.Empty ? string.Empty : string.Format($"{note} {oldNote}");
                 }
 
                 foreach(IntermechTreeElement child in elementFromQueue.Children)

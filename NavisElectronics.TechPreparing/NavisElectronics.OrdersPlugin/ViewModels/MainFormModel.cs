@@ -8,6 +8,7 @@
     using DataAccessLayer;
     using Enums;
     using Intermech.Interfaces;
+    using NavisElectronics.Orders.Services;
     using Reports;
     using TechPreparation.Interfaces;
     using TechPreparation.Interfaces.Entities;
@@ -188,6 +189,10 @@
             }
         }
 
+        public void AddNote(IntermechTreeElement element, string note, IAddNoteStrategy strategy)
+        {
+            strategy.AddNote(element, note);
+        }
 
         public void DecryptDocuments(IntermechTreeElement root)
         {
