@@ -92,7 +92,6 @@
     <Compile Include="Services\CalculationEngine.cs" />
     <Compile Include="Calculations\FormulaVariable.cs" />
     <Compile Include="CommonModule.cs" />
-    <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
@@ -154,7 +153,6 @@
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
-    <Compile Include="DividingList\ViewNode.cs" />
     <Compile Include="Note\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,13 +211,6 @@
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
-    <Compile Include="DividingList\IDividingListView.cs" />
-    <Compile Include="DividingList\DividingListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DividingList\DividingListForm.Designer.cs">
-      <DependentUpon>DividingListForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Note\AddNotePresenter.cs" />
     <Compile Include="ViewInterfaces\IParametersView.cs" />
     <Compile Include="Main\MainPresenter.cs" />
@@ -265,9 +256,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TechRouteMap\FindNodeView.resx">
       <DependentUpon>FindNodeView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DividingList\DividingListForm.resx">
-      <DependentUpon>DividingListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>

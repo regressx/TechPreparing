@@ -76,6 +76,10 @@
             this.nodeTextBox9 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox10 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.nodeTextBox11 = new Aga.Controls.Tree.NodeControls.NodeTextBox();
+            this.SetManufacturerButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.SetManufacturerInThisNodeButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetManufacturerInWholeTreeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -88,9 +92,11 @@
             this.produceButton,
             this.doNotProduceButton,
             this.toolStripSeparator1,
-            this.createReportButton});
+            this.createReportButton,
+            this.toolStripSeparator3,
+            this.SetManufacturerButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(246, 104);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 132);
             // 
             // AddNoteButton
             // 
@@ -132,14 +138,14 @@
             // produceInCurrentNodeButton
             // 
             this.produceInCurrentNodeButton.Name = "produceInCurrentNodeButton";
-            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(180, 22);
+            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInCurrentNodeButton.Text = "только в этом узле";
             this.produceInCurrentNodeButton.Click += new System.EventHandler(this.produceInCurrentNodeButton_Click);
             // 
             // produceInAllTreeButton
             // 
             this.produceInAllTreeButton.Name = "produceInAllTreeButton";
-            this.produceInAllTreeButton.Size = new System.Drawing.Size(180, 22);
+            this.produceInAllTreeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInAllTreeButton.Text = "во всём дереве";
             this.produceInAllTreeButton.Click += new System.EventHandler(this.produceInAllTreeButton_Click);
             // 
@@ -206,7 +212,7 @@
             this.DecryptDocumentsButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1335, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1447, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip";
             // 
@@ -266,7 +272,7 @@
             // 
             this.statusStrip.Location = new System.Drawing.Point(0, 410);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1335, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1447, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -310,7 +316,7 @@
             this.treeViewAdv.NodeControls.Add(this.nodeTextBox11);
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
-            this.treeViewAdv.Size = new System.Drawing.Size(1335, 385);
+            this.treeViewAdv.Size = new System.Drawing.Size(1447, 385);
             this.treeViewAdv.TabIndex = 3;
             this.treeViewAdv.Text = "treeViewAdv";
             this.treeViewAdv.UseColumns = true;
@@ -467,11 +473,37 @@
             this.nodeTextBox11.LeftMargin = 3;
             this.nodeTextBox11.ParentColumn = this.noteColumn;
             // 
+            // SetManufacturerButton
+            // 
+            this.SetManufacturerButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SetManufacturerInThisNodeButton,
+            this.SetManufacturerInWholeTreeButton});
+            this.SetManufacturerButton.Name = "SetManufacturerButton";
+            this.SetManufacturerButton.Size = new System.Drawing.Size(245, 22);
+            this.SetManufacturerButton.Text = "Установить узлу изготовителя";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(242, 6);
+            // 
+            // SetManufacturerInThisNodeButton
+            // 
+            this.SetManufacturerInThisNodeButton.Name = "SetManufacturerInThisNodeButton";
+            this.SetManufacturerInThisNodeButton.Size = new System.Drawing.Size(168, 22);
+            this.SetManufacturerInThisNodeButton.Text = "toolStripMenuItem1";
+            // 
+            // SetManufacturerInWholeTreeButton
+            // 
+            this.SetManufacturerInWholeTreeButton.Name = "SetManufacturerInWholeTreeButton";
+            this.SetManufacturerInWholeTreeButton.Size = new System.Drawing.Size(245, 22);
+            this.SetManufacturerInWholeTreeButton.Text = "toolStripMenuItem2";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1335, 432);
+            this.ClientSize = new System.Drawing.Size(1447, 432);
             this.Controls.Add(this.treeViewAdv);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
@@ -533,5 +565,9 @@
         private System.Windows.Forms.ToolStripMenuItem AddNoteOnlyThisNodeButton;
         private System.Windows.Forms.ToolStripMenuItem addNoteInWholeTreeButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem SetManufacturerButton;
+        private System.Windows.Forms.ToolStripMenuItem SetManufacturerInThisNodeButton;
+        private System.Windows.Forms.ToolStripMenuItem SetManufacturerInWholeTreeButton;
     }
 }
