@@ -102,7 +102,7 @@ namespace NavisElectronics.Orders.Presenters
                             OrderNode nodeFromQueue = queue.Dequeue();
                             if (nodeFromQueue.ObjectId == currentElement.ObjectId)
                             {
-                                nodeFromQueue.Note = currentElement.Note;
+                                nodeFromQueue.Note = currentElement.RelationNote;
                             }
 
                             foreach(OrderNode child in nodeFromQueue.Nodes)
@@ -129,7 +129,7 @@ namespace NavisElectronics.Orders.Presenters
                     if (noteForm.ShowDialog() == DialogResult.OK)
                     {
                         _model.AddNote(currentElement, noteForm.NoteText, new AddNoteToThisNodeStrategy());
-                        _view.GetSelectedTreeElement().Note = currentElement.Note;
+                        _view.GetSelectedTreeElement().Note = currentElement.RelationNote;
                     }
                 }
             }

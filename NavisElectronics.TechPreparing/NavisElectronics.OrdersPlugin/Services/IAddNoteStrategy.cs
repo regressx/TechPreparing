@@ -26,7 +26,7 @@ namespace NavisElectronics.Orders.Services
                 throw new ArgumentNullException("note", "Не указано примечание!");
             }
 
-            string oldNote = element.Note == null ? string.Empty : element.Note;
+            string oldNote = element.RelationNote == null ? string.Empty : element.RelationNote;
             
             // если была передана пустая строка, то затереть все примечания
             element.RelationNote = note == string.Empty ? string.Empty : string.Format($"{note} {oldNote}");
@@ -67,7 +67,7 @@ namespace NavisElectronics.Orders.Services
 
                 if (elementFromQueue.ObjectId == element.ObjectId)
                 {
-                    string oldNote = elementFromQueue.Note == null ? string.Empty : elementFromQueue.Note;
+                    string oldNote = elementFromQueue.RelationNote == null ? string.Empty : elementFromQueue.RelationNote;
 
                     elementFromQueue.RelationNote = note == string.Empty ? string.Empty : string.Format($"{note} {oldNote}");
                 }
