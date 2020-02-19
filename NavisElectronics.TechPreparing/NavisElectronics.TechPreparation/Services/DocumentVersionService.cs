@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NavisElectronics.TechPreparation.Services
 {
-    class DocumentVersionService
+    internal class DocumentVersionService
     {
+
     }
 }
