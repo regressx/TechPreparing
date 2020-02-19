@@ -4,6 +4,10 @@ namespace NavisElectronics.Orders
 {
     public class OrderNode : Node
     {
+        public long VersionId { get; set; }
+
+        public long ObjectId { get; set; }
+
         public int Type { get; set; }
         public string Designation { get; set; }
         public string Name { get; set; }
