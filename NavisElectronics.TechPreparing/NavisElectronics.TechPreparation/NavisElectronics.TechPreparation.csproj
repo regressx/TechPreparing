@@ -88,6 +88,12 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="DividingListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DividingListForm.Designer.cs" />
+    <Compile Include="DividingListPresenter.cs" />
+    <Compile Include="IDividingListView.cs" />
     <Compile Include="OrdersComparerCommandProvider.cs" />
     <Compile Include="Services\CalculationEngine.cs" />
     <Compile Include="Calculations\FormulaVariable.cs" />
@@ -159,6 +165,7 @@
     <Compile Include="Note\AddNoteForm.Designer.cs">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewNode.cs" />
     <Compile Include="Views\CompareTwoNodesView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +243,7 @@
     <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DividingListForm.resx" />
     <EmbeddedResource Include="Main\MdiMainForm.resx">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </EmbeddedResource>
