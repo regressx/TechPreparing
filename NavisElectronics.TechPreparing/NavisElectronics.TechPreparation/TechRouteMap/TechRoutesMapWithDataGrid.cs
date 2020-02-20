@@ -119,21 +119,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void PasteRouteButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<NodesCollectionEventArgs> temp = Volatile.Read(ref PasteClick);
-            if (temp != null)
-            {
-                ICollection<MyNode> nodes = new List<MyNode>();
-                foreach (TreeNodeAdv node in treeViewAdv.SelectedNodes)
-                {
-                    nodes.Add(node.Tag as MyNode);
-                }
-
-                temp(sender, new NodesCollectionEventArgs(nodes));
-            }
-        }
-
         private void goToArchiveButton_Click(object sender, EventArgs e)
         {
             if (GoToOldArchive != null)
@@ -218,56 +203,6 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
-        private void addIntoExistingRouteButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref EditTechRouteClick);
-            if (temp != null)
-            {
-                temp(sender, new EditTechRouteEventArgs(true));
-            }
-        }
-
-        private void createNewRouteButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref EditTechRouteClick);
-            if (temp != null)
-            {
-                temp(sender, new EditTechRouteEventArgs(false));
-            }
-        }
-
-        private void deleteRouteMenuItem_Click(object sender, EventArgs e)
-        {
-            EventHandler<NodesCollectionEventArgs> temp = Volatile.Read(ref DeleteRouteClick);
-            if (temp != null)
-            {
-                ICollection<MyNode> nodes = new List<MyNode>();
-                foreach (TreeNodeAdv node in treeViewAdv.SelectedNodes)
-                {
-                    nodes.Add(node.Tag as MyNode);
-                }
-
-                temp(sender, new NodesCollectionEventArgs(nodes));
-            }
-        }
-
-        private void SetTechRoutesButtonButton_Click(object sender, EventArgs e)
-        {
-            EventHandler temp = Volatile.Read(ref DownloadInfoFromIPS);
-            if (temp != null)
-            {
-                temp(sender, EventArgs.Empty);
-            }
-        }
-
-        private void editTechRoutesButton_Click(object sender, EventArgs e)
-        {
-            EventHandler<EditTechRouteEventArgs> temp = Volatile.Read(ref EditMassTechRouteClick);
-            if (temp != null)
-            {
-                temp(sender, new EditTechRouteEventArgs(false));
-            }
-        }
 
         private void updateFromIPSButton_Click(object sender, EventArgs e)
         {
@@ -321,7 +256,7 @@ namespace NavisElectronics.TechPreparation.Views
                 note = value ? "НЕ ИЗГОТАВЛИВАТЬ" : string.Empty;
 
                 nodeFromQueue.RelationNote = note;
-                taggedElement.RelationName = note;
+                taggedElement.RelationNote = note;
                 foreach (Node node in nodeFromQueue.Nodes)
                 {
                     queue.Enqueue((MyNode)node);

@@ -95,12 +95,6 @@ namespace NavisElectronics.TechPreparation.Presenters
             _mainView = mainView;
             _presentationFactory = presentationFactory;
             _mainView.Load += _view_Load;
-
-            //_mainView.NodeMouseClick += _mainView_NodeMouseClick;
-            //_mainView.ApplyButtonClick += _mainView_ApplyButtonClick;
-            //_mainView.CellValueChanged += _mainView_CellValueChanged;
-            //_mainView.ClearManufacturerClick += _mainView_ClearManufacturerClick;
-
             _mainView.CheckOk += MainViewCheckOk;
             _mainView.EditTechRoutes += EditTechRoutes;
             _mainView.CompareTwoTrees += CompareTwoTrees;
