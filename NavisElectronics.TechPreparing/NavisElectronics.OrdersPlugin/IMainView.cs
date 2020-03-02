@@ -17,11 +17,18 @@ namespace NavisElectronics.Orders
         event EventHandler AbortLoading;
         event EventHandler<ReportStyle> CreateReport;
         event EventHandler DecryptDocumentNames;
+        event EventHandler AddNoteToThisNode;
+        event EventHandler AddNoteToThisNodeInWholeTree;
+
+
 
         event EventHandler<ProduceEventArgs> SetProduceClick; 
         void UpdateTreeModel(IntermechTreeElement treeModel);
         void UpdateSaveLabel(string message);
 
         OrderNode GetSelectedTreeElement();
+
+
+
     }
 }

@@ -3,11 +3,13 @@
 namespace NavisElectronics.Orders
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
     using Aga.Controls.Tree;
     using EventArguments;
     using TechPreparation.Interfaces.Entities;
+    using System.Linq;
 
     /// <summary>
     /// Главная форма
@@ -18,7 +20,9 @@ namespace NavisElectronics.Orders
         {
             InitializeComponent();
             treeViewAdv.RowDraw += TreeViewAdv_RowDraw;
+            
         }
+
 
         #region Events
 
@@ -29,6 +33,9 @@ namespace NavisElectronics.Orders
         public event EventHandler<ReportStyle> CreateReport;
         public event EventHandler DecryptDocumentNames;
         public event EventHandler<ProduceEventArgs> SetProduceClick;
+        public event EventHandler AddNoteToThisNode;
+        public event EventHandler AddNoteToThisNodeInWholeTree;
+
 
         #endregion
 
@@ -62,6 +69,8 @@ namespace NavisElectronics.Orders
         public TreeModel GetTreeModel(IntermechTreeElement elementToView)
         {
             OrderNode root = new OrderNode();
+            root.VersionId = elementToView.Id;
+            root.ObjectId = elementToView.ObjectId;
             root.Type = elementToView.Type;
             root.Amount = elementToView.Amount;
             root.AmountWithUse = elementToView.AmountWithUse;
@@ -81,6 +90,8 @@ namespace NavisElectronics.Orders
             foreach (IntermechTreeElement child in elementToView.Children)
             {
                 OrderNode node = new OrderNode();
+                node.VersionId = child.Id;
+                node.ObjectId = child.ObjectId;
                 node.DoNotProduce = child.ProduseSign;
                 node.Type = child.Type;
                 node.Designation = child.Designation;
@@ -210,7 +221,7 @@ namespace NavisElectronics.Orders
                 IntermechTreeElement selectedElement =
                     (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
 
-                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.OnlyThisNode));
                 treeViewAdv.Invalidate();
             }
         }
@@ -248,6 +259,28 @@ namespace NavisElectronics.Orders
             if (DecryptDocumentNames != null)
             {
                 DecryptDocumentNames(sender,EventArgs.Empty);
+            }
+        }
+
+        public OrderNode GetRootOrderNode()
+        {
+            OrderNode rootNode = treeViewAdv.AllNodes.First().Tag as OrderNode;
+            return rootNode;
+        }
+
+        private void OnAddNoteOnlyThisNodeButtonClick(object sender, EventArgs e)
+        {
+            if (AddNoteToThisNode!=null)
+            {
+                AddNoteToThisNode(sender, e);
+            }
+        }
+
+        private void OnAddNoteInWholeTreeButtonClick(object sender, EventArgs e)
+        {
+            if (AddNoteToThisNodeInWholeTree != null)
+            {
+                AddNoteToThisNodeInWholeTree(sender, e);
             }
         }
     }

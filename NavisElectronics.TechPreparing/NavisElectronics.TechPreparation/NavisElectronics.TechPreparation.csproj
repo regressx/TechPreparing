@@ -88,10 +88,16 @@
     <Compile Include="..\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
+    <Compile Include="DividingListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DividingListForm.Designer.cs" />
+    <Compile Include="DividingListPresenter.cs" />
+    <Compile Include="IDividingListView.cs" />
+    <Compile Include="OrdersComparerCommandProvider.cs" />
     <Compile Include="Services\CalculationEngine.cs" />
     <Compile Include="Calculations\FormulaVariable.cs" />
     <Compile Include="CommonModule.cs" />
-    <Compile Include="DividingList\DividingListPresenter.cs" />
     <Compile Include="Entities\IdOrPath.cs" />
     <Compile Include="Entities\IntermechTreeElementAdapter.cs" />
     <Compile Include="Entities\TechRouteNodeAdapter.cs" />
@@ -105,6 +111,7 @@
     <Compile Include="Main\MdiMainForm.Designer.cs">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\DocumentVersionService.cs" />
     <Compile Include="Services\ParametersParser.cs" />
     <Compile Include="Services\OperationCalculationCommandProvider.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
@@ -152,13 +159,13 @@
     <Compile Include="ViewInterfaces\IView.cs" />
     <Compile Include="ViewModels\StructDialogViewModel.cs" />
     <Compile Include="ViewModels\TreeNodeDialogViewModel.cs" />
-    <Compile Include="DividingList\ViewNode.cs" />
     <Compile Include="Note\AddNoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Note\AddNoteForm.Designer.cs">
       <DependentUpon>AddNoteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewNode.cs" />
     <Compile Include="Views\CompareTwoNodesView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,13 +218,6 @@
     <Compile Include="ViewInterfaces\IAddNoteView.cs" />
     <Compile Include="Services\CooperationListCommandProvider.cs" />
     <Compile Include="CooperationListPlugin.cs" />
-    <Compile Include="DividingList\IDividingListView.cs" />
-    <Compile Include="DividingList\DividingListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DividingList\DividingListForm.Designer.cs">
-      <DependentUpon>DividingListForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Note\AddNotePresenter.cs" />
     <Compile Include="ViewInterfaces\IParametersView.cs" />
     <Compile Include="Main\MainPresenter.cs" />
@@ -243,6 +243,7 @@
     <Compile Include="TechRouteMap\TechRoutesMapModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DividingListForm.resx" />
     <EmbeddedResource Include="Main\MdiMainForm.resx">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -263,9 +264,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TechRouteMap\FindNodeView.resx">
       <DependentUpon>FindNodeView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DividingList\DividingListForm.resx">
-      <DependentUpon>DividingListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MultiplyParametersView.resx">
       <DependentUpon>MultiplyParametersView.cs</DependentUpon>
@@ -341,7 +339,9 @@
   <ItemGroup>
     <None Include="Resources\pcb_16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Reports\MaterialsList\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

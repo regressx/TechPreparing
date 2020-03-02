@@ -15,7 +15,7 @@ namespace NavisElectronics.TechPreparation.Interfaces
         T Deserialize(byte[] bytes);
     }
 
-    public class DeserializeStrategyDefault<T> : IDeserializeStrategy<T>
+    public class DeserializeStrategyBinDefault<T> : IDeserializeStrategy<T>
     {
         public T Deserialize(byte[] bytes)
         {

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.ExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.CollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.refreshTreeButton = new System.Windows.Forms.ToolStripButton();
@@ -37,12 +37,13 @@
             this.updateFromIPSButton = new System.Windows.Forms.ToolStripMenuItem();
             this.goToArchiveButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteRouteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produceButton = new System.Windows.Forms.ToolStripMenuItem();
             this.doNotProduceButton = new System.Windows.Forms.ToolStripMenuItem();
             this.SetInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveInnerCooperationButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.EditNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.createReport = new System.Windows.Forms.ToolStripMenuItem();
             this.createDevideList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,10 +80,8 @@
             this.textBoxTpRef = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxTechTask = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStrip1.SuspendLayout();
+            this.createMaterialsListButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -90,17 +89,17 @@
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // toolStrip
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExpandAllButton,
             this.CollapseAllButton,
             this.refreshTreeButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1089, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip";
+            this.toolStrip.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size(1270, 25);
+            this.toolStrip.TabIndex = 1;
+            this.toolStrip.Text = "toolStrip";
             // 
             // ExpandAllButton
             // 
@@ -137,8 +136,6 @@
             this.updateFromIPSButton,
             this.goToArchiveButton,
             this.toolStripSeparator1,
-            this.deleteRouteMenuItem,
-            this.toolStripSeparator2,
             this.produceButton,
             this.doNotProduceButton,
             this.SetInnerCooperationButton,
@@ -149,9 +146,10 @@
             this.createReport,
             this.createDevideList,
             this.toolStripMenuItem2,
-            this.createCooperationListMenuItem});
+            this.createCooperationListMenuItem,
+            this.createMaterialsListButton});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(293, 292);
+            this.contextMenuStrip.Size = new System.Drawing.Size(293, 308);
             // 
             // updateFromIPSButton
             // 
@@ -171,14 +169,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(289, 6);
-            // 
-            // deleteRouteMenuItem
-            // 
-            this.deleteRouteMenuItem.Image = global::NavisElectronics.TechPreparation.Properties.Resources.action_Cancel_16xLG;
-            this.deleteRouteMenuItem.Name = "deleteRouteMenuItem";
-            this.deleteRouteMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.deleteRouteMenuItem.Text = "Удалить маршрут";
-            this.deleteRouteMenuItem.Click += new System.EventHandler(this.deleteRouteMenuItem_Click);
             // 
             // produceButton
             // 
@@ -208,6 +198,11 @@
             this.RemoveInnerCooperationButton.Text = "Убрать внутрипроизв. кооп.";
             this.RemoveInnerCooperationButton.Click += new System.EventHandler(this.RemoveInnerCooperationButton_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(289, 6);
+            // 
             // EditNote
             // 
             this.EditNote.Image = global::NavisElectronics.TechPreparation.Properties.Resources.if_stock_insert_note_21825;
@@ -215,6 +210,11 @@
             this.EditNote.Size = new System.Drawing.Size(292, 22);
             this.EditNote.Text = "Добавить примечание";
             this.EditNote.Click += new System.EventHandler(this.EditNote_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(289, 6);
             // 
             // createReport
             // 
@@ -258,7 +258,7 @@
             this.propertyGrid1.Enabled = false;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(205, 454);
+            this.propertyGrid1.Size = new System.Drawing.Size(240, 454);
             this.propertyGrid1.TabIndex = 3;
             // 
             // splitContainer1
@@ -274,8 +274,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
-            this.splitContainer1.Size = new System.Drawing.Size(1089, 454);
-            this.splitContainer1.SplitterDistance = 880;
+            this.splitContainer1.Size = new System.Drawing.Size(1270, 454);
+            this.splitContainer1.SplitterDistance = 1026;
             this.splitContainer1.TabIndex = 4;
             // 
             // treeViewAdv
@@ -325,7 +325,7 @@
             this.treeViewAdv.NodeFilter = null;
             this.treeViewAdv.SelectedNode = null;
             this.treeViewAdv.SelectionMode = Aga.Controls.Tree.TreeSelectionMode.Multi;
-            this.treeViewAdv.Size = new System.Drawing.Size(880, 454);
+            this.treeViewAdv.Size = new System.Drawing.Size(1026, 454);
             this.treeViewAdv.TabIndex = 2;
             this.treeViewAdv.Text = "treeViewAdv1";
             this.treeViewAdv.UseColumns = true;
@@ -521,33 +521,24 @@
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
             // 
-            // toolStripSeparator2
+            // createMaterialsListButton
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(289, 6);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(289, 6);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(289, 6);
+            this.createMaterialsListButton.Name = "createMaterialsListButton";
+            this.createMaterialsListButton.Size = new System.Drawing.Size(292, 22);
+            this.createMaterialsListButton.Text = "Создать ВСН";
             // 
             // TechRoutesMapWithDataGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 479);
+            this.ClientSize = new System.Drawing.Size(1270, 479);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStrip);
             this.Name = "TechRoutesMapWithDataGrid";
             this.Text = "Ведомость технологических маршрутов";
             this.Load += new System.EventHandler(this.TechRoutesMap_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -559,7 +550,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStrip;
         private Aga.Controls.Tree.TreeViewAdv treeViewAdv;
         private Aga.Controls.Tree.TreeColumn designationTreeColumn;
         private Aga.Controls.Tree.TreeColumn nameTreeColumn;
@@ -590,7 +581,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem createSingleCompleteListMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createCooperationListMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteRouteMenuItem;
         private System.Windows.Forms.ToolStripButton refreshTreeButton;
         private Aga.Controls.Tree.NodeControls.NodeIcon nodeIcon;
         private Aga.Controls.Tree.TreeColumn iconColumn;
@@ -609,8 +599,8 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem produceButton;
         private System.Windows.Forms.ToolStripMenuItem doNotProduceButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem createMaterialsListButton;
     }
 }

@@ -4,6 +4,8 @@ namespace NavisElectronics.Orders
 {
     public class OrderNode : Node
     {
+        public long VersionId { get; set; }
+        public long ObjectId { get; set; }
         public int Type { get; set; }
         public string Designation { get; set; }
         public string Name { get; set; }
@@ -21,5 +23,6 @@ namespace NavisElectronics.Orders
         public string SubInfo { get; set; }
         public int PcbVersion { get; set; }
         public bool IsPcb { get; set; }
+        public string Agent{ get; set; }
     }
 }
