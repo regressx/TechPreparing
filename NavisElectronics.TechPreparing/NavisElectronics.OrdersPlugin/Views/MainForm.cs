@@ -221,7 +221,7 @@ namespace NavisElectronics.Orders
                 IntermechTreeElement selectedElement =
                     (IntermechTreeElement)((OrderNode)treeViewAdv.SelectedNode.Tag).Tag;
 
-                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.AllTree));
+                SetProduceClick(sender, new ProduceEventArgs(selectedElement, true, ProduceIn.OnlyThisNode));
                 treeViewAdv.Invalidate();
             }
         }
