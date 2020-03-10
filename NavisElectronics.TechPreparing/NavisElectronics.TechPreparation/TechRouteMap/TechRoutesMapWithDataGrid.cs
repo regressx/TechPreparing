@@ -37,6 +37,7 @@ namespace NavisElectronics.TechPreparation.Views
         public event EventHandler CreateReportClick;
         public event EventHandler CreateDevideList;
         public event EventHandler CreateCooperationList;
+        public event EventHandler CreateMaterialsList;
         public event EventHandler<NodesCollectionEventArgs> SetInnerCooperation;
         public event EventHandler<NodesCollectionEventArgs> RemoveInnerCooperation;
         public event EventHandler RefreshTree;
@@ -264,5 +265,12 @@ namespace NavisElectronics.TechPreparation.Views
             }
         }
 
+        private void createMaterialsListButton_Click(object sender, EventArgs e)
+        {
+            if (CreateMaterialsList != null)
+            {
+                CreateMaterialsList(sender, e);
+            }
+        }
     }
 }

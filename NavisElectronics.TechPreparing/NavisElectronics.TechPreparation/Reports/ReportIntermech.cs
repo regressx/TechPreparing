@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using NavisElectronics.TechPreparation.Reports.MaterialsList;
+
 namespace NavisElectronics.TechPreparation.Reports
 {
     using System;
@@ -68,6 +70,11 @@ namespace NavisElectronics.TechPreparation.Reports
                 case ReportType.CompleteList:
                     _documentTypeFactory = new CompleteListViewFactory();
                     break;
+
+                case ReportType.MaterialsList:
+                    _documentTypeFactory = new MaterialsListDocumentView(new MaterialsListDocumentModel(recountService));
+                    break;
+
                 default:
                     throw new NotImplementedException("Метод выгрузки данных в эту ведомость еще не был разработан");
 

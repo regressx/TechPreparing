@@ -87,6 +87,8 @@
     <Compile Include="DividingListPresenter.cs" />
     <Compile Include="IDividingListView.cs" />
     <Compile Include="OrdersComparerCommandProvider.cs" />
+    <Compile Include="Reports\MaterialsList\MaterialsListDocumentModel.cs" />
+    <Compile Include="Reports\MaterialsList\MaterialsListDocumentView.cs" />
     <Compile Include="Services\CalculationEngine.cs" />
     <Compile Include="Calculations\FormulaVariable.cs" />
     <Compile Include="CommonModule.cs" />
@@ -331,9 +333,7 @@
   <ItemGroup>
     <None Include="Resources\pcb_16.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\MaterialsList\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -284,7 +284,10 @@ namespace NavisElectronics.TechPreparation.Data
                                                         new ColumnDescriptor(1129, AttributeSourceTypes.Relation,
                                                             ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // количество
                                                         new ColumnDescriptor(-20, AttributeSourceTypes.Relation,
-                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0) // идентификатор связи
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // идентификатор связи
+                                                        new ColumnDescriptor(18091, AttributeSourceTypes.Relation,
+                                                        ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0) // материал из тех. требований
+                                                        
                                                     };
 
                                                     foreach (DataRow operation in operations.Rows)
@@ -317,6 +320,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                             }
                                                             else
                                                             {
+
                                                                 IntermechTreeElement materialElement =
                                                                     new IntermechTreeElementBuilder()
                                                                         .SetId(materialObject.ObjectID)
@@ -326,6 +330,12 @@ namespace NavisElectronics.TechPreparation.Data
                                                                         .SetRelationId((long) materialRow[3])
                                                                         .SetAmount(materialRow[2]);
                                                                 materialElement.RelationName = "Технологический состав";
+
+                                                                bool materialFrom = materialRow[4] != DBNull.Value && (Convert.ToByte(materialRow[4]) == 1);
+
+                                                                materialElement.MaterialRegisteredIn =
+                                                                    materialFrom ? "Тех. треб" : string.Empty;
+
                                                                 materials.Add(materialElement.ObjectId, materialElement);
                                                             }
                                                         }
