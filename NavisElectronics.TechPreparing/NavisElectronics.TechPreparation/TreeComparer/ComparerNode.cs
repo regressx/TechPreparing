@@ -24,7 +24,7 @@ namespace NavisElectronics.TechPreparation.ViewModels.TreeNodes
         /// <summary>
         /// Количество
         /// </summary>
-        public double Amount { get; set; }
+        public string Amount { get; set; }
         
         /// <summary>
         /// Номер изменения

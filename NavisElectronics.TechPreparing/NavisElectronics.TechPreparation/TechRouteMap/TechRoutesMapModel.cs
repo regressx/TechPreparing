@@ -142,7 +142,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                 {
 
                     // пропускаем всё неинтересное
-                    if (child.RelationName == "Документ" || child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
+                    if (child.RelationName == "Технологический состав" || child.RelationName == "Документ" || child.Type == 1128 || child.Type == 1105 || child.Type == 1138 || child.Type == 1088 || child.Type == 1125)
                     {
                         continue;
                     }
