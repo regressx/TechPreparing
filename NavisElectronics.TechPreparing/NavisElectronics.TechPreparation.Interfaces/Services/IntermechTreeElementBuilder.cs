@@ -191,6 +191,13 @@ namespace NavisElectronics.TechPreparation.Interfaces.Services
                     _element.Amount /= 1000;
                     _element.MeasureUnits = "м";
                 }
+
+                if (currentValue.MeasureID == 2612) // если попали на кубический метр, то переведем его в литр
+                {
+                    _element.Amount *= 1000;
+                    _element.MeasureUnits = "л";
+                }
+
             }
 
             return this;

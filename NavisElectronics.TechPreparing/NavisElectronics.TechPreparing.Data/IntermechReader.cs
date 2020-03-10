@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Intermech;
-using NavisElectronics.TechPreparation.Interfaces.Exceptions;
-
 namespace NavisElectronics.TechPreparation.Data
 {
     using System;
@@ -24,8 +21,10 @@ namespace NavisElectronics.TechPreparation.Data
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using Interfaces;
     using Interfaces.Entities;
+    using Interfaces.Exceptions;
     using Interfaces.Helpers;
     using Interfaces.Services;
+    using Intermech;
     using Intermech.Interfaces;
     using Intermech.Interfaces.Compositions;
     using Intermech.Kernel.Search;
@@ -75,7 +74,7 @@ namespace NavisElectronics.TechPreparation.Data
         {
             ICollection<TechRouteNode> existedRoutes = new List<TechRouteNode>();
             DataTable techRoutes = null;
-
+            IDictionary<long, IntermechTreeElement> materials = new Dictionary<long, IntermechTreeElement>();
             using (SessionKeeper keeper = new SessionKeeper())
             {
                 // Сервис для получения составов
@@ -234,6 +233,8 @@ namespace NavisElectronics.TechPreparation.Data
                                                     string.Empty,
                                                     1110); // цехозаходы 
 
+
+
                                                 foreach (DataRow item in techProcessItems.Rows)
                                                 {
                                                     IDBObject workshop = keeper.Session.GetObject((long)item[0]);
@@ -258,6 +259,78 @@ namespace NavisElectronics.TechPreparation.Data
                                                     }
 
 
+                                                    ColumnDescriptor[] columnsForOperations =
+                                                    {
+                                                        new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object,
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                                                    };
+
+                                                    DataTable operations = compositionService.LoadComposition(
+                                                        keeper.Session,
+                                                        workshop.ObjectID,
+                                                        1002,
+                                                        new List<ColumnDescriptor>(columnsForOperations),
+                                                        string.Empty,
+                                                        1075); // материалы 
+
+
+
+                                                    ColumnDescriptor[] columnsForMaterials =
+                                                    {
+                                                        new ColumnDescriptor((int) ObligatoryObjectAttributes.F_OBJECT_ID, AttributeSourceTypes.Object,
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // идентификатор версии объекта
+                                                        new ColumnDescriptor(10, AttributeSourceTypes.Object,
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // наименование
+                                                        new ColumnDescriptor(1129, AttributeSourceTypes.Relation,
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0), // количество
+                                                        new ColumnDescriptor(-20, AttributeSourceTypes.Relation,
+                                                            ColumnContents.Text, ColumnNameMapping.Index, SortOrders.ASC, 0) // идентификатор связи
+                                                    };
+
+                                                    foreach (DataRow operation in operations.Rows)
+                                                    {
+                                                        DataTable materialsItems = compositionService.LoadComposition(
+                                                            keeper.Session,
+                                                            (long)operation[0],
+                                                            1002,
+                                                            new List<ColumnDescriptor>(columnsForMaterials),
+                                                            string.Empty,
+                                                            1128); // материалы 
+
+                                                        foreach (DataRow materialRow in materialsItems.Rows)
+                                                        {
+                                                            IDBObject materialObject =
+                                                                keeper.Session.GetObject((long)materialRow[0]);
+
+                                                            if (materials.ContainsKey(materialObject.ID))
+                                                            {
+                                                                IntermechTreeElement materialFromDictionary =
+                                                                    materials[materialObject.ID];
+
+                                                                IDBRelation relation =
+                                                                    keeper.Session.GetRelation((long) materialRow[3]);
+                                                                IDBAttribute amountAttribute =
+                                                                    relation.GetAttributeByID(1129);
+
+                                                                materialFromDictionary.Amount +=
+                                                                    (float)((MeasuredValue)amountAttribute.Value).Value;
+                                                            }
+                                                            else
+                                                            {
+                                                                IntermechTreeElement materialElement =
+                                                                    new IntermechTreeElementBuilder()
+                                                                        .SetId(materialObject.ObjectID)
+                                                                        .SetObjectId(materialObject.ID)
+                                                                        .SetType(1128)
+                                                                        .SetName(materialRow[1])
+                                                                        .SetRelationId((long) materialRow[3])
+                                                                        .SetAmount(materialRow[2]);
+                                                                materialElement.RelationName = "Технологический состав";
+                                                                materials.Add(materialElement.ObjectId, materialElement);
+                                                            }
+                                                        }
+                                                    }
+
                                                     // если первый элемент в списке 102 или 101, то это автоматически кооперация и для всех дочерних узлов ественно
                                                     if (techProcessNode.Children.Count == 0)
                                                     {
@@ -269,7 +342,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                                 keeper.Session.GetRelationCollection(1006);
 
                                                             // получить все групповые тех. процессы
-                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2 },null, null);
+                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2 }, null, null);
 
                                                             DataTable groupTechProcesses = collectionOfRelations.EntersInVersion(pars, techProcessId);;
 
@@ -328,6 +401,16 @@ namespace NavisElectronics.TechPreparation.Data
                                                     }
 
                                                     techProcessNode.Add(workshopNode);
+                                                }
+
+                                                // Удалить элементы по связи тех. состав из элемента
+                                                IEnumerable<IntermechTreeElement> children = element.Children.Where((e) => e.RelationName != "Технологический состав");
+                                                element.Children = children.ToList();
+
+                                                // добавить элементы по связи тех. состав в элемент
+                                                foreach (IntermechTreeElement techMaterial in materials.Values)
+                                                {
+                                                    element.Add(techMaterial);
                                                 }
 
                                                 break;
