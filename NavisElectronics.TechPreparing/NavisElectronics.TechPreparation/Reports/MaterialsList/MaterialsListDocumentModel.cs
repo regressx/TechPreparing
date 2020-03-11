@@ -33,10 +33,15 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
         /// </summary>
         public IEnumerable<IntermechTreeElement> MainMaterials => _uniqueMainMaterials.Values.OrderBy(e => e.Name);
 
-        public IEnumerable<IntermechTreeElement> MaterialsFromTechTasks => _uniqueMainMaterials.Values.OrderBy(e => e.Name);
+        public IEnumerable<IntermechTreeElement> MaterialsFromTechTasks => _uniqueMaterialsFromTechTask.Values.OrderBy(e => e.Name);
 
-        public IEnumerable<IntermechTreeElement> SecondaryMaterials => _uniqueMainMaterials.Values.OrderBy(e => e.Name);
+        public IEnumerable<IntermechTreeElement> SecondaryMaterials => _uniqueSecondaryMaterials.Values.OrderBy(e => e.Name);
 
+        /// <summary>
+        /// Заполняет из указанного узла дерева материалы
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns>Заполненный данными документ</returns>
         public MaterialsListDocumentModel GenerateFrom(IntermechTreeElement element)
         {
             IntermechTreeElement root = (IntermechTreeElement)element.Clone();
@@ -55,7 +60,7 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                     continue;
                 }
 
-                // если это деталь, то надо забрать
+                // если это деталь, то надо забрать материал и добавить в основные материалы
                 if (elementFromQueue.Type == 1052 || elementFromQueue.Type == 1159)
                 {
                     IntermechTreeElement materialFromDetail = elementFromQueue.Children.First();
@@ -81,9 +86,6 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
 
             }
 
-
-
-
             return this;
         }
 
@@ -91,31 +93,55 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
         private void RegisterMaterial(IntermechTreeElement material, MaterialPlace place)
         {
 
+            // Выбрать словарь, куда писать
+            IDictionary<long, IntermechTreeElement> currentDictionary = null;
             switch (place)
             {
                 case MaterialPlace.MainMaterial:
-
-                    if (_uniqueMainMaterials.ContainsKey(material.ObjectId))
-                    {
-                        IntermechTreeElement materialFromDictionary = _uniqueMainMaterials[material.ObjectId];
-
-                    }
-                    else
-                    {
-                        _uniqueMainMaterials.Add(material.ObjectId, material);
-                    }
+                    currentDictionary = _uniqueMainMaterials;
                     break;
 
                 case MaterialPlace.MaterialFromTechTask:
+                    currentDictionary = _uniqueMaterialsFromTechTask;
                     break;
 
                 case MaterialPlace.SecondaryMaterial:
-
+                    currentDictionary = _uniqueSecondaryMaterials;
                     break;
 
             }
 
+            // выбрать родителя
+            IntermechTreeElement parent = new IntermechTreeElement();
 
+            // здесь присваиваем идентификаторы
+            parent.Id = material.Parent.Id;
+            parent.ObjectId = material.Parent.ObjectId;
+            parent.Type = material.Parent.Type;
+
+            // а здесь надо перекинуть данные из материала
+            parent.Amount = material.Amount;
+            parent.AmountWithUse = material.AmountWithUse;
+            parent.StockRate = material.StockRate;
+
+
+            if (currentDictionary.ContainsKey(material.ObjectId))
+            {
+                IntermechTreeElement materialFromDictionary = currentDictionary[material.ObjectId];
+                materialFromDictionary.Add(parent);
+            }
+            else
+            {
+                IntermechTreeElement copyElement = new IntermechTreeElement()
+                {
+                    Id = material.Id,
+                    ObjectId = material.ObjectId,
+                    Name = material.Name,
+                    MeasureUnits = material.MeasureUnits,
+                };
+                copyElement.Add(parent);
+                currentDictionary.Add(copyElement.ObjectId, copyElement);
+            }
         }
 
         private void RegisterParent()
