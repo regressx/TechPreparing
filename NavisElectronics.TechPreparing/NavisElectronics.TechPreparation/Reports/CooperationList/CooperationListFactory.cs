@@ -43,6 +43,7 @@
 
             // делаем полную его копию
             IntermechTreeElement clonedElement = (IntermechTreeElement)taggedElement.Clone();
+            clonedElement.Parent = null;
             clonedElement.Amount = 1;
             clonedElement.AmountWithUse = 1;
 
