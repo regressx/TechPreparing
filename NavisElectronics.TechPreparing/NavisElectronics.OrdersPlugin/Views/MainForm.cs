@@ -150,15 +150,6 @@ namespace NavisElectronics.Orders
             }
         }
 
-
-        private void toolStripButton1_Click(object sender, System.EventArgs e)
-        {
-            if (StartChecking != null)
-            {
-                StartChecking(sender, e);
-            }
-        }
-
         private void TreeViewAdv_RowDraw(object sender, TreeViewRowDrawEventArgs e)
         {
             IntermechTreeElement node = ((IntermechTreeElement)((OrderNode)e.Node.Tag).Tag);

@@ -53,7 +53,6 @@
             this.saveOrderButton = new System.Windows.Forms.ToolStripButton();
             this.saveInfoLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.loadAndUpdateButtonStrip = new System.Windows.Forms.ToolStripButton();
             this.DecryptDocumentsButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -96,7 +95,7 @@
             this.toolStripSeparator3,
             this.SetManufacturerButton});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(250, 154);
+            this.contextMenuStrip.Size = new System.Drawing.Size(246, 132);
             // 
             // AddNoteButton
             // 
@@ -104,27 +103,27 @@
             this.AddNoteOnlyThisNodeButton,
             this.addNoteInWholeTreeButton});
             this.AddNoteButton.Name = "AddNoteButton";
-            this.AddNoteButton.Size = new System.Drawing.Size(249, 22);
+            this.AddNoteButton.Size = new System.Drawing.Size(245, 22);
             this.AddNoteButton.Text = "Добавить примечание узлу";
             // 
             // AddNoteOnlyThisNodeButton
             // 
             this.AddNoteOnlyThisNodeButton.Name = "AddNoteOnlyThisNodeButton";
-            this.AddNoteOnlyThisNodeButton.Size = new System.Drawing.Size(191, 22);
+            this.AddNoteOnlyThisNodeButton.Size = new System.Drawing.Size(183, 22);
             this.AddNoteOnlyThisNodeButton.Text = "только в этой сборке";
             this.AddNoteOnlyThisNodeButton.Click += new System.EventHandler(this.OnAddNoteOnlyThisNodeButtonClick);
             // 
             // addNoteInWholeTreeButton
             // 
             this.addNoteInWholeTreeButton.Name = "addNoteInWholeTreeButton";
-            this.addNoteInWholeTreeButton.Size = new System.Drawing.Size(191, 22);
+            this.addNoteInWholeTreeButton.Size = new System.Drawing.Size(183, 22);
             this.addNoteInWholeTreeButton.Text = "во всем дереве";
             this.addNoteInWholeTreeButton.Click += new System.EventHandler(this.OnAddNoteInWholeTreeButtonClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(242, 6);
             // 
             // produceButton
             // 
@@ -132,20 +131,20 @@
             this.produceInCurrentNodeButton,
             this.produceInAllTreeButton});
             this.produceButton.Name = "produceButton";
-            this.produceButton.Size = new System.Drawing.Size(249, 22);
+            this.produceButton.Size = new System.Drawing.Size(245, 22);
             this.produceButton.Text = "Изготавливать";
             // 
             // produceInCurrentNodeButton
             // 
             this.produceInCurrentNodeButton.Name = "produceInCurrentNodeButton";
-            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(178, 22);
+            this.produceInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInCurrentNodeButton.Text = "только в этом узле";
             this.produceInCurrentNodeButton.Click += new System.EventHandler(this.produceInCurrentNodeButton_Click);
             // 
             // produceInAllTreeButton
             // 
             this.produceInAllTreeButton.Name = "produceInAllTreeButton";
-            this.produceInAllTreeButton.Size = new System.Drawing.Size(178, 22);
+            this.produceInAllTreeButton.Size = new System.Drawing.Size(171, 22);
             this.produceInAllTreeButton.Text = "во всём дереве";
             this.produceInAllTreeButton.Click += new System.EventHandler(this.produceInAllTreeButton_Click);
             // 
@@ -155,27 +154,27 @@
             this.notProdInCurrentNodeButton,
             this.notProdInTreeButton});
             this.doNotProduceButton.Name = "doNotProduceButton";
-            this.doNotProduceButton.Size = new System.Drawing.Size(249, 22);
+            this.doNotProduceButton.Size = new System.Drawing.Size(245, 22);
             this.doNotProduceButton.Text = "Не изготавливать";
             // 
             // notProdInCurrentNodeButton
             // 
             this.notProdInCurrentNodeButton.Name = "notProdInCurrentNodeButton";
-            this.notProdInCurrentNodeButton.Size = new System.Drawing.Size(178, 22);
+            this.notProdInCurrentNodeButton.Size = new System.Drawing.Size(171, 22);
             this.notProdInCurrentNodeButton.Text = "только в этом узле";
             this.notProdInCurrentNodeButton.Click += new System.EventHandler(this.notProdInCurrentNodeButton_Click);
             // 
             // notProdInTreeButton
             // 
             this.notProdInTreeButton.Name = "notProdInTreeButton";
-            this.notProdInTreeButton.Size = new System.Drawing.Size(178, 22);
+            this.notProdInTreeButton.Size = new System.Drawing.Size(171, 22);
             this.notProdInTreeButton.Text = "во всём дереве";
             this.notProdInTreeButton.Click += new System.EventHandler(this.notProdInTreeButton_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(242, 6);
             // 
             // createReportButton
             // 
@@ -183,28 +182,28 @@
             this.CreateReportIPSButton,
             this.CreateReportExcelButton});
             this.createReportButton.Name = "createReportButton";
-            this.createReportButton.Size = new System.Drawing.Size(249, 22);
+            this.createReportButton.Size = new System.Drawing.Size(245, 22);
             this.createReportButton.Text = "Создать отчет по составу заказа";
             // 
             // CreateReportIPSButton
             // 
             this.CreateReportIPSButton.Enabled = false;
             this.CreateReportIPSButton.Name = "CreateReportIPSButton";
-            this.CreateReportIPSButton.Size = new System.Drawing.Size(180, 22);
+            this.CreateReportIPSButton.Size = new System.Drawing.Size(108, 22);
             this.CreateReportIPSButton.Text = "в IPS";
             this.CreateReportIPSButton.Click += new System.EventHandler(this.CreateReportClickIPS_Click);
             // 
             // CreateReportExcelButton
             // 
             this.CreateReportExcelButton.Name = "CreateReportExcelButton";
-            this.CreateReportExcelButton.Size = new System.Drawing.Size(180, 22);
+            this.CreateReportExcelButton.Size = new System.Drawing.Size(108, 22);
             this.CreateReportExcelButton.Text = "в Excel";
             this.CreateReportExcelButton.Click += new System.EventHandler(this.CreateReportClickExcel_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(246, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(242, 6);
             // 
             // SetManufacturerButton
             // 
@@ -213,19 +212,19 @@
             this.SetManufacturerInWholeTreeButton});
             this.SetManufacturerButton.Enabled = false;
             this.SetManufacturerButton.Name = "SetManufacturerButton";
-            this.SetManufacturerButton.Size = new System.Drawing.Size(249, 22);
+            this.SetManufacturerButton.Size = new System.Drawing.Size(245, 22);
             this.SetManufacturerButton.Text = "Установить узлу изготовителя";
             // 
             // SetManufacturerInThisNodeButton
             // 
             this.SetManufacturerInThisNodeButton.Name = "SetManufacturerInThisNodeButton";
-            this.SetManufacturerInThisNodeButton.Size = new System.Drawing.Size(180, 22);
+            this.SetManufacturerInThisNodeButton.Size = new System.Drawing.Size(168, 22);
             this.SetManufacturerInThisNodeButton.Text = "toolStripMenuItem1";
             // 
             // SetManufacturerInWholeTreeButton
             // 
             this.SetManufacturerInWholeTreeButton.Name = "SetManufacturerInWholeTreeButton";
-            this.SetManufacturerInWholeTreeButton.Size = new System.Drawing.Size(180, 22);
+            this.SetManufacturerInWholeTreeButton.Size = new System.Drawing.Size(168, 22);
             this.SetManufacturerInWholeTreeButton.Text = "toolStripMenuItem2";
             // 
             // toolStrip
@@ -234,7 +233,6 @@
             this.saveOrderButton,
             this.saveInfoLabel,
             this.toolStripProgressBar1,
-            this.toolStripButton1,
             this.loadAndUpdateButtonStrip,
             this.DecryptDocumentsButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
@@ -256,23 +254,13 @@
             // saveInfoLabel
             // 
             this.saveInfoLabel.Name = "saveInfoLabel";
-            this.saveInfoLabel.Size = new System.Drawing.Size(84, 22);
+            this.saveInfoLabel.Size = new System.Drawing.Size(76, 22);
             this.saveInfoLabel.Text = "Не сохранено";
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::NavisElectronics.Orders.Properties.Resources.OK;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Начать проверку";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // loadAndUpdateButtonStrip
             // 
@@ -529,7 +517,6 @@
         private System.Windows.Forms.ToolStripButton saveOrderButton;
         private System.Windows.Forms.ToolStripLabel saveInfoLabel;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem produceButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton loadAndUpdateButtonStrip;
