@@ -94,7 +94,9 @@ namespace NavisElectronics.TechPreparation.Data
                     new ColumnDescriptor(10, AttributeSourceTypes.Object,
                     ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // наименование
                     new ColumnDescriptor(1065, AttributeSourceTypes.Object,
-                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // тип производства (микроэлектроника, цех нап и тд и тп)
+                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0), // тип производства (микроэлектроника, цех нап и тд и тп)
+                    new ColumnDescriptor(18103, AttributeSourceTypes.Object,
+                    ColumnContents.Text, ColumnNameMapping.Index, SortOrders.NONE, 0) // тех. процесс по кооперации
 
                 };
 
@@ -216,6 +218,8 @@ namespace NavisElectronics.TechPreparation.Data
                                                     row[5] == DBNull.Value
                                                         ? string.Empty
                                                         : (string)row[5];
+
+                                                bool cooperation = row[6] == DBNull.Value ? false : Convert.ToInt32(row[6]) == 1;
 
                                                 if (developer.ToUpper() != organizationStructName.ToUpper() || productionType != productTypeOfSingleTechProcess)
                                                 {
@@ -341,72 +345,18 @@ namespace NavisElectronics.TechPreparation.Data
                                                         }
                                                     }
 
+                                                    if (cooperation)
+                                                    {
+                                                        SetCooperation(techProcessId,keeper.Session,developer,element, productionType);
+                                                    }
+
                                                     // если первый элемент в списке 102 или 101, то это автоматически кооперация и для всех дочерних узлов ественно
                                                     if (techProcessNode.Children.Count == 0)
                                                     {
                                                         if (workshopNode.PartitionName == "102" ||
                                                             workshopNode.PartitionName == "101")
                                                         {
-                                                            // поиск по связи групповой тп
-                                                            IDBRelationCollection collectionOfRelations =
-                                                                keeper.Session.GetRelationCollection(1006);
-
-                                                            // получить все групповые тех. процессы
-                                                            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2 }, null, null);
-
-                                                            DataTable groupTechProcesses = collectionOfRelations.EntersInVersion(pars, techProcessId);;
-
-                                                            // выбрать один, который совпадает по коду организации и виду производства
-                                                            foreach (DataRow groupTechProcess in groupTechProcesses.Rows)
-                                                            {
-                                                                IDBObject groupTechProcessDBobject =
-                                                                    keeper.Session.GetObject((long)groupTechProcess[0]);
-
-                                                                IDBAttribute groupDesAttribute =
-                                                                    groupTechProcessDBobject.GetAttributeByID(9);
-                                                                IDBAttribute groupTechProcessDeveloperAttribute =
-                                                                    groupTechProcessDBobject.GetAttributeByID(14819);
-
-                                                                IDBAttribute productionTypeOfGroupTechProcess =
-                                                                    groupTechProcessDBobject.GetAttributeByID(1065);
-
-
-                                                                string groupTechProcessDeveloper = groupTechProcessDeveloperAttribute != null
-                                                                    ? groupTechProcessDeveloperAttribute.AsString
-                                                                    : string.Empty;
-
-                                                                string productionTypeOfGroupTechPRocess =
-                                                                    productionTypeOfGroupTechProcess == null
-                                                                        ? string.Empty
-                                                                        : productionTypeOfGroupTechProcess.AsString;
-
-                                                                // если не сходится разработчик или тип производства, пропускаем
-                                                                if (developer.ToUpper() != groupTechProcessDeveloper.ToUpper() || productionTypeOfGroupTechPRocess != productionType)
-                                                                {
-                                                                    continue;
-                                                                }
-                                                                
-                                                                element.TechProcessReference = new TechProcess()
-                                                                {
-                                                                    Id = groupTechProcessDBobject.ObjectID,
-                                                                    Name = groupDesAttribute.AsString
-                                                                };
-
-                                                                // всегда 100
-                                                                element.SampleSize = "100%";
-                                                            }
-
-                                                            Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
-                                                            elementQueue.Enqueue(element);
-                                                            while (elementQueue.Count > 0)
-                                                            {
-                                                                IntermechTreeElement elementFromQueue = elementQueue.Dequeue();
-                                                                elementFromQueue.CooperationFlag = true;
-                                                                foreach (IntermechTreeElement child in elementFromQueue.Children)
-                                                                {
-                                                                    elementQueue.Enqueue(child);
-                                                                }
-                                                            }
+                                                            SetCooperation(techProcessId, keeper.Session, developer, element, productionType);
                                                         }
                                                     }
 
@@ -434,6 +384,78 @@ namespace NavisElectronics.TechPreparation.Data
                 }
             }
             return existedRoutes;
+        }
+
+        /// <summary>
+        /// Метод отмечает, что тех. процесс кооперационный
+        /// </summary>
+        /// <param name="techProcessId">Идентификатор единичного тех. процесса, где расположен маршрут</param>
+        /// <param name="session">ссылка на сессию</param>
+        /// <param name="developer">изготовитель</param>
+        /// <param name="element">текущий элемент дерева, с которым Вы работаете</param>
+        /// <param name="productionType">тип производства</param>
+        private void SetCooperation(long techProcessId, IUserSession session, string developer, IntermechTreeElement element, string productionType)
+        {
+            // поиск по связи групповой тп
+            IDBRelationCollection collectionOfRelations =
+                session.GetRelationCollection(1006);
+
+            // получить все групповые тех. процессы
+            DBRecordSetParams pars = new DBRecordSetParams(null, new object[] { -2 }, null, null);
+
+            DataTable groupTechProcesses = collectionOfRelations.EntersInVersion(pars, techProcessId); ;
+
+            // выбрать один, который совпадает по коду организации и виду производства
+            foreach (DataRow groupTechProcess in groupTechProcesses.Rows)
+            {
+                IDBObject groupTechProcessDBobject =
+                    session.GetObject((long)groupTechProcess[0]);
+
+                IDBAttribute groupDesAttribute =
+                    groupTechProcessDBobject.GetAttributeByID(9);
+                IDBAttribute groupTechProcessDeveloperAttribute =
+                    groupTechProcessDBobject.GetAttributeByID(14819);
+
+                IDBAttribute productionTypeOfGroupTechProcess =
+                    groupTechProcessDBobject.GetAttributeByID(1065);
+
+
+                string groupTechProcessDeveloper = groupTechProcessDeveloperAttribute != null
+                    ? groupTechProcessDeveloperAttribute.AsString
+                    : string.Empty;
+
+                string productionTypeOfGroupTechPRocess =
+                    productionTypeOfGroupTechProcess == null
+                        ? string.Empty
+                        : productionTypeOfGroupTechProcess.AsString;
+
+                // если не сходится разработчик или тип производства, пропускаем
+                if (developer.ToUpper() != groupTechProcessDeveloper.ToUpper() || productionTypeOfGroupTechPRocess != productionType)
+                {
+                    continue;
+                }
+
+                element.TechProcessReference = new TechProcess()
+                {
+                    Id = groupTechProcessDBobject.ObjectID,
+                    Name = groupDesAttribute.AsString
+                };
+
+                // всегда 100
+                element.SampleSize = "100%";
+            }
+
+            Queue<IntermechTreeElement> elementQueue = new Queue<IntermechTreeElement>();
+            elementQueue.Enqueue(element);
+            while (elementQueue.Count > 0)
+            {
+                IntermechTreeElement elementFromQueue = elementQueue.Dequeue();
+                elementFromQueue.CooperationFlag = true;
+                foreach (IntermechTreeElement child in elementFromQueue.Children)
+                {
+                    elementQueue.Enqueue(child);
+                }
+            }
         }
 
 
@@ -615,9 +637,6 @@ namespace NavisElectronics.TechPreparation.Data
                         .SetRelationNote(sb.ToString().TrimEnd()).SetObjectId(row[12])
                         .SetChangeDocument(row[13]);
                     document.RelationName = "Документ";
-
-
-
                     elements.Add(document);
                 }
 
