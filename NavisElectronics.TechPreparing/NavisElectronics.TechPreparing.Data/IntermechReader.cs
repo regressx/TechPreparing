@@ -315,16 +315,17 @@ namespace NavisElectronics.TechPreparation.Data
                                                                     materials[materialObject.ID];
 
                                                                 IDBRelation relation =
-                                                                    keeper.Session.GetRelation((long) materialRow[3]);
+                                                                    keeper.Session.GetRelation((long)materialRow[3]);
                                                                 IDBAttribute amountAttribute =
                                                                     relation.GetAttributeByID(1129);
 
-                                                                materialFromDictionary.Amount +=
-                                                                    (float)((MeasuredValue)amountAttribute.Value).Value;
+                                                                if (amountAttribute != null)
+                                                                {
+                                                                    materialFromDictionary.Amount += (float)((MeasuredValue)amountAttribute.Value).Value;
+                                                                }
                                                             }
                                                             else
                                                             {
-
                                                                 IntermechTreeElement materialElement =
                                                                     new IntermechTreeElementBuilder()
                                                                         .SetId(materialObject.ObjectID)

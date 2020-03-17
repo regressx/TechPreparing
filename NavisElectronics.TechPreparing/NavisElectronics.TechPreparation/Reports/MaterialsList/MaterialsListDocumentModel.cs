@@ -63,8 +63,12 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                 // если это деталь, то надо забрать материал и добавить в основные материалы
                 if (elementFromQueue.Type == 1052 || elementFromQueue.Type == 1159)
                 {
-                    IntermechTreeElement materialFromDetail = elementFromQueue.Children.First();
-                    RegisterMaterial(materialFromDetail,MaterialPlace.MainMaterial);
+                    IntermechTreeElement materialFromDetail = elementFromQueue.Children.FirstOrDefault();
+                    if(materialFromDetail!=null)
+                    {
+                        RegisterMaterial(materialFromDetail, MaterialPlace.MainMaterial);
+                    }
+
                 }
 
                 if (elementFromQueue.RelationName == "Технологический состав")
@@ -142,11 +146,6 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                 copyElement.Add(parent);
                 currentDictionary.Add(copyElement.ObjectId, copyElement);
             }
-        }
-
-        private void RegisterParent()
-        {
-
         }
     }
 }

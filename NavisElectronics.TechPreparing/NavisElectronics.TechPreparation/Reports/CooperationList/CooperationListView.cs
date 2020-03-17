@@ -18,6 +18,11 @@ namespace NavisElectronics.TechPreparation.Reports.CooperationList
     public class CooperationListView : IDocumentTypeFactory
     {
         private readonly RecountService recountService;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recountService"></param>
         public CooperationListView(RecountService recountService)
         {
             this.recountService = recountService;
