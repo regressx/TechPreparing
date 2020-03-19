@@ -8,6 +8,7 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
     using Intermech.Interfaces;
     using Intermech.Interfaces.Document;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
 
     public class MaterialsListDocumentView : IDocumentTypeFactory
@@ -179,7 +180,16 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
 
 
                 TextData totalCell = rowInstanse.FindNode("Total"+ parameterToFind) as TextData;
-                totalCell.AssignText(string.Format("{0:F2}", total).Trim(), false, false, false);
+                totalCell.AssignText(string.Format("{0:F8}", total).Trim(), false, false, false);
+
+
+                foreach (var node in rowInstanse.Nodes)
+                {
+                    TextData cell = node as TextData;
+                    cell.AssignBackColor(Color.LightGray, false);
+                    cell.CharFormat = new CharFormat(new System.Drawing.Font("Arial", 10, FontStyle.Bold));
+                    cell.overrideFlags |= (OverrideFlags)0x4000; //щелкаем флагом
+                }
 
 
                 table.AddChildNode(rowInstanse, false, false);
@@ -206,7 +216,7 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                         TextData amountCell = parentRowInstance.FindNode("Amount"+ parameterToFind) as TextData;
                         if (amountCell != null)
                         {
-                            amountCell.AssignText(string.Format("{0:F0}", parent.Amount).Trim(), false, false, false);
+                            amountCell.AssignText(string.Format("{0:F8}", parent.Amount).Trim(), false, false, false);
                         }
 
                     }
@@ -216,7 +226,7 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                         TextData amountWithUseCell = parentRowInstance.FindNode("AmountInOrder"+ parameterToFind) as TextData;
                         if (amountWithUseCell != null)
                         {
-                            amountWithUseCell.AssignText(string.Format("{0:F0}", parent.AmountWithUse).Trim(), false, false,
+                            amountWithUseCell.AssignText(string.Format("{0:F8}", parent.AmountWithUse).Trim(), false, false,
                                 false);
                         }
                     }
@@ -226,7 +236,7 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                         TextData stockRateCell = parentRowInstance.FindNode("StockRate"+ parameterToFind) as TextData;
                         if (stockRateCell != null)
                         {
-                            stockRateCell.AssignText(string.Format("{0:F2}", parent.StockRate).Trim(), false, false,
+                            stockRateCell.AssignText(string.Format("{0:F8}", parent.StockRate).Trim(), false, false,
                                 false);
                         }
                     }

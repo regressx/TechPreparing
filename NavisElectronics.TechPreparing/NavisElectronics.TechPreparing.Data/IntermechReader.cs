@@ -275,7 +275,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                         1002,
                                                         new List<ColumnDescriptor>(columnsForOperations),
                                                         string.Empty,
-                                                        1075); // материалы 
+                                                        1075); // операции 
 
 
 
@@ -335,7 +335,7 @@ namespace NavisElectronics.TechPreparation.Data
                                                                         .SetRelationId((long) materialRow[3])
                                                                         .SetAmount(materialRow[2]);
                                                                 materialElement.RelationName = "Технологический состав";
-
+                                                                materialElement.StockRate = 1.05d;
                                                                 bool materialFrom = materialRow[4] != DBNull.Value && (Convert.ToByte(materialRow[4]) == 1);
 
                                                                 materialElement.MaterialRegisteredIn =
@@ -1108,7 +1108,6 @@ namespace NavisElectronics.TechPreparation.Data
             return mainNode;
         }
 
- 
         /// <summary>
         /// Метод получает коллекцию документов на изделие, которые затем можно просмотреть
         /// </summary>

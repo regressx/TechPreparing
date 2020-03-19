@@ -45,7 +45,9 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
         public MaterialsListDocumentModel GenerateFrom(IntermechTreeElement element)
         {
             IntermechTreeElement root = (IntermechTreeElement)element.Clone();
+            root.Parent = null;
             root.Amount = 1;
+            root.AmountWithUse = 1;
             _recountService.RecountAmount(root);
 
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
@@ -59,6 +61,11 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                 {
                     continue;
                 }
+                
+                if (elementFromQueue.Type == 1128 && elementFromQueue.RelationName == "Состав изделия")
+                {
+                    RegisterMaterial(elementFromQueue, MaterialPlace.MainMaterial);
+                }
 
                 // если это деталь, то надо забрать материал и добавить в основные материалы
                 if (elementFromQueue.Type == 1052 || elementFromQueue.Type == 1159)
@@ -68,7 +75,6 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
                     {
                         RegisterMaterial(materialFromDetail, MaterialPlace.MainMaterial);
                     }
-
                 }
 
                 if (elementFromQueue.RelationName == "Технологический состав")
@@ -122,12 +128,15 @@ namespace NavisElectronics.TechPreparation.Reports.MaterialsList
             parent.Id = material.Parent.Id;
             parent.ObjectId = material.Parent.ObjectId;
             parent.Type = material.Parent.Type;
+            parent.Name = material.Parent.Name;
+            parent.Designation = material.Parent.Designation;
+
 
             // а здесь надо перекинуть данные из материала
             parent.Amount = material.Amount;
             parent.AmountWithUse = material.AmountWithUse;
             parent.StockRate = material.StockRate;
-
+            parent.TotalAmount = parent.AmountWithUse * parent.StockRate;
 
             if (currentDictionary.ContainsKey(material.ObjectId))
             {
