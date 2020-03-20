@@ -73,7 +73,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
             mainNode.ObjectId = element.ObjectId;
             mainNode.Designation = element.Designation;
             mainNode.Name = element.Name;
-            mainNode.Amount = element.Amount;
+            mainNode.Amount = element.Amount.ToString("F6");
             mainNode.CooperationFlag = element.CooperationFlag;
             mainNode.NodeState = element.NodeState;
             mainNode.Tag = element;
@@ -194,7 +194,7 @@ namespace NavisElectronics.TechPreparation.ViewModels
                     childNode.ObjectId = child.ObjectId;
                     childNode.Designation = child.Designation;
                     childNode.Name = child.Name;
-                    childNode.Amount = child.Amount;
+                    childNode.Amount = child.Amount.ToString("F6");
                     childNode.ChangeNumber = child.ChangeNumber;
                     childNode.CooperationFlag = child.CooperationFlag;
                     childNode.NodeState = child.NodeState;

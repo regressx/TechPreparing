@@ -129,7 +129,12 @@ namespace NavisElectronics.TechPreparation.Presenters
             StringBuilder sb = new StringBuilder();
             IntermechTreeElement mainElement = _rootElement as IntermechTreeElement;
             Queue<IntermechTreeElement> queue = new Queue<IntermechTreeElement>();
-            queue.Enqueue(mainElement);
+
+            foreach(IntermechTreeElement child in mainElement.Children)
+            {
+                queue.Enqueue(child);
+            }
+
             while (queue.Count > 0)
             {
                 IntermechTreeElement elementFromQueue = queue.Dequeue();
@@ -174,7 +179,7 @@ namespace NavisElectronics.TechPreparation.Presenters
                 }
 
 
-                if (string.IsNullOrEmpty(elementFromQueue.TechRoute) && !elementFromQueue.ProduseSign)
+                if (string.IsNullOrEmpty(elementFromQueue.TechRoute) && !elementFromQueue.ProduseSign && elementFromQueue.Children.Count > 0)
                 {
                     string str = string.Format("В узле {0} {1} из состава {2} {3} не указан маршрут",
                         elementFromQueue.Designation,
@@ -244,12 +249,7 @@ namespace NavisElectronics.TechPreparation.Presenters
         /// </param>
         private async void _view_Load(object sender, EventArgs e)
         {
-            //TreeModel treeModel = new TreeModel();
-            //ViewNode waitingNode = new ViewNode();
             _mainView.UpdateStatusLabel("Пожалуйста, подождите. Идет загрузка данных");
-            //treeModel.Nodes.Add(waitingNode);
-            //_mainView.FillTree(treeModel);
-
 
             _mainView.LockButtons();
 

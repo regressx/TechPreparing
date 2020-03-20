@@ -53,6 +53,11 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
         /// </summary>
         event EventHandler CreateCooperationList;
 
+        /// <summary>
+        /// Создать ведомость кооперации
+        /// </summary>
+        event EventHandler CreateMaterialsList;
+
 
         /// <summary>
         /// Проставить внутрипроизводственную кооперацию

@@ -49,6 +49,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.createSingleCompleteListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createCooperationListMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createMaterialsListButton = new System.Windows.Forms.ToolStripMenuItem();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewAdv = new Aga.Controls.Tree.TreeViewAdv();
@@ -80,7 +81,6 @@
             this.textBoxTpRef = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.textBoxTechTask = new Aga.Controls.Tree.NodeControls.NodeTextBox();
             this.agentTextbox = new Aga.Controls.Tree.NodeControls.NodeTextBox();
-            this.createMaterialsListButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -251,6 +251,13 @@
             this.createCooperationListMenuItem.Size = new System.Drawing.Size(292, 22);
             this.createCooperationListMenuItem.Text = "Создать ведомость кооперации";
             this.createCooperationListMenuItem.Click += new System.EventHandler(this.createCooperationListMenuItem_Click);
+            // 
+            // createMaterialsListButton
+            // 
+            this.createMaterialsListButton.Name = "createMaterialsListButton";
+            this.createMaterialsListButton.Size = new System.Drawing.Size(292, 22);
+            this.createMaterialsListButton.Text = "Создать ВСН";
+            this.createMaterialsListButton.Click += new System.EventHandler(this.createMaterialsListButton_Click);
             // 
             // propertyGrid1
             // 
@@ -520,12 +527,6 @@
             this.agentTextbox.IncrementalSearchEnabled = true;
             this.agentTextbox.LeftMargin = 3;
             this.agentTextbox.ParentColumn = this.agentTreeColumn;
-            // 
-            // createMaterialsListButton
-            // 
-            this.createMaterialsListButton.Name = "createMaterialsListButton";
-            this.createMaterialsListButton.Size = new System.Drawing.Size(292, 22);
-            this.createMaterialsListButton.Text = "Создать ВСН";
             // 
             // TechRoutesMapWithDataGrid
             // 

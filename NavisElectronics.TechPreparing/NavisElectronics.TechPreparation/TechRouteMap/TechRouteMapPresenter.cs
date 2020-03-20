@@ -93,8 +93,19 @@ namespace NavisElectronics.TechPreparation.TechRouteMap
             _view.DownloadInfoFromIPS += OnDownloadFromIPS;
             _view.EditMassTechRouteClick += View_EditMassTechRouteClick;
             _view.UpdateNodeFromIps += View_UpdateNodeFromIps;
+            _view.CreateMaterialsList += _view_CreateMaterialsList;
             _model = model;
             _presentationFactory = presentationFactory;
+        }
+
+        private void _view_CreateMaterialsList(object sender, EventArgs e)
+        {
+            ReportService reportService = new ReportService(new Interfaces.Services.RecountService());
+            ICollection<MyNode> elements = _view.GetSelectedRows();
+            foreach (MyNode node in elements)
+            {
+                reportService.CreateReport(node, node.Name, ReportType.MaterialsList, DocumentType.Intermech);
+            }
         }
 
         private async void View_UpdateNodeFromIps(object sender, EventArgs e)

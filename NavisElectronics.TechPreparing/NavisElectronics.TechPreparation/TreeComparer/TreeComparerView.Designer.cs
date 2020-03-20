@@ -267,7 +267,7 @@
             this.toolStripSeparator1,
             this.pushChangesMenuItem});
             this.rightTreecontextMenuStrip.Name = "contextMenuStrip";
-            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 120);
+            this.rightTreecontextMenuStrip.Size = new System.Drawing.Size(342, 98);
             // 
             // findInOldArchiveMenuItem
             // 

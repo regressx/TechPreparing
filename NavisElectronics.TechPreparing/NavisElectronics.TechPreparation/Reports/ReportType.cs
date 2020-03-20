@@ -24,5 +24,10 @@
         /// Комплектовочная карта
         /// </summary>
         CompleteList,
+
+        /// <summary>
+        /// Ведомость стандартизированных норм
+        /// </summary>
+        MaterialsList,
     }
 }
